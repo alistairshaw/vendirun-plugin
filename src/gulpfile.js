@@ -13,15 +13,33 @@ var shell = require("gulp-shell");
  |
  */
 
-elixir(function(mix) {
-    mix.sass('main.scss');
-	mix.task('publish_assets', ['resources/assets/**/*.scss', 'resources/assets/**/*.js']);
+elixir(function (mix) {
+	mix.sass('main.scss', 'resources/assets/css');
+
+	mix.styles([
+		'main.css',
+		'../bower_components/font-awesome/css/font-awesome.css',
+		'../bower_components/lightbox/css/lightbox.css',
+		'../bower_components/select2/select2.css',
+		'../bower_components/nivoslider/nivo-slider.css'
+	], 'public/css/production.css');
+
+	mix.scripts([
+			'../bower_components/jquery/dist/jquery.js',
+			'../bower_components/jquery.smooth-scroll/jquery.smooth-scroll.js',
+			'../bower_components/bootstrap-sass/assets/javascripts/bootstrap.js',
+			'../bower_components/lightbox/js/lightbox.js',
+			'../bower_components/select2/select2.js',
+			'../bower_components/nivoslider/jquery.nivo.slider.js',
+			'main.js'
+		], 'public/js/production.js');
+
+	mix.copy('resources/bower_components/font-awesome/fonts', 'public/fonts');
+	mix.copy('resources/bower_components/select2/*.png', 'public/css');
+
+	mix.task('publish_assets', ['public/**/*.css', 'public/**/*.js']);
 });
 
-gulp.task('publish_assets', function() {
-	setTimeout(function() {
-		shell.task([
-			"php ../../../../artisan vendor:publish --tag=public --force"
-		]);
-	}, 2000);
-});
+gulp.task('publish_assets', shell.task([
+	"php ../../../../artisan vendor:publish --tag=public --force"
+]));

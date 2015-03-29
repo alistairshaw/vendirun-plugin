@@ -17,4 +17,4 @@
 
 </html>
 
-<script src="{{ asset('js/production.min.js') }}"></script>
+<script src="{{ asset('js/production.js') }}"></script>

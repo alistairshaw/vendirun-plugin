@@ -9,5 +9,7 @@
     }
   ],
   "minimum-stability": "dev",
-  "require": { }
+  "require": {
+    "illuminate/html": "~5.0"
+  }
 }

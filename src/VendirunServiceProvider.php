@@ -1,5 +1,6 @@
 <?php namespace Ambitiousdigital\Vendirun;
 
+use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
 
 class VendirunServiceProvider extends ServiceProvider {
@@ -43,6 +44,14 @@ class VendirunServiceProvider extends ServiceProvider {
 		$this->mergeConfigFrom(
 			__DIR__.'/config/vendirun.php', 'vendirun'
 		);
+
+		// register providers we need
+		$this->app->register('Illuminate\Html\HtmlServiceProvider');
+
+		// aliases
+		$loader = AliasLoader::getInstance();
+		$loader->alias('Form', 'Illuminate\Html\FormFacade');
+		$loader->alias('HTML', 'Illuminate\Html\HtmlFacade');
 	}
 
 }

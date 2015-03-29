@@ -6,14 +6,6 @@ return [
 
 	'apiKey' => 'RSDQ0cDTJDJlStMc',
 
-	'clientId' => 3,
+	'clientId' => 3
 
-	'providers' => [
-		'Illuminate\Html\HtmlServiceProvider'
-	],
-
-	'aliases' => [
-		'Form'      => 'Illuminate\Html\FormFacade',
-		'HTML'      => 'Illuminate\Html\HtmlFacade'
-	]
 ];

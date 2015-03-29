@@ -1,4 +1,6 @@
 var elixir = require('laravel-elixir');
+var gulp = require("gulp");
+var shell = require("gulp-shell");
 
 /*
  |--------------------------------------------------------------------------
@@ -13,4 +15,13 @@ var elixir = require('laravel-elixir');
 
 elixir(function(mix) {
     mix.sass('main.scss');
+	mix.task('publish_assets', ['resources/assets/**/*.scss', 'resources/assets/**/*.js']);
+});
+
+gulp.task('publish_assets', function() {
+	setTimeout(function() {
+		shell.task([
+			"php ../../../../artisan vendor:publish --tag=public --force"
+		]);
+	}, 2000);
 });

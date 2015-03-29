@@ -24,7 +24,7 @@ class VendirunServiceProvider extends ServiceProvider {
 		]);
 
 		// use artisan vendor:publish to copy public assets
-		// use artisan vandor:publish --tag=public --force   to force overwrite of assets tagged as "public"
+		// use artisan vendor:publish --tag=public --force   to force overwrite of assets tagged as "public"
 		$this->publishes([
 			__DIR__.'/public' => public_path('vendor/vendirun'),
 		], 'public');

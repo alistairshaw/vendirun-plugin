@@ -19,18 +19,19 @@
                         </div>
                         <h2 class="page-header">Search Results</h2>
 
-                        @forelse ($properties->result as $property)
-                            @include('vendirun::property.result', array('property'=>$property))
-                        @empty
+                        @if ($properties)
+                            @foreach ($properties->result as $property)
+                                @include('vendirun::property.result', array('property'=>$property))
+                            @endforeach
+                        @else
                             <p>No properties matched your search</p>
-                        @endforelse
+                        @endif
                     </div>
 
-                    @if ($paginator)
+                    @if ($pagination)
                         <div class="row">
                             <div class="col-sm-6">
-                                {{ $paginator->render() }}
-                                <!-- pagination -->
+                                {!! $pagination->render() !!}
                             </div>
                         </div>
                     @endif

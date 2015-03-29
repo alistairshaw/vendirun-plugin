@@ -2,16 +2,17 @@
 
 namespace Ambitiousdigital\Vendirun\Controllers\Property;
 
+use Ambitiousdigital\Vendirun\Controllers\VendirunBaseController;
 use Ambitiousdigital\Vendirun\Lib\IdObfuscator;
 use Ambitiousdigital\Vendirun\Lib\PropertyApi;
-use App\Http\Controllers\Controller;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\View;
+use Input;
+use Redirect;
+use Session;
+use View;
+use Request;
 
-class PropertyController extends Controller
+class PropertyController extends VendirunBaseController
 {
 
 	private $propertyApi;
@@ -26,46 +27,14 @@ class PropertyController extends Controller
 	 */
 	public function index()
 	{
-		$data['bodyClass']    = 'property-search';
 		$data['searchParams'] = $this->searchParams();
 
-		$data['favouriteProperties'] = $this->getFavouriteProperties();
-
-		$response = $this->propertyApi->search($data['searchParams']);
-		$data['properties'] = ($response['success'] == 1) ? $response['data'] : array();
-
-		$response   = $this->propertyApi->getCategories();
-		$categories = ($response['success'] == 1) ? $response['data'] : array();
-
-		$data['categories'] = $this->getCategories($categories);
-		$data['paginator']  = new LengthAwarePaginator($data['properties']->result, $data['properties']->total_rows, $data['properties']->limit);
-
-		// Setting up current Page.
-		Session::put('current_page_route', '/property-search');
+		$data['favouriteProperties'] = $this->propertyApi->getFavourite(Session::get('token'), true);
+		$data['categories'] = $this->propertyApi->getCategories();
+		$data['properties'] = $this->propertyApi->search($data['searchParams']);
+		$data['pagination'] = ($data['properties']) ? $data['pagination'] = new LengthAwarePaginator($data['properties']->result, $data['properties']->total_rows, $data['properties']->limit, Request::get('page'), ['path'=>'/property/']) : false;
 
 		return View::make('vendirun::property.search', $data);
-	}
-
-	private function getFavouriteProperties()
-	{
-		$token = Session::get('token');
-		if (!$token) return array();
-
-		$response = $this->propertyApi->getFavourite($token);
-
-		$favProperties = ($response['success'] == 1) ? $response['data'] : array();
-
-		$favPropertiesIds = array();
-
-		if ($favProperties && count($favProperties) > 0)
-		{
-			foreach ($favProperties as $row)
-			{
-				$favPropertiesIds[] = $row->property_id;
-			}
-		}
-
-		return $favPropertiesIds;
 	}
 
 	/**
@@ -81,7 +50,7 @@ class PropertyController extends Controller
 		$response         = $this->propertyApi->property($searchParams);
 		$data['property'] = ($response['success'] == 1) ? $response['data'] : array();
 
-		$data['favouriteProperties'] = $this->getFavouriteProperties();
+		$data['favouriteProperties'] = $this->propertyApi->getFavourite(Session::get('token'), true);
 
 		$data['bodyClass'] = 'property-view';
 
@@ -91,6 +60,9 @@ class PropertyController extends Controller
 		return View::make('vendirun::property.view', $data);
 	}
 
+	/**
+	 * @return mixed
+	 */
 	private function searchParams()
 	{
 		if (isset($_POST) && count($_POST) > 0)
@@ -116,36 +88,13 @@ class PropertyController extends Controller
 
 		$searchParams['limit'] = (Input::get('limit')) ? Input::get('limit') : 5;
 
-
 		return $searchParams;
-	}
-
-	public function getCategories($categories, $parent_name = '')
-	{
-		$finaArray = array();
-
-		if ($categories && count($categories) > 0)
-		{
-			foreach ($categories as $row)
-			{
-				$tempArray['category_name'] = ($parent_name != '') ? $parent_name . ' > ' . $row->category_name : $row->category_name;
-				$tempArray['id']            = $row->id;
-				$finaArray[]                = $tempArray;
-				if (count($row->sub_categories) > 0)
-				{
-					$childArray = $this->getCategories($row->sub_categories, $tempArray['category_name']);
-					$finaArray  = array_merge($finaArray, $childArray);
-				}
-
-			}
-		}
-		return $finaArray;
 	}
 
 	/**
 	 * Add Property to Favourite
 	 * @param $propertyId
-	 * @return
+	 * @return \Illuminate\Http\RedirectResponse
 	 */
 	public function addToFavourite($propertyId)
 	{
@@ -159,7 +108,7 @@ class PropertyController extends Controller
 
 		$params['token']       = $token->token;
 		$params['property_id'] = $propertyId;
-		$success               = $this->propertyApi->addToFavourite($params);
+		$this->propertyApi->addToFavourite($params);
 
 		if (is_object($token) && count($token) > 0)
 		{
@@ -223,8 +172,7 @@ class PropertyController extends Controller
 
 		$data['bodyClass'] = 'property-search';
 
-		$data['favouriteProperties'] = $this->getFavouriteProperties();
-
+		$data['favouriteProperties'] = $this->propertyApi->getFavourite(Session::get('token'));
 
 		if (count($data['favouriteProperties']) > 0)
 		{

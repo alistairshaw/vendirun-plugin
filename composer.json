@@ -1,0 +1,13 @@
+{
+  "name": "ambitiousdigital/vendirun",
+  "description": "Vendirun front end package",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "Alistair Shaw",
+      "email": "alistair@ambitiousdigital.co.uk"
+    }
+  ],
+  "minimum-stability": "dev",
+  "require": { }
+}

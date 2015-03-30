@@ -31,14 +31,18 @@ elixir(function (mix) {
 			'../bower_components/lightbox/js/lightbox.js',
 			'../bower_components/select2/select2.js',
 			'../bower_components/nivoslider/jquery.nivo.slider.js',
+			'sliders.js',
 			'main.js'
 		], 'public/js/production.js');
 
-	mix.copy('resources/bower_components/font-awesome/fonts', 'public/fonts');
-	mix.copy('resources/bower_components/select2/*.png', 'public/css');
-	mix.copy('resources/bower_components/lightbox/img', 'public/img');
-
 	mix.task('publish_assets', ['public/**/*.css', 'public/**/*.js']);
+
+	if (elixir.config.production)
+	{
+		mix.copy('resources/bower_components/font-awesome/fonts', 'public/fonts');
+		mix.copy('resources/bower_components/select2/*.png', 'public/css');
+		mix.copy('resources/bower_components/lightbox/img', 'public/img');
+	}
 });
 
 gulp.task('publish_assets', shell.task([

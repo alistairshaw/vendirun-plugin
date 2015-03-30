@@ -1,7 +1,7 @@
 @extends('vendirun::layouts.standard')
 
 @section('content')
-    <form method="post" action="{{ route('vendirun.propertySearch') }}" autocomplete="off">
+    <form method="post" action="{{ route('vendirun.propertySearch') }}" autocomplete="off" class="property-search">
         <div class="container-fluid clearfix">
             <div class="row search-height">
                 <div class="col-sm-10 col-sm-offset-1 js-main-results">

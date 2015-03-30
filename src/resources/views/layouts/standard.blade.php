@@ -17,4 +17,4 @@
 
 </html>
 
-<script src="{{ asset('js/production.js') }}"></script>
+<script src="{{ asset('vendor/vendirun/js/production.js') }}"></script>

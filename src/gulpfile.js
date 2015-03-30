@@ -14,14 +14,14 @@ var shell = require("gulp-shell");
  */
 
 elixir(function (mix) {
-	mix.sass('main.scss', 'resources/assets/css');
+	mix.sass('main.scss', 'resources/css');
 
 	mix.styles([
-		'main.css',
 		'../bower_components/font-awesome/css/font-awesome.css',
 		'../bower_components/lightbox/css/lightbox.css',
 		'../bower_components/select2/select2.css',
-		'../bower_components/nivoslider/nivo-slider.css'
+		'../bower_components/nivoslider/nivo-slider.css',
+		'main.css'
 	], 'public/css/production.css');
 
 	mix.scripts([
@@ -36,6 +36,7 @@ elixir(function (mix) {
 
 	mix.copy('resources/bower_components/font-awesome/fonts', 'public/fonts');
 	mix.copy('resources/bower_components/select2/*.png', 'public/css');
+	mix.copy('resources/bower_components/lightbox/img', 'public/img');
 
 	mix.task('publish_assets', ['public/**/*.css', 'public/**/*.js']);
 });

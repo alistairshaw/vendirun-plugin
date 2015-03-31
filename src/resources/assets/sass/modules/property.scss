@@ -174,3 +174,96 @@
 		}
 	}
 }
+
+.property-view {
+	.image-container {
+		margin: 0 0 20px 0;
+		.property-slide-show {
+			padding: 0;
+			margin: 0;
+			li {
+				list-style: none;
+				&:not(:first-child) {
+					img {
+						display: none;
+					}
+				}
+			}
+			.nivo-directionNav {
+				a {
+					color: #FFF;
+				}
+				.nivo-nextNav {
+					right: 10px;
+				}
+				.nivo-prevNav {
+					left: 10px;
+				}
+			}
+		}
+	}
+
+	h1 {
+		margin: 0 0 10px 0;
+		font-size: 1.7em;
+	}
+
+	h3 {
+		margin: 0 0 10px 0;
+	}
+
+	.price {
+		margin: -10px 0 18px 0;
+		font-size: 2.1em;
+		color: #ccc;
+		float: right;
+	}
+
+	.stats {
+		padding: 0;
+		margin: 0;
+		li {
+			list-style: none;
+			margin-bottom: 12px;
+			&:last-child {
+				margin: 0;
+			}
+		}
+	}
+
+	.description-well {
+		background: #FFF;
+	}
+
+	.amenities-well {
+		position: relative;
+		background: #FFF;
+		.col-sm-6 {
+			position: static;
+		}
+		.amenities {
+			text-align: right;
+		}
+		.buttons {
+			clear: both;
+			.fa-star {
+				color: $brand-warning;
+			}
+			.fa-info {
+				color: #0000ff;
+			}
+			.fa-remove {
+				color: $brand-primary;
+			}
+			.fa-envelope {
+				color: #999;
+			}
+		}
+	}
+}
+
+#map-canvas {
+	width: 100%;
+	height: 400px;
+	background-color: #CCC;
+}

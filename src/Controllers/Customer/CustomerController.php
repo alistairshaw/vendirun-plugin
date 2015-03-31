@@ -1,19 +1,18 @@
 <?php
 
-namespace Ambitiousdigital\Vendirun\Controllers;
+namespace Ambitiousdigital\Vendirun\Controllers\Customer;
 
-use Ambitiousdigital\Vendirun\BaseController;
-
+use Ambitiousdigital\Vendirun\Controllers\VendirunBaseController;
 use Ambitiousdigital\Vendirun\Lib\CustomerApi;
 use Ambitiousdigital\Vendirun\Lib\Mailer;
-use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\View;
+use Input;
+use Redirect;
+use Session;
+use Validator;
+use View;
 
-class CustomerController extends BaseController
-{
+class CustomerController extends VendirunBaseController {
+
 	/**
 	 * @var CustomerApi
 	 */
@@ -21,8 +20,7 @@ class CustomerController extends BaseController
 
 	public function __construct()
 	{
-		View::addNamespace('vendirun', app('path') . '/vendirun/views/');
-		$this->customerApi = new CustomerApi();
+		$this->customerApi = new CustomerApi(config('vendirun.apiKey'), config('vendirun.clientId'), config('vendirun.apiEndPoint'));
 	}
 
 	/**
@@ -30,7 +28,6 @@ class CustomerController extends BaseController
 	 */
 	public function doLogin()
 	{
-
 		$rules = [
 			'email_login' => 'required',
 			'password'    => 'required',
@@ -38,12 +35,12 @@ class CustomerController extends BaseController
 
 		$validationResult = $this->validateForm($rules, Input::all());
 
-		if (!$validationResult['success'])
+		if ( ! $validationResult['success'])
 		{
 			Session::flash('alert_message_failure', 'Incorrect username or password please try again!');
+
 			return Redirect::back();
 		}
-
 
 		$vars['email']    = $_POST['email_login'];
 		$vars['password'] = $_POST['password'];
@@ -64,9 +61,9 @@ class CustomerController extends BaseController
 		else
 		{
 			Session::flash('alert_message_failure', $response['error']);
+
 			return Redirect::route('vendirun.register')->withInput();
 		}
-
 	}
 
 	/**
@@ -75,8 +72,6 @@ class CustomerController extends BaseController
 	 */
 	public function doRegister()
 	{
-		$setApiFailureError = "";
-
 		$rules = [
 			'full_name'             => 'required',
 			'email'                 => 'required|email',
@@ -86,7 +81,7 @@ class CustomerController extends BaseController
 
 		$validationResult = $this->validateForm($rules, Input::all());
 
-		if (!$validationResult['success'])
+		if ( ! $validationResult['success'])
 		{
 			return Redirect::back()->with('errors', $validationResult['errors'])->withInput();
 		}
@@ -116,13 +111,12 @@ class CustomerController extends BaseController
 			else
 			{
 				Session::flash('alert_message_failure', $response['error']);
+
 				return Redirect::route('vendirun.register')->withInput();
 			}
 		}
 		else
 		{
-
-
 			if ($response['api_failure'] == 1)
 			{
 				unset($_POST['password']);
@@ -133,9 +127,9 @@ class CustomerController extends BaseController
 			}
 
 			Session::flash('alert_message_failure', $response['error']);
+
 			return Redirect::route('vendirun.register')->withInput();
 		}
-
 	}
 
 	/**
@@ -155,7 +149,7 @@ class CustomerController extends BaseController
 
 		$validationResult = $this->validateForm($rules, Input::all());
 
-		if (!$validationResult['success'])
+		if ( ! $validationResult['success'])
 		{
 			return Redirect::back()->with('showModal', 1)->with('errors', $validationResult['errors'])->withInput();
 		}
@@ -171,7 +165,7 @@ class CustomerController extends BaseController
 
 		$customerData = array();
 
-		if (!$response['success'])
+		if ( ! $response['success'])
 		{
 			if ($response['api_failure'])
 			{
@@ -195,8 +189,7 @@ class CustomerController extends BaseController
 		$params['note']         = isset($data['property']) ? "\n\nProperty Name: " . $data['property'] : '';
 		$response               = $this->customerApi->store($params);
 
-
-		if (!$response['success'])
+		if ( ! $response['success'])
 		{
 			if ($response['api_failure'])
 			{
@@ -205,15 +198,12 @@ class CustomerController extends BaseController
 				$mailer->sendMail($_ENV['EMAIL'], 'Recommend a Friend', $data, 'vendirun::emails.contact_mail');
 			}
 		}
-		else
-		{
-			$customerData = $response['data'];
-		}
-
 
 		Session::flash('alert_message_recommend_a_friend', 'Thank you for recommending your friend we will be in touch shortly.');
-		return Redirect::back();
 
+		dd("DONE");
+
+		// return Redirect::back();
 	}
 
 	/**
@@ -222,7 +212,6 @@ class CustomerController extends BaseController
 	 */
 	public function processContactForm()
 	{
-
 		$rules = [
 			'fullName'     => 'required',
 			'emailAddress' => 'required|email',
@@ -230,7 +219,7 @@ class CustomerController extends BaseController
 		];
 
 		$validationResult = $this->validateForm($rules, Input::all());
-		if (!$validationResult['success'])
+		if ( ! $validationResult['success'])
 		{
 			return Redirect::back()->with('errors', $validationResult['errors']);
 		}
@@ -247,25 +236,25 @@ class CustomerController extends BaseController
 
 		$response = $this->customerApi->store($params);
 
-		if (!$response['success'])
+		if ( ! $response['success'])
 		{
-			if($response['api_failure'])
+			if ($response['api_failure'])
 			{
 				$data['mailData'] = $params;
 				$mailer           = new Mailer();
 				$mailer->sendMail($_ENV['EMAIL'], 'Contact Form', $data, 'vendirun::emails.contact_mail');
 			}
-
 		}
 
 		Session::flash('alert_message_success', 'Thank you for contacting us we will get back to you shortly!');
+
 		return Redirect::back();
 	}
 
 	/**
 	 * Validates a form
-	 * @param $rules Rules for validation
-	 * @param $data  Form Data.
+	 * @param array $rules Rules for validation
+	 * @param array $data Form Data.
 	 * @return array
 	 */
 	private function validateForm($rules, $data)
@@ -275,6 +264,7 @@ class CustomerController extends BaseController
 		{
 			return ['success' => false, 'errors' => $validator->messages()];
 		}
+
 		return ['success' => true];
 	}
 
@@ -287,6 +277,7 @@ class CustomerController extends BaseController
 		$data = Session::all();
 
 		$data['bodyClass'] = 'property-search';
+
 		return View::make('vendirun::customer.register', $data);
 	}
 

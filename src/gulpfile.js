@@ -32,6 +32,8 @@ elixir(function (mix) {
 			'../bower_components/select2/select2.js',
 			'../bower_components/nivoslider/jquery.nivo.slider.js',
 			'sliders.js',
+			'property/filter.js',
+			'property/property-view.js',
 			'main.js'
 		], 'public/js/production.js');
 

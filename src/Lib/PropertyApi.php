@@ -37,7 +37,9 @@ class PropertyApi extends BaseApi {
 	{
 		$url = 'property/find';
 		$this->request($url, $params);
-		return $this->getResult();
+
+		$response = $this->getResult();
+		return ($response['success']) ? $response['data'] : false;
 	}
 
 	/**

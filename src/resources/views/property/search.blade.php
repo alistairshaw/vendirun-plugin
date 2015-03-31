@@ -2,6 +2,7 @@
 
 @section('content')
     <form method="post" action="{{ route('vendirun.propertySearch') }}" autocomplete="off" class="property-search">
+        <input type="hidden" name="_token" value="{{{ csrf_token() }}}">
         <div class="container-fluid clearfix">
             <div class="row search-height">
                 <div class="col-sm-10 col-sm-offset-1 js-main-results">
@@ -136,8 +137,12 @@
                             <label for="keywords">Keywords</label>
                             <input type="text" class="form-control" name="keywords" id="keywords" value="{{ isset($properties->search_params->strings) ? implode(',',$properties->search_params->strings) : '' }}">
                         </div>
-                        <button type="submit" class="btn btn-primary pull-right">Search</button>
-                        <br/><br/>
+
+                        <div class="form-group text-right">
+                            <button type="button" class="btn btn-default js-close-filter"><i class="fa fa-chevron-left"></i> </button>
+                            <a href="{{ route('vendirun.propertyClearSearch') }}" class="btn btn-default">Clear</a>
+                            <button type="submit" class="btn btn-primary">Search</button>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -1,26 +1,27 @@
 <?php
 
 
-Route::group(['namespace' => 'Ambitiousdigital\Vendirun\Controllers', 'prefix' => ''], function()
+Route::group(['namespace' => 'Ambitiousdigital\Vendirun\Controllers', 'prefix' => 'property'], function()
 {
-	Route::any('/property', ['as'=>'vendirun.propertySearch', 'uses' => 'Property\PropertyController@index']);
-	Route::get('/property-view/{id}/{propertyName}', ['as'=>'vendirun.propertyView', 'uses' => 'PropertyController@propertyView']);
-	Route::get('/property/add-to-favourite/{id}', ['as'=>'vendirun.propertyAddToFav', 'uses' => 'PropertyController@addToFavourite']);
-	Route::get('/property/remove-favourite/{id}', ['as'=>'vendirun.propertyRemoveFav', 'uses' => 'PropertyController@RemoveFavourite']);
-	Route::get('/property/view-favourite-properties/', ['as'=>'vendirun.viewFavouriteProperties', 'uses' => 'PropertyController@viewFavouriteProperties']);
+	Route::any('/', ['as'=>'vendirun.propertySearch', 'uses' => 'Property\PropertyController@index']);
+	Route::get('clear-search', ['as'=>'vendirun.propertyClearSearch', 'uses' => 'Property\PropertyController@clearSearch']);
+	Route::get('view/{id}/{propertyName}', ['as'=>'vendirun.propertyView', 'uses' => 'Property\PropertyController@propertyView']);
 
-	Route::get('/property/location/', ['as'=>'vendirun.location', 'uses' => 'PropertyController@location']);
+	Route::get('add-to-favourite/{id}', ['as'=>'vendirun.propertyAddToFav', 'uses' => 'PropertyController@addToFavourite']);
+	Route::get('remove-favourite/{id}', ['as'=>'vendirun.propertyRemoveFav', 'uses' => 'PropertyController@RemoveFavourite']);
+	Route::get('view-favourite-properties', ['as'=>'vendirun.viewFavouriteProperties', 'uses' => 'PropertyController@viewFavouriteProperties']);
 
-
-	Route::post('/contact-form-submit', ['as'=>'vendirun.contactFormSubmit', 'uses' => 'CustomerController@processContactForm']);
-	Route::post('/recommend-a-friend', ['as'=>'vendirun.recommendAFriend', 'uses' => 'CustomerController@recommendAFriend']);
-	Route::get('/logout', ['as'=>'vendirun.logout', 'uses' => 'CustomerController@logout']);
-	Route::any('register', ['as'=>'vendirun.register', 'uses' => 'CustomerController@register']);
-
-	Route::any('/do-register', ['as'=>'vendirun.doRegister', 'uses' => 'CustomerController@doRegister']);
-	Route::any('/do-login', ['as'=>'vendirun.doLogin', 'uses' => 'CustomerController@doLogin']);
-
+	Route::get('location', ['as'=>'vendirun.location', 'uses' => 'PropertyController@location']);
 });
 
+Route::group(['namespace' => 'Ambitiousdigital\Vendirun\Controllers', 'prefix' => 'customer'], function()
+{
+	Route::post('contact-form-submit', ['as' => 'vendirun.contactFormSubmit', 'uses' => 'Customer\CustomerController@processContactForm']);
+	Route::post('recommend-a-friend', ['as' => 'vendirun.recommendAFriend', 'uses' => 'Customer\CustomerController@recommendAFriend']);
+	Route::get('logout', ['as' => 'vendirun.logout', 'uses' => 'Customer\CustomerController@logout']);
+	Route::any('register', ['as' => 'vendirun.register', 'uses' => 'Customer\CustomerController@register']);
 
+	Route::any('do-register', ['as' => 'vendirun.doRegister', 'uses' => 'Customer\CustomerController@doRegister']);
+	Route::any('do-login', ['as' => 'vendirun.doLogin', 'uses' => 'Customer\CustomerController@doLogin']);
+});
 

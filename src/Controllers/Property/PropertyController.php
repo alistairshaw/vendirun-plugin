@@ -3,7 +3,6 @@
 namespace Ambitiousdigital\Vendirun\Controllers\Property;
 
 use Ambitiousdigital\Vendirun\Controllers\VendirunBaseController;
-use Ambitiousdigital\Vendirun\Lib\IdObfuscator;
 use Ambitiousdigital\Vendirun\Lib\PropertyApi;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Input;
@@ -38,24 +37,24 @@ class PropertyController extends VendirunBaseController
 	}
 
 	/**
+	 * Clear the search and redirect to index
+	 */
+	public function clearSearch()
+	{
+		Session::forget('searchParams');
+		return Redirect::route('vendirun.propertySearch');
+	}
+
+	/**
 	 * @param $id
-	 * @param $propertyName
 	 * @return mixed
 	 */
-	public function propertyView($id, $propertyName)
+	public function propertyView($id)
 	{
-		$idObfuscator       = new IdObfuscator();
-		$searchParams['id'] = $idObfuscator->decode($id);
+		$searchParams['id'] = $id;
 
-		$response         = $this->propertyApi->property($searchParams);
-		$data['property'] = ($response['success'] == 1) ? $response['data'] : array();
-
+		$data['property'] = $this->propertyApi->property($searchParams);
 		$data['favouriteProperties'] = $this->propertyApi->getFavourite(Session::get('token'), true);
-
-		$data['bodyClass'] = 'property-view';
-
-		// Setting up current Page.
-		Session::put('current_page_route', '/property-view/' . $id . '/' . $propertyName);
 
 		return View::make('vendirun::property.view', $data);
 	}

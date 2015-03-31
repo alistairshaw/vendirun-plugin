@@ -24,7 +24,7 @@
             <a href="{{ (in_array($property->id, $favouriteProperties)) ? route('vendirun.viewFavouriteProperties') : route('vendirun.propertyAddToFav',$property->id) }}" class="btn btn-default"><i class="fa {{ in_array($property->id, $favouriteProperties) ? 'fa-check' : 'fa-star' }}"></i>{{ in_array($property->id, $favouriteProperties) ?  ' View Favourites' : ' Add to Favorites' }}</a>
         @endif
         <button type="button" data-property-name="{{ $property->title }}" data-property-id="{{ $property->id }}" data-toggle="modal" data-target="#recommendAFriend" class="btn btn-default js-request-request-to-friend"><i class="fa fa-user"></i> Send to a Friend</button>
-        <!-- <a href="#" class="btn btn-default"><i class="fa fa-remove"></i> Hide Property</a> -->
+        <a href="#" class="btn btn-default"><i class="fa fa-remove"></i> Hide Property</a>
         <a href="{{ route('vendirun.propertyView',[$property->id, urlencode($property->title)]) }}#contact-us" class="btn btn-default"><i class="fa fa-envelope"></i> Contact Us</a>
     </div>
 </div>

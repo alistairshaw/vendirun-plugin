@@ -1,48 +1,71 @@
 @extends('vendirun::layouts.standard')
 
 @section('content')
-    <form method="post" action="{{ route('vendirun.propertySearch') }}" autocomplete="off" class="property-search">
-        <input type="hidden" name="_token" value="{{{ csrf_token() }}}">
-        <div class="container-fluid clearfix">
-            <div class="row search-height">
-                <div class="col-sm-10 col-sm-offset-1 js-main-results">
-                    <div class="property-results">
-                        <div class="pull-right">
+    <div class="container-fluid property-search clearfix">
+        <div class="row search-height">
+            <div class="col-sm-10 col-sm-offset-1 js-main-results">
+
+                @include('vendirun::forms.recommend-a-friend')
+
+                <div class="property-results">
+
+                    <h2 class="page-header">Search Results</h2>
+
+                    <div class="clearfix">
+                        @if ($pagination)
+                            <div class="pull-left">
+                                {!! $pagination->render() !!}
+                            </div>
+                        @endif
+
+                        <div class="pull-right form-inline per-page">
                             <label for="limit">Per Page</label>
-                            <select name="limit" id="limit">
+                            <select class="form-control" name="limit" id="limit">
                                 <option value="5">5</option>
                                 <option value="10">10</option>
                                 <option value="20">20</option>
                                 <option value="30">30</option>
                                 <option value="50">50</option>
                             </select>
-                            <br><br><br><br>
                         </div>
-                        <h2 class="page-header">Search Results</h2>
-
-                        @if ($properties)
-                            @foreach ($properties->result as $property)
-                                @include('vendirun::property.result', array('property'=>$property))
-                            @endforeach
-                        @else
-                            <p>No properties matched your search</p>
-                        @endif
                     </div>
 
+                    @if ($properties)
+                        @foreach ($properties->result as $property)
+                            @include('vendirun::property.result', array('property'=>$property))
+                        @endforeach
+                    @else
+                        <p>No properties matched your search</p>
+                    @endif
+                </div>
+
+                <div class="clearfix">
                     @if ($pagination)
-                        <div class="row">
-                            <div class="col-sm-6">
-                                {!! $pagination->render() !!}
-                            </div>
+                        <div class="pull-left">
+                            {!! $pagination->render() !!}
                         </div>
                     @endif
 
+                    <div class="pull-right form-inline per-page">
+                        <label for="limit">Per Page</label>
+                        <select class="form-control" name="limit" id="limit">
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                            <option value="30">30</option>
+                            <option value="50">50</option>
+                        </select>
+                    </div>
                 </div>
-                <div class="popout">
-                    <a href="#" class="js-popout-search">Filter <i class="fa fa-chevron-right"></i> </a>
-                </div>
-                <div class="col-sm-3 hide left-column">
-                    <div class="well refine-search">
+
+            </div>
+            <div class="popout">
+                <a href="#" class="js-popout-search">Filter <i class="fa fa-chevron-right"></i> </a>
+            </div>
+            <div class="col-sm-3 hide left-column">
+                <div class="well refine-search">
+                    <form method="post" action="{{ route('vendirun.propertySearch') }}" autocomplete="off">
+                        <input type="hidden" name="_token" value="{{{ csrf_token() }}}">
                         <p><strong>Refine your search</strong></p>
                         <div class="form-group">
                             <label for="location">Location</label>
@@ -124,7 +147,7 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="propertyType">Property Type</label>
+                            <label for="propertyType">Property Category</label>
                             <select class="form-control select2" name="propertytype" id="propertyType" data-placeholder="Any" data-allow-clear="true">
                                 <option value="">Please Select</option>
                                 @foreach($categories as $category)
@@ -139,15 +162,14 @@
                         </div>
 
                         <div class="form-group text-right">
-                            <button type="button" class="btn btn-default js-close-filter"><i class="fa fa-chevron-left"></i> </button>
+                            <button type="button" class="btn btn-default js-close-filter"><i class="fa fa-chevron-left"></i></button>
                             <a href="{{ route('vendirun.propertyClearSearch') }}" class="btn btn-default">Clear</a>
                             <button type="submit" class="btn btn-primary">Search</button>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
-    </form>
-    @include('vendirun::forms.recommend_a_friend_modal')
+    </div>
 
 @stop

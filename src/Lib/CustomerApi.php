@@ -1,33 +1,43 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: Alistair
- * Date: 15/11/2014
- * Time: 22:51
- */
-namespace Ambitiousdigital\Vendirun\Lib;
+<?php namespace Ambitiousdigital\Vendirun\Lib;
 
-class CustomerApi extends BaseApi
-{
+class CustomerApi extends BaseApi {
+
 	/**
 	 * Process Form
 	 * @param $params
-	 * @param $params['full_name']	required!
-	 * @param $params['email']		required!
-	 * @param $params['telephone']	required!
+	 * @param $params ['full_name']
+	 * @param $params ['email']        required!
+	 * @param $params ['telephone']
 	 */
 	function store($params)
 	{
 		$url = 'customer/store';
 		$this->request($url, $params, true);
+
 		return $this->getResult();
 	}
 
+	/**
+	 * @param array $params
+	 * @return mixed
+	 */
 	function login($params)
 	{
 		$url = 'customer/login';
 		$this->request($url, $params, true);
+
 		return $this->getResult();
 	}
 
+	/**
+	 * @param $token
+	 * @return mixed
+	 */
+	function tokenAuth($token)
+	{
+		$url = 'customer/token_auth';
+		$this->request($url, ['token' => $token], true);
+
+		return $this->getResult();
+	}
 }

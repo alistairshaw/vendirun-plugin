@@ -34,5 +34,14 @@
                 </li>
             </ul>
         </div><!-- /.navbar-collapse -->
+
+        <div class="pull-right">
+            @if (Session::has('token'))
+                {{{ $loggedInName }}}<br>
+                {{{ $loggedInEmail }}}
+            @else
+                <a href="{{ route('vendirun.register') }}">Login</a>
+            @endif
+        </div>
     </div><!-- /.container-fluid -->
 </nav>

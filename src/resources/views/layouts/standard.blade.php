@@ -7,6 +7,7 @@
 <header id="header" class="clearfix cl-header">
     @include('vendirun::common.header')
 </header>
+@include('vendirun::common.alerts')
 <section id="main" role="main" class="clearfix">
     @yield('content')
     <footer id="footer">

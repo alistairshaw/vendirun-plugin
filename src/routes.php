@@ -7,9 +7,9 @@ Route::group(['namespace' => 'Ambitiousdigital\Vendirun\Controllers', 'prefix' =
 	Route::get('clear-search', ['as'=>'vendirun.propertyClearSearch', 'uses' => 'Property\PropertyController@clearSearch']);
 	Route::get('view/{id}/{propertyName}', ['as'=>'vendirun.propertyView', 'uses' => 'Property\PropertyController@propertyView']);
 
-	Route::get('add-to-favourite/{id}', ['as'=>'vendirun.propertyAddToFav', 'uses' => 'PropertyController@addToFavourite']);
-	Route::get('remove-favourite/{id}', ['as'=>'vendirun.propertyRemoveFav', 'uses' => 'PropertyController@RemoveFavourite']);
-	Route::get('view-favourite-properties', ['as'=>'vendirun.viewFavouriteProperties', 'uses' => 'PropertyController@viewFavouriteProperties']);
+	Route::get('add-to-favourite/{id}', ['as'=>'vendirun.propertyAddToFav', 'uses' => 'Property\PropertyController@addToFavourite']);
+	Route::get('remove-favourite/{id}', ['as'=>'vendirun.propertyRemoveFav', 'uses' => 'Property\PropertyController@RemoveFavourite']);
+	Route::get('view-favourite-properties', ['as'=>'vendirun.viewFavouriteProperties', 'uses' => 'Property\PropertyController@viewFavouriteProperties']);
 
 	Route::get('location', ['as'=>'vendirun.location', 'uses' => 'PropertyController@location']);
 });

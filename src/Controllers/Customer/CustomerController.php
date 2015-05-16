@@ -7,6 +7,7 @@ use Ambitiousdigital\Vendirun\Lib\CustomerApi;
 use Ambitiousdigital\Vendirun\Lib\Mailer;
 use Input;
 use Redirect;
+use Request;
 use Session;
 use Validator;
 use View;
@@ -20,6 +21,7 @@ class CustomerController extends VendirunBaseController {
 
 	public function __construct()
 	{
+		parent::__construct();
 		$this->customerApi = new CustomerApi(config('vendirun.apiKey'), config('vendirun.clientId'), config('vendirun.apiEndPoint'));
 	}
 
@@ -46,6 +48,7 @@ class CustomerController extends VendirunBaseController {
 		$vars['password'] = $_POST['password'];
 
 		$response = $this->customerApi->login($vars);
+
 		if ($response['success'] == 1)
 		{
 			Session::flash('alert_message_success', 'Login Successful');
@@ -141,69 +144,64 @@ class CustomerController extends VendirunBaseController {
 		$rules = [
 			'fullName'           => 'required',
 			'emailAddress'       => 'required|email',
-			'telephone'          => 'required',
 			'fullNameFriend'     => 'required',
 			'emailAddressFriend' => 'required|email',
-			'telephoneFriend'    => 'required'
 		];
 
 		$validationResult = $this->validateForm($rules, Input::all());
 
-		if ( ! $validationResult['success'])
-		{
-			return Redirect::back()->with('showModal', 1)->with('errors', $validationResult['errors'])->withInput();
-		}
+		if ( ! $validationResult['success']) return Redirect::back()->with('showModal', 1)->with('errors', $validationResult['errors'])->withInput();
 
 		$data                  = Input::all();
-		$params['full_name']   = $data['fullName'];
-		$params['email']       = $data['emailAddress'];
-		$params['telephone']   = $data['telephone'];
-		$params['property_id'] = $data['propertyId'];
-		$params['form_id']     = $data['formId'];
-		$params['note']        = isset($data['property']) ? "\n\nProperty Name: " . $data['property'] : '';
-		$response              = $this->customerApi->store($params);
+		$params['property_id'] = isset($data['propertyId']) ? $data['propertyId'] : null;
 
-		$customerData = array();
+		$params['full_name'] = $data['fullName'];
+		$params['email']     = $data['emailAddress'];
 
-		if ( ! $response['success'])
+		$params['receiver_full_name'] = $data['fullNameFriend'];
+		$params['receiver_email']     = $data['emailAddressFriend'];
+
+		$params['recommend_a_friend']      = true;
+		$params['recommend_a_friend_link'] = Route('vendirun.propertyView', ['id' => Request::input('propertyId'), 'propertyName' => Request::input('propertyName')]);
+		$params['recommend_a_friend_link'] .= '/' . urlencode(Request::input('property'));
+
+		$params['form_id'] = 'Recommend a Friend Form';
+
+		$response = $this->customerApi->store($params);
+
+		if ( ! $response['success']) $this->apiSubmissionFailed('recommend-friend', $data);
+		Session::flash('vendirun-alert-success', 'Thank you for recommending this page to your friend! We\'ve sent them an email on your behalf.');
+
+		return Redirect::back();
+	}
+
+	/**
+	 * @param $action
+	 * @param $data
+	 */
+	private function apiSubmissionFailed($action, $data)
+	{
+		$subjectLine = '';
+		$view        = '';
+
+		switch ($action)
 		{
-			if ($response['api_failure'])
-			{
-				$data['mailData'] = $params;
-				$mailer           = new Mailer();
-				$mailer->sendMail($_ENV['EMAIL'], 'Recommend a Friend (Recommended By)', $data, 'vendirun::emails.contact_mail');
-			}
-		}
-		else
-		{
-			$customerData = $response['data'];
-		}
-
-		$data                   = Input::all();
-		$params['full_name']    = $data['fullNameFriend'];
-		$params['email']        = $data['emailAddressFriend'];
-		$params['telephone']    = $data['telephoneFriend'];
-		$params['property_id']  = $data['propertyId'];
-		$params['form_id']      = $data['formId'];
-		$params['recommend_by'] = isset($customerData->id) ? $customerData->id : '';
-		$params['note']         = isset($data['property']) ? "\n\nProperty Name: " . $data['property'] : '';
-		$response               = $this->customerApi->store($params);
-
-		if ( ! $response['success'])
-		{
-			if ($response['api_failure'])
-			{
-				$data['mailData'] = $params;
-				$mailer           = new Mailer();
-				$mailer->sendMail($_ENV['EMAIL'], 'Recommend a Friend', $data, 'vendirun::emails.contact_mail');
-			}
+			case 'recommend-friend-sender':
+				$subject = '';
+				$view    = 'vendirun::emails.contact_mail';
+				break;
+			case 'recommend-friend-receiver':
+				$view = 'vendirun::emails.contact_mail';
+				break;
 		}
 
-		Session::flash('alert_message_recommend_a_friend', 'Thank you for recommending your friend we will be in touch shortly.');
-
-		dd("DONE");
-
-		// return Redirect::back();
+		// only send an email if we have subject line
+		if ($subjectLine !== '')
+		{
+			$data['mailData'] = $data;
+			$mailer           = new Mailer();
+			$mailer->sendMail(config('mail.from'), $subjectLine, $data, $view);
+		}
 	}
 
 	/**

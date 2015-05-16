@@ -12,7 +12,7 @@
                 @endif
                 <div class="image-container img-thumbnail" style="margin-top: 20px;">
                     <ul class="property-slide-show">
-                        @forelse($property->images_with_full_path as $images)
+                        @forelse($property->images as $images)
                             <li><a class="fancybox" rel="group" href="{{ $images->largerect }}"><img src="{{ $images->largerect }}" alt=""/></a></li>
                         @empty
 
@@ -35,7 +35,7 @@
 
         <div class="image-container">
             <div class="row">
-                @forelse($property->images_with_full_path as $images)
+                @forelse($property->images as $images)
                     <div class="col-sm-3">
                         <a href="{{ $images->large }}" data-lightbox="image-1" data-title="Images"><img src="{{ $images->mediumsq }}" class="img-responsive img-thumbnail"></a>
                     </div>
@@ -116,8 +116,8 @@
             </div>
         @endif
 
-        @include('vendirun::...forms.quick_enquiry_form')
+        @include('vendirun::forms.quick-enquiry')
     </div>
-    @include('vendirun::...forms.recommend_a_friend_modal')
+    @include('vendirun::forms.recommend-a-friend')
 
 @stop

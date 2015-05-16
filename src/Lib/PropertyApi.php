@@ -83,7 +83,7 @@ class PropertyApi extends BaseApi {
 		$favouriteIds = [];
 		foreach ($favourites as $favourite)
 		{
-			$favouriteIds[] = $favourite->property_id;
+			$favouriteIds[] = $favourite->id;
 		}
 		return $favouriteIds;
 	}

@@ -1,6 +1,9 @@
-@import "../../bower_components/bootstrap-sass/assets/stylesheets/_bootstrap";
 
 @import "base/mixins";
 @import "base/common";
+@import "base/variables";
+@import "../../bower_components/bootstrap-sass/assets/stylesheets/_bootstrap";
+
+@import "components/recommend-a-friend";
 
 @import "modules/property";

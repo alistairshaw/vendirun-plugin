@@ -3,8 +3,8 @@
 namespace Ambitiousdigital\Vendirun\Controllers\Customer;
 
 use Ambitiousdigital\Vendirun\Controllers\VendirunBaseController;
-use Ambitiousdigital\Vendirun\Lib\CustomerApi;
 use Ambitiousdigital\Vendirun\Lib\Mailer;
+use Illuminate\Routing\UrlGenerator;
 use Input;
 use Redirect;
 use Request;
@@ -14,15 +14,9 @@ use View;
 
 class CustomerController extends VendirunBaseController {
 
-	/**
-	 * @var CustomerApi
-	 */
-	private $customerApi;
-
 	public function __construct()
 	{
 		parent::__construct();
-		$this->customerApi = new CustomerApi(config('vendirun.apiKey'), config('vendirun.clientId'), config('vendirun.apiEndPoint'));
 	}
 
 	/**
@@ -39,8 +33,7 @@ class CustomerController extends VendirunBaseController {
 
 		if ( ! $validationResult['success'])
 		{
-			Session::flash('alert_message_failure', 'Incorrect username or password please try again!');
-
+			Session::flash('vendirun-alert-error', 'Incorrect username or password please try again!');
 			return Redirect::back();
 		}
 
@@ -51,19 +44,20 @@ class CustomerController extends VendirunBaseController {
 
 		if ($response['success'] == 1)
 		{
-			Session::flash('alert_message_success', 'Login Successful');
+			Session::flash('vendirun-alert-success', 'Login Successful');
 			Session::put('token', $response['data']);
 
-			if (Session::get('action'))
+			if (Session::has('action'))
 			{
-				return Redirect::to(Session::get('action'));
+				$redirect = Session::get('action');
+				return Redirect::to($redirect);
 			}
 
 			return Redirect::route('vendirun.register');
 		}
 		else
 		{
-			Session::flash('alert_message_failure', $response['error']);
+			Session::flash('vendirun-alert-error', $response['error']);
 
 			return Redirect::route('vendirun.register')->withInput();
 		}
@@ -101,7 +95,7 @@ class CustomerController extends VendirunBaseController {
 
 			if ($response['success'] == 1)
 			{
-				Session::flash('alert_message_success', 'Login Successful');
+				Session::flash('vendirun-alert-success', 'Login Successful');
 				Session::put('token', $response['data']);
 
 				if (Session::get('action'))
@@ -113,7 +107,7 @@ class CustomerController extends VendirunBaseController {
 			}
 			else
 			{
-				Session::flash('alert_message_failure', $response['error']);
+				Session::flash('vendirun-alert-error', $response['error']);
 
 				return Redirect::route('vendirun.register')->withInput();
 			}
@@ -129,7 +123,7 @@ class CustomerController extends VendirunBaseController {
 				$mailer->sendMail($_ENV['EMAIL'], 'Registration', $data, 'vendirun::emails.contact_mail');
 			}
 
-			Session::flash('alert_message_failure', $response['error']);
+			Session::flash('vendirun-alert-error', $response['error']);
 
 			return Redirect::route('vendirun.register')->withInput();
 		}
@@ -150,7 +144,7 @@ class CustomerController extends VendirunBaseController {
 
 		$validationResult = $this->validateForm($rules, Input::all());
 
-		if ( ! $validationResult['success']) return Redirect::back()->with('showModal', 1)->with('errors', $validationResult['errors'])->withInput();
+		if ( ! $validationResult['success']) return Redirect::back()->with('errors', $validationResult['errors'])->withInput();
 
 		$data                  = Input::all();
 		$params['property_id'] = isset($data['propertyId']) ? $data['propertyId'] : null;
@@ -244,7 +238,7 @@ class CustomerController extends VendirunBaseController {
 			}
 		}
 
-		Session::flash('alert_message_success', 'Thank you for contacting us we will get back to you shortly!');
+		Session::flash('vendirun-alert-success', 'Thank you for contacting us we will get back to you shortly!');
 
 		return Redirect::back();
 	}

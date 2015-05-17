@@ -1,15 +1,6 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: Alistair
- * Date: 15/11/2014
- * Time: 22:52
- */
+<?php namespace Ambitiousdigital\Vendirun\Lib;
 
-namespace Ambitiousdigital\Vendirun\Lib;
-
-use Illuminate\Support\Facades\Cache;
-use Symfony\Component\Process\Exception\RuntimeException;
+use Cache;
 
 class BaseApi
 {
@@ -43,8 +34,8 @@ class BaseApi
 		{
 			if (Cache::has($key))
 			{
-				//$this->result = Cache::get($key);
-				//return true;
+				$this->result = Cache::get($key);
+				return true;
 			}
 		}
 
@@ -98,7 +89,7 @@ class BaseApi
 
 		if($this->debugmode)
 		{
-			exit();
+			// exit();
 		}
 
 		//If we get a success

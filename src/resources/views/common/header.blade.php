@@ -30,18 +30,29 @@
                         <li><a href="#">Search</a></li>
                         <li><a href="#">Locations</a></li>
                         <li><a href="#">Categories</a></li>
+                        @if (Session::has('token'))
+                            <li class="divider"></li>
+                            <li><a href="{{ route('vendirun.viewFavouriteProperties') }}">Favourites</a></li>
+                        @endif
                     </ul>
                 </li>
             </ul>
-        </div><!-- /.navbar-collapse -->
 
-        <div class="pull-right">
-            @if (Session::has('token'))
-                {{{ $loggedInName }}}<br>
-                {{{ $loggedInEmail }}}
-            @else
-                <a href="{{ route('vendirun.register') }}">Login</a>
-            @endif
+            <ul class="nav navbar-nav navbar-right">
+                @if (Session::has('token'))
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{{ $loggedInName }}} <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="{{ route('vendirun.logout') }}">Logout</a></li>
+                        </ul>
+                    </li>
+                @else
+                    <li><a href="{{ route('vendirun.register') }}">Login</a></li>
+                @endif
+            </ul>
+
         </div>
-    </div><!-- /.container-fluid -->
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container-fluid -->
 </nav>

@@ -17,6 +17,7 @@ class PropertyController extends VendirunBaseController {
 
 	public function __construct()
 	{
+		parent::__construct();
 		$this->propertyApi = new PropertyApi(config('vendirun.apiKey'), config('vendirun.clientId'), config('vendirun.apiEndPoint'));
 	}
 
@@ -109,24 +110,18 @@ class PropertyController extends VendirunBaseController {
 
 		$params['token']       = $token->token;
 		$params['property_id'] = $propertyId;
-		$this->propertyApi->addToFavourite($params);
+		$response              = $this->propertyApi->addToFavourite($params);
 
-		if (is_object($token) && count($token) > 0)
+		if ($response['success'])
 		{
-			if (Session::get('current_page_route'))
-			{
-				return Redirect::to(Session::get('current_page_route'));
-			}
-
-			return Redirect::back();
+			return Redirect::route('vendirun.propertyView', ['id' => $propertyId]);
 		}
 		else
 		{
-			Session::flash('alert_message_failure', 'Invalid token please login');
+			Session::flash('vendirun-alert-error', 'Oops! Something Went wrong! Please try again.');
 
 			return Redirect::route('vendirun.register');
 		}
-
 	}
 
 	/**
@@ -145,14 +140,13 @@ class PropertyController extends VendirunBaseController {
 		$params['property_id'] = $propertyId;
 		$response              = $this->propertyApi->removeFavourite($params);
 
-
 		if ($response['success'])
 		{
-			return Redirect::back();
+			return Redirect::route('vendirun.propertyView', ['id' => $propertyId]);
 		}
 		else
 		{
-			Session::flash('alert_message_failure', 'Opps! Something Went wrong!');
+			Session::flash('vendirun-alert-error', 'Oops! Something Went wrong! Please try again.');
 
 			return Redirect::route('vendirun.register');
 		}
@@ -167,7 +161,7 @@ class PropertyController extends VendirunBaseController {
 		$token = Session::get('token');
 		if ( ! $token)
 		{
-			Session::flash('alert_message_failure', 'Invalid token please login');
+			Session::flash('vendirun-alert-error', 'Invalid token please login');
 
 			return Redirect::route('vendirun.register');
 		}
@@ -185,5 +179,4 @@ class PropertyController extends VendirunBaseController {
 	{
 
 	}
-
 }

@@ -9,8 +9,10 @@ Route::group(['namespace' => 'Ambitiousdigital\Vendirun\Controllers', 'prefix' =
 	Route::get('add-to-favourite/{id}', ['as'=>'vendirun.propertyAddToFav', 'uses' => 'Property\PropertyController@addToFavourite']);
 	Route::get('remove-favourite/{id}', ['as'=>'vendirun.propertyRemoveFav', 'uses' => 'Property\PropertyController@RemoveFavourite']);
 	Route::get('view-favourite-properties', ['as'=>'vendirun.viewFavouriteProperties', 'uses' => 'Property\PropertyController@viewFavouriteProperties']);
+	Route::get('search', ['as'=>'vendirun.searchProperties', 'uses' => 'Property\PropertyController@search']);
 
-	Route::get('location', ['as'=>'vendirun.location', 'uses' => 'PropertyController@location']);
+	Route::get('categories', ['as'=>'vendirun.categories', 'uses' => 'Property\CategoryController@index']);
+	Route::get('location/{locationName?}/{locationId?}', ['as'=>'vendirun.location', 'uses' => 'Property\LocationController@index']);
 });
 
 Route::group(['namespace' => 'Ambitiousdigital\Vendirun\Controllers', 'prefix' => 'customer'], function()

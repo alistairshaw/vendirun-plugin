@@ -29,7 +29,7 @@
 		top: 115px;
 		left: 0;
 		overflow: hidden;
-		padding: 20px 0;
+		padding: 0;
 		.search-box {
 			.search-labels {
 				margin-bottom: 20px;
@@ -74,7 +74,7 @@
 	}
 
 	.property-results {
-		padding: 20px 0;
+		padding: 0;
 		.per-page {
 			margin-top: 20px;
 		}
@@ -177,10 +177,7 @@
 
 .property-view {
 	.image-container {
-		margin: 0;
-		img {
-			margin-bottom: 30px;
-		}
+		margin-bottom: 30px;
 		.property-slide-show {
 			padding: 0;
 			margin: 0;
@@ -202,6 +199,12 @@
 				.nivo-prevNav {
 					left: 10px;
 				}
+			}
+		}
+		&.thumbnails {
+			margin: 0;
+			img {
+				margin-bottom: 30px;
 			}
 		}
 	}
@@ -269,4 +272,67 @@
 	width: 100%;
 	height: 400px;
 	background-color: #CCC;
+}
+
+.property-categories {
+	.row {
+		margin: 0;
+	}
+	.col-sm-6 {
+		padding-left: 0;
+		padding-right: 0;
+	}
+	.category-search-item {
+		cursor: pointer;
+		@extend .clearfix;
+		.col {
+			width: 50%;
+			float: left;
+			position: relative;
+			background: #f0f0f0;
+			&.col-right {
+				float: right;
+			}
+			&.text-col {
+				@include transition(all 0.4s ease);
+				position: absolute;
+				right: 0;
+				height: 100%;
+				.category-button {
+					opacity: 0;
+				}
+			}
+			&.text-col-left {
+				@include transition(all 0.4s ease);
+				position: absolute;
+				left: 0;
+				height: 100%;
+				z-index: 3;
+				.category-button {
+					opacity: 0;
+				}
+			}
+			.copy {
+				padding: 20px;
+				h2 {
+					font-size: 1.2em;
+					margin-bottom: 12px;
+				}
+			}
+			.arrow {
+				@include transition(all 1s ease);
+				position: absolute;
+				top: 50%;
+				margin-top: -14px;
+				z-index: 2;
+				color: #f0f0f0;
+				&.arrow-left {
+					left: -18px;
+				}
+				&.arrow-right {
+					right: -18px;
+				}
+			}
+		}
+	}
 }

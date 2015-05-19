@@ -20,12 +20,10 @@ var propertyMap = function () {
 
 		setupMap: function () {
 			var _this = this;
-			console.log(_this);
 			google.maps.event.addDomListener(window, 'load', function() { _this.initialize(_this.lat, _this.lng); });
 		},
 
 		initialize: function(lat, lng) {
-			console.log(lat, lng);
 			var myLatlng = new google.maps.LatLng(lat, lng);
 			var mapOptions = {
 				zoom: 14,

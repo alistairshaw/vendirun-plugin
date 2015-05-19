@@ -11,51 +11,53 @@
 
                     <h2 class="page-header">Search Results</h2>
 
-                    <div class="clearfix">
-                        @if ($pagination)
-                            <div class="pull-left">
-                                {!! $pagination->render() !!}
+                    @if ($properties && count($properties->result) > 0)
+
+                        <div class="clearfix">
+                            @if ($pagination)
+                                <div class="pull-left">
+                                    {!! $pagination->render() !!}
+                                </div>
+                            @endif
+
+                            <div class="pull-right form-inline per-page">
+                                <label for="limit">Per Page</label>
+                                <select class="form-control" name="limit" id="limit">
+                                    <option value="5">5</option>
+                                    <option value="10">10</option>
+                                    <option value="20">20</option>
+                                    <option value="30">30</option>
+                                    <option value="50">50</option>
+                                </select>
                             </div>
-                        @endif
-
-                        <div class="pull-right form-inline per-page">
-                            <label for="limit">Per Page</label>
-                            <select class="form-control" name="limit" id="limit">
-                                <option value="5">5</option>
-                                <option value="10">10</option>
-                                <option value="20">20</option>
-                                <option value="30">30</option>
-                                <option value="50">50</option>
-                            </select>
                         </div>
-                    </div>
 
-                    @if ($properties)
                         @foreach ($properties->result as $property)
                             @include('vendirun::property.result', array('property'=>$property))
                         @endforeach
-                    @else
-                        <p>No properties matched your search</p>
-                    @endif
-                </div>
 
-                <div class="clearfix">
-                    @if ($pagination)
-                        <div class="pull-left">
-                            {!! $pagination->render() !!}
+                        <div class="clearfix">
+                            @if ($pagination)
+                                <div class="pull-left">
+                                    {!! $pagination->render() !!}
+                                </div>
+                            @endif
+
+                            <div class="pull-right form-inline per-page">
+                                <label for="limit">Per Page</label>
+                                <select class="form-control" name="limit" id="limit">
+                                    <option value="5">5</option>
+                                    <option value="10">10</option>
+                                    <option value="20">20</option>
+                                    <option value="30">30</option>
+                                    <option value="50">50</option>
+                                </select>
+                            </div>
                         </div>
+                    @else
+                        <p>No properties matched your search, please give it another go!</p>
+                        @include('vendirun::property.simple-search-form')
                     @endif
-
-                    <div class="pull-right form-inline per-page">
-                        <label for="limit">Per Page</label>
-                        <select class="form-control" name="limit" id="limit">
-                            <option value="5">5</option>
-                            <option value="10">10</option>
-                            <option value="20">20</option>
-                            <option value="30">30</option>
-                            <option value="50">50</option>
-                        </select>
-                    </div>
                 </div>
 
             </div>
@@ -158,7 +160,7 @@
 
                         <div class="form-group">
                             <label for="keywords">Keywords</label>
-                            <input type="text" class="form-control" name="keywords" id="keywords" value="{{ isset($properties->search_params->strings) ? implode(',',$properties->search_params->strings) : '' }}">
+                            <input type="text" class="form-control" name="keywords" id="keywords" value="{{ isset($searchParams['strings']) ? implode(',', (array)$searchParams['strings']) : '' }}">
                         </div>
 
                         <div class="form-group text-right">

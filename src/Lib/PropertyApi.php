@@ -89,6 +89,17 @@ class PropertyApi extends BaseApi {
 	}
 
 	/**
+	 * @param $params
+	 * @return mixed
+	 */
+	public function getLocation($params)
+	{
+		$url = 'property/get_location';
+		$this->request($url, $params, true);
+		return $this->getResult();
+	}
+
+	/**
 	 * @param        $categories
 	 * @param string $parent_name
 	 * @return array
@@ -101,8 +112,10 @@ class PropertyApi extends BaseApi {
 		{
 			foreach ($categories as $row)
 			{
-				$tempArray['category_name'] = ($parent_name != '') ? $parent_name . ' > ' . $row->category_name : $row->category_name;
 				$tempArray['id']            = $row->id;
+				$tempArray['category_name'] = ($parent_name != '') ? $parent_name . ' > ' . $row->category_name : $row->category_name;
+				$tempArray['category_description'] = $row->category_description;
+				$tempArray['primary_image'] = $row->primary_image;
 				$finalArray[]                = $tempArray;
 				if (count($row->sub_categories) > 0)
 				{

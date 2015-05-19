@@ -33,7 +33,7 @@
         </div>
 
 
-        <div class="image-container">
+        <div class="image-container thumbnails">
             <div class="row">
                 @forelse($property->images as $images)
                     <div class="col-sm-3">
@@ -47,15 +47,7 @@
 
         <div class="well amenities-well">
             <div class="row">
-                <div class="col-sm-6">
-                    <div class="buttons">
-                        <a href="{{ (in_array($property->id, $favouriteProperties)) ? route('vendirun.viewFavouriteProperties') : route('vendirun.propertyAddToFav',$property->id) }}" class="btn btn-default"><i class="fa {{ in_array($property->id, $favouriteProperties) ? 'fa-check' : 'fa-star' }}"></i>{{ in_array($property->id, $favouriteProperties) ?  ' View Favourites' : ' Add to Favorites' }}</a>
-                        <button type="button" data-property-name="{{ $property->title }}" data-property-id="{{ $property->id }}" data-toggle="modal" data-target="#recommendAFriend" class="btn btn-default js-request-request-to-friend"><i class="fa fa-user"></i> Send to a Friend</button>
-                        <a href="{{ route('vendirun.propertyView',$property->id) }}#contact-us" class="btn btn-default js-contact-us-btn"><i class="fa fa-envelope"></i> Contact Us</a>
-                    </div>
-                </div>
-
-                <div class="col-sm-6">
+                <div class="col-sm-12">
                     <div class="amenities">
                         @forelse($property->attributes as $row)
                             <label class="label label-primary">{{ $row->property_attribute_name }}</label>
@@ -64,6 +56,18 @@
                         @endforelse
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <div class="well">
+            <div class="buttons">
+                @if (isset($favouriteProperties) && in_array($property->id, $favouriteProperties))
+                    <a href="{{ route('vendirun.propertyRemoveFav', $property->id) }}" class="btn btn-default"><i class="fa fa-remove"></i> Remove From Favourites</a>
+                @endif
+                <a href="{{ (in_array($property->id, $favouriteProperties)) ? route('vendirun.viewFavouriteProperties') : route('vendirun.propertyAddToFav',$property->id) }}" class="btn btn-default"><i class="fa {{ in_array($property->id, $favouriteProperties) ? 'fa-check' : 'fa-star' }}"></i>{{ in_array($property->id, $favouriteProperties) ?  ' View Favourites' : ' Add to Favorites' }}
+                </a>
+                <button type="button" data-property-name="{{ $property->title }}" data-property-id="{{ $property->id }}" data-toggle="modal" data-target="#recommendAFriend" class="btn btn-default js-request-request-to-friend"><i class="fa fa-user"></i> Send to a Friend</button>
+                <a href="{{ route('vendirun.propertyView',$property->id) }}#contact-us" class="btn btn-default js-contact-us-btn"><i class="fa fa-envelope"></i> Contact Us</a>
             </div>
         </div>
 

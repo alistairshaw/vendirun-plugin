@@ -17777,13 +17777,6 @@ $.extend($.fn, {
 
 }));
 $(window).load(function () {
-	$('.nivoSlider').nivoSlider({
-		effect: 'slide',
-		controlNav: false,
-		pauseOnHover: false,
-		pauseTime: 20000
-	});
-
 	var iconStackLeft = '<span class="fa-stack">\
 							<i class="fa fa-circle fa-stack-2x" style="color: #000;"></i>\
 							<i class="fa fa-caret-left fa-stack-1x" style="top: -1px;"></i>\
@@ -17794,7 +17787,6 @@ $(window).load(function () {
 						</span>';
 
 	$('.property-slide-show').nivoSlider({
-		effect: 'slideInLeft',
 		manualAdvance: true,
 		prevText: iconStackLeft,
 		nextText: iconStackRight,
@@ -17936,12 +17928,10 @@ var propertyMap = function () {
 
 		setupMap: function () {
 			var _this = this;
-			console.log(_this);
 			google.maps.event.addDomListener(window, 'load', function() { _this.initialize(_this.lat, _this.lng); });
 		},
 
 		initialize: function(lat, lng) {
-			console.log(lat, lng);
 			var myLatlng = new google.maps.LatLng(lat, lng);
 			var mapOptions = {
 				zoom: 14,

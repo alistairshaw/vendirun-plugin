@@ -13,6 +13,9 @@ use Request;
 
 class PropertyController extends VendirunBaseController {
 
+	/**
+	 * @var PropertyApi
+	 */
 	private $propertyApi;
 
 	public function __construct()
@@ -31,7 +34,10 @@ class PropertyController extends VendirunBaseController {
 		$data['favouriteProperties'] = $this->propertyApi->getFavourite(Session::get('token'), true);
 		$data['categories']          = $this->propertyApi->getCategories();
 		$data['properties']          = $this->propertyApi->search($data['searchParams']);
-		$data['pagination']          = ($data['properties']) ? $data['pagination'] = new LengthAwarePaginator($data['properties']->result, $data['properties']->total_rows, $data['properties']->limit, Request::get('page'), ['path' => '/property/']) : false;
+
+		$data['searchParams'] = (array)$data['properties']->search_params;
+
+		$data['pagination'] = ($data['properties']) ? $data['pagination'] = new LengthAwarePaginator($data['properties']->result, $data['properties']->total_rows, $data['properties']->limit, Request::get('page'), ['path' => '/property/']) : false;
 
 		return View::make('vendirun::property.search', $data);
 	}
@@ -173,10 +179,10 @@ class PropertyController extends VendirunBaseController {
 	}
 
 	/**
-	 * Locations from the cms
+	 * @return View
 	 */
-	public function location()
+	public function search()
 	{
-
+		return View::make('vendirun::property.simple-search');
 	}
 }

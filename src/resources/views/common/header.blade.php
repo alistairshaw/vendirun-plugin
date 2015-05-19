@@ -27,9 +27,9 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Property <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
                         <li><a href="{{ route('vendirun.propertySearch') }}">Listings</a></li>
-                        <li><a href="#">Search</a></li>
-                        <li><a href="#">Locations</a></li>
-                        <li><a href="#">Categories</a></li>
+                        <li><a href="{{ route('vendirun.searchProperties') }}">Search</a></li>
+                        <li><a href="{{ route('vendirun.location') }}">Locations</a></li>
+                        <li><a href="{{ route('vendirun.categories') }}">Categories</a></li>
                         @if (Session::has('token'))
                             <li class="divider"></li>
                             <li><a href="{{ route('vendirun.viewFavouriteProperties') }}">Favourites</a></li>

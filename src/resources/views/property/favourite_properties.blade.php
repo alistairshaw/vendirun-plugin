@@ -1,5 +1,6 @@
 @extends('vendirun::layouts.standard')
 @section('content')
+    @include('vendirun::forms.recommend-a-friend')
     <div class="container property-search clearfix">
         <div class="property-results">
             <h2 class="page-header">Favourited Properties</h2>

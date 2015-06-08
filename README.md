@@ -1,29 +1,19 @@
-# README #
+# SETUP #
 
-This README would normally document whatever steps are necessary to get your application up and running.
+### Vendirun Laravel Package ###
 
-### What is this repository for? ###
+* This package can be pulled in to any Laravel project and provides all of the default Vendirun front-end functionality
+* Version 1.0
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+### Setting up the package for further development ###
 
-### How do I get set up? ###
+* Create the folder: /packages/ambitiousdigital/vendirun and clone the repo into it
+* Edit the /config/app.php file and add the VendirunServiceProvider to the app ('Ambitiousdigital\Vendirun\VendirunServiceProvider')
+* Edit your composer.json in the root and add the Vendirun namespace to the PSR-4 section ("Ambitiousdigital\\Vendirun\\": "packages/ambitiousdigital/vendirun/src")
+* Run composer dump-autoload
+* Edit the /packages/ambitiousdigital/vendirun/src/config/vendirun.php file, and set the correct endpoint, API key and client ID
+* Use 'artisan vendor:publish' to copy public assets to the right place (add tag --tag=public --force to overwrite existing files)
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
+### Importing the package into a new front-end ###
 
-### Contribution guidelines ###
-
-* Writing tests
-* Code review
-* Other guidelines
-
-### Who do I talk to? ###
-
-* Repo owner or admin
-* Other community or team contact
+* //todo: write this section

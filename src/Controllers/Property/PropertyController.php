@@ -31,9 +31,10 @@ class PropertyController extends VendirunBaseController {
 	{
 		$data['searchParams'] = $this->searchParams();
 
-		$data['favouriteProperties'] = $this->propertyApi->getFavourite(Session::get('token'), true);
-		$data['categories']          = $this->propertyApi->getCategories();
-		$data['properties']          = $this->propertyApi->search($data['searchParams']);
+        $data['favouriteProperties'] = $this->propertyApi->getFavourite(Session::get('token'), true);
+        $data['categories']          = $this->propertyApi->getCategories();
+        $data['properties']          = $this->propertyApi->search($data['searchParams']);
+
 
 		$data['searchParams'] = (array)$data['properties']->search_params;
 

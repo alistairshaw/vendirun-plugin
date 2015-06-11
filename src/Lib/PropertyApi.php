@@ -119,7 +119,7 @@ class PropertyApi extends BaseApi {
 				$finalArray[]                = $tempArray;
 				if (count($row->sub_categories) > 0)
 				{
-					$childArray = $this->getCategories($row->sub_categories, $tempArray['category_name']);
+					$childArray = $this->arrangeCategories($row->sub_categories, $tempArray['category_name']);
 					$finalArray  = array_merge($finalArray, $childArray);
 				}
 

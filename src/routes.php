@@ -25,3 +25,6 @@ Route::group(['namespace' => 'Ambitiousdigital\Vendirun\Controllers', 'prefix' =
 	Route::any('do-register', ['as' => 'vendirun.doRegister', 'uses' => 'Customer\CustomerController@doRegister']);
 	Route::any('do-login', ['as' => 'vendirun.doLogin', 'uses' => 'Customer\CustomerController@doLogin']);
 });
+
+// capture any undefined routes and pass to the CMS controller
+Route::any( '{catchall}', ['uses' => 'Ambitiousdigital\Vendirun\Controllers\Cms\PageController@index'])->where('catchall', '(.*)');

@@ -1,9 +1,9 @@
 @extends('vendirun::layouts.standard')
 
 @section('content')
-    <div class="container-fluid property-search clearfix">
+    <div class="container property-search clearfix">
         <div class="row search-height">
-            <div class="col-sm-10 col-sm-offset-1 js-main-results">
+            <div class="col-sm-12 js-main-results">
 
                 @include('vendirun::forms.recommend-a-friend')
 

@@ -21,7 +21,11 @@ class CategoryController extends VendirunBaseController {
 	 * @return View
 	 */
 	public function index()
-	{
+    {
+        $data['page'] = (object)[
+            'title' => 'Property Categories'
+        ];
+
 		$data['categories'] = $this->propertyApi->getCategories();
 
 		return View::make('vendirun::property.categories', $data);

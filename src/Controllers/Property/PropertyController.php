@@ -29,6 +29,10 @@ class PropertyController extends VendirunBaseController {
      */
     public function index()
     {
+        $data['page'] = (object)[
+            'title' => 'Property Search',
+        ];
+
         $data['searchParams'] = $this->searchParams();
 
         $data['favouriteProperties'] = $this->propertyApi->getFavourite(Session::get('token'), true);
@@ -61,8 +65,17 @@ class PropertyController extends VendirunBaseController {
     {
         $searchParams['id'] = $id;
 
-        $data['property'] = $this->propertyApi->property($searchParams);
+        $property = $this->propertyApi->property($searchParams);
+        if (!$property) abort(404);
+
+        $data['property'] = $property;
         $data['favouriteProperties'] = $this->propertyApi->getFavourite(Session::get('token'), true);
+
+        $data['page'] = (object)[
+            'title' => $property->title,
+            'meta_description' => strip_tags($property->short_description),
+            'meta_keywords' => $property->keywords
+        ];
 
         return View::make('vendirun::property.view', $data);
     }
@@ -164,6 +177,10 @@ class PropertyController extends VendirunBaseController {
      */
     public function viewFavouriteProperties()
     {
+        $data['page'] = (object)[
+            'title' => 'Favourite Properties'
+        ];
+
         $token = Session::get('token');
         if (!$token)
         {
@@ -183,6 +200,10 @@ class PropertyController extends VendirunBaseController {
      */
     public function search()
     {
+        $data['page'] = (object)[
+            'title' => 'Smart Search'
+        ];
+
         return View::make('vendirun::property.simple-search');
     }
 }

@@ -17,21 +17,21 @@ elixir(function (mix) {
 	mix.sass('main.scss', 'resources/css')
 
 		.styles([
-		'../bower_components/font-awesome/css/font-awesome.css',
-		'../bower_components/lightbox/css/lightbox.css',
-		'../bower_components/select2/select2.css',
-		'../bower_components/nivoslider/nivo-slider.css',
+		'../../bower_components/font-awesome/css/font-awesome.css',
+		'../../bower_components/lightbox/dist/css/lightbox.css',
+		'../../bower_components/select2/select2.css',
+		'../../bower_components/nivoslider/nivo-slider.css',
 		'main.css'
 			], 'public/css/production.css')
 
 		.scripts([
-			'../bower_components/jquery/dist/jquery.js',
-			'../bower_components/jquery.smooth-scroll/jquery.smooth-scroll.js',
-			'../bower_components/bootstrap-sass/assets/javascripts/bootstrap.js',
-			'../bower_components/lightbox/js/lightbox.js',
-			'../bower_components/select2/select2.js',
-			'../bower_components/nivoslider/jquery.nivo.slider.js',
-			'../bower_components/jquery-validate/dist/jquery.validate.js',
+			'../../bower_components/jquery/dist/jquery.js',
+			'../../bower_components/jquery.smooth-scroll/jquery.smooth-scroll.js',
+			'../../bower_components/bootstrap-sass/assets/javascripts/bootstrap.js',
+			'../../bower_components/lightbox/dist/js/lightbox.js',
+			'../../bower_components/select2/select2.js',
+			'../../bower_components/nivoslider/jquery.nivo.slider.js',
+			'../../bower_components/jquery-validate/dist/jquery.validate.js',
 			'sliders.js',
 			'validation.js',
 			'send-to-friend.js',

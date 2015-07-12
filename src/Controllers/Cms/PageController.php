@@ -14,9 +14,23 @@ class PageController extends VendirunBaseController {
     }
 
     /**
-     * @param $slug
+     * @return \Illuminate\View\View
      */
-    public function index($slug)
+    public function index()
+    {
+        $page = $this->cmsApi->page('');
+        if (!$page) abort('404');
+
+        $data['page'] = $page;
+
+        return View::make('vendirun::cms.page', $data);
+    }
+
+    /**
+     * @param $slug
+     * @return \Illuminate\View\View
+     */
+    public function page($slug)
     {
         $page = $this->cmsApi->page($slug);
         if (!$page) abort('404');

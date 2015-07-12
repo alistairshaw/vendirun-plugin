@@ -1,6 +1,4 @@
-<?php
-
-namespace Ambitiousdigital\Vendirun\Lib;
+<?php namespace Ambitiousdigital\Vendirun\App\Lib\VendirunApi;
 
 class PropertyApi extends BaseApi {
 

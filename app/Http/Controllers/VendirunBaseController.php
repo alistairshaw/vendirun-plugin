@@ -1,4 +1,4 @@
-<?php namespace Ambitiousdigital\Vendirun\Controllers;
+<?php namespace Ambitiousdigital\Vendirun\App\Http\Controllers;
 
 use Ambitiousdigital\Vendirun\Lib\CustomerApi;
 use App\Http\Controllers\Controller;

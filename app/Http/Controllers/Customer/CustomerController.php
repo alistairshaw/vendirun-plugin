@@ -1,10 +1,9 @@
 <?php
 
-namespace Ambitiousdigital\Vendirun\Controllers\Customer;
+namespace Ambitiousdigital\Vendirun\App\Http\Controllers\Customer;
 
-use Ambitiousdigital\Vendirun\Controllers\VendirunBaseController;
-use Ambitiousdigital\Vendirun\Lib\Mailer;
-use Illuminate\Routing\UrlGenerator;
+use Ambitiousdigital\Vendirun\App\Http\Controllers\VendirunBaseController;
+use Ambitiousdigital\Vendirun\App\Lib\Mailer;
 use Input;
 use Redirect;
 use Request;

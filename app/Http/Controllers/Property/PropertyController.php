@@ -2,8 +2,8 @@
 
 namespace Ambitiousdigital\Vendirun\Controllers\Property;
 
-use Ambitiousdigital\Vendirun\Controllers\VendirunBaseController;
-use Ambitiousdigital\Vendirun\Lib\PropertyApi;
+use Ambitiousdigital\Vendirun\App\Http\Controllers\VendirunBaseController;
+use Ambitiousdigital\Vendirun\App\Lib\VendirunApi\PropertyApi;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Input;
 use Redirect;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Ambitiousdigital\Vendirun\Lib;
+namespace Ambitiousdigital\Vendirun\App\Lib;
 /**
  * IdObfuscator Class
  *

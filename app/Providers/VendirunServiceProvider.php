@@ -1,4 +1,4 @@
-<?php namespace Ambitiousdigital\Vendirun;
+<?php namespace Ambitiousdigital\Vendirun\App\Providers;
 
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
@@ -12,26 +12,26 @@ class VendirunServiceProvider extends ServiceProvider {
 	 */
 	public function boot()
 	{
-		$this->loadViewsFrom(__DIR__.'/resources/views', 'vendirun');
+		$this->loadViewsFrom(__DIR__.'/../../resources/views', 'vendirun');
 
 		// use artisan vendor:publish to copy views to standard view folder
 		$this->publishes([
-			__DIR__.'/resources/views' => base_path('resources/views/vendor/vendirun'),
+			__DIR__.'/../../resources/views' => base_path('resources/views/vendor/vendirun'),
 		]);
 
 		// use artisan vendor:publish to copy config
 		$this->publishes([
-			__DIR__.'/config/vendirun.php' => config_path('vendirun.php'),
+			__DIR__.'/../../config/vendirun.php' => config_path('vendirun.php'),
 		]);
 
 		// use artisan vendor:publish to copy public assets
 		// use artisan vendor:publish --tag=public --force   to force overwrite of assets tagged as "public"
 		$this->publishes([
-			__DIR__.'/public' => public_path('vendor/vendirun'),
+			__DIR__.'/../../public' => public_path('vendor/vendirun'),
 		], 'public');
 
 		// include my package custom routes
-		include __DIR__.'/routes.php';
+		include __DIR__.'/../../routes.php';
 	}
 
 	/**
@@ -42,7 +42,7 @@ class VendirunServiceProvider extends ServiceProvider {
 	public function register()
 	{
 		$this->mergeConfigFrom(
-			__DIR__.'/config/vendirun.php', 'vendirun'
+			__DIR__.'/../../config/vendirun.php', 'vendirun'
 		);
 
 		// register providers we need

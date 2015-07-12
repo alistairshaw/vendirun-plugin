@@ -1,4 +1,4 @@
-<?php namespace Ambitiousdigital\Vendirun\Composers;
+<?php namespace Ambitiousdigital\Vendirun\App\Http\Composers;
 
 class CmsViewComposer {
 

@@ -1,6 +1,6 @@
 <?php
 
-Route::group(['namespace' => 'Ambitiousdigital\Vendirun\Controllers', 'prefix' => 'property'], function()
+Route::group(['namespace' => 'Ambitiousdigital\Vendirun\App\Http\Controllers', 'prefix' => 'property'], function()
 {
 	Route::any('/', ['as'=>'vendirun.propertySearch', 'uses' => 'Property\PropertyController@index']);
 	Route::get('clear-search', ['as'=>'vendirun.propertyClearSearch', 'uses' => 'Property\PropertyController@clearSearch']);
@@ -15,7 +15,7 @@ Route::group(['namespace' => 'Ambitiousdigital\Vendirun\Controllers', 'prefix' =
 	Route::get('location/{locationName?}/{locationId?}', ['as'=>'vendirun.location', 'uses' => 'Property\LocationController@index']);
 });
 
-Route::group(['namespace' => 'Ambitiousdigital\Vendirun\Controllers', 'prefix' => 'customer'], function()
+Route::group(['namespace' => 'Ambitiousdigital\Vendirun\App\Http\Controllers', 'prefix' => 'customer'], function()
 {
 	Route::post('contact-form-submit', ['as' => 'vendirun.contactFormSubmit', 'uses' => 'Customer\CustomerController@processContactForm']);
 	Route::post('recommend-a-friend', ['as' => 'vendirun.recommendAFriend', 'uses' => 'Customer\CustomerController@recommendAFriend']);
@@ -27,7 +27,7 @@ Route::group(['namespace' => 'Ambitiousdigital\Vendirun\Controllers', 'prefix' =
 });
 
 // home page
-Route::any('/', ['as'=>'vendirun.home', 'uses' => 'Ambitiousdigital\Vendirun\Controllers\Cms\PageController@index']);
+Route::any('/', ['as'=>'vendirun.home', 'uses' => 'Ambitiousdigital\Vendirun\App\Http\Controllers\Cms\PageController@index']);
 
 // capture any undefined routes and pass to the CMS controller
-Route::any( '{catchall}', ['uses' => 'Ambitiousdigital\Vendirun\Controllers\Cms\PageController@page'])->where('catchall', '(.*)');
+Route::any( '{catchall}', ['uses' => 'Ambitiousdigital\Vendirun\App\Http\Controllers\Cms\PageController@page'])->where('catchall', '(.*)');

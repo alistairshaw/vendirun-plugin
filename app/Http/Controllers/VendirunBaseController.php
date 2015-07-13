@@ -1,6 +1,6 @@
 <?php namespace Ambitiousdigital\Vendirun\App\Http\Controllers;
 
-use Ambitiousdigital\Vendirun\Lib\CustomerApi;
+use Ambitiousdigital\Vendirun\App\Lib\VendirunApi\CustomerApi;
 use App\Http\Controllers\Controller;
 use Session;
 use Request;

@@ -46,6 +46,7 @@ class VendirunServiceProvider extends ServiceProvider {
 		);
 
 		// register providers we need
+		$this->app->register('Ambitiousdigital\Vendirun\App\Providers\ComposerServiceProvider');
 		$this->app->register('Illuminate\Html\HtmlServiceProvider');
 
 		// aliases

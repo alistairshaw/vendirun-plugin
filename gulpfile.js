@@ -14,14 +14,14 @@ var shell = require("gulp-shell");
  */
 
 elixir(function (mix) {
-	mix.sass('main.scss', 'resources/css')
+	mix.sass('main.scss', 'resources/assets/css')
 
 		.styles([
 		'../../bower_components/font-awesome/css/font-awesome.css',
 		'../../bower_components/lightbox/dist/css/lightbox.css',
 		'../../bower_components/select2/select2.css',
 		'../../bower_components/nivoslider/nivo-slider.css',
-		'main.css'
+		'app.css'
 			], 'public/css/production.css')
 
 		.scripts([

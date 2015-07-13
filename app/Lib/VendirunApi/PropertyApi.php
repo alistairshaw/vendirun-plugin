@@ -87,13 +87,13 @@ class PropertyApi extends BaseApi {
 	}
 
 	/**
-	 * @param $params
+	 * @param $locationName
 	 * @return mixed
 	 */
-	public function getLocation($params)
+	public function getLocation($locationName)
 	{
-		$url = 'property/get_location';
-		$this->request($url, $params, true);
+		$url = 'property/location';
+		$this->request($url, ['location' => $locationName], true);
 		return $this->getResult();
 	}
 

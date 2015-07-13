@@ -19,28 +19,18 @@ class LocationController extends VendirunBaseController {
 
     /**
      * @param string $locationName
-     * @param string $locationId
      * @return View
      */
-	public function index($locationName = '', $locationId = '')
+	public function index($locationName = '')
 	{
-		$searchParams['location_name'] = urldecode($locationName);
-		$searchParams['location_id']   = urldecode($locationId);
-		$response                      = $this->propertyApi->getLocation($searchParams);
-		$data['locationData']          = ($response['success'] == 1) ? $response['data'] : array();
+		$data['locationName'] = $locationName;
+        $location = $this->propertyApi->getLocation($locationName);
 
 		$data['page'] = (object)[
 			'title' => $locationName ? urldecode($locationName) : 'Property Categories',
-            'meta_description' => $locationId ? $data['locationData']->master_location->location_description : '',
-            'meta_keywords' => $locationId ? 'Property in ' . $data['locationData']->master_location->location_name : '',
+            'meta_description' => isset($location->id) ? $location->location_description : '',
+            'meta_keywords' => isset($location->id) ? 'Property in ' . $location->location_name : '',
 		];
-
-		if (count($data['locationData']->parent_location) > 0 || $locationName != '')
-		{
-			$locationName       = isset($data['locationData']->parent_location->location_name) ? $data['locationData']->parent_location->location_name : '';
-			$locationId         = isset($data['locationData']->parent_location->id) ? $data['locationData']->parent_location->id : '';
-			$data['backButton'] = [$locationName, $locationId];
-		}
 
 		return View::make('vendirun::property.locations', $data);
 	}

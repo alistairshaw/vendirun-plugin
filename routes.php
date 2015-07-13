@@ -12,7 +12,7 @@ Route::group(['namespace' => 'Ambitiousdigital\Vendirun\App\Http\Controllers', '
 	Route::get('search', ['as'=>'vendirun.searchProperties', 'uses' => 'Property\PropertyController@search']);
 
 	Route::get('categories', ['as'=>'vendirun.categories', 'uses' => 'Property\CategoryController@index']);
-	Route::get('location/{locationName?}/{locationId?}', ['as'=>'vendirun.location', 'uses' => 'Property\LocationController@index']);
+	Route::get('location/{locationName?}', ['as'=>'vendirun.location', 'uses' => 'Property\LocationController@index']);
 });
 
 Route::group(['namespace' => 'Ambitiousdigital\Vendirun\App\Http\Controllers', 'prefix' => 'customer'], function()

@@ -1,6 +1,6 @@
 <?php
 
-namespace Ambitiousdigital\Vendirun\Controllers\Property;
+namespace Ambitiousdigital\Vendirun\App\Http\Controllers\Property;
 
 use Ambitiousdigital\Vendirun\App\Http\Controllers\VendirunBaseController;
 use Ambitiousdigital\Vendirun\App\Lib\VendirunApi\PropertyApi;

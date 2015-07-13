@@ -59,10 +59,8 @@ h3 {
 .top-header {
   margin-top: 0; }
 
-hr {
-  height: 15px;
-  background: url(../img/divider.png) repeat-x;
-  border: 0; }
+.back-button-container {
+  margin-bottom: 20px; }
 
 /*!
  * Bootstrap v3.3.5 (http://getbootstrap.com)
@@ -6133,20 +6131,20 @@ button.close {
       margin-right: 30px;
       overflow: hidden;
       border: 1px solid #333; }
-      .property-search .property-results .property-result .image-container .property-slide-show {
+      .property-search .property-results .property-result .image-container .property-slide-show, .property-search .property-results .property-result .image-container .property-single-image {
         padding: 0;
         margin: 0;
         font-size: 24px;
         font-size: 1.5rem; }
-        .property-search .property-results .property-result .image-container .property-slide-show li {
+        .property-search .property-results .property-result .image-container .property-slide-show li, .property-search .property-results .property-result .image-container .property-single-image li {
           list-style: none; }
-          .property-search .property-results .property-result .image-container .property-slide-show li:not(:first-child) img {
+          .property-search .property-results .property-result .image-container .property-slide-show li:not(:first-child) img, .property-search .property-results .property-result .image-container .property-single-image li:not(:first-child) img {
             display: none; }
-        .property-search .property-results .property-result .image-container .property-slide-show .nivo-directionNav a {
+        .property-search .property-results .property-result .image-container .property-slide-show .nivo-directionNav a, .property-search .property-results .property-result .image-container .property-single-image .nivo-directionNav a {
           color: #FFF; }
-        .property-search .property-results .property-result .image-container .property-slide-show .nivo-directionNav .nivo-nextNav {
+        .property-search .property-results .property-result .image-container .property-slide-show .nivo-directionNav .nivo-nextNav, .property-search .property-results .property-result .image-container .property-single-image .nivo-directionNav .nivo-nextNav {
           right: 10px; }
-        .property-search .property-results .property-result .image-container .property-slide-show .nivo-directionNav .nivo-prevNav {
+        .property-search .property-results .property-result .image-container .property-slide-show .nivo-directionNav .nivo-prevNav, .property-search .property-results .property-result .image-container .property-single-image .nivo-directionNav .nivo-prevNav {
           left: 10px; }
     .property-search .property-results .property-result .details h2 {
       font-weight: 300;

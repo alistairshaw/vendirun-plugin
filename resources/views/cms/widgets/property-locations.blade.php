@@ -41,9 +41,11 @@
         @foreach($location->sub_locations as $subLocation)
             <div class="col-sm-6 col-md-{{ $element_options['col_md'] }}">
                 <div class="thumbnail">
-                    <a href="{{ route('vendirun.location', [urlencode($subLocation->location_name)]) }}">
-                        <img src="{{ reset($subLocation->images)->mediumrect }}" class="img-responsive">
-                    </a>
+                    @if ($element_options['show_images'] == 'Yes')
+                        <a href="{{ route('vendirun.location', [urlencode($subLocation->location_name)]) }}">
+                            <img src="{{ reset($subLocation->images)->mediumrect }}" class="img-responsive">
+                        </a>
+                    @endif
 
                     <div class="caption">
                         <h3 id="thumbnail-label">{{ $subLocation->location_name }}</h3>
@@ -130,11 +132,13 @@
     <div class="property-categories">
         @foreach($location->sub_locations as $subLocation)
             <div class="property-category-list-item clearfix">
-                <div class="image-container">
-                    <a href="{{ route('vendirun.location', [urlencode($subLocation->location_name)]) }}">
-                        <img src="{{ reset($subLocation->images)->mediumrect }}" class="img-responsive">
-                    </a>
-                </div>
+                @if ($element_options['show_images'] == 'Yes')
+                    <div class="image-container">
+                        <a href="{{ route('vendirun.location', [urlencode($subLocation->location_name)]) }}">
+                            <img src="{{ reset($subLocation->images)->mediumrect }}" class="img-responsive">
+                        </a>
+                    </div>
+                @endif
                 <div class="details">
                     <h2>{{ $subLocation->location_name }}</h2>
 

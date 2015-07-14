@@ -62,6 +62,9 @@ h3 {
 .back-button-container {
   margin-bottom: 20px; }
 
+.pagination-container {
+  min-height: 70px; }
+
 /*!
  * Bootstrap v3.3.5 (http://getbootstrap.com)
  * Copyright 2011-2015 Twitter, Inc.

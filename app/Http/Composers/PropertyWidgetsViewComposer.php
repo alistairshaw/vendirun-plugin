@@ -20,10 +20,29 @@ class PropertyWidgetsViewComposer {
      */
     public function propertyCategories(View $view)
     {
-        $viewData= $view->getData();
-        $element_options = isset($viewData->element->element_options) ? json_decode($viewData->element->element_options, true) : ['layout' => '3 columns', 'show_images' => 'Yes', 'max' => 0];
+        $viewData = $view->getData();
+        $element_options = isset($viewData['element']->element_options) ? json_decode($viewData['element']->element_options, true) : ['layout' => '3 columns', 'show_images' => 'Yes', 'max' => 0];
 
-        $view->with('categories', $this->propertyApi->getCategories())->with('element_options', $element_options);
+        $categoryName = isset($viewData['categoryName']) ? urldecode($viewData['categoryName']) : '';
+        $categoryData = $this->propertyApi->getCategory($categoryName, $element_options['max']);
+        $category = $categoryData['success'] ? $categoryData['data'] : [];
+
+        switch($element_options['layout'])
+        {
+            case '2 columns':
+                $element_options['col_md'] = 6;
+                break;
+            case '3 columns':
+                $element_options['col_md'] = 4;
+                break;
+            case '4 columns':
+                $element_options['col_md'] = 3;
+                break;
+            default:
+                $element_options['col_md'] = null;
+        }
+
+        $view->with('category', $category)->with('element_options', $element_options);
     }
 
     /**

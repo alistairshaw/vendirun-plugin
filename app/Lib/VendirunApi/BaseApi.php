@@ -70,7 +70,7 @@ class BaseApi {
         $resp = curl_exec($curl);
         $this->errorMessage = curl_error($curl);
 
-        // if ($url == 'property/location') exit($resp);
+        // if ($url == 'property/category_list') exit($resp);
 
         //Close Request
         curl_close($curl);

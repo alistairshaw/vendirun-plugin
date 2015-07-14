@@ -18,14 +18,20 @@ class CategoryController extends VendirunBaseController {
 	}
 
 	/**
+	 * @param string $categoryName
 	 * @return View
 	 */
-	public function index()
-    {
-        $data['page'] = (object)[
-            'title' => 'Property Categories'
-        ];
+	public function index($categoryName = '')
+	{
+		$data['categoryName'] = $categoryName;
+		$category = $this->propertyApi->getLocation($categoryName);
 
-		return View::make('vendirun::property.categories', $data);
+		$data['page'] = (object)[
+			'title' => $categoryName ? urldecode($categoryName) : 'Property Categories',
+			'meta_description' => isset($category->id) ? $category->category_description : '',
+			'meta_keywords' => isset($category->id) ? 'Property in ' . $category->category_name : '',
+		];
+
+		return View::make('vendirun::property.category', $data);
 	}
 }

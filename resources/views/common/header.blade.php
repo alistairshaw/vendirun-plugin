@@ -8,7 +8,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="{{ route('vendirun.propertySearch') }}">Vendirun</a>
+            <a class="navbar-brand" href="{{ route('vendirun.home') }}">Vendirun</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -29,7 +29,7 @@
                         <li><a href="{{ route('vendirun.propertySearch') }}">Listings</a></li>
                         <li><a href="{{ route('vendirun.searchProperties') }}">Search</a></li>
                         <li><a href="{{ route('vendirun.location') }}">Locations</a></li>
-                        <li><a href="{{ route('vendirun.categories') }}">Categories</a></li>
+                        <li><a href="{{ route('vendirun.category') }}">Categories</a></li>
                         @if (Session::has('token'))
                             <li class="divider"></li>
                             <li><a href="{{ route('vendirun.viewFavouriteProperties') }}">Favourites</a></li>

@@ -11,7 +11,7 @@ Route::group(['namespace' => 'Ambitiousdigital\Vendirun\App\Http\Controllers', '
 	Route::get('view-favourite-properties', ['as'=>'vendirun.viewFavouriteProperties', 'uses' => 'Property\PropertyController@viewFavouriteProperties']);
 	Route::get('search', ['as'=>'vendirun.searchProperties', 'uses' => 'Property\PropertyController@search']);
 
-	Route::get('categories', ['as'=>'vendirun.categories', 'uses' => 'Property\CategoryController@index']);
+	Route::get('category/{categoryName?}', ['as'=>'vendirun.category', 'uses' => 'Property\CategoryController@index']);
 	Route::get('location/{locationName?}', ['as'=>'vendirun.location', 'uses' => 'Property\LocationController@index']);
 });
 

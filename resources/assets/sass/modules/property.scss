@@ -395,3 +395,15 @@
         }
     }
 }
+
+.search-box {
+    text-align: center;
+    input {
+        font-size: 1.2em;
+        font-weight: 300;
+        height: 50px;
+        width: 500px;
+        display: inline-block;
+        text-align: center;
+    }
+}

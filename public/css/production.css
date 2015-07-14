@@ -9047,5 +9047,15 @@ button.close {
   .property-categories .property-category-list-item .details p {
     color: #666; }
 
+.search-box {
+  text-align: center; }
+  .search-box input {
+    font-size: 1.2em;
+    font-weight: 300;
+    height: 50px;
+    width: 500px;
+    display: inline-block;
+    text-align: center; }
+
 /*# sourceMappingURL=app.css.map */
 /*# sourceMappingURL=production.css.map */

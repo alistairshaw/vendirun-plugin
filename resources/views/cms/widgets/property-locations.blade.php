@@ -34,31 +34,122 @@
         </div>
     </div>
     <hr>
-@else
-    <h1>Property Locations</h1>
 @endif
 
-<div class="row">
-    @foreach($location->sub_locations as $sublocation)
-        <div class="col-sm-6 col-md-4">
-            <div class="thumbnail">
-                <a href="{{ route('vendirun.location', [urlencode($sublocation->location_name)]) }}">
-                    <img src="{{ reset($sublocation->images)->mediumrect }}" class="img-responsive">
-                </a>
+@if ($element_options['layout'] == '2 columns' || $element_options['layout'] == '3 columns' || $element_options['layout'] == '4 columns')
+    <div class="row">
+        @foreach($location->sub_locations as $subLocation)
+            <div class="col-sm-6 col-md-{{ $element_options['col_md'] }}">
+                <div class="thumbnail">
+                    <a href="{{ route('vendirun.location', [urlencode($subLocation->location_name)]) }}">
+                        <img src="{{ reset($subLocation->images)->mediumrect }}" class="img-responsive">
+                    </a>
 
-                <div class="caption">
-                    <h3 id="thumbnail-label">{{ $sublocation->location_name }}</h3>
+                    <div class="caption">
+                        <h3 id="thumbnail-label">{{ $subLocation->location_name }}</h3>
 
-                    <p>{{ substr($sublocation->location_description, 0, 300) }}{{ (strlen($sublocation->location_description) > 300) ? '...' : '' }}</p>
+                        <p>{{ substr($subLocation->location_description, 0, 300) }}{{ (strlen($subLocation->location_description) > 300) ? '...' : '' }}</p>
 
-                    <form method="post" action="{{ route('vendirun.propertySearch') }}">
-                        <input type="hidden" name="_token" value="{!! csrf_token() !!}">
-                        <input type="hidden" class="form-control" value="{{ $sublocation->location_name }}" name="location">
-                        <button type="submit" class="btn btn-default">View Properties</button>
-                        <a class="btn btn-primary" href="{{ route('vendirun.location', [urlencode($sublocation->location_name)]) }}">View Location</a>
-                    </form>
+                        <form method="post" action="{{ route('vendirun.propertySearch') }}">
+                            <input type="hidden" name="_token" value="{!! csrf_token() !!}">
+                            <input type="hidden" class="form-control" value="{{ $subLocation->location_name }}" name="location">
+                            <button type="submit" class="btn btn-default">View Properties</button>
+                            <a class="btn btn-primary" href="{{ route('vendirun.location', [urlencode($subLocation->location_name)]) }}">View Location</a>
+                        </form>
+                    </div>
                 </div>
             </div>
+        @endforeach
+    </div>
+@elseif ($element_options['layout'] == 'Staggered')
+    <div class="property-categories">
+        <div class="row">
+            <?php  $count = 0; ?>
+            @foreach($location->sub_locations as $subLocation)
+                <?php $count++;?>
+                @if($count > 2)
+                    <?php if ($count == 4) $count = 0; ?>
+                    <div class="col-sm-6 clearfix">
+                        <div class="category-search-item">
+                            <div class="col text-col-left">
+                                <div class="arrow arrow-right">
+                                    <i class="fa fa-caret-right fa-4x"></i>
+                                </div>
+                                <div class="copy">
+                                    <h2>{{ $subLocation->location_name }}</h2>
+
+                                    <p>{{ $subLocation->location_description }}</p>
+
+                                    <form method="post" action="{{ route('vendirun.propertySearch') }}">
+                                        <input type="hidden" name="_token" value="{!! csrf_token() !!}">
+                                        <input type="hidden" class="form-control" value="{{ $subLocation->id }}" name="location">
+                                        <button type="submit" class="btn btn-default">View Properties</button>
+                                        <a class="btn btn-primary" href="{{ route('vendirun.location', [urlencode($subLocation->location_name)]) }}">View Location</a>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="col col-right">
+                                <a href="{{ route('vendirun.location', [urlencode($subLocation->location_name)]) }}">
+                                    <img src="{{ reset($subLocation->images)->mediumsq }}" class="img-responsive">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                @else
+                    <div class="col-sm-6 clearfix">
+                        <div class="category-search-item">
+                            <div class="col">
+                                <a href="{{ route('vendirun.location', [urlencode($subLocation->location_name)]) }}">
+                                    <img src="{{ reset($subLocation->images)->mediumsq }}" class="img-responsive">
+                                </a>
+                            </div>
+                            <div class="col text-col">
+                                <div class="arrow arrow-left">
+                                    <i class="fa fa-caret-left fa-4x"></i>
+                                </div>
+                                <div class="copy">
+                                    <h2>{{ $subLocation->location_name }}</h2>
+
+                                    <p>{{ $subLocation->location_description }}</p>
+
+                                    <form method="post" action="{{ route('vendirun.propertySearch') }}">
+                                        <input type="hidden" name="_token" value="{!! csrf_token() !!}}">
+                                        <input type="hidden" class="form-control" value="{{ $subLocation->id }}" name="location">
+                                        <button type="submit" class="btn btn-default">View Properties</button>
+                                        <a class="btn btn-primary" href="{{ route('vendirun.location', [urlencode($subLocation->location_name)]) }}">View Location</a>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+            @endforeach
         </div>
-    @endforeach
-</div>
+    </div>
+@else
+    <div class="property-categories">
+        @foreach($location->sub_locations as $subLocation)
+            <div class="property-category-list-item clearfix">
+                <div class="image-container">
+                    <a href="{{ route('vendirun.location', [urlencode($subLocation->location_name)]) }}">
+                        <img src="{{ reset($subLocation->images)->mediumrect }}" class="img-responsive">
+                    </a>
+                </div>
+                <div class="details">
+                    <h2>{{ $subLocation->location_name }}</h2>
+
+                    <p>{{ $subLocation->location_description }}</p>
+
+                    <div class="buttons">
+                        <form method="post" action="{{ route('vendirun.propertySearch') }}">
+                            <input type="hidden" name="_token" value="{!! csrf_token() !!}}">
+                            <input type="hidden" class="form-control" value="{{ $subLocation->id }}" name="location">
+                            <button type="submit" class="btn btn-default">View Properties</button>
+                            <a class="btn btn-primary" href="{{ route('vendirun.location', [urlencode($subLocation->location_name)]) }}">View Location</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        @endforeach
+    </div>
+@endif

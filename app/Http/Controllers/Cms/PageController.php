@@ -39,4 +39,12 @@ class PageController extends VendirunBaseController {
         return View::make('vendirun::cms.page', $data);
     }
 
+    /**
+     * Example of a menu from the API
+     * @return \Illuminate\View\View
+     */
+    public function menu()
+    {
+        return View::make('vendirun::cms.menu');
+    }
 }

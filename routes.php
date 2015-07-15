@@ -29,5 +29,8 @@ Route::group(['namespace' => 'Ambitiousdigital\Vendirun\App\Http\Controllers', '
 // home page
 Route::any('/', ['as'=>'vendirun.home', 'uses' => 'Ambitiousdigital\Vendirun\App\Http\Controllers\Cms\PageController@index']);
 
+// menu example
+Route::any('/menu', ['as'=>'vendirun.menu', 'uses' => 'Ambitiousdigital\Vendirun\App\Http\Controllers\Cms\PageController@menu']);
+
 // capture any undefined routes and pass to the CMS controller
 Route::any( '{catchall}', ['uses' => 'Ambitiousdigital\Vendirun\App\Http\Controllers\Cms\PageController@page'])->where('catchall', '(.*)');

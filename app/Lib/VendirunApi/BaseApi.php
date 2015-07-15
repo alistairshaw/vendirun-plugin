@@ -20,8 +20,8 @@ class BaseApi {
     /**
      * Does the CURL request, returns the response or sets an error message
      *
-     * @param  string $url    Only pass the end of the URL, the main endpoint is set in the constructor
-     * @param  array  $params Only pass in additional post parameters if required
+     * @param string $url    Only pass the end of the URL, the main endpoint is set in the constructor
+     * @param array  $params Only pass in additional post parameters if required
      * @param bool    $ignoreCache
      * @return array
      */
@@ -127,6 +127,8 @@ class BaseApi {
                 $this->result = $response;
             }
         }
+
+        return true;
     }
 
     /**

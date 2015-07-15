@@ -36,6 +36,8 @@
                         @endif
                     </ul>
                 </li>
+
+                <li><a href="{{ route('vendirun.menu') }}">Menu</a></li>
             </ul>
 
             <ul class="nav navbar-nav navbar-right">

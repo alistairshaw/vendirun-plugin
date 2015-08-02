@@ -2,7 +2,7 @@
 <head>
     @include('vendirun::common.head')
 </head>
-
+<html>
 <body>
 <header id="header" class="clearfix cl-header">
     @include('vendirun::common.header')

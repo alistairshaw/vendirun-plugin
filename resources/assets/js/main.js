@@ -13,4 +13,7 @@ $(document).ready(function () {
 		}, time);
 	});
 
+	// If there are thumbnails on the page, we want them all the same size
+	if ($('.thumbnail').length > 0) thumbnails.init();
+
 });

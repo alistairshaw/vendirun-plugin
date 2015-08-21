@@ -17971,6 +17971,24 @@ var sendToFriend = function() {
 $(document).ready(function() {
 	if ($('.js-recommend-a-friend-form').length) sendToFriend();
 });
+var thumbnails = {
+    init: function () {
+        this.resizeThumbnails();
+        return this;
+    },
+
+    resizeThumbnails: function () {
+        var tallest = 0;
+        var $thumbnail = $('.thumbnail');
+        $thumbnail.each(function () {
+            if ($(this).height() > tallest) tallest = $(this).height();
+        });
+
+        $thumbnail.each(function() {
+            $(this).css('min-height', (tallest + 35) + 'px');
+        });
+    }
+};
 $('.js-popout-search').on('click', function() {
 	$('.left-column').removeClass('hide');
 	$('.js-main-results').removeClass('col-sm-offset-1').removeClass('col-sm-10').addClass('col-sm-offset-3').addClass('col-sm-9');
@@ -18050,6 +18068,9 @@ $(document).ready(function () {
 			});
 		}, time);
 	});
+
+	// If there are thumbnails on the page, we want them all the same size
+	if ($('.thumbnail').length > 0) thumbnails.init();
 
 });
 //# sourceMappingURL=production.js.map

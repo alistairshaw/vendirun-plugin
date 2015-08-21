@@ -35,6 +35,7 @@ elixir(function (mix) {
 			'sliders.js',
 			'validation.js',
 			'send-to-friend.js',
+			'thumbnails.js',
 			'property/filter.js',
 			'property/property-view.js',
 			'main.js'

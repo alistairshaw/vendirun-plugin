@@ -11,7 +11,7 @@
                             @elseif ($element->type == 'html')
                                 {!! $element->content !!}
                             @elseif ($element->type == 'image')
-                                <img src="{{ $element->content }}" height="{{ $element->height }}" width="{{ $element->width }}">
+                                <img src="{{ $element->content }}" <?php if ($element->height > 0) echo 'style="height: ' . $element->height . 'px; width: ' . $element->width . 'px;"' ?> class="img-responsive">
                             @endif
                         </div>
                     @endforeach

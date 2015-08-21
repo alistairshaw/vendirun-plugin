@@ -5,6 +5,8 @@ use View;
 
 class CmsViewComposer {
 
+    private $cmsApi;
+
     public function __construct()
     {
         $this->cmsApi = new cmsApi();
@@ -26,7 +28,12 @@ class CmsViewComposer {
      */
     public function menu($view)
     {
+        $viewData = $view->getData();
+        $slug = isset($viewData['menuSlug']) ? $viewData['menuSlug'] : '';
 
+        $menu = $this->cmsApi->menu($slug);
+
+        $view->with('menu', $menu);
     }
 
 }

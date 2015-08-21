@@ -15,10 +15,10 @@ class CmsApi extends BaseApi {
         return ($response['success']) ? $response['data'] : false;
     }
 
-    public function menus()
+    public function menu($slug = '')
     {
-        $url = 'cms/menus';
-        $this->request($url);
+        $url = 'cms/menu';
+        $this->request($url, ['slug' => $slug]);
         $response = $this->getResult();
 
         return ($response['success']) ? $response['data'] : false;

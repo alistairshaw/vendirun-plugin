@@ -1,4 +1,4 @@
-<?php namespace Ambitiousdigital\Vendirun\App\Providers;
+<?php namespace AlistairShaw\Vendirun\App\Providers;
 
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
@@ -46,7 +46,7 @@ class VendirunServiceProvider extends ServiceProvider {
 		);
 
 		// register providers we need
-		$this->app->register('Ambitiousdigital\Vendirun\App\Providers\ComposerServiceProvider');
+		$this->app->register('AlistairShaw\Vendirun\App\Providers\ComposerServiceProvider');
 		$this->app->register('Illuminate\Html\HtmlServiceProvider');
 
 		// aliases

@@ -1,6 +1,6 @@
-<?php namespace Ambitiousdigital\Vendirun\App\Http\Composers;
+<?php namespace AlistairShaw\Vendirun\App\Http\Composers;
 
-use Ambitiousdigital\Vendirun\App\Lib\VendirunApi\CmsApi;
+use AlistairShaw\Vendirun\App\Lib\VendirunApi\CmsApi;
 use View;
 
 class CmsViewComposer {

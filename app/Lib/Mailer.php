@@ -1,4 +1,4 @@
-<?php namespace Ambitiousdigital\Vendirun\App\Lib;
+<?php namespace AlistairShaw\Vendirun\App\Lib;
 
 use Illuminate\Support\Facades\Mail;
 

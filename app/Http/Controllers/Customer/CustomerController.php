@@ -1,9 +1,9 @@
 <?php
 
-namespace Ambitiousdigital\Vendirun\App\Http\Controllers\Customer;
+namespace AlistairShaw\Vendirun\App\Http\Controllers\Customer;
 
-use Ambitiousdigital\Vendirun\App\Http\Controllers\VendirunBaseController;
-use Ambitiousdigital\Vendirun\App\Lib\Mailer;
+use AlistairShaw\Vendirun\App\Http\Controllers\VendirunBaseController;
+use AlistairShaw\Vendirun\App\Lib\Mailer;
 use Input;
 use Redirect;
 use Request;

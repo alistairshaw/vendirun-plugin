@@ -1,7 +1,7 @@
-<?php namespace Ambitiousdigital\Vendirun\App\Http\Controllers\Cms;
+<?php namespace AlistairShaw\Vendirun\App\Http\Controllers\Cms;
 
-use Ambitiousdigital\Vendirun\App\Http\Controllers\VendirunBaseController;
-use Ambitiousdigital\Vendirun\App\Lib\VendirunApi\CmsApi;
+use AlistairShaw\Vendirun\App\Http\Controllers\VendirunBaseController;
+use AlistairShaw\Vendirun\App\Lib\VendirunApi\CmsApi;
 use View;
 
 class PageController extends VendirunBaseController {

@@ -1,6 +1,6 @@
 <?php
 
-Route::group(['namespace' => 'Ambitiousdigital\Vendirun\App\Http\Controllers', 'prefix' => 'property'], function()
+Route::group(['namespace' => 'AlistairShaw\Vendirun\App\Http\Controllers', 'prefix' => 'property'], function()
 {
 	Route::any('/', ['as'=>'vendirun.propertySearch', 'uses' => 'Property\PropertyController@index']);
 	Route::get('clear-search', ['as'=>'vendirun.propertyClearSearch', 'uses' => 'Property\PropertyController@clearSearch']);
@@ -15,7 +15,7 @@ Route::group(['namespace' => 'Ambitiousdigital\Vendirun\App\Http\Controllers', '
 	Route::get('location/{locationName?}', ['as'=>'vendirun.location', 'uses' => 'Property\LocationController@index']);
 });
 
-Route::group(['namespace' => 'Ambitiousdigital\Vendirun\App\Http\Controllers', 'prefix' => 'customer'], function()
+Route::group(['namespace' => 'AlistairShaw\Vendirun\App\Http\Controllers', 'prefix' => 'customer'], function()
 {
 	Route::post('contact-form-submit', ['as' => 'vendirun.contactFormSubmit', 'uses' => 'Customer\CustomerController@processContactForm']);
 	Route::post('recommend-a-friend', ['as' => 'vendirun.recommendAFriend', 'uses' => 'Customer\CustomerController@recommendAFriend']);
@@ -27,10 +27,10 @@ Route::group(['namespace' => 'Ambitiousdigital\Vendirun\App\Http\Controllers', '
 });
 
 // home page
-Route::any('/', ['as'=>'vendirun.home', 'uses' => 'Ambitiousdigital\Vendirun\App\Http\Controllers\Cms\PageController@index']);
+Route::any('/', ['as'=>'vendirun.home', 'uses' => 'AlistairShaw\Vendirun\App\Http\Controllers\Cms\PageController@index']);
 
 // menu example
-Route::any('/menu', ['as'=>'vendirun.menu', 'uses' => 'Ambitiousdigital\Vendirun\App\Http\Controllers\Cms\PageController@menu']);
+Route::any('/menu', ['as'=>'vendirun.menu', 'uses' => 'AlistairShaw\Vendirun\App\Http\Controllers\Cms\PageController@menu']);
 
 // capture any undefined routes and pass to the CMS controller
-Route::any( '{catchall}', ['uses' => 'Ambitiousdigital\Vendirun\App\Http\Controllers\Cms\PageController@page'])->where('catchall', '(.*)');
+Route::any( '{catchall}', ['uses' => 'AlistairShaw\Vendirun\App\Http\Controllers\Cms\PageController@page'])->where('catchall', '(.*)');

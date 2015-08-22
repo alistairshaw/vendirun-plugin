@@ -1,4 +1,4 @@
-<?php namespace Ambitiousdigital\Vendirun\App\Lib\VendirunApi;
+<?php namespace AlistairShaw\Vendirun\App\Lib\VendirunApi;
 
 class CmsApi extends BaseApi {
 

@@ -4,7 +4,7 @@
         <div class="{{ $block->class }}">
             <div class="container{{ $block->full_width ? '-fluid' : '' }}">
                 <div class="row">
-                    <div style="margin: {{ $block->margin }}; padding: {{ $block->padding }};">
+                    <div class="clearfix" style="margin: {{ $block->margin }}; padding: {{ $block->padding }};">
                         @foreach ($block->elements as $element)
                             <div class="{{ $block->full_width ? '' : 'col-sm-' . $element->column_width }} {{ $element->class }}">
                                 @if ($element->type == 'widget')

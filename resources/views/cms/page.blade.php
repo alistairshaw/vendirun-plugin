@@ -2,7 +2,7 @@
 @section('content')
     @foreach ($page->page_blocks as $block)
         <div class="{{ $block->class }}">
-            <div class="container{{ $block->full_width ? '-fluid' : '' }}">
+            <div class="container{{ $block->full_width ? '-fluid' : '' }} element-{{ $element->type }}">
                 <div class="row">
                     <div class="clearfix" style="margin: {{ $block->margin }}; padding: {{ $block->padding }};">
                         @foreach ($block->elements as $element)

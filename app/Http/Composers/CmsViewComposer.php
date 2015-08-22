@@ -72,6 +72,7 @@ class CmsViewComposer {
         {
             // unless the slug is the homepage
             if ($item->slug !== '/') $activeClass = 'active';
+            if ($item->slug == '/' && Request::path() == '') $activeClass = 'active';
         }
 
         $view->with('activeClass', $activeClass);

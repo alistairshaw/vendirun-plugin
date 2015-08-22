@@ -1,4 +1,4 @@
-<?php $options = json_decode($element->element_options, true) ?>
+<?php if (!isset($options)) $options = json_decode($element->element_options, true) ?>
 <form method="post" action="{{ route('vendirun.propertySearch') }}" class="search-box">
     <div class="form-group">
         <label class="sr-only">Property Search</label>

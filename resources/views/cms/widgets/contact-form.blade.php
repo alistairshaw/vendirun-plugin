@@ -1,4 +1,4 @@
-<?php $options = json_decode($element->element_options, true) ?>
+<?php if (!isset($options)) $options = json_decode($element->element_options, true) ?>
 <div class="well contact-form">
     @if ($options['form_title'])
         <h3>{{ $options['form_title'] }}</h3>

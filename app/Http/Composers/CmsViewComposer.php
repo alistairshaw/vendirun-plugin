@@ -22,8 +22,7 @@ class CmsViewComposer {
     }
 
     /**
-     * Composer for navigation, fetches all available menus from API and stores
-     *   in array with the menu slug as the key
+     * Composer for navigation, fetches the menu from the API
      * @param View $view
      */
     public function menu($view)
@@ -36,4 +35,21 @@ class CmsViewComposer {
         $view->with('menu', $menu);
     }
 
+    /**
+     * Composer for the menu item, checks if the menu is already set, if not does the
+     *    API request
+     * @param $view
+     */
+    public function menuItem($view)
+    {
+        $viewData = $view->getData();
+        if (!isset($viewData['menu']))
+        {
+            $slug = isset($viewData['menuSlug']) ? $viewData['menuSlug'] : '';
+
+            $menu = $this->cmsApi->menu($slug);
+
+            $view->with('menu', $menu->sub_menu);
+        }
+    }
 }

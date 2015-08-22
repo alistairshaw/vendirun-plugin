@@ -1,0 +1,11 @@
+{
+    "name": "alistairshaw/vendirun",
+    "description": "Vendirun plugin for front-end Laravel website",
+    "authors": [
+        {
+            "name": "Alistair Shaw",
+            "email": "alistairshaw@gmail.com"
+        }
+    ],
+    "require": {}
+}

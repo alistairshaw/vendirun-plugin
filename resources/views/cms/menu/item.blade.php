@@ -1,3 +1,7 @@
 @foreach ($menu as $item)
-    @include('vendirun::cms.menu.link', ['item' => $item])
+    @if ($item->slug == '/customer/register')
+        @include('vendirun::cms.menu.login-button')
+    @else
+        @include('vendirun::cms.menu.link', ['item' => $item])
+    @endif
 @endforeach

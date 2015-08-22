@@ -34,6 +34,7 @@ elixir(function (mix) {
 			'../../bower_components/jquery-validate/dist/jquery.validate.js',
 			'sliders.js',
 			'validation.js',
+			'google-map.js',
 			'send-to-friend.js',
 			'thumbnails.js',
 			'property/filter.js',

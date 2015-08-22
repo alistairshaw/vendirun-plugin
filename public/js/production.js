@@ -17940,6 +17940,29 @@ var formValidation = function (theForm, excludeForKeyUp) {
 $(document).ready(function() {
 	formValidation();
 });
+$(document).ready(function () {
+    var googleMapAddress = $('#googleMapAddress');
+    if (googleMapAddress.length > 0) {
+        var latlng = new google.maps.LatLng(0, 0);
+        var myOptions = {zoom: 12, center: latlng, mapTypeId: google.maps.MapTypeId.ROADMAP};
+        var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+
+        var geocoder = new google.maps.Geocoder();
+
+        geocoder.geocode({'address': googleMapAddress.val()}, function (results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                //In this case it creates a marker, but you can get the lat and lng from the location.LatLng
+                map.setCenter(results[0].geometry.location);
+                new google.maps.Marker({
+                    map: map,
+                    position: results[0].geometry.location
+                });
+            } else {
+                // alert("Geocode was not successful for the following reason: " + status);
+            }
+        });
+    }
+});
 var sendToFriend = function() {
 	return {
 		init: function() {
@@ -17991,19 +18014,19 @@ var thumbnails = {
 };
 $('.js-popout-search').on('click', function() {
 	$('.left-column').removeClass('hide');
-	$('.js-main-results').removeClass('col-sm-offset-1').removeClass('col-sm-10').addClass('col-sm-offset-3').addClass('col-sm-9');
+	$('.js-main-results').removeClass('col-sm-offset-1').removeClass('col-sm-10').addClass('col-sm-offset-2').addClass('col-sm-10');
 	localStorage['filterOpen'] = 1;
 });
 
 $('.js-close-filter').on('click', function() {
 	$('.left-column').addClass('hide');
-	$('.js-main-results').addClass('col-sm-offset-1').addClass('col-sm-10').removeClass('col-sm-offset-3').removeClass('col-sm-9');
+	$('.js-main-results').addClass('col-sm-offset-1').addClass('col-sm-10').removeClass('col-sm-offset-2').removeClass('col-sm-10');
 	localStorage['filterOpen'] = 0;
 });
 
 if (localStorage['filterOpen'] == 1) {
 	$('.left-column').removeClass('hide');
-	$('.js-main-results').removeClass('col-sm-offset-1').removeClass('col-sm-10').addClass('col-sm-offset-3').addClass('col-sm-9');
+	$('.js-main-results').removeClass('col-sm-offset-1').removeClass('col-sm-10').addClass('col-sm-offset-2').addClass('col-sm-10');
 }
 var propertyMap = function () {
 	return {

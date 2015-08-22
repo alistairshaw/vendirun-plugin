@@ -2745,12 +2745,12 @@ a {
   transition: all 0.5s ease; }
 
 h2 {
-  font-size: 20px;
-  font-size: 1.25rem; }
+  font-size: 16px;
+  font-size: 1rem; }
 
 h3 {
-  font-size: 18px;
-  font-size: 1.125rem;
+  font-size: 14px;
+  font-size: 0.875rem;
   color: #333; }
 
 .label a {
@@ -8770,6 +8770,12 @@ button.close {
   .recommend-a-friend h2, .recommend-a-friend h3 {
     margin-top: 0; }
 
+.map-canvas {
+  width: 100%;
+  height: 400px;
+  position: relative;
+  background-color: #e5e3df; }
+
 .property-search .search-height {
   min-height: 700px; }
 
@@ -8853,10 +8859,14 @@ button.close {
         .property-search .property-results .property-result .image-container .property-slide-show .nivo-directionNav .nivo-prevNav, .property-search .property-results .property-result .image-container .property-single-image .nivo-directionNav .nivo-prevNav {
           left: 10px; }
     .property-search .property-results .property-result .details h2 {
-      font-weight: 300;
-      color: #333;
-      margin: 0 0 10px 0;
-      line-height: 1.4; }
+      margin-top: 0; }
+      .property-search .property-results .property-result .details h2 a {
+        font-size: 1.4em;
+        font-weight: 300;
+        color: #333;
+        margin: 0 0 10px 0;
+        line-height: 1.4;
+        text-decoration: none; }
     .property-search .property-results .property-result .details .price {
       color: #999;
       margin: 0 0 5px 5px;

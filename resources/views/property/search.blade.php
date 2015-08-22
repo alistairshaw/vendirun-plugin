@@ -3,7 +3,7 @@
 @section('content')
     <div class="container property-search clearfix">
         <div class="row search-height">
-            <div class="col-sm-12 js-main-results">
+            <div class="js-main-results">
 
                 @include('vendirun::forms.recommend-a-friend')
 
@@ -61,10 +61,10 @@
                 </div>
 
             </div>
-            <div class="popout">
+            <div class="popout hidden-sm hidden-xs">
                 <a href="#" class="js-popout-search">Filter <i class="fa fa-chevron-right"></i> </a>
             </div>
-            <div class="col-sm-3 hide left-column">
+            <div class="col-sm-2 hide left-column hidden-sm hidden-xs">
                 <div class="well refine-search">
                     @include('vendirun::property.search-form')
                 </div>

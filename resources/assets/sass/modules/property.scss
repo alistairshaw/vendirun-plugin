@@ -119,10 +119,15 @@
             .details {
                 @extend .clearfix;
                 h2 {
-                    font-weight: 300;
-                    color: #333;
-                    margin: 0 0 10px 0;
-                    line-height: 1.4;
+                    margin-top: 0;
+                    a {
+                        font-size: 1.4em;
+                        font-weight: 300;
+                        color: #333;
+                        margin: 0 0 10px 0;
+                        line-height: 1.4;
+                        text-decoration: none;
+                    }
                 }
                 .price {
                     color: #999;

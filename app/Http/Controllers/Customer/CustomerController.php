@@ -75,8 +75,8 @@ class CustomerController extends VendirunBaseController {
         $rules = [
             'full_name' => 'required',
             'email' => 'required|email',
-            'password' => 'required|min:3|confirmed',
-            'password_confirmation' => 'required|min:3'
+            'password' => 'required|min:5|confirmed',
+            'password_confirmation' => 'required|min:5'
         ];
 
         $validationResult = $this->validateForm($rules, Input::all());
@@ -90,27 +90,26 @@ class CustomerController extends VendirunBaseController {
 
         if ($response['success'])
         {
-
             $vars['email'] = $_POST['email'];
             $vars['password'] = $_POST['password'];
 
-            $response = $this->customerApi->login($vars);
+            $loginResponse = $this->customerApi->login($vars);
 
-            if ($response['success'] == 1)
+            if ($loginResponse['success'])
             {
                 Session::flash('vendirun-alert-success', 'Login Successful');
-                Session::put('token', $response['data']);
+                Session::put('token', $loginResponse['data']);
 
                 if (Session::get('action'))
                 {
                     return Redirect::to(Session::get('action'));
                 }
 
-                return Redirect::route('vendirun.register');
+                return Redirect::route('vendirun.home');
             }
             else
             {
-                Session::flash('vendirun-alert-error', $response['error']);
+                Session::flash('vendirun-alert-error', $loginResponse['error']);
 
                 return Redirect::route('vendirun.register')->withInput();
             }
@@ -191,11 +190,10 @@ class CustomerController extends VendirunBaseController {
         $params['full_name'] = Input::get('fullname', '');
         $params['email'] = Input::get('email', '');
         $params['telephone'] = Input::get('telephone', '');
-        $params['note'] = Input::get('message', '');
-        $params['property_id'] = Input::get('property_id', '');
-        $params['form_id'] = Input::get('form_id', '');
-        $params['note'] .= isset($data['property']) ? "\n\nProperty Name: " . $data['property'] : '';
-        $params['note'] .= isset($data['message']) ? $data['message'] : '';
+        $params['property_id'] = Input::get('propertyId', '');
+        $params['form_id'] = Input::get('formId', '');
+        $params['note'] = nl2br(Input::get('message', ''));
+        $params['note'] .= Input::get('property') ? "<br><br>Property Name: " . Input::get('property') : '';
 
         $response = $this->customerApi->store($params);
 

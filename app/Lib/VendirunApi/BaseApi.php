@@ -74,8 +74,6 @@ class BaseApi {
         curl_close($curl);
         $result = $resp;
 
-        //exit($resp);
-
         $resp = json_decode($resp);
 
         // If debug mode is enabled then we print out the CURL response

@@ -14,27 +14,26 @@
                     <div class="form-group">
                         {!! Form::label('full_name', 'Full Name:*') !!}
                         {!! Form::text('full_name', Input::old('full_name'), array('placeholder'=>'Full name', 'class'=>'form-control')) !!}
-                        @if ($errors->has('full_name')) <p class="help-block">{{ $errors->first('full_name') }}</p> @endif
+                        @if ($errors->has('full_name')) <p class="error">{{ $errors->first('full_name') }}</p> @endif
                         {!! Form::hidden('form_id', 'registration_form') !!}
                     </div>
 
                     <div class="form-group">
                         {!! Form::label('email', 'Email:*') !!}
                         {!! Form::text('email', Input::old('email'), array('placeholder'=>'Email Address', 'class'=>'form-control')) !!}
-                        @if ($errors->has('email')) <p class="help-block">{{ $errors->first('email') }}</p> @endif
+                        @if ($errors->has('email')) <p class="error">{{ $errors->first('email') }}</p> @endif
                     </div>
 
                     <div class="form-group">
                         {!! Form::label('password', 'Password:*') !!}
                         {!! Form::password('password', array('placeholder'=>'password', 'class'=>'form-control')) !!}
-                        @if ($errors->has('password')) <p class="help-block">{{ $errors->first('Password') }}</p> @endif
+                        @if ($errors->has('password')) <p class="error">{{ $errors->first('Password') }}</p> @endif
                     </div>
 
                     <div class="form-group">
                         {!! Form::label('password_confirmation', 'Confirm password:*') !!}
                         {!! Form::password('password_confirmation', array('placeholder'=>'Confirm password', 'class'=>'form-control')) !!}
-                        @if ($errors->has('password_confirmation')) <p
-                                class="help-block">{{ $errors->first('password_confirmation') }}</p> @endif
+                        @if ($errors->has('password_confirmation')) <p class="error">{{ $errors->first('password_confirmation') }}</p> @endif
                     </div>
 
                     <div class="form-group">

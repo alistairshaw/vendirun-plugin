@@ -39,3 +39,8 @@ h3 {
 .pagination-container {
   min-height: 70px;
 }
+
+.form-group .error {
+    color: $alert-danger-text;
+    font-size: 0.9em;
+}

@@ -69,7 +69,7 @@
                                             <td width="520" align="left" valign="top" style="border: 1px solid #9d9d9d; font-family: 'Century Gothic', Arial, sans-serif; color: #4c4d4f; font-size: 14px; padding: 20px;">
                                                 @foreach ($mailData as $key => $value)
                                                     <strong>{{ ucwords($key) }}</strong><br>
-                                                    {!! nl2br($value) !!}<br><br>
+                                                    {!! $value !!}<br><br>
                                                 @endforeach
                                             </td>
                                             <td width="40" align="left" valign="top">&nbsp;</td>

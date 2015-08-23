@@ -74,7 +74,7 @@ class BaseApi {
         curl_close($curl);
         $result = $resp;
 
-        exit($resp);
+        //exit($resp);
 
         $resp = json_decode($resp);
 

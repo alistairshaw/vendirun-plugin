@@ -6,7 +6,7 @@
     @if ($options['form_description'])
         <p>{{ $options['form_description'] }}</p>
     @endif
-    {!! Form::open() !!}
+    {!! Form::open(['route' => 'vendirun.contactFormSubmit']) !!}
     <div class="row">
         <div class="col-sm-6">
             @if (isset($options['fullname']))

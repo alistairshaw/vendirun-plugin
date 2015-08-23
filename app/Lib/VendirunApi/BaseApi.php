@@ -70,11 +70,11 @@ class BaseApi {
         $resp = curl_exec($curl);
         $this->errorMessage = curl_error($curl);
 
-        // if ($url == 'cms/menu') exit($resp);
-
         //Close Request
         curl_close($curl);
         $result = $resp;
+
+        exit($resp);
 
         $resp = json_decode($resp);
 

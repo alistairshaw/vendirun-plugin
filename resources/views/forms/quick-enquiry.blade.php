@@ -16,14 +16,14 @@
                 </div>
             @endif
             <div class="form-group">
-                {!! Form::label('fullName', 'Full Name') !!}
-                {!! Form::text('fullName', '', array('placeholder'=>'Full Name', 'class'=>'form-control')) !!}
-                @if ($errors->has('fullName')) <p class="help-block">{{ $errors->first('fullName') }}</p> @endif
+                {!! Form::label('fullname', 'Full Name') !!}
+                {!! Form::text('fullname', '', array('placeholder'=>'Full Name', 'class'=>'form-control')) !!}
+                @if ($errors->has('fullname')) <p class="help-block">{{ $errors->first('fullname') }}</p> @endif
             </div>
             <div class="form-group">
-                {!! Form::label('emailAddress', 'Email Address') !!}
-                {!! Form::text('emailAddress', '', array('placeholder'=>'Email Address', 'class'=>'form-control')) !!}
-                @if ($errors->has('emailAddress')) <p class="help-block">{{ $errors->first('emailAddress') }}</p> @endif
+                {!! Form::label('email', 'Email Address') !!}
+                {!! Form::text('email', '', array('placeholder'=>'Email Address', 'class'=>'form-control')) !!}
+                @if ($errors->has('email')) <p class="help-block">{{ $errors->first('email') }}</p> @endif
             </div>
             <div class="form-group">
                 {!! Form::label('telephone', 'Telephone') !!}

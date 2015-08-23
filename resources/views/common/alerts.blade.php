@@ -3,6 +3,7 @@
         <div class="alert alert-success js-fade-out" data-time="10">
             <i class="fa fa-check"></i> {{ Session::get('vendirun-alert-success') }}
         </div>
+        xxxxx
     @endif
 
     @if (Session::has('vendirun-alert-info'))

@@ -2,6 +2,7 @@
 
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\CmsApi;
 use Request;
+use URL;
 use View;
 
 class CmsViewComposer {
@@ -62,19 +63,25 @@ class CmsViewComposer {
         $viewData = $view->getData();
         $activeClass = '';
         $item = $viewData['item'];
+
+        $slug = $item->slug !== '' ? $item->slug : $item->url;
+        if ($slug == '') $slug = '/foo';
+
         // it's active if it's an exact match to the slug
-        if ('/' . Request::path() == $item->slug)
+        if ('/' . Request::path() == $slug)
         {
             $activeClass = 'active';
         }
         // it's also active if it's the first part of the slug
-        else if (strpos('/' . Request::path(), $item->slug) === 0)
+        else if (strpos('/' . Request::path(), $slug) === 0)
         {
             // unless the slug is the homepage
-            if ($item->slug !== '/') $activeClass = 'active';
-            if ($item->slug == '/' && Request::path() == '/') $activeClass = 'active';
+            if ($slug !== '/') $activeClass = 'active';
+            if ($slug == '/' && Request::path() == '/') $activeClass = 'active';
         }
 
-        $view->with('activeClass', $activeClass);
+        $link = ($item->slug) ? URL::to($item->slug) : $item->url;
+
+        $view->with('activeClass', $activeClass)->with('link', $link);
     }
 }

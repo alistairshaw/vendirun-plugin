@@ -62,7 +62,7 @@
 
             </div>
             <div class="popout hidden-sm hidden-xs">
-                @include('vendirun::property.partials.filter-button)
+                @include('vendirun::property.partials.filter-button')
             </div>
             <div class="col-sm-2 hide left-column hidden-sm hidden-xs">
                 <div class="well refine-search">

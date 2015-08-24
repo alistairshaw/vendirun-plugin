@@ -1,12 +1,12 @@
 <?php namespace AlistairShaw\Vendirun\App\Http\Composers;
 
-use AlistairShaw\Vendirun\App\Lib\VendirunApi\propertyApi;
+use AlistairShaw\Vendirun\App\Lib\VendirunApi\PropertyApi;
 use Illuminate\View\View;
 
 class PropertyWidgetsViewComposer {
 
     /**
-     * @var object
+     * @var PropertyApi
      */
     private $propertyApi;
 

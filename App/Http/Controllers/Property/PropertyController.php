@@ -103,7 +103,7 @@ class PropertyController extends VendirunBaseController {
 
         if (isset($_GET['propertytype']))
         {
-            $searchParams['propertytype'] = $_GET['propertyType'];
+            $searchParams['propertytype'] = $_GET['propertytype'];
         }
 
         if (isset($_GET['location']))

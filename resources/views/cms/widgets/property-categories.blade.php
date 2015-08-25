@@ -52,12 +52,8 @@
 
                         <p>{{ substr($subCategory->category_description, 0, 300) }}{{ (strlen($subCategory->category_description) > 300) ? '...' : '' }}</p>
 
-                        <form method="post" action="{{ route('vendirun.propertySearch') }}">
-                            <input type="hidden" name="_token" value="{!! csrf_token() !!}">
-                            <input type="hidden" class="form-control" value="{{ $subCategory->category_name }}" name="category">
-                            <button type="submit" class="btn btn-default">View Properties</button>
-                            <a class="btn btn-primary" href="{{ route('vendirun.category', [urlencode($subCategory->category_name)]) }}">View Category</a>
-                        </form>
+                        <a class="btn btn-default" href="{{ route('vendirun.propertySearch') }}/?propertytype={{ $subCategory->id }}">View Properties</a>
+                        <a class="btn btn-primary" href="{{ route('vendirun.category', [urlencode($subCategory->category_name)]) }}">View Category</a>
                     </div>
                 </div>
             </div>
@@ -82,12 +78,8 @@
 
                                     <p>{{ $subCategory->category_description }}</p>
 
-                                    <form method="post" action="{{ route('vendirun.propertySearch') }}">
-                                        <input type="hidden" name="_token" value="{!! csrf_token() !!}">
-                                        <input type="hidden" class="form-control" value="{{ $subCategory->id }}" name="category">
-                                        <button type="submit" class="btn btn-default">View Properties</button>
-                                        <a class="btn btn-primary" href="{{ route('vendirun.category', [urlencode($subCategory->category_name)]) }}">View Category</a>
-                                    </form>
+                                    <a class="btn btn-default" href="{{ route('vendirun.propertySearch') }}/?propertytype={{ $subCategory->id }}">View Properties</a>
+                                    <a class="btn btn-primary" href="{{ route('vendirun.category', [urlencode($subCategory->category_name)]) }}">View Category</a>
                                 </div>
                             </div>
                             <div class="col col-right">
@@ -114,12 +106,8 @@
 
                                     <p>{{ $subCategory->category_description }}</p>
 
-                                    <form method="post" action="{{ route('vendirun.propertySearch') }}">
-                                        <input type="hidden" name="_token" value="{!! csrf_token() !!}}">
-                                        <input type="hidden" class="form-control" value="{{ $subCategory->id }}" name="category">
-                                        <button type="submit" class="btn btn-default">View Properties</button>
-                                        <a class="btn btn-primary" href="{{ route('vendirun.category', [urlencode($subCategory->category_name)]) }}">View Category</a>
-                                    </form>
+                                    <a class="btn btn-default" href="{{ route('vendirun.propertySearch') }}/?propertytype={{ $subCategory->id }}">View Properties</a>
+                                    <a class="btn btn-primary" href="{{ route('vendirun.category', [urlencode($subCategory->category_name)]) }}">View Category</a>
                                 </div>
                             </div>
                         </div>
@@ -145,12 +133,8 @@
                     <p>{{ $subCategory->category_description }}</p>
 
                     <div class="buttons">
-                        <form method="post" action="{{ route('vendirun.propertySearch') }}">
-                            <input type="hidden" name="_token" value="{!! csrf_token() !!}}">
-                            <input type="hidden" class="form-control" value="{{ $subCategory->id }}" name="category">
-                            <button type="submit" class="btn btn-default">View Properties</button>
-                            <a class="btn btn-primary" href="{{ route('vendirun.category', [urlencode($subCategory->category_name)]) }}">View Category</a>
-                        </form>
+                        <a class="btn btn-default" href="{{ route('vendirun.propertySearch') }}/?propertytype={{  $subCategory->id }}">View Properties</a>
+                        <a class="btn btn-primary" href="{{ route('vendirun.category', [urlencode($subCategory->category_name)]) }}">View Category</a>
                     </div>
                 </div>
             </div>

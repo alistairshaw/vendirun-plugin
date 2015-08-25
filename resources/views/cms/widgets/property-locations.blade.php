@@ -26,11 +26,8 @@
 
             <p>{{ $location->location_description }}</p>
 
-            <form method="post" action="{{ route('vendirun.propertySearch') }}">
-                <input type="hidden" name="_token" value="{!! csrf_token() !!}">
-                <input type="hidden" class="form-control" value="{{ $location->location_name }}" name="location">
-                <button type="submit" class="btn btn-default">View Properties in {{ $location->location_name }}</button>
-            </form>
+            <a class="btn btn-default" href="{{ route('vendirun.propertySearch') }}/?location={{ $subLocation->location_name }}">View Properties</a>
+
         </div>
     </div>
     <hr>
@@ -52,12 +49,9 @@
 
                         <p>{{ substr($subLocation->location_description, 0, 300) }}{{ (strlen($subLocation->location_description) > 300) ? '...' : '' }}</p>
 
-                        <form method="post" action="{{ route('vendirun.propertySearch') }}">
-                            <input type="hidden" name="_token" value="{!! csrf_token() !!}">
-                            <input type="hidden" class="form-control" value="{{ $subLocation->location_name }}" name="location">
-                            <button type="submit" class="btn btn-default">View Properties</button>
-                            <a class="btn btn-primary" href="{{ route('vendirun.location', [urlencode($subLocation->location_name)]) }}">View Location</a>
-                        </form>
+                        <a class="btn btn-default" href="{{ route('vendirun.propertySearch') }}/?location={{ $subLocation->location_name }}">View Properties</a>
+                        <a class="btn btn-primary" href="{{ route('vendirun.location', [urlencode($subLocation->location_name)]) }}">View Location</a>
+
                     </div>
                 </div>
             </div>
@@ -82,12 +76,9 @@
 
                                     <p>{{ $subLocation->location_description }}</p>
 
-                                    <form method="post" action="{{ route('vendirun.propertySearch') }}">
-                                        <input type="hidden" name="_token" value="{!! csrf_token() !!}">
-                                        <input type="hidden" class="form-control" value="{{ $subLocation->id }}" name="location">
-                                        <button type="submit" class="btn btn-default">View Properties</button>
-                                        <a class="btn btn-primary" href="{{ route('vendirun.location', [urlencode($subLocation->location_name)]) }}">View Location</a>
-                                    </form>
+                                    <a class="btn btn-default" href="{{ route('vendirun.propertySearch') }}/?location={{ $subLocation->location_name }}">View Properties</a>
+                                    <a class="btn btn-primary" href="{{ route('vendirun.location', [urlencode($subLocation->location_name)]) }}">View Location</a>
+
                                 </div>
                             </div>
                             <div class="col col-right">
@@ -114,12 +105,9 @@
 
                                     <p>{{ $subLocation->location_description }}</p>
 
-                                    <form method="post" action="{{ route('vendirun.propertySearch') }}">
-                                        <input type="hidden" name="_token" value="{!! csrf_token() !!}}">
-                                        <input type="hidden" class="form-control" value="{{ $subLocation->id }}" name="location">
-                                        <button type="submit" class="btn btn-default">View Properties</button>
-                                        <a class="btn btn-primary" href="{{ route('vendirun.location', [urlencode($subLocation->location_name)]) }}">View Location</a>
-                                    </form>
+                                    <a class="btn btn-default" href="{{ route('vendirun.propertySearch') }}/?location={{ $subLocation->location_name }}">View Properties</a>
+                                    <a class="btn btn-primary" href="{{ route('vendirun.location', [urlencode($subLocation->location_name)]) }}">View Location</a>
+
                                 </div>
                             </div>
                         </div>
@@ -145,12 +133,9 @@
                     <p>{{ $subLocation->location_description }}</p>
 
                     <div class="buttons">
-                        <form method="post" action="{{ route('vendirun.propertySearch') }}">
-                            <input type="hidden" name="_token" value="{!! csrf_token() !!}}">
-                            <input type="hidden" class="form-control" value="{{ $subLocation->id }}" name="location">
-                            <button type="submit" class="btn btn-default">View Properties</button>
-                            <a class="btn btn-primary" href="{{ route('vendirun.location', [urlencode($subLocation->location_name)]) }}">View Location</a>
-                        </form>
+                        <a class="btn btn-default" href="{{ route('vendirun.propertySearch') }}/?location={{ $subLocation->location_name }}">View Properties</a>
+                        <a class="btn btn-primary" href="{{ route('vendirun.location', [urlencode($subLocation->location_name)]) }}">View Location</a>
+
                     </div>
                 </div>
             </div>

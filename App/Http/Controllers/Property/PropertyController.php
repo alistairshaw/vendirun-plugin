@@ -101,6 +101,16 @@ class PropertyController extends VendirunBaseController {
             $searchParams['offset'] = $_GET['page'] - 1;
         }
 
+        if (isset($_GET['propertytype']))
+        {
+            $searchParams['propertytype'] = $_GET['propertyType'];
+        }
+
+        if (isset($_GET['location']))
+        {
+            $searchParams['location'] = $_GET['location'];
+        }
+
         if (Input::get('keywords'))
         {
             $searchParams['search_string'] = ' ' . Input::get('keywords');

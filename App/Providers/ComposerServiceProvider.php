@@ -9,6 +9,7 @@ class ComposerServiceProvider extends ServiceProvider {
         // widgets
         $this->app->view->composer('vendirun::cms.widgets.property-categories', 'AlistairShaw\Vendirun\App\Http\Composers\PropertyWidgetsViewComposer@propertyCategories');
         $this->app->view->composer('vendirun::cms.widgets.property-locations', 'AlistairShaw\Vendirun\App\Http\Composers\PropertyWidgetsViewComposer@propertyLocations');
+        $this->app->view->composer('vendirun::property.search-form', 'AlistairShaw\Vendirun\App\Http\Composers\PropertyWidgetsViewComposer@propertySearchForm');
 
         // cms page
         $this->app->view->composer('vendirun::cms.page', 'AlistairShaw\Vendirun\App\Http\Composers\CmsViewComposer');

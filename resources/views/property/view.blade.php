@@ -12,11 +12,9 @@
                 @endif
                 <div class="image-container img-thumbnail" style="margin-top: 20px;">
                     <ul class="property-slide-show">
-                        @forelse($property->images as $images)
+                        @foreach($property->images as $images)
                             <li><a class="fancybox" rel="group" href="{{ $images->largerect }}"><img src="{{ $images->largerect }}" alt=""/></a></li>
-                        @empty
-
-                        @endforelse
+                        @endforeach
                     </ul>
                 </div>
             </div>
@@ -25,23 +23,21 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="well description-well">
-                    <div class="price">€{{ $property->price }}</div>
+                    <div class="price">€{{ number_format($property->price) }}</div>
                     <h1>{{ $property->title }}</h1>
                     {!! $property->short_description !!}
+                    <p><strong>Reference {!! $property->reference !!}</strong></p>
                 </div>
             </div>
         </div>
-
-
+        
         <div class="image-container thumbnails">
             <div class="row">
-                @forelse($property->images as $images)
+                @foreach($property->images as $images)
                     <div class="col-sm-3">
                         <a href="{{ $images->large }}" data-lightbox="image-1" data-title="Images"><img src="{{ $images->mediumsq }}" class="img-responsive img-thumbnail"></a>
                     </div>
-                @empty
-
-                @endforelse
+                @endforeach
             </div>
         </div>
 
@@ -49,11 +45,9 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="amenities">
-                        @forelse($property->attributes as $row)
+                        @foreach($property->attributes as $row)
                             <label class="label label-primary">{{ $row->property_attribute_name }}</label>
-                        @empty
-
-                        @endforelse
+                        @endforeach
                     </div>
                 </div>
             </div>
@@ -77,34 +71,7 @@
             <div class="col-sm-12">
                 <div class="well description-well">
                     {!! $property->long_description !!}
-                    <table class="table">
-                        <tbody>
-                        <tr>
-                            <th>Town</th>
-                            <td>{{ $property->city }}</td>
-                            <th>Location</th>
-                            <td>{{ $property->location_name }}</td>
-                        </tr>
-                        <tr>
-                            <th>Beds</th>
-                            <td>{{ $property->bedrooms }}</td>
-                            <th>Baths</th>
-                            <td>{{ $property->bathrooms }}</td>
-                        </tr>
-                        <tr>
-                            <th>Main Build</th>
-                            <td>{{ $property->build_size }}m<sup>2</sup></td>
-                            <th>Main Terrace</th>
-                            <td>{{ $property->terrace_size }} m<sup>2</sup></td>
-                        </tr>
-                        <tr>
-                            <th>Main Garden</th>
-                            <td>{{ $property->garden_size }}m<sup>2</sup></td>
-                            <th>Plot</th>
-                            <td>{{ $property->total_plot_size }}m<sup>2</sup></td>
-                        </tr>
-                        </tbody>
-                    </table>
+                    @include('vendirun::property.partials.property-attributes')
                 </div>
             </div>
         </div>

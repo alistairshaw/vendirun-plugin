@@ -4239,7 +4239,7 @@ pre {
   .row:after {
     clear: both; }
 
-.col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 {
+.col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .col-sm-6, .property-search .property-results .property-result .property-attributes .item, .property-view .property-attributes .item, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 {
   position: relative;
   min-height: 1px;
   padding-left: 15px;
@@ -4402,7 +4402,7 @@ pre {
   margin-left: 100%; }
 
 @media (min-width: 768px) {
-  .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12 {
+  .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .property-search .property-results .property-result .property-attributes .item, .property-view .property-attributes .item, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12 {
     float: left; }
   .col-sm-1 {
     width: 8.33333%; }
@@ -4414,7 +4414,7 @@ pre {
     width: 33.33333%; }
   .col-sm-5 {
     width: 41.66667%; }
-  .col-sm-6 {
+  .col-sm-6, .property-search .property-results .property-result .property-attributes .item, .property-view .property-attributes .item {
     width: 50%; }
   .col-sm-7 {
     width: 58.33333%; }
@@ -8900,29 +8900,40 @@ h3 {
     background: #fff;
     padding: 10px;
     margin-bottom: 10px; }
-    .property-search .property-results .property-result .image-container {
-      margin-bottom: 20px;
+    .property-search .property-results .property-result .left {
       width: 50%;
-      text-align: center;
       float: left;
       margin-right: 30px;
-      overflow: hidden;
-      border: 1px solid #333; }
-      .property-search .property-results .property-result .image-container .property-slide-show, .property-search .property-results .property-result .image-container .property-single-image {
-        padding: 0;
-        margin: 0;
-        font-size: 24px;
-        font-size: 1.5rem; }
-        .property-search .property-results .property-result .image-container .property-slide-show li, .property-search .property-results .property-result .image-container .property-single-image li {
-          list-style: none; }
-          .property-search .property-results .property-result .image-container .property-slide-show li:not(:first-child) img, .property-search .property-results .property-result .image-container .property-single-image li:not(:first-child) img {
-            display: none; }
-        .property-search .property-results .property-result .image-container .property-slide-show .nivo-directionNav a, .property-search .property-results .property-result .image-container .property-single-image .nivo-directionNav a {
-          color: #FFF; }
-        .property-search .property-results .property-result .image-container .property-slide-show .nivo-directionNav .nivo-nextNav, .property-search .property-results .property-result .image-container .property-single-image .nivo-directionNav .nivo-nextNav {
-          right: 10px; }
-        .property-search .property-results .property-result .image-container .property-slide-show .nivo-directionNav .nivo-prevNav, .property-search .property-results .property-result .image-container .property-single-image .nivo-directionNav .nivo-prevNav {
-          left: 10px; }
+      margin-bottom: 10px; }
+      .property-search .property-results .property-result .left .image-container {
+        width: 100%;
+        text-align: center;
+        overflow: hidden;
+        border: 1px solid #333; }
+        .property-search .property-results .property-result .left .image-container .property-slide-show, .property-search .property-results .property-result .left .image-container .property-single-image {
+          padding: 0;
+          margin: 0;
+          font-size: 24px;
+          font-size: 1.5rem; }
+          .property-search .property-results .property-result .left .image-container .property-slide-show li, .property-search .property-results .property-result .left .image-container .property-single-image li {
+            list-style: none; }
+            .property-search .property-results .property-result .left .image-container .property-slide-show li:not(:first-child) img, .property-search .property-results .property-result .left .image-container .property-single-image li:not(:first-child) img {
+              display: none; }
+          .property-search .property-results .property-result .left .image-container .property-slide-show .nivo-directionNav a, .property-search .property-results .property-result .left .image-container .property-single-image .nivo-directionNav a {
+            color: #FFF; }
+          .property-search .property-results .property-result .left .image-container .property-slide-show .nivo-directionNav .nivo-nextNav, .property-search .property-results .property-result .left .image-container .property-single-image .nivo-directionNav .nivo-nextNav {
+            right: 10px; }
+          .property-search .property-results .property-result .left .image-container .property-slide-show .nivo-directionNav .nivo-prevNav, .property-search .property-results .property-result .left .image-container .property-single-image .nivo-directionNav .nivo-prevNav {
+            left: 10px; }
+    .property-search .property-results .property-result .property-attributes {
+      background: #f0f0f0;
+      padding: 10px;
+      line-height: 1.6;
+      text-align: left; }
+      .property-search .property-results .property-result .property-attributes span {
+        display: inline-block;
+        font-weight: bold;
+        width: 110px; }
     .property-search .property-results .property-result .details h2 {
       margin-top: 0; }
       .property-search .property-results .property-result .details h2 a {
@@ -8966,6 +8977,23 @@ h3 {
 
 .property-view .image-container {
   margin-bottom: 30px; }
+  .property-view .image-container.thumbnails {
+    margin: 0; }
+    .property-view .image-container.thumbnails a {
+      display: block;
+      height: 258px;
+      width: 100%; }
+      @media (max-width: 1200px) {
+        .property-view .image-container.thumbnails a {
+          height: 212px; } }
+      @media (max-width: 1199px) {
+        .property-view .image-container.thumbnails a {
+          height: 157px; } }
+      @media (max-width: 991px) {
+        .property-view .image-container.thumbnails a {
+          height: auto; } }
+      .property-view .image-container.thumbnails a img {
+        margin-bottom: 30px; }
   .property-view .image-container .property-slide-show {
     padding: 0;
     margin: 0; }
@@ -8979,10 +9007,6 @@ h3 {
       right: 10px; }
     .property-view .image-container .property-slide-show .nivo-directionNav .nivo-prevNav {
       left: 10px; }
-  .property-view .image-container.thumbnails {
-    margin: 0; }
-    .property-view .image-container.thumbnails img {
-      margin-bottom: 30px; }
 
 .property-view h1 {
   margin: 0 0 10px 0;
@@ -9012,7 +9036,7 @@ h3 {
 .property-view .amenities-well {
   position: relative;
   background: #FFF; }
-  .property-view .amenities-well .col-sm-6 {
+  .property-view .amenities-well .col-sm-6, .property-view .amenities-well .property-search .property-results .property-result .property-attributes .item, .property-search .property-results .property-result .property-attributes .property-view .amenities-well .item, .property-view .amenities-well .property-attributes .item, .property-view .property-attributes .amenities-well .item {
     position: static; }
   .property-view .amenities-well .amenities {
     text-align: right; }
@@ -9027,6 +9051,14 @@ h3 {
     .property-view .amenities-well .buttons .fa-envelope {
       color: #999; }
 
+.property-view .property-attributes {
+  background: #f0f0f0;
+  padding: 20px;
+  line-height: 1.6; }
+  .property-view .property-attributes span {
+    display: inline-block;
+    font-weight: bold; }
+
 #map-canvas {
   width: 100%;
   height: 400px;
@@ -9035,7 +9067,7 @@ h3 {
 .property-categories .row {
   margin: 0; }
 
-.property-categories .col-sm-6 {
+.property-categories .col-sm-6, .property-categories .property-search .property-results .property-result .property-attributes .item, .property-search .property-results .property-result .property-attributes .property-categories .item, .property-categories .property-view .property-attributes .item, .property-view .property-attributes .property-categories .item {
   padding-left: 0;
   padding-right: 0; }
 

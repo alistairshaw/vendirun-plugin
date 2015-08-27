@@ -70,6 +70,8 @@ class BaseApi {
         $resp = curl_exec($curl);
         $this->errorMessage = curl_error($curl);
 
+        //if ($url == 'customer/store') exit($resp);
+
         //Close Request
         curl_close($curl);
         $result = $resp;

@@ -64,6 +64,7 @@
                     <i class="fa fa-user"></i> Send to a Friend
                 </button>
                 <a href="{{ route('vendirun.propertyView',$property->id) }}#contact-us" class="btn btn-default js-contact-us-btn"><i class="fa fa-envelope"></i> Contact Us</a>
+                <a href="{{ $propertyCardUrl }}" class="btn btn-default" target="_blank"><i class="fa fa-print"></i> Print Property Card</a>
             </div>
         </div>
 

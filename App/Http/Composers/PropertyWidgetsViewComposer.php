@@ -3,6 +3,7 @@
 use AlistairShaw\Vendirun\App\Lib\CurrencyHelper;
 use AlistairShaw\Vendirun\App\Lib\UnitHelper;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\PropertyApi;
+use Config;
 use Illuminate\View\View;
 
 class PropertyWidgetsViewComposer {
@@ -140,5 +141,7 @@ class PropertyWidgetsViewComposer {
     {
         $viewData = $view->getData();
         $view->with('price', CurrencyHelper::formatWithCurrency($viewData['property']->price, true));
+
+        $view->with('propertyCardUrl', Config::get('vendirun.apiEndPoint') . '../../public_area/property_card/' . $viewData['property']->id . '/' . Config::get('vendirun.clientId'));
     }
 }

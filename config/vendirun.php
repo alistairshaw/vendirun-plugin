@@ -5,7 +5,7 @@ return [
     /**
      * The endpoint for the Vendirun system
      */
-	'apiEndPoint' => 'http://app.vendirun.local/api/v1/',
+	'apiEndPoint' => env('VENDIRUN_ENDPOINT', 'http://app.vendirun.local/api/v1/'),
 
     /**
      * You can get the API key and client ID by logging into your

@@ -23,7 +23,7 @@ class CurrencyHelper {
         }
 
         $final = '';
-        if ($currency->position == 'Prepend') $final .= $currency->html;
+        if ($currency->position == 'Prepend' || !$currency->position) $final .= $currency->html;
         $final .= number_format($amount, $decimals);
         if ($currency->position == 'Append') $final .= $currency->html;
 

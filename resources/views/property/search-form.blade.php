@@ -10,10 +10,10 @@
         {!! Form::text('reference', (isset($searchParams['reference']) ? $searchParams['reference'] : ''), ['class' => 'form-control']) !!}
     </div>
     <div class="form-group">
-        {!! Form::label('price_range_from', 'Reference') !!}
+        {!! Form::label('price_range_from', 'Price Range From') !!}
         {!! Form::select('price_range_from', $priceArray, (isset($searchParams['price_range_from']) ? $searchParams['price_range_from'] : ''), ['class' => 'form-control']) !!}
         <br/>
-        {!! Form::label('price_range_to', 'Reference') !!}
+        {!! Form::label('price_range_to', 'Price Range To') !!}
         {!! Form::select('price_range_to', $priceArray, (isset($searchParams['price_range_to']) ? $searchParams['price_range_to'] : ''), ['class' => 'form-control']) !!}
     </div>
     <div class="form-group">

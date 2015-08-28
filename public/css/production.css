@@ -9057,7 +9057,8 @@ h3 {
   line-height: 1.6; }
   .property-view .property-attributes span {
     display: inline-block;
-    font-weight: bold; }
+    font-weight: bold;
+    width: 110px; }
 
 #map-canvas {
   width: 100%;

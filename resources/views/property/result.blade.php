@@ -9,7 +9,7 @@
         </div>
     </div>
     <div class="details">
-        <div class="price">&euro; {{ number_format($property->price) }}</div>
+        <div class="price">{{ $price }}</div>
         <h2>
             <a href="{{ route('vendirun.propertyView',[$property->id, urlencode($property->title)]) }}">{{ $property->title }}</a>
         </h2>

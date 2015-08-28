@@ -1,6 +1,8 @@
 <?php namespace AlistairShaw\Vendirun\App\Http\Composers;
 
+use AlistairShaw\Vendirun\App\Lib\VendirunApi\ClientApi;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\CmsApi;
+use Config;
 use Request;
 use URL;
 use View;
@@ -83,5 +85,17 @@ class CmsViewComposer {
         $link = ($item->slug) ? URL::to($item->slug) : $item->url;
 
         $view->with('activeClass', $activeClass)->with('link', $link);
+    }
+
+    public function footer($view)
+    {
+        $clientData = Config::get('clientData');
+        if (!$clientData)
+        {
+            $clientApi = new ClientApi(config('vendirun.apiKey'), config('vendirun.clientId'), config('vendirun.apiEndPoint'));
+            $clientData = $clientApi->publicInfo();
+            Config::set('clientInfo', $clientData);
+        }
+        $view->with('clientData', $clientData);
     }
 }

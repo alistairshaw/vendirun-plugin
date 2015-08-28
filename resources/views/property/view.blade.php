@@ -23,7 +23,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="well description-well">
-                    <div class="price">€{{ number_format($property->price) }}</div>
+                    <div class="price">{{ $price }}</div>
                     <h1>{{ $property->title }}</h1>
                     {!! $property->short_description !!}
                     <p><strong>Reference {!! $property->reference !!}</strong></p>

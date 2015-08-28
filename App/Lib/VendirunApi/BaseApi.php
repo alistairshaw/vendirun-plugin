@@ -20,12 +20,13 @@ class BaseApi {
     /**
      * Does the CURL request, returns the response or sets an error message
      *
-     * @param string $url    Only pass the end of the URL, the main endpoint is set in the constructor
-     * @param array  $params Only pass in additional post parameters if required
-     * @param bool    $ignoreCache
+     * @param string $url         Only pass the end of the URL, the main endpoint is set in the constructor
+     * @param array  $params      Only pass in additional post parameters if required
+     * @param bool   $ignoreCache Do not use the cache at all
+     * @param int    $cacheTime   Time in minutes
      * @return array
      */
-    protected function request($url, $params = array(), $ignoreCache = false)
+    protected function request($url, $params = array(), $ignoreCache = false, $cacheTime = 5)
     {
         $key = $url . json_encode($params);
 
@@ -70,7 +71,7 @@ class BaseApi {
         $resp = curl_exec($curl);
         $this->errorMessage = curl_error($curl);
 
-        // if ($url == 'property/search') exit($resp);
+        // if ($url == 'client') exit($resp);
 
         //Close Request
         curl_close($curl);
@@ -99,7 +100,7 @@ class BaseApi {
             $response['error_message'] = '';
             $this->result = $response;
 
-            Cache::put($key, $response, 1);
+            Cache::put($key, $response, $cacheTime);
             Cache::forever('Permanent' . $key, $response);
         }
         else

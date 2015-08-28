@@ -11,8 +11,8 @@ return [
      * You can get the API key and client ID by logging into your
      * Vendirun and going to Business Setup -> Settings -> API
      */
-	'apiKey' => 'RSDQ0cDTJDJlStMc',
-	'clientId' => 3,
+	'apiKey' => env('VENDIRUN_API_KEY', 'RSDQ0cDTJDJlStMc'),
+    'clientId' => env('VENDIRUN_CLIENT_ID', '3'),
 
     /**
      * The from address that all emails are from. You set the

@@ -1,5 +1,7 @@
 <?php namespace AlistairShaw\Vendirun\App\Http\Composers;
 
+use AlistairShaw\Vendirun\App\Lib\CurrencyHelper;
+use AlistairShaw\Vendirun\App\Lib\UnitHelper;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\PropertyApi;
 use Illuminate\View\View;
 
@@ -27,7 +29,7 @@ class PropertyWidgetsViewComposer {
         $categoryData = $this->propertyApi->getCategory($categoryName, $element_options['max']);
         $category = $categoryData['success'] ? $categoryData['data'] : [];
 
-        switch($element_options['layout'])
+        switch ($element_options['layout'])
         {
             case '2 columns':
                 $element_options['col_md'] = 6;
@@ -39,7 +41,7 @@ class PropertyWidgetsViewComposer {
                 $element_options['col_md'] = 3;
                 break;
             default:
-                $element_options['col_md'] = null;
+                $element_options['col_md'] = NULL;
         }
 
         $view->with('category', $category)->with('element_options', $element_options);
@@ -57,7 +59,7 @@ class PropertyWidgetsViewComposer {
         $locationData = $this->propertyApi->getLocation($locationName, $element_options['max']);
         $location = $locationData['success'] ? $locationData['data'] : [];
 
-        switch($element_options['layout'])
+        switch ($element_options['layout'])
         {
             case '2 columns':
                 $element_options['col_md'] = 6;
@@ -69,7 +71,7 @@ class PropertyWidgetsViewComposer {
                 $element_options['col_md'] = 3;
                 break;
             default:
-                $element_options['col_md'] = null;
+                $element_options['col_md'] = NULL;
         }
 
         $view->with('location', $location)->with('element_options', $element_options);
@@ -78,28 +80,50 @@ class PropertyWidgetsViewComposer {
     /**
      * @param View $view
      */
+    public function propertyAttributes(View $view)
+    {
+        $viewData = $view->getData();
+        $property = $viewData['property'];
+        $final = [];
+
+        if ($property->city) $final['City'] = $property->city;
+        if ($property->location_name) $final['Location'] = $property->location_name;
+        if ($property->bedrooms) $final['Bedrooms'] = $property->bedrooms;
+        if ($property->bathrooms) $final['Bathrooms'] = $property->bathrooms;
+        if ($property->build_size) $final['Build Size'] = UnitHelper::formatArea($property->build_size);
+        if ($property->terrace_size) $final['Terrace Size'] = UnitHelper::formatArea($property->terrace_size);
+        if ($property->garden_size) $final['Garden Size'] = UnitHelper::formatArea($property->garden_size);
+        if ($property->total_plot_size) $final['Total Plot Size'] = UnitHelper::formatArea($property->total_plot_size);
+        if ($property->reference) $final['Reference'] = $property->reference;
+
+        $view->with('attributes', $final);
+    }
+
+    /**
+     * @param View $view
+     */
     public function propertySearchForm(View $view)
     {
         $priceArray = [
-            0=>'Any',
-            10000=>'10,000€',
-            50000=>'50,000€',
-            100000=>'100,000€',
-            200000=>'200,000€',
-            300000=>'300,000€',
-            400000=>'400,000€',
-            500000=>'500,000€',
-            600000=>'600,000€',
-            700000=>'700,000€',
-            800000=>'800,000€',
-            900000=>'900,000€',
-            1000000=>'1000,000€',
-            1500000=>'1500,000€',
-            2000000=>'2000,000€',
-            2500000=>'2500,000€',
-            3000000=>'3000,000€',
-            3500000=>'3500,000€',
-            4000000=>'4000,000€'
+            0 => 'Any',
+            10000 => currencyHelper::formatWithCurrency(1000000, true),
+            50000 => currencyHelper::formatWithCurrency(5000000, true),
+            100000 => currencyHelper::formatWithCurrency(10000000, true),
+            200000 => currencyHelper::formatWithCurrency(20000000, true),
+            300000 => currencyHelper::formatWithCurrency(30000000, true),
+            400000 => currencyHelper::formatWithCurrency(40000000, true),
+            500000 => currencyHelper::formatWithCurrency(50000000, true),
+            600000 => currencyHelper::formatWithCurrency(60000000, true),
+            700000 => currencyHelper::formatWithCurrency(70000000, true),
+            800000 => currencyHelper::formatWithCurrency(80000000, true),
+            900000 => currencyHelper::formatWithCurrency(90000000, true),
+            1000000 => currencyHelper::formatWithCurrency(100000000, true),
+            1500000 => currencyHelper::formatWithCurrency(150000000, true),
+            2000000 => currencyHelper::formatWithCurrency(200000000, true),
+            2500000 => currencyHelper::formatWithCurrency(250000000, true),
+            3000000 => currencyHelper::formatWithCurrency(300000000, true),
+            3500000 => currencyHelper::formatWithCurrency(350000000, true),
+            4000000 => currencyHelper::formatWithCurrency(400000000, true)
         ];
 
         $categories = $this->propertyApi->getCategoryList();
@@ -112,4 +136,9 @@ class PropertyWidgetsViewComposer {
         $view->with('priceArray', $priceArray)->with('propertyTypeArray', $propertyTypeArray);
     }
 
+    public function propertyView(View $view)
+    {
+        $viewData = $view->getData();
+        $view->with('price', CurrencyHelper::formatWithCurrency($viewData['property']->price, true));
+    }
 }

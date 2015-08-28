@@ -6078,6 +6078,10 @@ h3 {
   position: relative;
   background-color: #e5e3df; }
 
+footer {
+  padding: 40px 0;
+  background: #f0f0f0; }
+
 .social-media-icons {
   text-align: center; }
   .social-media-icons a {
@@ -6355,7 +6359,8 @@ h3 {
   line-height: 1.6; }
   .property-view .property-attributes span {
     display: inline-block;
-    font-weight: bold; }
+    font-weight: bold;
+    width: 110px; }
 
 #map-canvas {
   width: 100%;

@@ -1,17 +1,17 @@
 {
-  "name": "AlistairShaw/vendirun",
-  "version": "0.1.0",
+  "name": "AlistairShaw/Vendirun",
+  "version": "1.0.4",
   "authors": [
     "Alistair Shaw <alistairshaw@gmail.com>"
   ],
   "license": "proprietary",
-  "private": true,
   "ignore": [
     "**/.*",
     "node_modules",
     "bower_components",
     "test",
-    "tests"
+    "tests",
+    "resources/bower_components"
   ],
   "dependencies": {
     "select2": "~3.5.2",
@@ -22,5 +22,7 @@
     "lightbox": "~2.7.1",
     "nivoslider": "*",
     "jquery-validate": "~1.13"
-  }
+  },
+  "homepage": "https://github.com/alistairshaw/vendirun-plugin",
+  "description": "Vendirun Laravel Plugin"
 }

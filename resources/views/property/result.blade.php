@@ -1,14 +1,18 @@
 <div class="property-result clearfix">
-    <div class="image-container">
-        <ul class="{{ count($property->images) > 1 ? 'property-slide-show' : 'property-single-image' }}">
-            @foreach ($property->images as $image)
-                <li><img src="{{ $image->mediumrect }}" class="img-responsive"></li>
-            @endforeach
-        </ul>
+    <div class="left">
+        <div class="image-container">
+            <ul class="{{ count($property->images) > 1 ? 'property-slide-show' : 'property-single-image' }}">
+                @foreach ($property->images as $image)
+                    <li><img src="{{ $image->mediumrect }}" class="img-responsive"></li>
+                @endforeach
+            </ul>
+        </div>
     </div>
     <div class="details">
-        <div class="price">&euro; {{ number_format($property->price) }}</div>
-        <h2><a href="{{ route('vendirun.propertyView',[$property->id, urlencode($property->title)]) }}">{{ $property->title }}</a></h2>
+        <div class="price">{{ $price }}</div>
+        <h2>
+            <a href="{{ route('vendirun.propertyView',[$property->id, urlencode($property->title)]) }}">{{ $property->title }}</a>
+        </h2>
         {!! $property->short_description !!}
         <div class="amenities">
             @foreach ($property->attributes as $attribute)
@@ -16,6 +20,7 @@
             @endforeach
         </div>
     </div>
+    @include('vendirun::property.partials.property-attributes')
     <div class="buttons">
         <a href="{{ route('vendirun.propertyView',[$property->id, urlencode($property->title)]) }}" class="btn btn-default"><i class="fa fa-info"></i> Full Details</a>
         @if (isset($favouriteProperties) && in_array($property->id, $favouriteProperties))

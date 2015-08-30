@@ -14,7 +14,7 @@ class VendirunAuthController extends VendirunBaseController {
         {
             Session::put('action', Request::url());
 
-            return Redirect::route('vendirun.register');
+            Redirect::route('vendirun.register')->send();
         }
     }
 

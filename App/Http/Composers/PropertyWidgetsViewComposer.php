@@ -162,6 +162,7 @@ class PropertyWidgetsViewComposer {
             $favouriteProperties = null;
         }
 
+
         $view->with('favouriteProperties')->with('favouritePropertiesArray', $favouritePropertiesArray);
     }
 }

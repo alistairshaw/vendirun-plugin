@@ -66,14 +66,15 @@ class BaseApi {
 
             if ($res->getStatusCode() !== 200) throw new NoApiConnectionException($url, $res->getStatusCode(), $key);
             $response = json_decode($res->getBody());
+
+            // if no valid JSON, try to get from cache
+            if (json_last_error() !== JSON_ERROR_NONE) $response = $this->getFromPermanentCache($noCache, $url, $key);
+
         }
         catch (\Exception $e)
         {
             $response = $this->getFromPermanentCache($noCache, $url, $key);
         }
-
-        // if no valid JSON, try to get from cache
-        if (json_last_error() !== JSON_ERROR_NONE) $response = $this->getFromPermanentCache($noCache, $url, $key);
 
         // if the API returns a valid failure response, try to get from cache
         if (!$response->success) $response = $this->getFromPermanentCache($noCache, $url, $key);

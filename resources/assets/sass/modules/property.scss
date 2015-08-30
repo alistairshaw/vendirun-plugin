@@ -92,6 +92,16 @@
                     .property-slide-show, .property-single-image {
                         padding: 0;
                         margin: 0;
+                        min-height: 295px;
+                        @media (max-width: $screen-lg-min) {
+                            min-height: 242px;
+                        }
+                        @media (max-width: $screen-md-min) {
+                            min-height: 204px;
+                        }
+                        @media (max-width: $screen-sm-min) {
+                            min-height: 0;
+                        }
                         @include font-size(24px);
                         li {
                             list-style: none;
@@ -391,7 +401,7 @@
         padding: 10px;
         margin-bottom: 10px;
         .image-container {
-            margin-bottom: 20px;
+            margin-bottom: 20px; //x
             .property-slide-show, .property-single-image {
                 padding: 0;
                 margin: 0;

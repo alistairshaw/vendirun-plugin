@@ -7,6 +7,7 @@ use AlistairShaw\Vendirun\App\Traits\NotifySupportTrait;
 use App;
 use Cache;
 use GuzzleHttp\Client as GuzzleClient;
+use GuzzleHttp\Exception\ServerException;
 use Illuminate\Mail\Message;
 use Mail;
 
@@ -55,7 +56,7 @@ class BaseApi {
         if (!$noCache && Cache::has($key)) return Cache::get($key);
 
         $client = new GuzzleClient();
-
+        $res = null;
         try
         {
             $res = $client->post($this->endpoint . $url, [
@@ -68,16 +69,37 @@ class BaseApi {
             $response = json_decode($res->getBody());
 
             // if no valid JSON, try to get from cache
-            if (json_last_error() !== JSON_ERROR_NONE) $response = $this->getFromPermanentCache($noCache, $url, $key);
+            if (json_last_error() !== JSON_ERROR_NONE)
+            {
+                if (App::environment() == 'local')
+                {
+                    echo $res->getBody();
+                    dd($res->getStatusCode());
+                }
+                $response = $this->getFromPermanentCache($noCache, $key, 'Invalid response from server at ' . $url);
+            }
 
+        }
+        catch (ServerException $e)
+        {
+            if (App::environment() == 'local')
+            {
+                echo $e->getResponse()->getBody();
+                dd($e->getResponse()->getStatusCode());
+            }
+            $response = $this->getFromPermanentCache($noCache, $key, 'Server returned a ' . $e->getResponse()->getStatusCode() . ' status at ' . $url);
         }
         catch (\Exception $e)
         {
-            $response = $this->getFromPermanentCache($noCache, $url, $key);
+            if (App::environment() == 'local')
+            {
+                dd($e);
+            }
+            $response = $this->getFromPermanentCache($noCache, $key, 'Unknown error on connecting to ' . $url);
         }
 
-        // if the API returns a valid failure response, try to get from cache
-        if (!$response->success) $response = $this->getFromPermanentCache($noCache, $url, $key);
+        // if the API returns a valid failure response, try to get from cache or FailResponseException
+        if (!$response->success) $response = $this->getFromPermanentCache($noCache, $key, $response->error);
 
         $this->setCache($response, $key, $cacheTime);
 
@@ -85,23 +107,24 @@ class BaseApi {
     }
 
     /**
-     * @param $noCache
-     * @param $url
-     * @param $key
+     * @param bool   $noCache
+     * @param string $key
+     * @param string $errorMessage
      * @return bool|mixed
      * @throws FailResponseException
      */
-    protected function getFromPermanentCache($noCache, $url, $key)
+    protected function getFromPermanentCache($noCache, $key, $errorMessage = '')
     {
         if (!$noCache)
         {
             if (Cache::has('Permanent' . $key))
             {
                 $this->alertSupport('API Request Failed, Using Permanent Cache', $key, 480);
+
                 return Cache::get('Permanent' . $key);
             }
         }
-        throw new FailResponseException(false, $url, $key);
+        throw new FailResponseException(false, $errorMessage);
     }
 
     /**

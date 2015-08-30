@@ -60,7 +60,7 @@
 
                     @if(Session::has('alert_message_failure'))
                         <div class="alert alert-danger js-fade-out" data-time="5">
-                            <i class="fa fa-exclamation-triangle"></i> {{{ Session::get('alert_message_failure') }}}
+                            <i class="fa fa-exclamation-triangle"></i> {!! Session::get('alert_message_failure') !!}
                         </div>
                     @endif
 
@@ -74,8 +74,11 @@
                         {!! Form::password('password', array('placeholder'=>'Password', 'class'=>'form-control')) !!}
                     </div>
 
-                    <div class="form-group pull-right">
+                    <div class="form-group text-right">
                         <button type="submit" class="btn btn-primary">Login</button>
+                        <br>
+                        <br>
+                        <a href="{{ route('vendirun.passwordRecovery') }}">forgotten password?</a>
                     </div>
                     {!! Form::close() !!}
                 </div>

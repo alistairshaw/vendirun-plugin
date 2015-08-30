@@ -1,8 +1,11 @@
 <?php namespace AlistairShaw\Vendirun\App\Lib\VendirunApi\Exceptions;
 
+use AlistairShaw\Vendirun\App\Traits\NotifySupportTrait;
 use App;
 
 class InvalidResponseException extends VendirunApiException {
+
+    use NotifySupportTrait;
 
     public function __construct($availableInCache, $url, $key)
     {

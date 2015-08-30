@@ -12,7 +12,7 @@ class CustomerApi extends BaseApi {
 	 * @param $params ['email']        required!
 	 * @param $params ['telephone']
 	 */
-	function store($params)
+	public function store($params)
 	{
 		$url = 'customer/store';
         try
@@ -32,7 +32,7 @@ class CustomerApi extends BaseApi {
 	 * @param array $params
 	 * @return array
 	 */
-	function login($params)
+	public function login($params)
 	{
 		$url = 'customer/login';
 		return $this->request($url, $params, true);
@@ -42,10 +42,29 @@ class CustomerApi extends BaseApi {
      * @param $params
      * @return array
      */
-	function tokenAuth($params)
+	public function tokenAuth($params)
 	{
 		$url = 'customer/token_auth';
 		return $this->request($url, ['token' => $params['token']], true);
 	}
 
+    /**
+     * @param $params
+     * @return object
+     */
+	public function passwordRecovery($params)
+    {
+        $url = 'customer/password_recovery';
+        return $this->request($url, $params, true);
+    }
+
+    /**
+     * @param $params
+     * @return object
+     */
+	public function passwordReset($params)
+    {
+        $url = 'customer/password_reset';
+        return $this->request($url, $params, true);
+    }
 }

@@ -7,11 +7,8 @@ class FailResponseException extends VendirunApiException {
 
     use NotifySupportTrait;
 
-    public function __construct($availableInCache, $url, $key)
+    public function __construct($availableInCache, $notice)
     {
-        $notice = sprintf('API Responded with failure at Endpoint "%s"', $url);
-        $this->alertSupport($notice, $key);
-
         // only stop the script from executing if the value is NOT available from the cache
         if (!$availableInCache)
         {

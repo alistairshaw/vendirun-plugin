@@ -22,6 +22,16 @@ Route::group(['namespace' => 'AlistairShaw\Vendirun\App\Http\Controllers', 'pref
 	Route::get('logout', ['as' => 'vendirun.logout', 'uses' => 'Customer\CustomerController@logout']);
 	Route::any('register', ['as' => 'vendirun.register', 'uses' => 'Customer\CustomerController@register']);
 
+	Route::group(['prefix' => 'password'], function()
+    {
+        Route::get('recovery', ['as' => 'vendirun.passwordRecovery', 'uses' => 'Customer\PasswordController@recovery']);
+        Route::post('recovery', ['as' => 'vendirun.doPasswordRecovery', 'uses' => 'Customer\PasswordController@processRecovery']);
+        Route::get('recovery/success', ['as' => 'vendirun.passwordRecoveryOk', 'uses' => 'Customer\PasswordController@completeRecovery']);
+        Route::get('reset/{token}', ['as' => 'vendirun.passwordReset', 'uses' => 'Customer\PasswordController@resetForm']);
+        Route::post('reset', ['as' => 'vendirun.doPasswordReset', 'uses' => 'Customer\PasswordController@processReset']);
+        Route::get('reset-ok', ['as' => 'vendirun.passwordResetOk', 'uses' => 'Customer\PasswordController@completeReset']);
+    });
+
 	Route::post('do-register', ['as' => 'vendirun.doRegister', 'uses' => 'Customer\CustomerController@doRegister']);
 	Route::post('do-login', ['as' => 'vendirun.doLogin', 'uses' => 'Customer\CustomerController@doLogin']);
 });

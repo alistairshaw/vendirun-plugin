@@ -19,6 +19,9 @@
                             <li><a class="fancybox" rel="group" href="{{ $images->largerect }}"><img src="{{ $images->largerect }}" alt=""/></a></li>
                         @endforeach
                     </ul>
+                    @if ($property->sold_at)
+                        <div class="property-badge {{ $property->property_type == 'For Sale' ? 'sold' : 'rented' }}"></div>
+                    @endif
                 </div>
             </div>
         </div>

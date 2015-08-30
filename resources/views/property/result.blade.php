@@ -6,6 +6,9 @@
                     <li><img src="{{ $image->mediumrect }}" class="img-responsive"></li>
                 @endforeach
             </ul>
+            @if ($property->sold_at)
+                <div class="property-badge {{ $property->property_type == 'For Sale' ? 'sold' : 'rented' }}"></div>
+            @endif
         </div>
     </div>
     <div class="details">

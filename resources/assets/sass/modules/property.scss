@@ -89,6 +89,7 @@
                 margin-right: 30px;
                 margin-bottom: 10px;
                 .image-container {
+                    position: relative;
                     .property-slide-show, .property-single-image {
                         padding: 0;
                         margin: 0;
@@ -209,6 +210,7 @@
 
 .property-view {
     .image-container {
+        position: relative;
         margin-bottom: 30px;
         &.thumbnails {
             margin: 0;
@@ -401,6 +403,7 @@
         padding: 10px;
         margin-bottom: 10px;
         .image-container {
+            position: relative;
             margin-bottom: 20px; //x
             .property-slide-show, .property-single-image {
                 padding: 0;
@@ -476,5 +479,20 @@
         position: absolute;
         bottom: 13px;
         left: 13px;
+    }
+}
+
+.property-badge {
+    position: absolute;
+    width: 120px;
+    height: 80px;
+    top: 20px;
+    right: 20px;
+    background-size: 100% 100%;
+    &.sold {
+        background-image: url(../images/property/sold-badge.png);
+    }
+    &.rented {
+        background-image: url(../images/property/rented-badge.png);
     }
 }

@@ -8915,6 +8915,7 @@ footer {
       margin-right: 30px;
       margin-bottom: 10px; }
       .property-search .property-results .property-result .left .image-container {
+        position: relative;
         width: 100%;
         text-align: center;
         overflow: hidden;
@@ -8995,6 +8996,7 @@ footer {
         color: #999; }
 
 .property-view .image-container {
+  position: relative;
   margin-bottom: 30px; }
   .property-view .image-container.thumbnails {
     margin: 0; }
@@ -9138,6 +9140,7 @@ footer {
   padding: 10px;
   margin-bottom: 10px; }
   .property-categories .property-category-list-item .image-container {
+    position: relative;
     margin-bottom: 20px;
     width: 30%;
     text-align: center;
@@ -9192,6 +9195,18 @@ footer {
     position: absolute;
     bottom: 13px;
     left: 13px; }
+
+.property-badge {
+  position: absolute;
+  width: 120px;
+  height: 80px;
+  top: 20px;
+  right: 20px;
+  background-size: 100% 100%; }
+  .property-badge.sold {
+    background-image: url(../images/property/sold-badge.png); }
+  .property-badge.rented {
+    background-image: url(../images/property/rented-badge.png); }
 
 /*# sourceMappingURL=app.css.map */
 /*# sourceMappingURL=production.css.map */

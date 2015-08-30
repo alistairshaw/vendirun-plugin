@@ -5,6 +5,7 @@ namespace AlistairShaw\Vendirun\App\Http\Controllers\Property;
 use AlistairShaw\Vendirun\App\Http\Controllers\VendirunBaseController;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\Exceptions\FailResponseException;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\VendirunApi;
+use App;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Input;
 use Redirect;
@@ -20,7 +21,7 @@ class PropertyController extends VendirunBaseController {
     public function index()
     {
         $searchParams = $this->searchParams();
-
+        $data = [];
         try
         {
             $data['properties'] = VendirunApi::makeRequest('property/search', $searchParams)->getData();
@@ -30,7 +31,7 @@ class PropertyController extends VendirunBaseController {
         }
         catch (\Exception $e)
         {
-            abort(404);
+            if (App::environment() == 'production') abort(404);
         }
 
         return View::make('vendirun::property.search', $data);
@@ -53,17 +54,18 @@ class PropertyController extends VendirunBaseController {
      */
     public function propertyView($id, $propertyName = '')
     {
+        $data = [];
         try
         {
             $property = VendirunApi::makeRequest('property/property', ['id' => $id]);
             $data['property'] = $property->getData();
-
-            return View::make('vendirun::property.view', $data);
         }
         catch (FailResponseException $e)
         {
-            abort(404);
+            if (App::environment() == 'production') abort(404);
         }
+
+        return View::make('vendirun::property.view', $data);
     }
 
     /**

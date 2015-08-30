@@ -3,7 +3,7 @@
     @include('vendirun::common.head')
 </head>
 <html>
-<body>
+<body class="@yield('body-class')">
 <header id="header" class="clearfix cl-header">
     @include('vendirun::common.header')
 </header>
@@ -14,8 +14,7 @@
         @include('vendirun::common.footer')
     </footer>
 </section>
+<script src="{{ asset('vendor/vendirun/js/production.js') }}"></script>
 </body>
 
 </html>
-
-<script src="{{ asset('vendor/vendirun/js/production.js') }}"></script>

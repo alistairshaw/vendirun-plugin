@@ -1,7 +1,7 @@
 {!! Form::open(array('route' => 'vendirun.contactFormSubmit', 'autocomplete' => 'off')) !!}
 {!! Form::hidden('property', $property->title) !!}
 {!! Form::hidden('propertyId', $property->id) !!}
-{!! Form::hidden('formId', 'Contact form from view property page') !!}
+{!! Form::hidden('formId', 'Quick Enquiry') !!}
 <div class="well js-contact-us" id="contact-us">
     <div class="row">
         <div class="col-sm-12">

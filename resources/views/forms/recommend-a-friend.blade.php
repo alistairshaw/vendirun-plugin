@@ -3,7 +3,7 @@
     <input type="hidden" name="_token" value="{{{ csrf_token() }}}">
     {!! Form::hidden('property', Input::old('property'), array('id'=>'propertyName')) !!}
     {!! Form::hidden('propertyId', Input::old('propertyId'), array('id'=>'propertyId')) !!}
-    {!! Form::hidden('formId','Contact form from view property page') !!}
+    {!! Form::hidden('formId','Recommend a Friend') !!}
     <div class="row">
         <div class="col-sm-12">
             <h2>Send to a Friend</h2>

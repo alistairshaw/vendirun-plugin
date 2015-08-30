@@ -5,14 +5,14 @@ Route::group(['namespace' => 'AlistairShaw\Vendirun\App\Http\Controllers', 'pref
 	Route::any('/', ['as'=>'vendirun.propertySearch', 'uses' => 'Property\PropertyController@index']);
 	Route::get('clear-search', ['as'=>'vendirun.propertyClearSearch', 'uses' => 'Property\PropertyController@clearSearch']);
 	Route::get('view/{id}/{propertyName?}', ['as'=>'vendirun.propertyView', 'uses' => 'Property\PropertyController@propertyView']);
-
-	Route::get('add-to-favourite/{id}', ['as'=>'vendirun.propertyAddToFav', 'uses' => 'Property\PropertyController@addToFavourite']);
-	Route::get('remove-favourite/{id}', ['as'=>'vendirun.propertyRemoveFav', 'uses' => 'Property\PropertyController@RemoveFavourite']);
-	Route::get('view-favourite-properties', ['as'=>'vendirun.viewFavouriteProperties', 'uses' => 'Property\PropertyController@viewFavouriteProperties']);
 	Route::get('search', ['as'=>'vendirun.searchProperties', 'uses' => 'Property\PropertyController@search']);
-
 	Route::get('category/{categoryName?}', ['as'=>'vendirun.category', 'uses' => 'Property\CategoryController@index']);
 	Route::get('location/{locationName?}', ['as'=>'vendirun.location', 'uses' => 'Property\LocationController@index']);
+
+    // require user to be logged in
+	Route::get('add-to-favourite/{id}', ['as'=>'vendirun.propertyAddToFav', 'uses' => 'Property\PropertyAuthController@addToFavourite']);
+	Route::get('remove-favourite/{id}', ['as'=>'vendirun.propertyRemoveFav', 'uses' => 'Property\PropertyAuthController@RemoveFavourite']);
+	Route::get('view-favourite-properties', ['as'=>'vendirun.viewFavouriteProperties', 'uses' => 'Property\PropertyAuthController@viewFavouriteProperties']);
 });
 
 Route::group(['namespace' => 'AlistairShaw\Vendirun\App\Http\Controllers', 'prefix' => 'customer'], function()
@@ -22,8 +22,8 @@ Route::group(['namespace' => 'AlistairShaw\Vendirun\App\Http\Controllers', 'pref
 	Route::get('logout', ['as' => 'vendirun.logout', 'uses' => 'Customer\CustomerController@logout']);
 	Route::any('register', ['as' => 'vendirun.register', 'uses' => 'Customer\CustomerController@register']);
 
-	Route::any('do-register', ['as' => 'vendirun.doRegister', 'uses' => 'Customer\CustomerController@doRegister']);
-	Route::any('do-login', ['as' => 'vendirun.doLogin', 'uses' => 'Customer\CustomerController@doLogin']);
+	Route::post('do-register', ['as' => 'vendirun.doRegister', 'uses' => 'Customer\CustomerController@doRegister']);
+	Route::post('do-login', ['as' => 'vendirun.doLogin', 'uses' => 'Customer\CustomerController@doLogin']);
 });
 
 // home page

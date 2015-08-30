@@ -2,6 +2,7 @@
 
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
+use Response;
 
 class VendirunServiceProvider extends ServiceProvider {
 

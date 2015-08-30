@@ -6065,6 +6065,11 @@ h3 {
   color: #a94442;
   font-size: 0.9em; }
 
+.large-notice {
+  padding: 60px 0;
+  font-size: 1.2em;
+  text-align: center; }
+
 .recommend-a-friend {
   border: 1px solid #ccc;
   padding: 20px;
@@ -6466,5 +6471,14 @@ footer {
     width: 500px;
     display: inline-block;
     text-align: center; }
+
+.thumbnail {
+  position: relative; }
+  .thumbnail .caption {
+    padding-bottom: 20px; }
+  .thumbnail .buttons {
+    position: absolute;
+    bottom: 13px;
+    left: 13px; }
 
 /*# sourceMappingURL=app.css.map */

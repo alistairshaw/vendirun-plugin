@@ -1,29 +1,12 @@
 <?php namespace AlistairShaw\Vendirun\App\Http\Composers;
 
-use AlistairShaw\Vendirun\App\Lib\VendirunApi\ClientApi;
-use AlistairShaw\Vendirun\App\Lib\VendirunApi\CmsApi;
+use AlistairShaw\Vendirun\App\Lib\VendirunApi\VendirunApi;
 use Config;
+use Illuminate\View\View;
 use Request;
 use URL;
-use View;
 
 class CmsViewComposer {
-
-    private $cmsApi;
-
-    public function __construct()
-    {
-        $this->cmsApi = new cmsApi();
-    }
-
-    /**
-     * Composer for main CMS page
-     * @param $view
-     */
-    public function compose($view)
-    {
-
-    }
 
     /**
      * Composer for navigation, fetches the menu from the API
@@ -34,14 +17,14 @@ class CmsViewComposer {
         $viewData = $view->getData();
         $slug = isset($viewData['menuSlug']) ? $viewData['menuSlug'] : '';
 
-        $menu = $this->cmsApi->menu($slug);
+        $menu = VendirunApi::makeRequest('cms/menu', ['slug' => $slug])->getData();
 
         $view->with('menu', $menu);
     }
 
     /**
      * Composer for the menu item, Checks if the menu is already set, if not does the API request
-     * @param $view
+     * @param View $view
      */
     public function menuItem($view)
     {
@@ -50,7 +33,7 @@ class CmsViewComposer {
         {
             $slug = isset($viewData['menuSlug']) ? $viewData['menuSlug'] : '';
 
-            $menu = $this->cmsApi->menu($slug);
+            $menu = VendirunApi::makeRequest('cms/menu', ['slug' => $slug])->getData();
 
             $view->with('menu', $menu->sub_menu);
         }
@@ -58,7 +41,7 @@ class CmsViewComposer {
 
     /**
      * Figures out if the menu item we're displaying should be active
-     * @param $view
+     * @param View $view
      */
     public function menuLink($view)
     {
@@ -87,15 +70,11 @@ class CmsViewComposer {
         $view->with('activeClass', $activeClass)->with('link', $link);
     }
 
+    /**
+     * @param View $view
+     */
     public function footer($view)
     {
-        $clientData = Config::get('clientData');
-        if (!$clientData)
-        {
-            $clientApi = new ClientApi(config('vendirun.apiKey'), config('vendirun.clientId'), config('vendirun.apiEndPoint'));
-            $clientData = $clientApi->publicInfo();
-            Config::set('clientInfo', $clientData);
-        }
-        $view->with('clientData', $clientData);
+        $view->with('clientData', VendirunApi::makeRequest('client/publicInfo')->getData());
     }
 }

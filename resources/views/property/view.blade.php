@@ -1,5 +1,8 @@
 @extends('vendirun::layouts.standard')
-
+@section('title', $property->title)
+@section('description', $property->short_description)
+@section('keywords', $property->keywords)
+@section('body-class', 'cms-property cms-property-ref-' . strtolower(str_replace('/', '-', $property->reference)))
 @section('content')
 
     <div class="container property-view js-single-property">
@@ -55,10 +58,10 @@
 
         <div class="well">
             <div class="buttons">
-                @if (isset($favouriteProperties) && in_array($property->id, $favouriteProperties))
+                @if (isset($favouritePropertiesArray) && in_array($property->id, $favouritePropertiesArray))
                     <a href="{{ route('vendirun.propertyRemoveFav', $property->id) }}" class="btn btn-default"><i class="fa fa-remove"></i> Remove From Favourites</a>
                 @endif
-                <a href="{{ (in_array($property->id, $favouriteProperties)) ? route('vendirun.viewFavouriteProperties') : route('vendirun.propertyAddToFav',$property->id) }}" class="btn btn-default"><i class="fa {{ in_array($property->id, $favouriteProperties) ? 'fa-check' : 'fa-star' }}"></i>{{ in_array($property->id, $favouriteProperties) ?  ' View Favourites' : ' Add to Favorites' }}
+                <a href="{{ (in_array($property->id, $favouritePropertiesArray)) ? route('vendirun.viewFavouriteProperties') : route('vendirun.propertyAddToFav',$property->id) }}" class="btn btn-default"><i class="fa {{ in_array($property->id, $favouritePropertiesArray) ? 'fa-check' : 'fa-star' }}"></i>{{ in_array($property->id, $favouritePropertiesArray) ?  ' View Favourites' : ' Add to Favorites' }}
                 </a>
                 <button type="button" data-property-name="{{ $property->title }}" data-property-id="{{ $property->id }}" class="btn btn-default js-send-to-friend">
                     <i class="fa fa-user"></i> Send to a Friend

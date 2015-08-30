@@ -456,3 +456,15 @@
         text-align: center;
     }
 }
+
+.thumbnail {
+    position: relative;
+    .caption {
+        padding-bottom: 20px;
+    }
+    .buttons {
+        position: absolute;
+        bottom: 13px;
+        left: 13px;
+    }
+}

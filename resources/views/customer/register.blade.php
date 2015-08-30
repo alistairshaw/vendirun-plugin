@@ -1,4 +1,8 @@
 @extends('vendirun::layouts.standard')
+@section('title', 'New Registration')
+@section('description', '')
+@section('keywords', '')
+@section('body-class', 'customer-registration')
 @section('content')
     <div class="container">
         @if(!Session::get('token'))
@@ -15,7 +19,7 @@
                         {!! Form::label('full_name', 'Full Name:*') !!}
                         {!! Form::text('full_name', Input::old('full_name'), array('placeholder'=>'Full name', 'class'=>'form-control')) !!}
                         @if ($errors->has('full_name')) <p class="error">{{ $errors->first('full_name') }}</p> @endif
-                        {!! Form::hidden('form_id', 'registration_form') !!}
+                        {!! Form::hidden('form_id', 'Website Registration Form') !!}
                     </div>
 
                     <div class="form-group">
@@ -77,7 +81,11 @@
                 </div>
             </div>
         @else
-            <p> You are currently logged in click <a href="{{ route('vendirun.logout') }}">here </a>to logout</p>
+            <div class="large-notice">
+                <div class="alert alert-success">
+                    <p>You are currently logged in click <a href="{{ route('vendirun.logout') }}">here</a> to logout</p>
+                </div>
+            </div>
         @endif
     </div>
 

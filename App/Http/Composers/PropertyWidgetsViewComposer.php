@@ -2,21 +2,13 @@
 
 use AlistairShaw\Vendirun\App\Lib\CurrencyHelper;
 use AlistairShaw\Vendirun\App\Lib\UnitHelper;
-use AlistairShaw\Vendirun\App\Lib\VendirunApi\PropertyApi;
+use AlistairShaw\Vendirun\App\Lib\VendirunApi\VendirunApi;
 use Config;
+use Illuminate\Support\Str;
 use Illuminate\View\View;
+use Session;
 
 class PropertyWidgetsViewComposer {
-
-    /**
-     * @var PropertyApi
-     */
-    private $propertyApi;
-
-    public function __construct()
-    {
-        $this->propertyApi = new propertyApi();
-    }
 
     /**
      * @param View $view
@@ -27,8 +19,9 @@ class PropertyWidgetsViewComposer {
         $element_options = isset($viewData['element']->element_options) ? json_decode($viewData['element']->element_options, true) : ['layout' => '3 columns', 'show_images' => 'Yes', 'max' => 0];
 
         $categoryName = isset($viewData['categoryName']) ? urldecode($viewData['categoryName']) : '';
-        $categoryData = $this->propertyApi->getCategory($categoryName, $element_options['max']);
-        $category = $categoryData['success'] ? $categoryData['data'] : [];
+
+        $category = VendirunApi::makeRequest('property/getCategory', ['category' => $categoryName, 'max' => $element_options['max']])->getData();
+        $view->with('category', $category);
 
         switch ($element_options['layout'])
         {
@@ -45,7 +38,7 @@ class PropertyWidgetsViewComposer {
                 $element_options['col_md'] = NULL;
         }
 
-        $view->with('category', $category)->with('element_options', $element_options);
+        $view->with('element_options', $element_options);
     }
 
     /**
@@ -56,9 +49,13 @@ class PropertyWidgetsViewComposer {
         $viewData = $view->getData();
         $element_options = isset($viewData['element']->element_options) ? json_decode($viewData['element']->element_options, true) : ['layout' => '3 columns', 'show_images' => 'Yes', 'max' => 0];
 
-        $locationName = isset($viewData['locationName']) ? urldecode($viewData['locationName']) : '';
-        $locationData = $this->propertyApi->getLocation($locationName, $element_options['max']);
-        $location = $locationData['success'] ? $locationData['data'] : [];
+        if (!isset($viewData['location']))
+        {
+            $locationName = isset($viewData['locationName']) ? urldecode($viewData['locationName']) : '';
+            $location = VendirunApi::makeRequest('property/getLocation', ['location' => $locationName, 'max' => $element_options['max']])->getData();
+
+            $view->with('location', $location);
+        }
 
         switch ($element_options['layout'])
         {
@@ -75,7 +72,7 @@ class PropertyWidgetsViewComposer {
                 $element_options['col_md'] = NULL;
         }
 
-        $view->with('location', $location)->with('element_options', $element_options);
+        $view->with('element_options', $element_options);
     }
 
     /**
@@ -127,21 +124,44 @@ class PropertyWidgetsViewComposer {
             4000000 => currencyHelper::formatWithCurrency(400000000, true)
         ];
 
-        $categories = $this->propertyApi->getCategoryList();
         $propertyTypeArray[''] = ['Any'];
-        foreach ($categories['data'] as $category)
+        $categories = VendirunApi::makeRequest('property/getCategoryList');
+        if ($categories->getSuccess())
         {
-            $propertyTypeArray[$category->id] = $category->category_name;
+            foreach ($categories->getData() as $category) $propertyTypeArray[$category->id] = $category->category_name;
         }
 
         $view->with('priceArray', $priceArray)->with('propertyTypeArray', $propertyTypeArray);
     }
 
+    /**
+     * @param View $view
+     */
     public function propertyView(View $view)
     {
         $viewData = $view->getData();
-        $view->with('price', CurrencyHelper::formatWithCurrency($viewData['property']->price, true));
 
+        $view->with('price', CurrencyHelper::formatWithCurrency($viewData['property']->price, true));
         $view->with('propertyCardUrl', Config::get('vendirun.apiEndPoint') . '../../public_area/property_card/' . $viewData['property']->id . '/' . Config::get('vendirun.clientId'));
+        $view->with('propertySlug', Str::slug($viewData['property']->title));
+    }
+
+    /**
+     * @param View $view
+     */
+    public function getFavourites(View $view)
+    {
+        $favouritePropertiesArray = [];
+        try
+        {
+            $favouriteProperties = VendirunApi::makeRequest('property/getFavourite', ['token' => Session::get('token')])->getData();
+            foreach ($favouriteProperties as $favourite) $favouritePropertiesArray[] = $favourite->id;
+        }
+        catch (\Exception $e)
+        {
+            $favouriteProperties = null;
+        }
+
+        $view->with('favouriteProperties')->with('favouritePropertiesArray', $favouritePropertiesArray);
     }
 }

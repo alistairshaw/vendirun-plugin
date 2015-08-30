@@ -1,5 +1,8 @@
 @extends('vendirun::layouts.standard')
-
+@section('title', 'Property Search')
+@section('description', 'Search for properties')
+@section('keywords', '')
+@section('body-class', 'property-search')
 @section('content')
     <div class="container property-search clearfix">
         <div class="row search-height">

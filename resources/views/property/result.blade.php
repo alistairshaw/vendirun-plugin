@@ -22,15 +22,12 @@
     </div>
     @include('vendirun::property.partials.property-attributes')
     <div class="buttons">
-        <a href="{{ route('vendirun.propertyView',[$property->id, urlencode($property->title)]) }}" class="btn btn-default"><i class="fa fa-info"></i> Full Details</a>
-        @if (isset($favouriteProperties) && in_array($property->id, $favouriteProperties))
+        <a href="{{ route('vendirun.propertyView',[$property->id, $propertySlug]) }}" class="btn btn-default"><i class="fa fa-info"></i> Full Details</a>
+        @if (isset($favouritePropertiesArray) && is_array($favouritePropertiesArray) && in_array($property->id, $favouritePropertiesArray))
             <a href="{{ route('vendirun.propertyRemoveFav', $property->id) }}" class="btn btn-default"><i class="fa fa-remove"></i> Remove From Favourites</a>
-        @elseif (!isset($favouriteProperties))
-            <a href="{{ route('vendirun.propertyRemoveFav', $property->id) }}" class="btn btn-default"><i class="fa fa-remove"></i> Remove From Favourites</a>
-            <?php $favouriteProperties[] = []; ?>
         @else
-            <a href="{{ (in_array($property->id, $favouriteProperties)) ? route('vendirun.viewFavouriteProperties') : route('vendirun.propertyAddToFav',$property->id) }}" class="btn btn-default">
-                <i class="fa {{ in_array($property->id, $favouriteProperties) ? 'fa-search' : 'fa-star' }}"></i>{{ in_array($property->id, $favouriteProperties) ?  ' View Favourites' : ' Add to Favorites' }}
+            <a href="{{ (in_array($property->id, $favouritePropertiesArray)) ? route('vendirun.viewFavouriteProperties') : route('vendirun.propertyAddToFav',$property->id) }}" class="btn btn-default">
+                <i class="fa {{ in_array($property->id, $favouritePropertiesArray) ? 'fa-search' : 'fa-star' }}"></i>{{ in_array($property->id, $favouritePropertiesArray) ?  ' View Favourites' : ' Add to Favorites' }}
             </a>
         @endif
 

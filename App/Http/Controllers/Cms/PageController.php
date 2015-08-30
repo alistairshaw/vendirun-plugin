@@ -2,6 +2,8 @@
 
 use AlistairShaw\Vendirun\App\Http\Controllers\VendirunBaseController;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\CmsApi;
+use AlistairShaw\Vendirun\App\Lib\VendirunApi\Exceptions\FailResponseException;
+use AlistairShaw\Vendirun\App\Lib\VendirunApi\VendirunApi;
 use View;
 
 class PageController extends VendirunBaseController {
@@ -9,7 +11,6 @@ class PageController extends VendirunBaseController {
     public function __construct()
     {
         parent::__construct();
-        $this->cmsApi = new CmsApi(config('vendirun.apiKey'), config('vendirun.clientId'), config('vendirun.apiEndPoint'));
     }
 
     /**
@@ -17,12 +18,7 @@ class PageController extends VendirunBaseController {
      */
     public function index()
     {
-        $page = $this->cmsApi->page('');
-        if (!$page) abort('404');
-
-        $data['page'] = $page;
-
-        return View::make('vendirun::cms.page', $data);
+        return $this->page('');
     }
 
     /**
@@ -31,12 +27,16 @@ class PageController extends VendirunBaseController {
      */
     public function page($slug)
     {
-        $page = $this->cmsApi->page($slug);
-        if (!$page) abort('404');
-
-        $data['page'] = $page;
-
-        return View::make('vendirun::cms.page', $data);
+        try
+        {
+            $page = VendirunApi::makeRequest('cms/page', ['slug' => $slug]);
+            $data['page'] = $page->getData();
+            return View::make('vendirun::cms.page', $data);
+        }
+        catch (FailResponseException $e)
+        {
+            abort('404');
+        }
     }
 
     /**

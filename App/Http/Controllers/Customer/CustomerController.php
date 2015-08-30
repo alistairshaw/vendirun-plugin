@@ -3,14 +3,14 @@
 namespace AlistairShaw\Vendirun\App\Http\Controllers\Customer;
 
 use AlistairShaw\Vendirun\App\Http\Controllers\VendirunBaseController;
-use AlistairShaw\Vendirun\App\Lib\Mailer;
-use Config;
+use AlistairShaw\Vendirun\App\Lib\VendirunApi\Exceptions\FailResponseException;
+use AlistairShaw\Vendirun\App\Lib\VendirunApi\VendirunApi;
 use Input;
 use Mail;
 use Redirect;
 use Request;
+use Illuminate\Http\Request as IlRequest;
 use Session;
-use Validator;
 use View;
 
 class CustomerController extends VendirunBaseController {
@@ -22,32 +22,65 @@ class CustomerController extends VendirunBaseController {
 
     /**
      * Login customer
+     * @param IlRequest $request
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function doLogin()
+    public function doLogin(IlRequest $request)
     {
-        $rules = [
+        $this->validate($request, [
             'email_login' => 'required',
-            'password' => 'required',
-        ];
+            'password' => 'required'
+        ]);
 
-        $validationResult = $this->validateForm($rules, Input::all());
+        return $this->login(Input::get('email_login'), Input::get('password'));
+    }
 
-        if (!$validationResult['success'])
+    /**
+     * Register a customer
+     * @param IlRequest $request
+     * @return mixed
+     */
+    public function doRegister(IlRequest $request)
+    {
+        $this->validate($request, [
+            'full_name' => 'required',
+            'email' => 'required|email',
+            'password' => 'required|min:5|confirmed',
+            'password_confirmation' => 'required|min:5'
+        ]);
+
+        $register = VendirunApi::makeRequest('customer/store', Input::all());
+
+        if ($register->getSuccess())
         {
-            Session::flash('vendirun-alert-error', 'Incorrect username or password please try again!');
-
-            return Redirect::back();
+            return $this->login(Input::get('email'), Input::get('password'));
         }
+        else
+        {
+            $vars = $_POST;
+            unset($vars['password']);
+            unset($vars['password_confirmation']);
+            $this->apiSubmissionFailed('register', $vars);
 
-        $vars['email'] = $_POST['email_login'];
-        $vars['password'] = $_POST['password'];
+            Session::flash('vendirun-alert-error', $register->getError());
 
-        $response = $this->customerApi->login($vars);
+            return Redirect::route('vendirun.register')->withInput();
+        }
+    }
 
-        if ($response['success'] == 1)
+    /**
+     * @param $email
+     * @param $password
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    private function login($email, $password)
+    {
+        $login = VendirunApi::makeRequest('customer/login', ['email' => $email, 'password' => $password]);
+
+        if ($login->getSuccess())
         {
             Session::flash('vendirun-alert-success', 'Login Successful');
-            Session::put('token', $response['data']);
+            Session::put('token', $login->getData()->token);
 
             if (Session::has('action'))
             {
@@ -60,71 +93,7 @@ class CustomerController extends VendirunBaseController {
         }
         else
         {
-            Session::flash('vendirun-alert-error', $response['error']);
-
-            return Redirect::route('vendirun.register')->withInput();
-        }
-    }
-
-    /**
-     * Register a customer
-     * @return mixed
-     */
-    public function doRegister()
-    {
-        $rules = [
-            'full_name' => 'required',
-            'email' => 'required|email',
-            'password' => 'required|min:5|confirmed',
-            'password_confirmation' => 'required|min:5'
-        ];
-
-        $validationResult = $this->validateForm($rules, Input::all());
-
-        if (!$validationResult['success'])
-        {
-            return Redirect::back()->with('errors', $validationResult['errors'])->withInput();
-        }
-
-        $response = $this->customerApi->store($_POST);
-
-        if ($response['success'])
-        {
-            $vars['email'] = $_POST['email'];
-            $vars['password'] = $_POST['password'];
-
-            $loginResponse = $this->customerApi->login($vars);
-
-            if ($loginResponse['success'])
-            {
-                Session::flash('vendirun-alert-success', 'Login Successful');
-                Session::put('token', $loginResponse['data']);
-
-                if (Session::get('action'))
-                {
-                    return Redirect::to(Session::get('action'));
-                }
-
-                return Redirect::route('vendirun.home');
-            }
-            else
-            {
-                Session::flash('vendirun-alert-error', $loginResponse['error']);
-
-                return Redirect::route('vendirun.register')->withInput();
-            }
-        }
-        else
-        {
-            if ($response['api_failure'] == 1)
-            {
-                $vars = $_POST;
-                unset($vars['password']);
-                unset($vars['password_confirmation']);
-                $this->apiSubmissionFailed('register', $vars);
-            }
-
-            Session::flash('vendirun-alert-error', $response['error']);
+            Session::flash('vendirun-alert-error', $login->getError());
 
             return Redirect::route('vendirun.register')->withInput();
         }
@@ -132,20 +101,17 @@ class CustomerController extends VendirunBaseController {
 
     /**
      * Recommend a Friend
+     * @param IlRequest $request
      * @return mixed
      */
-    public function recommendAFriend()
+    public function recommendAFriend(IlRequest $request)
     {
-        $rules = [
+        $this->validate($request, [
             'fullName' => 'required',
             'emailAddress' => 'required|email',
             'fullNameFriend' => 'required',
             'emailAddressFriend' => 'required|email',
-        ];
-
-        $validationResult = $this->validateForm($rules, Input::all());
-
-        if (!$validationResult['success']) return Redirect::back()->with('errors', $validationResult['errors'])->withInput();
+        ]);
 
         $data = Input::all();
         $params['property_id'] = isset($data['propertyId']) ? $data['propertyId'] : NULL;
@@ -162,9 +128,15 @@ class CustomerController extends VendirunBaseController {
 
         $params['form_id'] = 'Recommend a Friend Form';
 
-        $response = $this->customerApi->store($params);
+        try
+        {
+            VendirunApi::makeRequest('customer/store', $params);
+        }
+        catch (\Exception $e)
+        {
+            abort(404);
+        }
 
-        if (!$response['success']) $this->apiSubmissionFailed('recommend-friend', $data);
         Session::flash('vendirun-alert-success', 'Thank you for recommending this page to your friend! We\'ve sent them an email on your behalf.');
 
         return Redirect::back();
@@ -172,21 +144,15 @@ class CustomerController extends VendirunBaseController {
 
     /**
      * Process Contact form
+     * @param IlRequest $request
      * @return mixed
      */
-    public function processContactForm()
+    public function processContactForm(IlRequest $request)
     {
-        $rules = [
+        $this->validate($request, [
             'email' => 'required'
-        ];
+        ]);
 
-        $validationResult = $this->validateForm($rules, Input::all());
-        if (!$validationResult['success'])
-        {
-            return Redirect::back()->with('errors', $validationResult['errors']);
-        }
-
-        $data = Input::all();
         $params['full_name'] = Input::get('fullname', '');
         $params['email'] = Input::get('email', '');
         $params['telephone'] = Input::get('telephone', '');
@@ -195,15 +161,13 @@ class CustomerController extends VendirunBaseController {
         $params['note'] = nl2br(Input::get('message', ''));
         $params['note'] .= Input::get('property') ? "<br><br>Property Name: " . Input::get('property') : '';
 
-        $response = $this->customerApi->store($params);
-
-        if (!$response['success'])
+        try
         {
-            if ($response['api_failure'])
-            {
-                unset($data['_token']);
-                $this->apiSubmissionFailed('contact-form', $data);
-            }
+            VendirunApi::makeRequest('customer/store', $params);
+        }
+        catch (\Exception $e)
+        {
+            abort(404);
         }
 
         Session::flash('vendirun-alert-success', 'Thank you for contacting us we will get back to you shortly!');
@@ -212,61 +176,7 @@ class CustomerController extends VendirunBaseController {
     }
 
     /**
-     * @param $action
-     * @param $data
-     */
-    private function apiSubmissionFailed($action, $data)
-    {
-        switch ($action)
-        {
-            case 'contact-form':
-                $subjectLine = 'Someone contacted you from your website';
-                $view = 'vendirun::emails.failures.contact-form';
-                break;
-            case 'register':
-                $subjectLine = 'Someone attempted to register on your website';
-                $view = 'vendirun::emails.failures.register';
-                break;
-            case 'recommend-friend':
-                $subjectLine = 'Someone attempted to recommed a friend to a page on your website';
-                $view = 'vendirun::emails.failures.recommend-friend';
-                break;
-            default:
-                $subjectLine = 'An unknown error occurred';
-                $view = 'vendirun::emails.failures.default';
-        }
-
-        $data['mailData'] = $data;
-        $mailer = new Mailer();
-        Mail::send($view, $data, function($message)
-        {
-            $message->from(Config('vendirun.emailsFrom'), Config('vendirun.emailsFromName'));
-            $message->to(Config('vendirun.backupEmail'))->subject('');
-            $message->cc(Config('vendirun.vendirunSupportEmail'), 'Vendirun Support');
-        });
-        $mailer->sendMail(Config('vendirun.backupEmail'), $subjectLine, $data, $view);
-    }
-
-    /**
-     * Validates a form
-     * @param array $rules Rules for validation
-     * @param array $data  Form Data.
-     * @return array
-     */
-    private function validateForm($rules, $data)
-    {
-        $validator = Validator::make($data, $rules);
-        if ($validator->fails())
-        {
-            return ['success' => false, 'errors' => $validator->messages()];
-        }
-
-        return ['success' => true];
-    }
-
-    /**
-     * Loads Register / Login page.
-     * @return mixed
+     * @return \Illuminate\View\View
      */
     public function register()
     {
@@ -277,6 +187,9 @@ class CustomerController extends VendirunBaseController {
         return View::make('vendirun::customer.register', $data);
     }
 
+    /**
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function logout()
     {
         Session::flush();

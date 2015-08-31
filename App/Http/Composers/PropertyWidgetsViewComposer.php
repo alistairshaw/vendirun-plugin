@@ -142,8 +142,33 @@ class PropertyWidgetsViewComposer {
         $viewData = $view->getData();
 
         $view->with('price', CurrencyHelper::formatWithCurrency($viewData['property']->price, true));
-        $view->with('propertyCardUrl', Config::get('vendirun.apiEndPoint') . '../../public_area/property_card/' . $viewData['property']->id . '/' . Config::get('vendirun.clientId'));
         $view->with('propertySlug', Str::slug($viewData['property']->title));
+    }
+
+    /**
+     * @param View $view
+     */
+    public function propertyButtons(View $view)
+    {
+        $viewData = $view->getData();
+
+        $validPropertyButtons = ['details', 'enquire', 'favourite', 'property-card', 'recommend'];
+        if (!isset($viewData['propertyButtons']))
+        {
+            $propertyButtons = $validPropertyButtons;
+        }
+        else
+        {
+            $propertyButtons = [];
+            foreach ($viewData['propertyButtons'] as $button)
+            {
+                if (in_array($button, $validPropertyButtons)) $propertyButtons[] = $button;
+            }
+        }
+
+        $view->with('propertyButtons', $propertyButtons);
+        if (!isset($viewData['abbreviatedButtons'])) $view->with('abbreviatedButtons', false);
+        $view->with('propertyCardUrl', Config::get('vendirun.apiEndPoint') . '../../public_area/property_card/' . $viewData['property']->id . '/' . Config::get('vendirun.clientId'));
     }
 
     /**
@@ -159,7 +184,7 @@ class PropertyWidgetsViewComposer {
         }
         catch (\Exception $e)
         {
-            $favouriteProperties = null;
+            $favouriteProperties = NULL;
         }
 
 

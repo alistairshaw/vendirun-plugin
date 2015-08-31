@@ -4,11 +4,11 @@
 @section('keywords', '')
 @section('body-class', 'property-search')
 @section('content')
-    <div class="container property-search clearfix">
+    <div class="container property-search type2 clearfix">
         <div class="row search-height">
             <div class="js-main-results">
 
-                @include('vendirun::forms.recommend-a-friend')
+                @include('vendirun::forms.recommend-a-friend', ['hideRacForm' => true])
 
                 <div class="property-results">
 
@@ -36,7 +36,7 @@
                         </div>
 
                         @foreach ($properties->result as $property)
-                            @include('vendirun::property.result', array('property'=>$property))
+                            @include('vendirun::property.result', array('property' => $property, 'limitImages' => 10))
                         @endforeach
 
                         <div class="clearfix">

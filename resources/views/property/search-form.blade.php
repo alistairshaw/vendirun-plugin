@@ -1,6 +1,6 @@
-<form method="post" action="{{ route('vendirun.propertySearch') }}" autocomplete="off">
-    <input type="hidden" name="_token" value="{!! csrf_token() !!}">
-    <p><strong>Refine your search</strong></p>
+{!! Form::open(['route' => 'vendirun.propertySearch']) !!}
+<h3>Refine your search</h3>
+<div class="form-inputs">
     <div class="form-group">
         {!! Form::label('location', 'Location') !!}
         {!! Form::text('location', (isset($searchParams['location']) ? $searchParams['location'] : ''), ['class' => 'form-control']) !!}
@@ -39,4 +39,5 @@
         <a href="{{ route('vendirun.propertyClearSearch') }}" class="btn btn-default">Clear</a>
         <button type="submit" class="btn btn-primary">Search</button>
     </div>
-</form>
+</div>
+{!! Form::close() !!}

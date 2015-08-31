@@ -5,19 +5,20 @@ use AlistairShaw\Vendirun\App\Lib\VendirunApi\Exceptions\InvalidApiRequestExcept
 
 class CustomerApi extends BaseApi {
 
-	/**
-	 * Process Form
-	 * @param $params
-	 * @param $params ['full_name']
-	 * @param $params ['email']        required!
-	 * @param $params ['telephone']
-	 */
+    /**
+     * Process Form
+     * @param $params
+     * @param $params ['full_name']
+     * @param $params ['email']        required!
+     * @param $params ['telephone']
+     * @return object
+     */
 	public function store($params)
 	{
 		$url = 'customer/store';
         try
         {
-            $this->request($url, $params, true);
+            return $this->request($url, $params, true);
         }
         catch (\Exception $e)
         {
@@ -26,6 +27,8 @@ class CustomerApi extends BaseApi {
             unset($params['password_confirmation']);
             $this->apiSubmissionFailed('contact-form', $params);
         }
+
+        return false;
 	}
 
 	/**

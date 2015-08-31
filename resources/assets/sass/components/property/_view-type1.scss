@@ -1,0 +1,115 @@
+.property-view.type1 {
+    .heading {
+        margin: 0 0 20px 0;
+        h1 {
+            font-size: 1.4em;
+            font-weight: 300;
+            margin: 0;
+        }
+        h2 {
+            margin: 6px 0 0 0;
+        }
+        .price {
+            @extend .pull-right;
+            line-height: 1.6;
+            font-size: 1.2em;
+            color: $brand-primary;
+            text-align: right;
+            font-weight: 300;
+        }
+    }
+    .description {
+        margin-bottom: 20px;
+    }
+    .property-attributes {
+        background: $well-bg;
+        margin: 12px 0;
+        padding: 20px;
+        .item {
+            @extend .col-sm-4;
+            @extend .col-xs-6;
+            margin-bottom: 6px;
+            font-weight: bold;
+            span {
+                display: block;
+                font-weight: 300;
+                font-size: 0.8em;
+            }
+        }
+    }
+    .sidebar {
+        h3 {
+            margin: 0 0 12px 0;
+        }
+        .buttons {
+            background: $well-bg;
+            margin: 0 0 20px 0;
+            padding: 20px;
+            .btn {
+                width: 100%;
+                margin-bottom: 6px;
+                text-align: left;
+            }
+        }
+    }
+
+    .social-share {
+        @extend .clearfix;
+        background: $well-bg;
+        margin: 0 0 20px 0;
+        padding: 20px;
+        > div {
+            width: 50%;
+            float: left;
+            padding: 6px 0;
+            margin: 3px 0;
+            border-bottom: 1px solid #ccc;
+            min-height: 38px;
+        }
+    }
+
+    .property-related {
+        .details {
+            .short-description {
+                display: none;
+            }
+            .amenities {
+                display: none;
+            }
+        }
+        .property-attributes {
+            display: none;
+        }
+        .property-result {
+            background: $well-bg;
+            margin-bottom: 20px;
+            box-shadow: 1px 1px 2px #555;
+            .part-one {
+                .image-container {
+                    border: 0;
+                }
+            }
+            .details {
+                padding: 20px;
+                text-align: center;
+                .price {
+                    @extend .text-success;
+                    font-size: 1.2em;
+                }
+                h2 {
+                    margin: 6px 0;
+                }
+                .location {
+                    h3 {
+                        text-transform: uppercase;
+                        font-weight: 300;
+                        margin-bottom: 5px;
+                    }
+                    h4 {
+                        margin-top: 0;
+                    }
+                }
+            }
+        }
+    }
+}

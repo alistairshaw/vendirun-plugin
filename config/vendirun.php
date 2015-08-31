@@ -5,14 +5,14 @@ return [
     /**
      * The endpoint for the Vendirun system
      */
-	'apiEndPoint' => env('VENDIRUN_ENDPOINT', 'http://app.vendirun.local/api/v1/'),
+    'apiEndPoint' => env('VENDIRUN_ENDPOINT', ''),
 
     /**
      * You can get the API key and client ID by logging into your
      * Vendirun and going to Business Setup -> Settings -> API
      */
-	'apiKey' => env('VENDIRUN_API_KEY', 'RSDQ0cDTJDJlStMc'),
-    'clientId' => env('VENDIRUN_CLIENT_ID', '3'),
+    'apiKey' => env('VENDIRUN_API_KEY', ''),
+    'clientId' => env('VENDIRUN_CLIENT_ID', ''),
 
     /**
      * The from address that all emails are from. You set the
@@ -34,6 +34,18 @@ return [
      * appropriate - You don't need to change this unless you no longer
      * wish for us to receive these notifications
      */
-    'vendirunSupportEmail' => 'support@vendirun.com'
+    'vendirunSupportEmail' => 'support@vendirun.com',
+
+    /**
+     * Which listings view to use as a default,
+     * there are currently 2 options: type1 and type2
+     */
+    'propertyListingsView' => 'type1',
+
+    /**
+     * Which property information view to use as a default,
+     * there are currently 2 options: type1 and type2
+     */
+    'propertyInfoView' => 'type1'
 
 ];

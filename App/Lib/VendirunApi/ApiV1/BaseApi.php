@@ -78,7 +78,6 @@ class BaseApi {
                 }
                 $response = $this->getFromPermanentCache($noCache, $key, 'Invalid response from server at ' . $url);
             }
-
         }
         catch (ServerException $e)
         {

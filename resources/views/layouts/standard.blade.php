@@ -8,6 +8,7 @@
     @include('vendirun::common.header')
 </header>
 @include('vendirun::common.alerts')
+<div id="fb-root"></div>
 <section id="main" role="main" class="clearfix">
     @yield('content')
     <footer id="footer">
@@ -15,6 +16,7 @@
     </footer>
 </section>
 <script src="{{ asset('vendor/vendirun/js/production.js') }}"></script>
+<script src="https://apis.google.com/js/platform.js" async defer></script>
 </body>
 
 </html>

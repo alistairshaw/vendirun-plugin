@@ -73,8 +73,25 @@ class CmsViewComposer {
     /**
      * @param View $view
      */
+    public function head($view)
+    {
+        $view->with('clientData', Config::get('clientInfo'));
+    }
+
+    /**
+     * @param View $view
+     */
     public function footer($view)
     {
-        $view->with('clientData', VendirunApi::makeRequest('client/publicInfo')->getData());
+        $view->with('clientData', Config::get('clientInfo'));
     }
+
+    /**
+     * @param View $view
+     */
+    public function social($view)
+    {
+        $view->with('clientData', Config::get('clientInfo'));
+    }
+
 }

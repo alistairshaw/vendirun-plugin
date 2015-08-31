@@ -43,12 +43,10 @@ class VendirunRequestV1 extends AbstractVendirunRequest implements VendirunReque
                 throw new InvalidApiRequestException($request);
         }
 
-
         $method = $requestArray[1];
         if (!method_exists($this->api, $method)) throw new InvalidApiRequestException($request);
 
         $response = $this->api->{$method}($parameters);
-
         if (!$response) throw new InvalidApiRequestException($request);
 
         $this->response = new VendirunResponseV1($response);

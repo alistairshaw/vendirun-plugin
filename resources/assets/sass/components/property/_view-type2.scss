@@ -1,0 +1,72 @@
+.property-view.type2 {
+    h1 {
+        margin: 0 0 10px 0;
+        font-size: 1.7em;
+    }
+
+    h3 {
+        margin: 0 0 10px 0;
+    }
+
+    .price {
+        margin: -10px 0 18px 0;
+        font-size: 2.1em;
+        color: #ccc;
+        float: right;
+    }
+
+    .stats {
+        padding: 0;
+        margin: 0;
+        li {
+            list-style: none;
+            margin-bottom: 12px;
+            &:last-child {
+                margin: 0;
+            }
+        }
+    }
+
+    .description-well {
+        background: #FFF;
+    }
+
+    .amenities-well {
+        position: relative;
+        background: #FFF;
+        .col-sm-6 {
+            position: static;
+        }
+        .amenities {
+            text-align: right;
+        }
+        .buttons {
+            clear: both;
+            .fa-star {
+                color: $brand-warning;
+            }
+            .fa-info {
+                color: #0000ff;
+            }
+            .fa-remove {
+                color: $brand-primary;
+            }
+            .fa-envelope {
+                color: #999;
+            }
+        }
+    }
+    .property-attributes {
+        background: $well-bg;
+        padding: 20px;
+        line-height: 1.6;
+        .item {
+            @extend .col-sm-6;
+        }
+        span {
+            display: inline-block;
+            font-weight: bold;
+            width: 110px;
+        }
+    }
+}

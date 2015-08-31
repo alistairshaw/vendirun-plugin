@@ -55,5 +55,4 @@ class VendirunServiceProvider extends ServiceProvider {
 		$loader->alias('Form', 'Illuminate\Html\FormFacade');
 		$loader->alias('HTML', 'Illuminate\Html\HtmlFacade');
 	}
-
 }

@@ -8,6 +8,7 @@ Route::group(['namespace' => 'AlistairShaw\Vendirun\App\Http\Controllers', 'pref
 	Route::get('search', ['as'=>'vendirun.searchProperties', 'uses' => 'Property\PropertyController@search']);
 	Route::get('category/{categoryName?}', ['as'=>'vendirun.category', 'uses' => 'Property\CategoryController@index']);
 	Route::get('location/{locationName?}', ['as'=>'vendirun.location', 'uses' => 'Property\LocationController@index']);
+	Route::get('property/recommend/{propertyId}', ['as'=>'vendirun.propertyRecommend', 'uses' => 'Property\PropertyController@recommend']);
 
     // require user to be logged in
 	Route::get('add-to-favourite/{id}', ['as'=>'vendirun.propertyAddToFav', 'uses' => 'Property\PropertyAuthController@addToFavourite']);

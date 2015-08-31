@@ -3,7 +3,10 @@
 namespace AlistairShaw\Vendirun\App\Http\Controllers\Property;
 
 use AlistairShaw\Vendirun\App\Http\Controllers\VendirunBaseController;
-use AlistairShaw\Vendirun\App\Lib\VendirunApi\PropertyApi;
+use AlistairShaw\Vendirun\App\Lib\VendirunApi\Exceptions\FailResponseException;
+use AlistairShaw\Vendirun\App\Lib\VendirunApi\VendirunApi;
+use App;
+use Config;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Input;
 use Redirect;
@@ -14,35 +17,25 @@ use Request;
 class PropertyController extends VendirunBaseController {
 
     /**
-     * @var PropertyApi
-     */
-    private $propertyApi;
-
-    public function __construct()
-    {
-        parent::__construct();
-        $this->propertyApi = new PropertyApi(config('vendirun.apiKey'), config('vendirun.clientId'), config('vendirun.apiEndPoint'));
-    }
-
-    /**
      * @return \Illuminate\View\View
      */
     public function index()
     {
-        $data['page'] = (object)[
-            'title' => 'Property Search',
-        ];
+        $searchParams = $this->searchParams();
+        $data = [];
+        try
+        {
+            $data['properties'] = VendirunApi::makeRequest('property/search', $searchParams)->getData();
+            $data['searchParams'] = (array)$data['properties']->search_params;
 
-        $data['searchParams'] = $this->searchParams();
+            $data['pagination'] = ($data['properties']) ? $data['pagination'] = new LengthAwarePaginator($data['properties']->result, $data['properties']->total_rows, $data['properties']->limit, Request::get('page'), ['path' => '/property/']) : false;
+        }
+        catch (\Exception $e)
+        {
+            if (App::environment() == 'production') abort(404);
+        }
 
-        $data['favouriteProperties'] = $this->propertyApi->getFavourite(Session::get('token'), true);
-        $data['properties'] = $this->propertyApi->search($data['searchParams']);
-
-        $data['searchParams'] = (array)$data['properties']->search_params;
-
-        $data['pagination'] = ($data['properties']) ? $data['pagination'] = new LengthAwarePaginator($data['properties']->result, $data['properties']->total_rows, $data['properties']->limit, Request::get('page'), ['path' => '/property/']) : false;
-
-        return View::make('vendirun::property.search', $data);
+        return View::make('vendirun::property.listings.' . Config::get('vendirun.propertyListingsView'), $data);
     }
 
     /**
@@ -62,21 +55,18 @@ class PropertyController extends VendirunBaseController {
      */
     public function propertyView($id, $propertyName = '')
     {
-        $searchParams['id'] = $id;
+        $data = [];
+        try
+        {
+            $property = VendirunApi::makeRequest('property/property', ['id' => $id]);
+            $data['property'] = $property->getData();
+        }
+        catch (FailResponseException $e)
+        {
+            if (App::environment() == 'production') abort(404);
+        }
 
-        $property = $this->propertyApi->property($searchParams);
-        if (!$property) abort(404);
-
-        $data['property'] = $property;
-        $data['favouriteProperties'] = $this->propertyApi->getFavourite(Session::get('token'), true);
-
-        $data['page'] = (object)[
-            'title' => $property->title,
-            'meta_description' => strip_tags($property->short_description),
-            'meta_keywords' => $property->keywords
-        ];
-
-        return View::make('vendirun::property.view', $data);
+        return View::make('vendirun::property.view.' . Config::get('vendirun.propertyInfoView'), $data);
     }
 
     /**
@@ -119,93 +109,26 @@ class PropertyController extends VendirunBaseController {
             $searchParams['reference'] = Input::get('reference');
         }
 
-        $searchParams['limit'] = (Input::get('limit')) ? Input::get('limit') : 5;
+        switch (Config::get('vendirun.propertyListingsView'))
+        {
+            case 'type2':
+                $defaultLimit = 5;
+                break;
+            default:
+                $defaultLimit = 12;
+        }
+        $searchParams['limit'] = (Input::has('limit')) ? Input::get('limit') : $defaultLimit;
+
+        $searchParams['order_by'] = 'created';
+        $searchParams['order_direction'] = 'DESC';
+        if (Input::has('order_by'))
+        {
+            $searchArray = explode("_", Input::get('order_by'));
+            $searchParams['order_by'] = $searchArray[0];
+            $searchParams['order_direction'] = (count($searchArray) == 2) ? $searchArray[1] : 'ASC';
+        }
 
         return $searchParams;
-    }
-
-    /**
-     * Add Property to Favourite
-     * @param $propertyId
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function addToFavourite($propertyId)
-    {
-        $token = Session::get('token');
-
-        if (!$token)
-        {
-            Session::put('action', '/property/add-to-favourite/' . $propertyId);
-
-            return Redirect::route('vendirun.register');
-        }
-
-        $params['token'] = $token->token;
-        $params['property_id'] = $propertyId;
-        $response = $this->propertyApi->addToFavourite($params);
-
-        if ($response['success'])
-        {
-            return Redirect::route('vendirun.propertyView', ['id' => $propertyId]);
-        }
-        else
-        {
-            Session::flash('vendirun-alert-error', 'Oops! Something Went wrong! Please try again.');
-
-            return Redirect::route('vendirun.register');
-        }
-    }
-
-    /**
-     * @param $propertyId
-     * @return mixed
-     */
-    public function removeFavourite($propertyId)
-    {
-        $token = Session::get('token');
-        if (!$token)
-        {
-            return Redirect::route('vendirun.register');
-        }
-
-        $params['token'] = $token->token;
-        $params['property_id'] = $propertyId;
-        $response = $this->propertyApi->removeFavourite($params);
-
-        if ($response['success'])
-        {
-            return Redirect::route('vendirun.propertyView', ['id' => $propertyId]);
-        }
-        else
-        {
-            Session::flash('vendirun-alert-error', 'Oops! Something Went wrong! Please try again.');
-
-            return Redirect::route('vendirun.register');
-        }
-
-    }
-
-    /**
-     * Displays favourite properties
-     */
-    public function viewFavouriteProperties()
-    {
-        $data['page'] = (object)[
-            'title' => 'Favourite Properties'
-        ];
-
-        $token = Session::get('token');
-        if (!$token)
-        {
-            Session::flash('vendirun-alert-error', 'Invalid token please login');
-
-            return Redirect::route('vendirun.register');
-        }
-
-        $data['bodyClass'] = 'property-search';
-        $data['property'] = $this->propertyApi->getFavourite(Session::get('token'));
-
-        return View::make('vendirun::property.favourite_properties', $data);
     }
 
     /**
@@ -213,10 +136,26 @@ class PropertyController extends VendirunBaseController {
      */
     public function search()
     {
-        $data['page'] = (object)[
-            'title' => 'Smart Search'
-        ];
-
         return View::make('vendirun::property.simple-search');
+    }
+
+    /**
+     * @param $id
+     * @return \Illuminate\View\View
+     */
+    public function recommend($id)
+    {
+        $data = [];
+        try
+        {
+            $property = VendirunApi::makeRequest('property/property', ['id' => $id]);
+            $data['property'] = $property->getData();
+        }
+        catch (FailResponseException $e)
+        {
+            if (App::environment() == 'production') abort(404);
+        }
+
+        return View::make('vendirun::property.recommend', $data);
     }
 }

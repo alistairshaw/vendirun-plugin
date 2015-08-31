@@ -32,9 +32,8 @@
     },
 
 * Add the namespace to the PSR-4 section ("AlistairShaw\\": "vendor/alistairshaw/")
-* composer require illuminate/html (in the root)
 * Edit the /config/app.php file and add the VendirunServiceProvider to the app (AlistairShaw\Vendirun\App\Providers\VendirunServiceProvider::class)
 * composer dump-autoload
 * Use 'artisan vendor:publish' to copy public assets to the right place (add tag --tag=public to only publish the images, css, etc and use --force to overwrite existing files)
-* Copy the vendor/alistairshaw/vendirun/config/vendirun.php to app/config/vendirun.php and set the correct endpoint URL, client ID and API Key
+* Copy the vendor/alistairshaw/vendirun/config/vendirun.php to app/config/vendirun.php and set the correct endpoint URL, client ID and API Key, either in the config file or in the laravel .env file
 * The site is working! Now you just need to customise the CSS and any views you like.

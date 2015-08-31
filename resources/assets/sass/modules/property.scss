@@ -1,448 +1,14 @@
-.property-search {
-
-    .search-height {
-        min-height: 700px;
-
-    }
-
-    .popout {
-        position: absolute;
-        left: 0;
-        top: 240px;
-        a {
-            display: block;
-            padding: 15px 10px;
-            background: #FFF;
-            border: 1px solid #ccc;
-            &:hover {
-                text-decoration: none;
-                background: #F0F0F0;
-            }
-            &:active, &:focus {
-                text-decoration: none;
-            }
-        }
-    }
-
-    .left-column {
-        position: absolute;
-        top: 115px;
-        left: 0;
-        overflow: hidden;
-        padding: 0;
-        .search-box {
-            .search-labels {
-                margin-bottom: 20px;
-                .label {
-                    display: inline-block;
-                    padding: 5px 8px;
-                    margin-bottom: 2px;
-                }
-            }
-        }
-        .filter {
-            .section {
-                margin-bottom: 12px;
-                .heading {
-                    font-size: 0.9em;
-                    color: $brand-info;
-                    text-transform: uppercase;
-                    font-weight: bold;
-                }
-                ul {
-                    padding: 0 0 0 5px;
-                    li {
-                        list-style: none;
-                        a {
-                            &:hover {
-                                text-decoration: none;
-                            }
-                        }
-                        &.more-options {
-                            margin-top: 5px;
-                            a {
-                                color: $brand-info;
-                                &:hover {
-                                    color: $brand-primary;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    .property-results {
-        padding: 0;
-        .per-page {
-            margin-top: 20px;
-        }
-        .property-result {
-            border: 1px solid #ccc;
-            background: #fff;
-            padding: 10px;
-            margin-bottom: 10px;
-            .left {
-                width: 50%;
-                float: left;
-                margin-right: 30px;
-                margin-bottom: 10px;
-                .image-container {
-                    .property-slide-show, .property-single-image {
-                        padding: 0;
-                        margin: 0;
-                        @include font-size(24px);
-                        li {
-                            list-style: none;
-                            &:not(:first-child) {
-                                img {
-                                    display: none;
-                                }
-                            }
-                        }
-                        .nivo-directionNav {
-                            a {
-                                color: #FFF;
-                            }
-                            .nivo-nextNav {
-                                right: 10px;
-                            }
-                            .nivo-prevNav {
-                                left: 10px;
-                            }
-                        }
-                    }
-                    width: 100%;
-                    text-align: center;
-                    overflow: hidden;
-                    border: 1px solid #333;
-                }
-            }
-            .property-attributes {
-                background: #f0f0f0;
-                padding: 10px;
-                line-height: 1.6;
-                text-align: left;
-                .item {
-                    @extend .col-sm-6;
-                }
-                span {
-                    display: inline-block;
-                    font-weight: bold;
-                    width: 110px;
-                }
-            }
-            .details {
-                @extend .clearfix;
-                h2 {
-                    margin-top: 0;
-                    a {
-                        font-size: 1.4em;
-                        font-weight: 300;
-                        color: #333;
-                        margin: 0 0 10px 0;
-                        line-height: 1.4;
-                        text-decoration: none;
-                    }
-                }
-                .price {
-                    color: #999;
-                    margin: 0 0 5px 5px;
-                    font-weight: 600;
-                    float: right;
-                    font-size: 2em;
-                }
-                p {
-                    color: #666;
-                }
-            }
-            .stats {
-                li {
-                    list-style: none;
-                    margin-bottom: 5px;
-                    .icon {
-                        margin-right: 10px;
-                        width: 20px;
-                        img {
-                            width: 16px;
-                        }
-                    }
-                }
-            }
-            .amenities {
-                .label {
-                    display: inline-block;
-                    margin-bottom: 5px;
-                    padding: 5px 10px;
-                }
-            }
-            .buttons {
-                clear: both;
-                margin-top: 10px;
-                .fa-star {
-                    color: $brand-warning;
-                }
-                .fa-info {
-                    color: #0000ff;
-                }
-                .fa-remove {
-                    color: $brand-primary;
-                }
-                .fa-envelope {
-                    color: #999;
-                }
-            }
-        }
-    }
-}
-
-.property-view {
-    .image-container {
-        margin-bottom: 30px;
-        &.thumbnails {
-            margin: 0;
-            a {
-                display: block;
-                height: 258px;
-                width: 100%;
-                @media (max-width: $screen-lg) {
-                    height: 212px;
-                }
-                @media (max-width: $screen-md-max) {
-                    height: 157px;
-                }
-                @media (max-width: $screen-sm-max) {
-                    height: auto;
-                }
-                img {
-                    margin-bottom: 30px;
-                }
-            }
-        }
-        .property-slide-show {
-            padding: 0;
-            margin: 0;
-            li {
-                list-style: none;
-                &:not(:first-child) {
-                    img {
-                        display: none;
-                    }
-                }
-            }
-            .nivo-directionNav {
-                a {
-                    color: #FFF;
-                }
-                .nivo-nextNav {
-                    right: 10px;
-                }
-                .nivo-prevNav {
-                    left: 10px;
-                }
-            }
-        }
-    }
-
-    h1 {
-        margin: 0 0 10px 0;
-        font-size: 1.7em;
-    }
-
-    h3 {
-        margin: 0 0 10px 0;
-    }
-
-    .price {
-        margin: -10px 0 18px 0;
-        font-size: 2.1em;
-        color: #ccc;
-        float: right;
-    }
-
-    .stats {
-        padding: 0;
-        margin: 0;
-        li {
-            list-style: none;
-            margin-bottom: 12px;
-            &:last-child {
-                margin: 0;
-            }
-        }
-    }
-
-    .description-well {
-        background: #FFF;
-    }
-
-    .amenities-well {
-        position: relative;
-        background: #FFF;
-        .col-sm-6 {
-            position: static;
-        }
-        .amenities {
-            text-align: right;
-        }
-        .buttons {
-            clear: both;
-            .fa-star {
-                color: $brand-warning;
-            }
-            .fa-info {
-                color: #0000ff;
-            }
-            .fa-remove {
-                color: $brand-primary;
-            }
-            .fa-envelope {
-                color: #999;
-            }
-        }
-    }
-    .property-attributes {
-        background: #f0f0f0;
-        padding: 20px;
-        line-height: 1.6;
-        .item {
-            @extend .col-sm-6;
-        }
-        span {
-            display: inline-block;
-            font-weight: bold;
-            width: 110px;
-        }
-    }
-}
+@import "../components/property/listings-type1";
+@import "../components/property/listings-type2";
+@import "../components/property/view";
+@import "../components/property/view-type1";
+@import "../components/property/view-type2";
+@import "../components/property/categories";
 
 #map-canvas {
     width: 100%;
     height: 400px;
     background-color: #CCC;
-}
-
-.property-categories {
-    .row {
-        margin: 0;
-    }
-    .col-sm-6 {
-        padding-left: 0;
-        padding-right: 0;
-    }
-    .category-search-item {
-        cursor: pointer;
-        @extend .clearfix;
-        .col {
-            width: 50%;
-            float: left;
-            position: relative;
-            background: #f0f0f0;
-            &.col-right {
-                float: right;
-            }
-            &.text-col {
-                @include transition(all 0.4s ease);
-                position: absolute;
-                right: 0;
-                height: 100%;
-                .category-button {
-                    opacity: 0;
-                }
-            }
-            &.text-col-left {
-                @include transition(all 0.4s ease);
-                position: absolute;
-                left: 0;
-                height: 100%;
-                z-index: 3;
-                .category-button {
-                    opacity: 0;
-                }
-            }
-            .copy {
-                padding: 20px;
-                h2 {
-                    font-size: 1.2em;
-                    margin-bottom: 12px;
-                }
-            }
-            .arrow {
-                @include transition(all 1s ease);
-                position: absolute;
-                top: 50%;
-                margin-top: -14px;
-                z-index: 2;
-                color: #f0f0f0;
-                &.arrow-left {
-                    left: -18px;
-                }
-                &.arrow-right {
-                    right: -18px;
-                }
-            }
-        }
-    }
-
-    .property-category-list-item {
-        border: 1px solid #ccc;
-        background: #fff;
-        padding: 10px;
-        margin-bottom: 10px;
-        .image-container {
-            margin-bottom: 20px;
-            .property-slide-show, .property-single-image {
-                padding: 0;
-                margin: 0;
-                @include font-size(24px);
-                li {
-                    list-style: none;
-                    &:not(:first-child) {
-                        img {
-                            display: none;
-                        }
-                    }
-                }
-                .nivo-directionNav {
-                    a {
-                        color: #FFF;
-                    }
-                    .nivo-nextNav {
-                        right: 10px;
-                    }
-                    .nivo-prevNav {
-                        left: 10px;
-                    }
-                }
-            }
-            width: 30%;
-            text-align: center;
-            float: left;
-            margin-right: 30px;
-            overflow: hidden;
-            border: 1px solid #333;
-        }
-        .details {
-            @extend .clearfix;
-            h2 {
-                font-weight: 300;
-                color: #333;
-                margin: 0 0 10px 0;
-                line-height: 1.4;
-            }
-            .price {
-                color: #999;
-                margin: 0 0 5px 5px;
-                font-weight: 600;
-                float: right;
-                font-size: 2em;
-            }
-            p {
-                color: #666;
-            }
-        }
-    }
 }
 
 .search-box {
@@ -454,5 +20,33 @@
         width: 500px;
         display: inline-block;
         text-align: center;
+    }
+}
+
+.thumbnail {
+    position: relative;
+    .caption {
+        padding-bottom: 20px;
+    }
+    .buttons {
+        position: absolute;
+        bottom: 13px;
+        left: 13px;
+    }
+}
+
+.property-badge {
+    position: absolute;
+    width: 120px;
+    height: 80px;
+    top: 20px;
+    right: 20px;
+    background-size: 100% 100%;
+    z-index: 11;
+    &.sold {
+        background-image: url(../images/property/sold-badge.png);
+    }
+    &.rented {
+        background-image: url(../images/property/rented-badge.png);
     }
 }

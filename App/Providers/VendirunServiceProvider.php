@@ -2,6 +2,7 @@
 
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
+use Response;
 
 class VendirunServiceProvider extends ServiceProvider {
 
@@ -54,5 +55,4 @@ class VendirunServiceProvider extends ServiceProvider {
 		$loader->alias('Form', 'Illuminate\Html\FormFacade');
 		$loader->alias('HTML', 'Illuminate\Html\HtmlFacade');
 	}
-
 }

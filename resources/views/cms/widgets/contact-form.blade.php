@@ -7,6 +7,7 @@
         <p>{{ $options['form_description'] }}</p>
     @endif
     {!! Form::open(['route' => 'vendirun.contactFormSubmit']) !!}
+    {!! Form::hidden('formId', $options['form_title']) !!}
     <div class="row">
         <div class="col-sm-6">
             @if (isset($options['fullname']))

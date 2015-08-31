@@ -16,4 +16,27 @@ $(document).ready(function () {
 	// If there are thumbnails on the page, we want them all the same size
 	if ($('.thumbnail').length > 0) thumbnails.init();
 
+    $('[data-toggle="tooltip"]').tooltip();
+
 });
+
+var urlManager = function() {
+    return {
+        init: function() {
+            return this;
+        },
+
+        addParameterToUrl: function(param, value) {
+            var queryParameters = {}, queryString = location.search.substring(1),
+                re = /([^&=]+)=([^&]*)/g, m;
+
+            while (m = re.exec(queryString)) {
+                queryParameters[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
+            }
+
+            queryParameters[param] = value;
+
+            location.search = $.param(queryParameters);
+        }
+    }.init();
+};

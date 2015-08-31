@@ -39,6 +39,8 @@ elixir(function (mix) {
 			'thumbnails.js',
 			'property/filter.js',
 			'property/property-view.js',
+			'property/property-results.js',
+			'social.js',
 			'main.js'
 		], 'public/js/production.js')
 

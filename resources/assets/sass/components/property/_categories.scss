@@ -1,0 +1,122 @@
+.property-categories {
+    .row {
+        margin: 0;
+    }
+    .col-sm-6 {
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .category-search-item {
+        cursor: pointer;
+        @extend .clearfix;
+        .col {
+            width: 50%;
+            float: left;
+            position: relative;
+            background: $well-bg;
+            &.col-right {
+                float: right;
+            }
+            &.text-col {
+                @include transition(all 0.4s ease);
+                position: absolute;
+                right: 0;
+                height: 100%;
+                .category-button {
+                    opacity: 0;
+                }
+            }
+            &.text-col-left {
+                @include transition(all 0.4s ease);
+                position: absolute;
+                left: 0;
+                height: 100%;
+                z-index: 3;
+                .category-button {
+                    opacity: 0;
+                }
+            }
+            .copy {
+                padding: 20px;
+                h2 {
+                    font-size: 1.2em;
+                    margin-bottom: 12px;
+                }
+            }
+            .arrow {
+                @include transition(all 1s ease);
+                position: absolute;
+                top: 50%;
+                margin-top: -14px;
+                z-index: 2;
+                color: $well-bg;
+                &.arrow-left {
+                    left: -18px;
+                }
+                &.arrow-right {
+                    right: -18px;
+                }
+            }
+        }
+    }
+
+    .property-category-list-item {
+        border: 1px solid #ccc;
+        background: #fff;
+        padding: 10px;
+        margin-bottom: 10px;
+        .image-container {
+            position: relative;
+            margin-bottom: 20px;
+            .property-slide-show, .property-single-image {
+                padding: 0;
+                margin: 0;
+                @include font-size(24px);
+                li {
+                    list-style: none;
+                    &:not(:first-child) {
+                        img {
+                            display: none;
+                        }
+                    }
+                }
+                .nivo-directionNav {
+                    a {
+                        color: #FFF;
+                    }
+                    .nivo-nextNav {
+                        right: 10px;
+                    }
+                    .nivo-prevNav {
+                        left: 10px;
+                    }
+                }
+            }
+            width: 30%;
+            text-align: center;
+            float: left;
+            margin-right: 30px;
+            overflow: hidden;
+            border: 1px solid #333;
+        }
+        .details {
+            @extend .clearfix;
+            h2 {
+                font-weight: 300;
+                color: #333;
+                margin: 0 0 10px 0;
+                line-height: 1.4;
+            }
+            .price {
+                color: #999;
+                margin: 0 0 5px 5px;
+                font-weight: 600;
+                float: right;
+                font-size: 2em;
+            }
+            p {
+                color: #666;
+            }
+        }
+    }
+}

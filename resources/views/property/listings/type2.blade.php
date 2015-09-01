@@ -69,6 +69,7 @@
             </div>
             <div class="col-sm-2 hide left-column hidden-sm hidden-xs">
                 <div class="well refine-search">
+                    <h3>Refine your search</h3>
                     @include('vendirun::property.search-form')
                 </div>
             </div>

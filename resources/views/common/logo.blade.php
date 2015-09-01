@@ -1,0 +1,1 @@
+<img src="{{ Config::get('clientInfo')->company_logo . '/medium' }}" class="img-responsive">

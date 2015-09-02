@@ -8786,6 +8786,12 @@ h3 {
   position: relative;
   background-color: #e5e3df; }
 
+.navbar-brand {
+  padding: 4px 15px;
+  display: block; }
+  .navbar-brand img {
+    max-height: 100%; }
+
 footer {
   padding: 40px 0;
   background: #f0f0f0; }
@@ -9351,7 +9357,7 @@ footer {
 .thumbnail {
   position: relative; }
   .thumbnail .caption {
-    padding-bottom: 20px; }
+    padding-bottom: 40px; }
   .thumbnail .buttons {
     position: absolute;
     bottom: 13px;

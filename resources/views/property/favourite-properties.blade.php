@@ -12,7 +12,10 @@
                 @forelse ($properties as $item)
                     @include('vendirun::property.result', array('property'=>$item, 'limitImages' => 1, 'abbreviatedButtons' => true))
                 @empty
-                    <p>You don't have any favourite properties yet! Click <a href="{{ route('vendirun.propertySearch') }}">here</a> to explore and find some!.</p>
+                    <div class="large-notice">
+                        <p>You don't have any favourite properties yet! Click
+                            <a href="{{ route('vendirun.propertySearch') }}">here</a> to explore and find some!.</p>
+                    </div>
                 @endforelse
             </div>
         </div>

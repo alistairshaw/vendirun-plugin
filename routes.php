@@ -40,6 +40,10 @@ Route::group(['namespace' => 'AlistairShaw\Vendirun\App\Http\Controllers', 'pref
 // home page
 Route::any('/', ['as'=>'vendirun.home', 'uses' => 'AlistairShaw\Vendirun\App\Http\Controllers\Cms\PageController@index']);
 
+// google map cache
+Route::post('vendirun/google-map-cache-get', ['as'=>'vendirun.mapCache', 'uses' => 'AlistairShaw\Vendirun\App\Http\Controllers\Cms\PageController@mapCacheRetrieve']);
+Route::post('vendirun/google-map-cache-set', ['as'=>'vendirun.mapCache', 'uses' => 'AlistairShaw\Vendirun\App\Http\Controllers\Cms\PageController@mapCacheSet']);
+
 // menu example
 Route::any('/menu', ['as'=>'vendirun.menu', 'uses' => 'AlistairShaw\Vendirun\App\Http\Controllers\Cms\PageController@menu']);
 

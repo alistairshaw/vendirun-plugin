@@ -2,7 +2,7 @@
 @section('title', $page->title)
 @section('description', $page->meta_description)
 @section('keywords', $page->meta_keywords)
-@section('body-class', 'cms-page-' . str_replace('/', '-', $page->slug))
+@section('body-class', 'cms-page cms-page-' . str_replace('/', '-', $page->slug ? $page->slug : 'home'))
 @section('content')
     @foreach ($page->page_blocks as $block)
         <div class="{{ $block->class }}">

@@ -8,6 +8,7 @@
         <div class="row">
             <div class="col-md-3 col-sm-4 hidden-xs hidden-sm">
                 <div class="search-form">
+                    <h3>Refine your search</h3>
                     @include('vendirun::property.search-form')
                 </div>
             </div>

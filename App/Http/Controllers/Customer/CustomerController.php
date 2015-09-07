@@ -28,7 +28,7 @@ class CustomerController extends VendirunBaseController {
     public function doLogin(IlRequest $request)
     {
         $this->validate($request, [
-            'email_login' => 'required',
+            'email_login' => 'required|email',
             'password' => 'required'
         ]);
 
@@ -49,22 +49,14 @@ class CustomerController extends VendirunBaseController {
             'password_confirmation' => 'required|min:5'
         ]);
 
-        $register = VendirunApi::makeRequest('customer/store', Input::all());
-
-        if ($register->getSuccess())
+        try
         {
+            VendirunApi::makeRequest('customer/store', Input::all());
             return $this->login(Input::get('email'), Input::get('password'));
         }
-        else
+        catch (FailResponseException $e)
         {
-            $vars = $_POST;
-            unset($vars['password']);
-            unset($vars['password_confirmation']);
-            $this->apiSubmissionFailed('register', $vars);
-
-            Session::flash('vendirun-alert-error', $register->getError());
-
-            return Redirect::route('vendirun.register')->withInput();
+            return Redirect::route('vendirun.register')->withInput()->withErrors($e->getMessage());
         }
     }
 
@@ -75,10 +67,10 @@ class CustomerController extends VendirunBaseController {
      */
     private function login($email, $password)
     {
-        $login = VendirunApi::makeRequest('customer/login', ['email' => $email, 'password' => $password]);
-
-        if ($login->getSuccess())
+        try
         {
+            $login = VendirunApi::makeRequest('customer/login', ['email' => $email, 'password' => $password]);
+
             Session::flash('vendirun-alert-success', 'Login Successful');
             Session::put('token', $login->getData()->token);
 
@@ -91,11 +83,9 @@ class CustomerController extends VendirunBaseController {
 
             return Redirect::route('vendirun.register');
         }
-        else
+        catch (\Exception $e)
         {
-            Session::flash('vendirun-alert-error', $login->getError());
-
-            return Redirect::route('vendirun.register')->withInput();
+            return Redirect::route('vendirun.register')->withInput()->withErrors($e->getMessage());
         }
     }
 

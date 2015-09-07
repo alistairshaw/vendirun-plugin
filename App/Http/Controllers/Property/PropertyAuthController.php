@@ -40,8 +40,8 @@ class PropertyAuthController extends VendirunAuthController {
      */
     public function viewFavouriteProperties()
     {
-        $property = VendirunApi::makeRequest('property/getFavourite', ['token' => Session::get('token'), 'idsOnly' => false]);
-        return View::make('vendirun::property.favourite-properties')->with('property', $property->getData());
+        $properties = VendirunApi::makeRequest('property/getFavourite', ['token' => Session::get('token'), 'idsOnly' => false]);
+        return View::make('vendirun::property.favourite-properties')->with('properties', $properties->getData());
     }
 
 }

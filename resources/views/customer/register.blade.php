@@ -6,6 +6,17 @@
 @section('content')
     <div class="container">
         @if(!Session::get('token'))
+
+            @if (count($errors) > 0)
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li><i class="fa fa-exclamation-triangle"></i> {{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
             <div class="row">
                 <div class="col-md-6">
 
@@ -57,12 +68,6 @@
                     <p></p>
 
                     <h2>Login </h2>
-
-                    @if(Session::has('alert_message_failure'))
-                        <div class="alert alert-danger js-fade-out" data-time="5">
-                            <i class="fa fa-exclamation-triangle"></i> {!! Session::get('alert_message_failure') !!}
-                        </div>
-                    @endif
 
                     <div class="form-group">
                         {!! Form::label('email_login', 'Email:*') !!}

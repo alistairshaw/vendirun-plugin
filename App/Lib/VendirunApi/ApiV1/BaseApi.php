@@ -68,6 +68,16 @@ class BaseApi {
             if ($res->getStatusCode() !== 200) throw new NoApiConnectionException($url, $res->getStatusCode(), $key);
             $response = json_decode($res->getBody());
 
+            if ($response == '')
+            {
+                if (App::environment() == 'local')
+                {
+                    echo 'API endpoint returned completely empty. That shouldn\'t happen.';
+                    dd($res->getStatusCode());
+                }
+                $response = $this->getFromPermanentCache($noCache, $key, 'Empty response from server at ' . $url);
+            }
+
             // if no valid JSON, try to get from cache
             if (json_last_error() !== JSON_ERROR_NONE)
             {
@@ -119,8 +129,8 @@ class BaseApi {
             if (Cache::has('Permanent' . $key))
             {
                 $this->alertSupport('API Request Failed, Using Permanent Cache', $key, 480);
-
-                return Cache::get('Permanent' . $key);
+                $response = Cache::get('Permanent' . $key);
+                if ($response) return $response;
             }
         }
         throw new FailResponseException(false, $errorMessage);

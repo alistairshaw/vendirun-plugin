@@ -8,7 +8,9 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="{{ route('vendirun.home') }}">Vendirun</a>
+            <a class="navbar-brand" href="{{ route('vendirun.home') }}">
+                @include('vendirun::common.logo')
+            </a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->

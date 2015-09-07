@@ -1,0 +1,13 @@
+.property-advanced-search-widget {
+    @extend .well;
+    h2 {
+        margin-top: 0;
+    }
+    .form-inputs {
+        @extend .row;
+        .form-group {
+            @extend .col-sm-6;
+            @extend .col-md-4;
+        }
+    }
+}

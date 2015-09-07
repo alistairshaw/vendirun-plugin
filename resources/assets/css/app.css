@@ -1536,17 +1536,18 @@ pre {
   .container-fluid:after {
     clear: both; }
 
-.row {
+.row, .property-advanced-search-widget .form-inputs {
   margin-left: -15px;
   margin-right: -15px; }
   .row:before,
-  .row:after {
+  .property-advanced-search-widget .form-inputs:before,
+  .row:after, .property-advanced-search-widget .form-inputs:after {
     content: " ";
     display: table; }
-  .row:after {
+  .row:after, .property-advanced-search-widget .form-inputs:after {
     clear: both; }
 
-.col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, .col-xs-4, .col-sm-4, .property-search.type1 .multiple .property-result, .property-view.type1 .property-attributes .item, .col-md-4, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .property-view.type1 .property-attributes .item, .col-sm-6, .property-search.type2 .property-results .property-result .property-attributes .item, .property-view.type2 .property-attributes .item, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 {
+.col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, .col-xs-4, .col-sm-4, .property-search.type1 .multiple .property-result, .property-view.type1 .property-attributes .item, .col-md-4, .property-advanced-search-widget .form-inputs .form-group, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .property-view.type1 .property-attributes .item, .col-sm-6, .property-search.type2 .property-results .property-result .property-attributes .item, .property-view.type2 .property-attributes .item, .property-advanced-search-widget .form-inputs .form-group, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 {
   position: relative;
   min-height: 1px;
   padding-left: 15px;
@@ -1709,7 +1710,7 @@ pre {
   margin-left: 100%; }
 
 @media (min-width: 768px) {
-  .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .property-search.type1 .multiple .property-result, .property-view.type1 .property-attributes .item, .col-sm-5, .col-sm-6, .property-search.type2 .property-results .property-result .property-attributes .item, .property-view.type2 .property-attributes .item, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12 {
+  .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .property-search.type1 .multiple .property-result, .property-view.type1 .property-attributes .item, .col-sm-5, .col-sm-6, .property-search.type2 .property-results .property-result .property-attributes .item, .property-view.type2 .property-attributes .item, .property-advanced-search-widget .form-inputs .form-group, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12 {
     float: left; }
   .col-sm-1 {
     width: 8.33333%; }
@@ -1721,7 +1722,7 @@ pre {
     width: 33.33333%; }
   .col-sm-5 {
     width: 41.66667%; }
-  .col-sm-6, .property-search.type2 .property-results .property-result .property-attributes .item, .property-view.type2 .property-attributes .item {
+  .col-sm-6, .property-search.type2 .property-results .property-result .property-attributes .item, .property-view.type2 .property-attributes .item, .property-advanced-search-widget .form-inputs .form-group {
     width: 50%; }
   .col-sm-7 {
     width: 58.33333%; }
@@ -1815,7 +1816,7 @@ pre {
     margin-left: 100%; } }
 
 @media (min-width: 992px) {
-  .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12 {
+  .col-md-1, .col-md-2, .col-md-3, .col-md-4, .property-advanced-search-widget .form-inputs .form-group, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12 {
     float: left; }
   .col-md-1 {
     width: 8.33333%; }
@@ -1823,7 +1824,7 @@ pre {
     width: 16.66667%; }
   .col-md-3 {
     width: 25%; }
-  .col-md-4 {
+  .col-md-4, .property-advanced-search-widget .form-inputs .form-group {
     width: 33.33333%; }
   .col-md-5 {
     width: 41.66667%; }
@@ -5216,7 +5217,7 @@ button.list-group-item-danger {
 .embed-responsive-4by3 {
   padding-bottom: 75%; }
 
-.well {
+.well, .property-advanced-search-widget {
   min-height: 20px;
   padding: 19px;
   margin-bottom: 20px;
@@ -5224,7 +5225,7 @@ button.list-group-item-danger {
   border: 1px solid #dedede;
   border-radius: 0;
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05); }
-  .well blockquote {
+  .well blockquote, .property-advanced-search-widget blockquote {
     border-color: #ddd;
     border-color: rgba(0, 0, 0, 0.15); }
 
@@ -6082,6 +6083,11 @@ h3 {
   font-size: 1.2em;
   text-align: center; }
 
+.alert ul {
+  padding: 0; }
+  .alert ul li {
+    list-style: none; }
+
 .recommend-a-friend {
   border: 1px solid #ccc;
   padding: 20px;
@@ -6094,6 +6100,12 @@ h3 {
   height: 400px;
   position: relative;
   background-color: #e5e3df; }
+
+.navbar-brand {
+  padding: 4px 15px;
+  display: block; }
+  .navbar-brand img {
+    max-height: 100%; }
 
 footer {
   padding: 40px 0;
@@ -6524,7 +6536,7 @@ footer {
 .property-view.type2 .amenities-well {
   position: relative;
   background: #FFF; }
-  .property-view.type2 .amenities-well .col-sm-6, .property-view.type2 .amenities-well .property-search.type2 .property-results .property-result .property-attributes .item, .property-search.type2 .property-results .property-result .property-attributes .property-view.type2 .amenities-well .item, .property-view.type2 .amenities-well .property-attributes .item, .property-view.type2 .property-attributes .amenities-well .item {
+  .property-view.type2 .amenities-well .col-sm-6, .property-view.type2 .amenities-well .property-search.type2 .property-results .property-result .property-attributes .item, .property-search.type2 .property-results .property-result .property-attributes .property-view.type2 .amenities-well .item, .property-view.type2 .amenities-well .property-attributes .item, .property-view.type2 .property-attributes .amenities-well .item, .property-view.type2 .amenities-well .property-advanced-search-widget .form-inputs .form-group, .property-advanced-search-widget .form-inputs .property-view.type2 .amenities-well .form-group {
     position: static; }
   .property-view.type2 .amenities-well .amenities {
     text-align: right; }
@@ -6548,10 +6560,10 @@ footer {
     font-weight: bold;
     width: 110px; }
 
-.property-categories .row {
+.property-categories .row, .property-categories .property-advanced-search-widget .form-inputs, .property-advanced-search-widget .property-categories .form-inputs {
   margin: 0; }
 
-.property-categories .col-sm-6, .property-categories .property-search.type2 .property-results .property-result .property-attributes .item, .property-search.type2 .property-results .property-result .property-attributes .property-categories .item, .property-categories .property-view.type2 .property-attributes .item, .property-view.type2 .property-attributes .property-categories .item {
+.property-categories .col-sm-6, .property-categories .property-search.type2 .property-results .property-result .property-attributes .item, .property-search.type2 .property-results .property-result .property-attributes .property-categories .item, .property-categories .property-view.type2 .property-attributes .item, .property-view.type2 .property-attributes .property-categories .item, .property-categories .property-advanced-search-widget .form-inputs .form-group, .property-advanced-search-widget .form-inputs .property-categories .form-group {
   padding-left: 0;
   padding-right: 0; }
 
@@ -6639,6 +6651,9 @@ footer {
   .property-categories .property-category-list-item .details p {
     color: #666; }
 
+.property-advanced-search-widget h2 {
+  margin-top: 0; }
+
 #map-canvas {
   width: 100%;
   height: 400px;
@@ -6657,7 +6672,7 @@ footer {
 .thumbnail {
   position: relative; }
   .thumbnail .caption {
-    padding-bottom: 20px; }
+    padding-bottom: 40px; }
   .thumbnail .buttons {
     position: absolute;
     bottom: 13px;

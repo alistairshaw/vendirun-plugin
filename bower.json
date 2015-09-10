@@ -21,7 +21,8 @@
     "font-awesome": "~4.2.0",
     "lightbox": "~2.7.1",
     "nivoslider": "*",
-    "jquery-validate": "~1.13"
+    "jquery-validate": "~1.13",
+    "world-flags-sprite": "*"
   },
   "homepage": "https://github.com/alistairshaw/vendirun-plugin",
   "description": "Vendirun Laravel Plugin"

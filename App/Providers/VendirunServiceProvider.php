@@ -33,6 +33,9 @@ class VendirunServiceProvider extends ServiceProvider {
 
 		// include my package custom routes
 		include __DIR__.'/../../routes.php';
+
+		// load translation files
+		$this->loadTranslationsFrom(__DIR__.'/../../resources/lang', 'standard');
 	}
 
 	/**

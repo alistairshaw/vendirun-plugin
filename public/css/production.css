@@ -8896,6 +8896,792 @@ footer {
         width: 100%;
         height: 100%; }
 
+.f16 .flag, .language-select .flag {
+  background: url(../images/flags16.png) no-repeat; }
+
+.f16 ._African_Union, .language-select ._African_Union {
+  background-position: 0 -16px; }
+
+.f16 ._Arab_League, .language-select ._Arab_League {
+  background-position: 0 -32px; }
+
+.f16 ._ASEAN, .language-select ._ASEAN {
+  background-position: 0 -48px; }
+
+.f16 ._CARICOM, .language-select ._CARICOM {
+  background-position: 0 -64px; }
+
+.f16 ._CIS, .language-select ._CIS {
+  background-position: 0 -80px; }
+
+.f16 ._Commonwealth, .language-select ._Commonwealth {
+  background-position: 0 -96px; }
+
+.f16 ._England, .language-select ._England {
+  background-position: 0 -112px; }
+
+.f16 ._European_Union, .language-select ._European_Union {
+  background-position: 0 -128px; }
+
+.f16 ._Islamic_Conference, .language-select ._Islamic_Conference {
+  background-position: 0 -144px; }
+
+.f16 ._Kosovo, .language-select ._Kosovo {
+  background-position: 0 -160px; }
+
+.f16 ._NATO, .language-select ._NATO {
+  background-position: 0 -176px; }
+
+.f16 ._Northern_Cyprus, .language-select ._Northern_Cyprus {
+  background-position: 0 -192px; }
+
+.f16 ._Northern_Ireland, .language-select ._Northern_Ireland {
+  background-position: 0 -208px; }
+
+.f16 ._Olimpic_Movement, .language-select ._Olimpic_Movement {
+  background-position: 0 -224px; }
+
+.f16 ._OPEC, .language-select ._OPEC {
+  background-position: 0 -240px; }
+
+.f16 ._Red_Cross, .language-select ._Red_Cross {
+  background-position: 0 -256px; }
+
+.f16 ._Scotland, .language-select ._Scotland {
+  background-position: 0 -272px; }
+
+.f16 ._Somaliland, .language-select ._Somaliland {
+  background-position: 0 -288px; }
+
+.f16 ._Tibet, .language-select ._Tibet {
+  background-position: 0 -304px; }
+
+.f16 ._United_Nations, .language-select ._United_Nations {
+  background-position: 0 -320px; }
+
+.f16 ._Wales, .language-select ._Wales {
+  background-position: 0 -336px; }
+
+.f16 .eu, .language-select .eu {
+  background-position: 0 -128px; }
+
+.f16 .ad, .language-select .ad {
+  background-position: 0 -352px; }
+
+.f16 .ae, .language-select .ae {
+  background-position: 0 -368px; }
+
+.f16 .af, .language-select .af {
+  background-position: 0 -384px; }
+
+.f16 .ag, .language-select .ag {
+  background-position: 0 -400px; }
+
+.f16 .ai, .language-select .ai {
+  background-position: 0 -416px; }
+
+.f16 .al, .language-select .al {
+  background-position: 0 -432px; }
+
+.f16 .am, .language-select .am {
+  background-position: 0 -448px; }
+
+.f16 .ao, .language-select .ao {
+  background-position: 0 -464px; }
+
+.f16 .aq, .language-select .aq {
+  background-position: 0 -480px; }
+
+.f16 .ar, .language-select .ar {
+  background-position: 0 -496px; }
+
+.f16 .as, .language-select .as {
+  background-position: 0 -512px; }
+
+.f16 .at, .language-select .at {
+  background-position: 0 -528px; }
+
+.f16 .au, .language-select .au {
+  background-position: 0 -544px; }
+
+.f16 .aw, .language-select .aw {
+  background-position: 0 -560px; }
+
+.f16 .ax, .language-select .ax {
+  background-position: 0 -576px; }
+
+.f16 .az, .language-select .az {
+  background-position: 0 -592px; }
+
+.f16 .ba, .language-select .ba {
+  background-position: 0 -608px; }
+
+.f16 .bb, .language-select .bb {
+  background-position: 0 -624px; }
+
+.f16 .bd, .language-select .bd {
+  background-position: 0 -640px; }
+
+.f16 .be, .language-select .be {
+  background-position: 0 -656px; }
+
+.f16 .bf, .language-select .bf {
+  background-position: 0 -672px; }
+
+.f16 .bg, .language-select .bg {
+  background-position: 0 -688px; }
+
+.f16 .bh, .language-select .bh {
+  background-position: 0 -704px; }
+
+.f16 .bi, .language-select .bi {
+  background-position: 0 -720px; }
+
+.f16 .bj, .language-select .bj {
+  background-position: 0 -736px; }
+
+.f16 .bm, .language-select .bm {
+  background-position: 0 -752px; }
+
+.f16 .bn, .language-select .bn {
+  background-position: 0 -768px; }
+
+.f16 .bo, .language-select .bo {
+  background-position: 0 -784px; }
+
+.f16 .br, .language-select .br {
+  background-position: 0 -800px; }
+
+.f16 .bs, .language-select .bs {
+  background-position: 0 -816px; }
+
+.f16 .bt, .language-select .bt {
+  background-position: 0 -832px; }
+
+.f16 .bw, .language-select .bw {
+  background-position: 0 -848px; }
+
+.f16 .by, .language-select .by {
+  background-position: 0 -864px; }
+
+.f16 .bz, .language-select .bz {
+  background-position: 0 -880px; }
+
+.f16 .ca, .language-select .ca {
+  background-position: 0 -896px; }
+
+.f16 .cg, .language-select .cg {
+  background-position: 0 -912px; }
+
+.f16 .cf, .language-select .cf {
+  background-position: 0 -928px; }
+
+.f16 .cd, .language-select .cd {
+  background-position: 0 -944px; }
+
+.f16 .ch, .language-select .ch {
+  background-position: 0 -960px; }
+
+.f16 .ci, .language-select .ci {
+  background-position: 0 -976px; }
+
+.f16 .ck, .language-select .ck {
+  background-position: 0 -992px; }
+
+.f16 .cl, .language-select .cl {
+  background-position: 0 -1008px; }
+
+.f16 .cm, .language-select .cm {
+  background-position: 0 -1024px; }
+
+.f16 .cn, .language-select .cn {
+  background-position: 0 -1040px; }
+
+.f16 .co, .language-select .co {
+  background-position: 0 -1056px; }
+
+.f16 .cr, .language-select .cr {
+  background-position: 0 -1072px; }
+
+.f16 .cu, .language-select .cu {
+  background-position: 0 -1088px; }
+
+.f16 .cv, .language-select .cv {
+  background-position: 0 -1104px; }
+
+.f16 .cy, .language-select .cy {
+  background-position: 0 -1120px; }
+
+.f16 .cz, .language-select .cz {
+  background-position: 0 -1136px; }
+
+.f16 .de, .language-select .de {
+  background-position: 0 -1152px; }
+
+.f16 .dj, .language-select .dj {
+  background-position: 0 -1168px; }
+
+.f16 .dk, .language-select .dk {
+  background-position: 0 -1184px; }
+
+.f16 .dm, .language-select .dm {
+  background-position: 0 -1200px; }
+
+.f16 .do, .language-select .do {
+  background-position: 0 -1216px; }
+
+.f16 .dz, .language-select .dz {
+  background-position: 0 -1232px; }
+
+.f16 .ec, .language-select .ec {
+  background-position: 0 -1248px; }
+
+.f16 .ee, .language-select .ee {
+  background-position: 0 -1264px; }
+
+.f16 .eg, .language-select .eg {
+  background-position: 0 -1280px; }
+
+.f16 .eh, .language-select .eh {
+  background-position: 0 -1296px; }
+
+.f16 .er, .language-select .er {
+  background-position: 0 -1312px; }
+
+.f16 .es, .language-select .es {
+  background-position: 0 -1328px; }
+
+.f16 .et, .language-select .et {
+  background-position: 0 -1344px; }
+
+.f16 .fi, .language-select .fi {
+  background-position: 0 -1360px; }
+
+.f16 .fj, .language-select .fj {
+  background-position: 0 -1376px; }
+
+.f16 .fm, .language-select .fm {
+  background-position: 0 -1392px; }
+
+.f16 .fo, .language-select .fo {
+  background-position: 0 -1408px; }
+
+.f16 .fr, .language-select .fr {
+  background-position: 0 -1424px; }
+
+.f16 .bl, .language-select .bl {
+  background-position: 0 -1424px; }
+
+.f16 .cp, .language-select .cp {
+  background-position: 0 -1424px; }
+
+.f16 .mf, .language-select .mf {
+  background-position: 0 -1424px; }
+
+.f16 .yt, .language-select .yt {
+  background-position: 0 -1424px; }
+
+.f16 .ga, .language-select .ga {
+  background-position: 0 -1440px; }
+
+.f16 .gb, .language-select .gb {
+  background-position: 0 -1456px; }
+
+.f16 .sh, .language-select .sh {
+  background-position: 0 -1456px; }
+
+.f16 .gd, .language-select .gd {
+  background-position: 0 -1472px; }
+
+.f16 .ge, .language-select .ge {
+  background-position: 0 -1488px; }
+
+.f16 .gg, .language-select .gg {
+  background-position: 0 -1504px; }
+
+.f16 .gh, .language-select .gh {
+  background-position: 0 -1520px; }
+
+.f16 .gi, .language-select .gi {
+  background-position: 0 -1536px; }
+
+.f16 .gl, .language-select .gl {
+  background-position: 0 -1552px; }
+
+.f16 .gm, .language-select .gm {
+  background-position: 0 -1568px; }
+
+.f16 .gn, .language-select .gn {
+  background-position: 0 -1584px; }
+
+.f16 .gp, .language-select .gp {
+  background-position: 0 -1600px; }
+
+.f16 .gq, .language-select .gq {
+  background-position: 0 -1616px; }
+
+.f16 .gr, .language-select .gr {
+  background-position: 0 -1632px; }
+
+.f16 .gt, .language-select .gt {
+  background-position: 0 -1648px; }
+
+.f16 .gu, .language-select .gu {
+  background-position: 0 -1664px; }
+
+.f16 .gw, .language-select .gw {
+  background-position: 0 -1680px; }
+
+.f16 .gy, .language-select .gy {
+  background-position: 0 -1696px; }
+
+.f16 .hk, .language-select .hk {
+  background-position: 0 -1712px; }
+
+.f16 .hn, .language-select .hn {
+  background-position: 0 -1728px; }
+
+.f16 .hr, .language-select .hr {
+  background-position: 0 -1744px; }
+
+.f16 .ht, .language-select .ht {
+  background-position: 0 -1760px; }
+
+.f16 .hu, .language-select .hu {
+  background-position: 0 -1776px; }
+
+.f16 .id, .language-select .id {
+  background-position: 0 -1792px; }
+
+.f16 .mc, .language-select .mc {
+  background-position: 0 -1792px; }
+
+.f16 .ie, .language-select .ie {
+  background-position: 0 -1808px; }
+
+.f16 .il, .language-select .il {
+  background-position: 0 -1824px; }
+
+.f16 .im, .language-select .im {
+  background-position: 0 -1840px; }
+
+.f16 .in, .language-select .in {
+  background-position: 0 -1856px; }
+
+.f16 .iq, .language-select .iq {
+  background-position: 0 -1872px; }
+
+.f16 .ir, .language-select .ir {
+  background-position: 0 -1888px; }
+
+.f16 .is, .language-select .is {
+  background-position: 0 -1904px; }
+
+.f16 .it, .language-select .it {
+  background-position: 0 -1920px; }
+
+.f16 .je, .language-select .je {
+  background-position: 0 -1936px; }
+
+.f16 .jm, .language-select .jm {
+  background-position: 0 -1952px; }
+
+.f16 .jo, .language-select .jo {
+  background-position: 0 -1968px; }
+
+.f16 .jp, .language-select .jp {
+  background-position: 0 -1984px; }
+
+.f16 .ke, .language-select .ke {
+  background-position: 0 -2000px; }
+
+.f16 .kg, .language-select .kg {
+  background-position: 0 -2016px; }
+
+.f16 .kh, .language-select .kh {
+  background-position: 0 -2032px; }
+
+.f16 .ki, .language-select .ki {
+  background-position: 0 -2048px; }
+
+.f16 .km, .language-select .km {
+  background-position: 0 -2064px; }
+
+.f16 .kn, .language-select .kn {
+  background-position: 0 -2080px; }
+
+.f16 .kp, .language-select .kp {
+  background-position: 0 -2096px; }
+
+.f16 .kr, .language-select .kr {
+  background-position: 0 -2112px; }
+
+.f16 .kw, .language-select .kw {
+  background-position: 0 -2128px; }
+
+.f16 .ky, .language-select .ky {
+  background-position: 0 -2144px; }
+
+.f16 .kz, .language-select .kz {
+  background-position: 0 -2160px; }
+
+.f16 .la, .language-select .la {
+  background-position: 0 -2176px; }
+
+.f16 .lb, .language-select .lb {
+  background-position: 0 -2192px; }
+
+.f16 .lc, .language-select .lc {
+  background-position: 0 -2208px; }
+
+.f16 .li, .language-select .li {
+  background-position: 0 -2224px; }
+
+.f16 .lk, .language-select .lk {
+  background-position: 0 -2240px; }
+
+.f16 .lr, .language-select .lr {
+  background-position: 0 -2256px; }
+
+.f16 .ls, .language-select .ls {
+  background-position: 0 -2272px; }
+
+.f16 .lt, .language-select .lt {
+  background-position: 0 -2288px; }
+
+.f16 .lu, .language-select .lu {
+  background-position: 0 -2304px; }
+
+.f16 .lv, .language-select .lv {
+  background-position: 0 -2320px; }
+
+.f16 .ly, .language-select .ly {
+  background-position: 0 -2336px; }
+
+.f16 .ma, .language-select .ma {
+  background-position: 0 -2352px; }
+
+.f16 .md, .language-select .md {
+  background-position: 0 -2368px; }
+
+.f16 .me, .language-select .me {
+  background-position: 0 -2384px; }
+
+.f16 .mg, .language-select .mg {
+  background-position: 0 -2400px; }
+
+.f16 .mh, .language-select .mh {
+  background-position: 0 -2416px; }
+
+.f16 .mk, .language-select .mk {
+  background-position: 0 -2432px; }
+
+.f16 .ml, .language-select .ml {
+  background-position: 0 -2448px; }
+
+.f16 .mm, .language-select .mm {
+  background-position: 0 -2464px; }
+
+.f16 .mn, .language-select .mn {
+  background-position: 0 -2480px; }
+
+.f16 .mo, .language-select .mo {
+  background-position: 0 -2496px; }
+
+.f16 .mq, .language-select .mq {
+  background-position: 0 -2512px; }
+
+.f16 .mr, .language-select .mr {
+  background-position: 0 -2528px; }
+
+.f16 .ms, .language-select .ms {
+  background-position: 0 -2544px; }
+
+.f16 .mt, .language-select .mt {
+  background-position: 0 -2560px; }
+
+.f16 .mu, .language-select .mu {
+  background-position: 0 -2576px; }
+
+.f16 .mv, .language-select .mv {
+  background-position: 0 -2592px; }
+
+.f16 .mw, .language-select .mw {
+  background-position: 0 -2608px; }
+
+.f16 .mx, .language-select .mx {
+  background-position: 0 -2624px; }
+
+.f16 .my, .language-select .my {
+  background-position: 0 -2640px; }
+
+.f16 .mz, .language-select .mz {
+  background-position: 0 -2656px; }
+
+.f16 .na, .language-select .na {
+  background-position: 0 -2672px; }
+
+.f16 .nc, .language-select .nc {
+  background-position: 0 -2688px; }
+
+.f16 .ne, .language-select .ne {
+  background-position: 0 -2704px; }
+
+.f16 .ng, .language-select .ng {
+  background-position: 0 -2720px; }
+
+.f16 .ni, .language-select .ni {
+  background-position: 0 -2736px; }
+
+.f16 .nl, .language-select .nl {
+  background-position: 0 -2752px; }
+
+.f16 .bq, .language-select .bq {
+  background-position: 0 -2752px; }
+
+.f16 .no, .language-select .no {
+  background-position: 0 -2768px; }
+
+.f16 .bv, .language-select .bv {
+  background-position: 0 -2768px; }
+
+.f16 .nq, .language-select .nq {
+  background-position: 0 -2768px; }
+
+.f16 .sj, .language-select .sj {
+  background-position: 0 -2768px; }
+
+.f16 .np, .language-select .np {
+  background-position: 0 -2784px; }
+
+.f16 .nr, .language-select .nr {
+  background-position: 0 -2800px; }
+
+.f16 .nz, .language-select .nz {
+  background-position: 0 -2816px; }
+
+.f16 .om, .language-select .om {
+  background-position: 0 -2832px; }
+
+.f16 .pa, .language-select .pa {
+  background-position: 0 -2848px; }
+
+.f16 .pe, .language-select .pe {
+  background-position: 0 -2864px; }
+
+.f16 .pf, .language-select .pf {
+  background-position: 0 -2880px; }
+
+.f16 .pg, .language-select .pg {
+  background-position: 0 -2896px; }
+
+.f16 .ph, .language-select .ph {
+  background-position: 0 -2912px; }
+
+.f16 .pk, .language-select .pk {
+  background-position: 0 -2928px; }
+
+.f16 .pl, .language-select .pl {
+  background-position: 0 -2944px; }
+
+.f16 .pr, .language-select .pr {
+  background-position: 0 -2960px; }
+
+.f16 .ps, .language-select .ps {
+  background-position: 0 -2976px; }
+
+.f16 .pt, .language-select .pt {
+  background-position: 0 -2992px; }
+
+.f16 .pw, .language-select .pw {
+  background-position: 0 -3008px; }
+
+.f16 .py, .language-select .py {
+  background-position: 0 -3024px; }
+
+.f16 .qa, .language-select .qa {
+  background-position: 0 -3040px; }
+
+.f16 .re, .language-select .re {
+  background-position: 0 -3056px; }
+
+.f16 .ro, .language-select .ro {
+  background-position: 0 -3072px; }
+
+.f16 .rs, .language-select .rs {
+  background-position: 0 -3088px; }
+
+.f16 .ru, .language-select .ru {
+  background-position: 0 -3104px; }
+
+.f16 .rw, .language-select .rw {
+  background-position: 0 -3120px; }
+
+.f16 .sa, .language-select .sa {
+  background-position: 0 -3136px; }
+
+.f16 .sb, .language-select .sb {
+  background-position: 0 -3152px; }
+
+.f16 .sc, .language-select .sc {
+  background-position: 0 -3168px; }
+
+.f16 .sd, .language-select .sd {
+  background-position: 0 -3184px; }
+
+.f16 .se, .language-select .se {
+  background-position: 0 -3200px; }
+
+.f16 .sg, .language-select .sg {
+  background-position: 0 -3216px; }
+
+.f16 .si, .language-select .si {
+  background-position: 0 -3232px; }
+
+.f16 .sk, .language-select .sk {
+  background-position: 0 -3248px; }
+
+.f16 .sl, .language-select .sl {
+  background-position: 0 -3264px; }
+
+.f16 .sm, .language-select .sm {
+  background-position: 0 -3280px; }
+
+.f16 .sn, .language-select .sn {
+  background-position: 0 -3296px; }
+
+.f16 .so, .language-select .so {
+  background-position: 0 -3312px; }
+
+.f16 .sr, .language-select .sr {
+  background-position: 0 -3328px; }
+
+.f16 .st, .language-select .st {
+  background-position: 0 -3344px; }
+
+.f16 .sv, .language-select .sv {
+  background-position: 0 -3360px; }
+
+.f16 .sy, .language-select .sy {
+  background-position: 0 -3376px; }
+
+.f16 .sz, .language-select .sz {
+  background-position: 0 -3392px; }
+
+.f16 .tc, .language-select .tc {
+  background-position: 0 -3408px; }
+
+.f16 .td, .language-select .td {
+  background-position: 0 -3424px; }
+
+.f16 .tg, .language-select .tg {
+  background-position: 0 -3440px; }
+
+.f16 .th, .language-select .th {
+  background-position: 0 -3456px; }
+
+.f16 .tj, .language-select .tj {
+  background-position: 0 -3472px; }
+
+.f16 .tl, .language-select .tl {
+  background-position: 0 -3488px; }
+
+.f16 .tm, .language-select .tm {
+  background-position: 0 -3504px; }
+
+.f16 .tn, .language-select .tn {
+  background-position: 0 -3520px; }
+
+.f16 .to, .language-select .to {
+  background-position: 0 -3536px; }
+
+.f16 .tr, .language-select .tr {
+  background-position: 0 -3552px; }
+
+.f16 .tt, .language-select .tt {
+  background-position: 0 -3568px; }
+
+.f16 .tv, .language-select .tv {
+  background-position: 0 -3584px; }
+
+.f16 .tw, .language-select .tw {
+  background-position: 0 -3600px; }
+
+.f16 .tz, .language-select .tz {
+  background-position: 0 -3616px; }
+
+.f16 .ua, .language-select .ua {
+  background-position: 0 -3632px; }
+
+.f16 .ug, .language-select .ug {
+  background-position: 0 -3648px; }
+
+.f16 .us, .language-select .us {
+  background-position: 0 -3664px; }
+
+.f16 .uy, .language-select .uy {
+  background-position: 0 -3680px; }
+
+.f16 .uz, .language-select .uz {
+  background-position: 0 -3696px; }
+
+.f16 .va, .language-select .va {
+  background-position: 0 -3712px; }
+
+.f16 .vc, .language-select .vc {
+  background-position: 0 -3728px; }
+
+.f16 .ve, .language-select .ve {
+  background-position: 0 -3744px; }
+
+.f16 .vg, .language-select .vg {
+  background-position: 0 -3760px; }
+
+.f16 .vi, .language-select .vi {
+  background-position: 0 -3776px; }
+
+.f16 .vn, .language-select .vn {
+  background-position: 0 -3792px; }
+
+.f16 .vu, .language-select .vu {
+  background-position: 0 -3808px; }
+
+.f16 .ws, .language-select .ws {
+  background-position: 0 -3824px; }
+
+.f16 .ye, .language-select .ye {
+  background-position: 0 -3840px; }
+
+.f16 .za, .language-select .za {
+  background-position: 0 -3856px; }
+
+.f16 .zm, .language-select .zm {
+  background-position: 0 -3872px; }
+
+.f16 .zw, .language-select .zw {
+  background-position: 0 -3888px; }
+
+.f16 .sx, .language-select .sx {
+  background-position: 0 -3904px; }
+
+.f16 .cw, .language-select .cw {
+  background-position: 0 -3920px; }
+
+.f16 .ss, .language-select .ss {
+  background-position: 0 -3936px; }
+
+.language-select {
+  margin-top: 8px; }
+  .language-select li > a:hover {
+    background: #ccc;
+    color: black; }
+  .language-select i {
+    display: block;
+    float: left;
+    height: 16px;
+    width: 24px;
+    margin-top: 2px; }
+
 .property-search.type1 .search-form h3 {
   background: #f0f0f0;
   padding: 8px 12px;

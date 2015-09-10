@@ -1,0 +1,20 @@
+$flags-images-path: '../images';
+@import "../../../bower_components/world-flags-sprite/stylesheets/flags16";
+
+.language-select {
+    @extend .f16;
+    margin-top: 8px;
+    li > a {
+        &:hover {
+            background: #ccc;
+            color: black;
+        }
+    }
+    i {
+        display: block;
+        float: left;
+        height: 16px;
+        width: 24px;
+        margin-top: 2px;
+    }
+}

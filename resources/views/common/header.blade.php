@@ -44,6 +44,9 @@
 
             <ul class="nav navbar-nav navbar-right">
                 @include('vendirun::cms.menu.login-button')
+                <li>
+                    @include('vendirun::common.language-select')
+                </li>
             </ul>
 
         </div>

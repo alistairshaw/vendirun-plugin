@@ -37,6 +37,12 @@ return [
     'vendirunSupportEmail' => 'support@vendirun.com',
 
     /**
+     * By default, how to sort property search results
+     */
+    'propertyDefaultSortBy' => 'price',
+    'propertyDefaultSortOrder' => 'DESC',
+
+    /**
      * Which listings view to use as a default,
      * there are currently 2 options: type1 and type2
      */

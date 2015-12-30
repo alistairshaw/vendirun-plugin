@@ -13,4 +13,6 @@
 <meta property="og:description"   content="@yield('description')" />
 <meta property="og:image"         content="@yield('image', $clientData->company_logo)" />
 
+<meta name="csrf-token" content="{{ csrf_token() }}">
+
 <link rel="stylesheet" href="{{ asset('vendor/vendirun/css/production.css') }}">

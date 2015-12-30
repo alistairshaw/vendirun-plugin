@@ -16,9 +16,10 @@ class VendirunServiceProvider extends ServiceProvider {
 		$this->loadViewsFrom(__DIR__.'/../../resources/views', 'vendirun');
 
 		// use artisan vendor:publish to copy views to standard view folder
-		$this->publishes([
+		// commented out since generally we don't want to publish all the views
+		/*$this->publishes([
 			__DIR__.'/../../resources/views' => base_path('resources/views/vendor/vendirun'),
-		]);
+		]);*/
 
 		// use artisan vendor:publish to copy config
 		$this->publishes([
@@ -35,7 +36,7 @@ class VendirunServiceProvider extends ServiceProvider {
 		include __DIR__.'/../../routes.php';
 
 		// load translation files
-		$this->loadTranslationsFrom(__DIR__.'/../../resources/lang', 'standard');
+		$this->loadTranslationsFrom(__DIR__.'/../../resources/lang', 'vendirun');
 	}
 
 	/**

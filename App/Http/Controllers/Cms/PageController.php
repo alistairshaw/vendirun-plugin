@@ -28,7 +28,7 @@ class PageController extends VendirunBaseController {
      * @param $slug
      * @return \Illuminate\View\View
      */
-    public function page($slug)
+    public function page($slug = '')
     {
         try
         {

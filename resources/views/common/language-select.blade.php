@@ -10,4 +10,5 @@
             @endforeach
         </ul>
     </div>
+    {{ App::getLocale() }}
 </div>

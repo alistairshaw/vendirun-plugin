@@ -16,7 +16,7 @@
     </footer>
 </section>
 <script src="{{ asset('vendor/vendirun/js/production.js') }}"></script>
-<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&callback=initializeMap" async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&callback=initializeMap" async defer></script>
 <script>
     $.ajaxSetup({ headers: { 'X-CSRF-TOKEN' : '{{ csrf_token() }}' } });
 </script>

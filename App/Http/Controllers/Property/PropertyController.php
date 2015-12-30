@@ -119,7 +119,7 @@ class PropertyController extends VendirunBaseController {
         }
         $searchParams['limit'] = (Input::has('limit')) ? Input::get('limit') : $defaultLimit;
 
-        $searchParams['order_by'] = 'created';
+        $searchParams['order_by'] = 'price';
         $searchParams['order_direction'] = 'DESC';
         if (Input::has('order_by'))
         {

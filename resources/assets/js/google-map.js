@@ -30,6 +30,7 @@ function geoCodeAddress(address) {
 
 function initializeMap() {
     var googleMapAddress = $('#googleMapAddress');
+    console.log(googleMapAddress.val());
     if (googleMapAddress.length > 0) {
         var address = googleMapAddress.val();
         if (address !== '') {

@@ -68,7 +68,7 @@ class BaseApi {
             if ($res->getStatusCode() !== 200) throw new NoApiConnectionException($url, $res->getStatusCode(), $key);
             $response = json_decode($res->getBody());
 
-            if ($response == '')
+            if ($response == '' && $res->getBody() == '')
             {
                 if (App::environment() == 'local')
                 {

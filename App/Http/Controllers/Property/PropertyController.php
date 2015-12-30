@@ -119,8 +119,8 @@ class PropertyController extends VendirunBaseController {
         }
         $searchParams['limit'] = (Input::has('limit')) ? Input::get('limit') : $defaultLimit;
 
-        $searchParams['order_by'] = 'created';
-        $searchParams['order_direction'] = 'DESC';
+        $searchParams['order_by'] = Config::get('vendirun.propertyDefaultSortBy', 'created');
+        $searchParams['order_direction'] = Config::get('vendirun.propertyDefaultSortOrder', 'DESC');
         if (Input::has('order_by'))
         {
             $searchArray = explode("_", Input::get('order_by'));

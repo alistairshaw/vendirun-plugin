@@ -118,7 +118,7 @@ class LocaleHelper {
             }
             else
             {
-                return $locale . $url;
+                return '/' . $locale . $url;
             }
         }
     }

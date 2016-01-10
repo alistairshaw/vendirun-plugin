@@ -12,19 +12,19 @@
         <div class="col-sm-6">
             @if (isset($options['fullname']))
                 <div class="form-group">
-                    <label for="contact_fullname">{{ $options['fullname_label'] or 'Full Name' }}</label>
+                    <label for="contact_fullname">{{ $options['fullname_label'] or trans('vendirun::forms.fullname') }}</label>
                     <input type="text" class="form-control" name="fullname" id="contact_fullname" value="" placeholder="{{ $options['fullname_place_holder'] or '' }}" {{ (isset($options['fullname_required'])) ? 'required' : '' }}>
                 </div>
             @endif
             @if (isset($options['email']))
                 <div class="form-group">
-                    <label for="contact_email">{{ $options['email_label'] or 'Email Address' }}</label>
+                    <label for="contact_email">{{ $options['email_label'] or trans('vendirun::forms.email') }}</label>
                     <input type="email" class="form-control" name="email" id="contact_email" value="" placeholder="{{ $options['email_place_holder'] or '' }}" {{ (isset($options['email_required'])) ? 'required' : '' }}>
                 </div>
             @endif
             @if (isset($options['telephone']))
                 <div class="form-group">
-                    <label for="contact_telephone">{{ $options['telephone_label'] or 'Telephone' }}</label>
+                    <label for="contact_telephone">{{ $options['telephone_label'] or trans('vendirun::forms.telephone') }}</label>
                     <input type="text" class="form-control" name="telephone" id="contact_telephone" value="" placeholder="{{ $options['telephone_place_holder'] or '' }}" {{ (isset($options['telephone_required'])) ? 'required' : '' }}>
                 </div>
             @endif
@@ -32,11 +32,11 @@
         <div class="col-sm-6">
             @if (isset($options['message']))
                 <div class="form-group">
-                    <label for="contact_message">{{ $options['message_label'] or 'Telephone' }}</label>
+                    <label for="contact_message">{{ $options['message_label'] or trans('vendirun::forms.telephone') }}</label>
                     <textarea class="form-control" rows="6" name="message" id="contact_message" placeholder="{{ $options['message_place_holder'] or '' }}" {{ (isset($options['message_required'])) ? 'required' : '' }}></textarea>
                 </div>
             @endif
-            <button type="submit" class="btn btn-primary">{{ $options['form_button'] or 'Submit' }}</button>
+            <button type="submit" class="btn btn-primary">{{ $options['form_button'] or trans('vendirun::forms.submit') }}</button>
         </div>
     </div>
     {!! Form::close() !!}

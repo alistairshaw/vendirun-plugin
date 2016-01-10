@@ -4,10 +4,10 @@
             <div class="row">
                 <div class="col-sm-12">
                     @if ($location->parent)
-                        <a href="{{ route('vendirun.location', [urlencode($location->parent->location_name)]) }}" class="btn btn-default"><i class="fa fa-angle-double-left"></i> Back to {{ $location->parent->location_name }}
+                        <a href="{{ route('vendirun.location', [urlencode($location->parent->location_name)]) }}" class="btn btn-default"><i class="fa fa-angle-double-left"></i> {{ trans('vendirun::property.backTo') }} {{ $location->parent->location_name }}
                         </a>
                     @else
-                        <a href="{{ route('vendirun.location', ['']) }}" class="btn btn-default"><i class="fa fa-angle-double-left"></i> Back to Locations</a>
+                        <a href="{{ route('vendirun.location', ['']) }}" class="btn btn-default"><i class="fa fa-angle-double-left"></i> {{ trans('vendirun::property.backToLocations') }}</a>
                     @endif
                 </div>
             </div>
@@ -27,7 +27,7 @@
 
                 <p>{{ $location->location_description }}</p>
 
-                <a class="btn btn-default" href="{{ route('vendirun.propertySearch') }}/?location={{ $location->location_name }}">View Properties</a>
+                <a class="btn btn-default" href="{{ route('vendirun.propertySearch') }}/?location={{ $location->location_name }}">{{ trans('vendirun::property.viewProperties') }}</a>
 
             </div>
         </div>
@@ -52,8 +52,8 @@
                         </div>
 
                         <div class="buttons">
-                            <a class="btn btn-default" href="{{ route('vendirun.propertySearch') }}/?location={{ $subLocation->location_name }}">View Properties</a>
-                            <a class="btn btn-primary" href="{{ route('vendirun.location', [urlencode($subLocation->location_name)]) }}">View Location</a>
+                            <a class="btn btn-default" href="{{ route('vendirun.propertySearch') }}/?location={{ $subLocation->location_name }}">{{ trans('vendirun::property.viewProperties') }}</a>
+                            <a class="btn btn-primary" href="{{ route('vendirun.location', [urlencode($subLocation->location_name)]) }}">{{ trans('vendirun::property.viewLocation') }}</a>
                         </div>
                     </div>
                 </div>
@@ -78,8 +78,8 @@
 
                                         <p>{{ $subLocation->location_description }}</p>
 
-                                        <a class="btn btn-default" href="{{ route('vendirun.propertySearch') }}/?location={{ $subLocation->location_name }}">View Properties</a>
-                                        <a class="btn btn-primary" href="{{ route('vendirun.location', [urlencode($subLocation->location_name)]) }}">View Location</a>
+                                        <a class="btn btn-default" href="{{ route('vendirun.propertySearch') }}/?location={{ $subLocation->location_name }}">{{ trans('vendirun::property.viewProperties') }}</a>
+                                        <a class="btn btn-primary" href="{{ route('vendirun.location', [urlencode($subLocation->location_name)]) }}">{{ trans('vendirun::property.viewLocation') }}</a>
 
                                     </div>
                                 </div>
@@ -107,8 +107,8 @@
 
                                         <p>{{ $subLocation->location_description }}</p>
 
-                                        <a class="btn btn-default" href="{{ route('vendirun.propertySearch') }}/?location={{ $subLocation->location_name }}">View Properties</a>
-                                        <a class="btn btn-primary" href="{{ route('vendirun.location', [urlencode($subLocation->location_name)]) }}">View Location</a>
+                                        <a class="btn btn-default" href="{{ route('vendirun.propertySearch') }}/?location={{ $subLocation->location_name }}">{{ trans('vendirun::property.viewProperties') }}</a>
+                                        <a class="btn btn-primary" href="{{ route('vendirun.location', [urlencode($subLocation->location_name)]) }}">{{ trans('vendirun::property.viewLocation') }}</a>
 
                                     </div>
                                 </div>
@@ -135,8 +135,8 @@
                         <p>{{ $subLocation->location_description }}</p>
 
                         <div class="buttons">
-                            <a class="btn btn-default" href="{{ route('vendirun.propertySearch') }}/?location={{ $subLocation->location_name }}">View Properties</a>
-                            <a class="btn btn-primary" href="{{ route('vendirun.location', [urlencode($subLocation->location_name)]) }}">View Location</a>
+                            <a class="btn btn-default" href="{{ route('vendirun.propertySearch') }}/?location={{ $subLocation->location_name }}">{{ trans('vendirun::property.viewProperties') }}</a>
+                            <a class="btn btn-primary" href="{{ route('vendirun.location', [urlencode($subLocation->location_name)]) }}">{{ trans('vendirun::property.viewLocation') }}</a>
 
                         </div>
                     </div>

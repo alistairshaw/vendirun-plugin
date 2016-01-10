@@ -4,10 +4,10 @@
             <div class="row">
                 <div class="col-sm-12">
                     @if ($category->parent)
-                        <a href="{{ route('vendirun.category', [urlencode($category->parent->category_name)]) }}" class="btn btn-default"><i class="fa fa-angle-double-left"></i> Back to {{ $category->parent->category_name }}
+                        <a href="{{ route('vendirun.category', [urlencode($category->parent->category_name)]) }}" class="btn btn-default"><i class="fa fa-angle-double-left"></i> {{ trans('vendirun::property.backTo') }} {{ $category->parent->category_name }}
                         </a>
                     @else
-                        <a href="{{ route('vendirun.category', ['']) }}" class="btn btn-default"><i class="fa fa-angle-double-left"></i> Back to Categories</a>
+                        <a href="{{ route('vendirun.category', ['']) }}" class="btn btn-default"><i class="fa fa-angle-double-left"></i> {{ trans('vendirun::property.backToCategories') }}</a>
                     @endif
                 </div>
             </div>
@@ -55,8 +55,8 @@
                         </div>
 
                         <div class="buttons">
-                            <a class="btn btn-default" href="{{ route('vendirun.propertySearch') }}/?propertytype={{ $subCategory->id }}">View Properties</a>
-                            <a class="btn btn-primary" href="{{ route('vendirun.category', [urlencode($subCategory->category_name)]) }}">View Category</a>
+                            <a class="btn btn-default" href="{{ route('vendirun.propertySearch') }}/?propertytype={{ $subCategory->id }}">{{ trans('vendirun::property.viewProperties') }}</a>
+                            <a class="btn btn-primary" href="{{ route('vendirun.category', [urlencode($subCategory->category_name)]) }}">{{ trans('vendirun::property.viewCategory') }}</a>
                         </div>
                     </div>
                 </div>
@@ -81,8 +81,8 @@
 
                                         <p>{{ $subCategory->category_description }}</p>
 
-                                        <a class="btn btn-default" href="{{ route('vendirun.propertySearch') }}/?propertytype={{ $subCategory->id }}">View Properties</a>
-                                        <a class="btn btn-primary" href="{{ route('vendirun.category', [urlencode($subCategory->category_name)]) }}">View Category</a>
+                                        <a class="btn btn-default" href="{{ route('vendirun.propertySearch') }}/?propertytype={{ $subCategory->id }}">{{ trans('vendirun::property.viewProperties') }}</a>
+                                        <a class="btn btn-primary" href="{{ route('vendirun.category', [urlencode($subCategory->category_name)]) }}">{{ trans('vendirun::property.viewCategory') }}</a>
                                     </div>
                                 </div>
                                 <div class="col col-right">
@@ -109,8 +109,8 @@
 
                                         <p>{{ $subCategory->category_description }}</p>
 
-                                        <a class="btn btn-default" href="{{ route('vendirun.propertySearch') }}/?propertytype={{ $subCategory->id }}">View Properties</a>
-                                        <a class="btn btn-primary" href="{{ route('vendirun.category', [urlencode($subCategory->category_name)]) }}">View Category</a>
+                                        <a class="btn btn-default" href="{{ route('vendirun.propertySearch') }}/?propertytype={{ $subCategory->id }}">{{ trans('vendirun::property.viewProperties') }}</a>
+                                        <a class="btn btn-primary" href="{{ route('vendirun.category', [urlencode($subCategory->category_name)]) }}">{{ trans('vendirun::property.viewCategory') }}</a>
                                     </div>
                                 </div>
                             </div>
@@ -136,8 +136,8 @@
                         <p>{{ $subCategory->category_description }}</p>
 
                         <div class="buttons">
-                            <a class="btn btn-default" href="{{ route('vendirun.propertySearch') }}/?propertytype={{  $subCategory->id }}">View Properties</a>
-                            <a class="btn btn-primary" href="{{ route('vendirun.category', [urlencode($subCategory->category_name)]) }}">View Category</a>
+                            <a class="btn btn-default" href="{{ route('vendirun.propertySearch') }}/?propertytype={{  $subCategory->id }}">{{ trans('vendirun::property.viewProperties') }}</a>
+                            <a class="btn btn-primary" href="{{ route('vendirun.category', [urlencode($subCategory->category_name)]) }}">{{ trans('vendirun::property.viewCategory') }}</a>
                         </div>
                     </div>
                 </div>

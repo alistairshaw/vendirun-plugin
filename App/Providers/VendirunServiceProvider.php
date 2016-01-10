@@ -1,8 +1,8 @@
 <?php namespace AlistairShaw\Vendirun\App\Providers;
 
+use AlistairShaw\Vendirun\App\Lib\LocaleHelper;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
-use Response;
 
 class VendirunServiceProvider extends ServiceProvider {
 
@@ -53,6 +53,15 @@ class VendirunServiceProvider extends ServiceProvider {
 		// register providers we need
 		$this->app->register('AlistairShaw\Vendirun\App\Providers\ComposerServiceProvider');
 		$this->app->register('Illuminate\Html\HtmlServiceProvider');
+
+        // middleware
+        $this->app['router']->middleware('localization', 'AlistairShaw\Vendirun\App\Http\Middleware\Localization');
+
+        // helpers
+        $this->app->bind('LocaleHelper', function()
+        {
+            return new LocaleHelper();
+        });
 
 		// aliases
 		$loader = AliasLoader::getInstance();

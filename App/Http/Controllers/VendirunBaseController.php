@@ -22,9 +22,6 @@ class VendirunBaseController extends Controller {
         // set public client information to the config so we have access to it everywhere
 		$clientInfo = VendirunApi::makeRequest('client/publicInfo')->getData();
         Config::set('clientInfo', $clientInfo);
-
-        App::setLocale($clientInfo->primary_language->language_code);
-        Config::set('app.fallback_locale', $clientInfo->primary_language->language_code);
 	}
 
 }

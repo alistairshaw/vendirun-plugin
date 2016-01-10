@@ -12,7 +12,7 @@
         <div class="col-sm-6">
             @if (isset($options['fullname']))
                 <div class="form-group">
-                    <label for="contact_fullname">{{ $options['fullname_label'] or trans('vendirun::forms.fullname') }}</label>
+                    <label for="contact_fullname">{{ $options['fullname_label'] or trans('vendirun::forms.fullName') }}</label>
                     <input type="text" class="form-control" name="fullname" id="contact_fullname" value="" placeholder="{{ $options['fullname_place_holder'] or '' }}" {{ (isset($options['fullname_required'])) ? 'required' : '' }}>
                 </div>
             @endif

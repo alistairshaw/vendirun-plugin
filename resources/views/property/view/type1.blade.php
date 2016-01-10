@@ -30,7 +30,7 @@
                 @include('vendirun::property.partials.property-attributes')
 
                 <div class="description">
-                    <h3>Description</h3>
+                    <h3>{{ trans('vendirun::property.description') }}</h3>
                     {!! $property->long_description !!}
                 </div>
 
@@ -39,13 +39,13 @@
 
             <div class="col-sm-3">
                 <div class="sidebar">
-                    <h3>Like the look of this?</h3>
+                    <h3>{{ trans('vendirun::property.likeThis') }}</h3>
                     @include('vendirun::property.partials.property-buttons', ['propertyButtons' => ['enquire', 'recommend', 'property-card', 'favourite']])
 
-                    <h3>Share</h3>
+                    <h3>{{ trans('vendirun::standard.share') }}</h3>
                     @include('vendirun::cms.widgets.social-share')
 
-                    <h3>Related Properties</h3>
+                    <h3>{{ trans('vendirun::property.relatedProperties') }}</h3>
                     @include('vendirun::property.partials.related-property')
                 </div>
             </div>

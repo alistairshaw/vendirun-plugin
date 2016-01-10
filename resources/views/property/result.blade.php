@@ -8,7 +8,7 @@
                     @endforeach
                 </ul>
                 @if ($property->sold_at)
-                    <div class="property-badge {{ $property->property_type == 'For Sale' ? 'sold' : 'rented' }}"></div>
+                    <div class="property-badge {{ $property->property_type == 'For Sale' ? trans('vendirun::property.sold') : trans('vendirun::property.rented') }}"></div>
                 @endif
             </div>
         </div>

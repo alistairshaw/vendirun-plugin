@@ -6455,6 +6455,11 @@ footer {
       display: block;
       font-weight: 300;
       font-size: 0.8em; }
+  .property-view.type1 .property-attributes .label {
+    font-size: 1em;
+    font-weight: 300;
+    padding: 6px 12px;
+    border-radius: 0; }
 
 .property-view.type1 .sidebar h3 {
   margin: 0 0 12px 0; }

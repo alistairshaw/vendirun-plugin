@@ -72,7 +72,16 @@ class BaseApi {
             {
                 if (App::environment() == 'local')
                 {
-                    echo 'API endpoint returned completely empty. That shouldn\'t happen.';
+                    if ($res->getBody() == '')
+                    {
+                        echo 'API endpoint returned completely empty. That shouldn\'t happen.';
+                        echo '<br>' . $this->endpoint . $url . '<br>';
+                    }
+                    else
+                    {
+                        echo 'API endpoint returned invalid JSON.<br><br>---------<br><br>';
+                        echo $res->getBody();
+                    }
                     dd($res->getStatusCode());
                 }
                 $response = $this->getFromPermanentCache($noCache, $key, 'Empty response from server at ' . $url);

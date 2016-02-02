@@ -60,6 +60,7 @@ class PropertyController extends VendirunBaseController {
         {
             $property = VendirunApi::makeRequest('property/property', ['id' => $id]);
             $data['property'] = $property->getData();
+            $data['propertyName'] = $propertyName;
         }
         catch (FailResponseException $e)
         {
@@ -119,8 +120,9 @@ class PropertyController extends VendirunBaseController {
         }
         $searchParams['limit'] = (Input::has('limit')) ? Input::get('limit') : $defaultLimit;
 
-        $searchParams['order_by'] = 'price';
-        $searchParams['order_direction'] = 'DESC';
+        $searchParams['order_by'] = Config::get('vendirun.propertyDefaultSortBy', 'created');
+        $searchParams['order_direction'] = Config::get('vendirun.propertyDefaultSortOrder', 'DESC');
+
         if (Input::has('order_by'))
         {
             $searchArray = explode("_", Input::get('order_by'));

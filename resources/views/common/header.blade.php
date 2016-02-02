@@ -39,6 +39,8 @@
                     </ul>
                 </li>
 
+                <li><a href="{{ route('vendirun.blog') }}">Blog</a></li>
+
                 <li><a href="{{ route('vendirun.menu') }}">Menu</a></li>
             </ul>
 

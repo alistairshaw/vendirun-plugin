@@ -18158,6 +18158,13 @@ function initializeMap() {
     if (googleMapAddress.length > 0) {
         var address = googleMapAddress.val();
         if (address !== '') {
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
             // get from cache (if exists in cache)
             $.post('/vendirun/google-map-cache-get', { address: address }, function(response) {
                 if (response.success) {

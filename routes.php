@@ -45,6 +45,14 @@ foreach (array_merge([''], \AlistairShaw\Vendirun\App\Lib\LocaleHelper::validLoc
             Route::post('do-login', ['as' => $localePrefix . 'vendirun.doLogin', 'uses' => 'Customer\CustomerController@doLogin']);
         });
 
+        // blog
+        Route::group(['namespace' => 'AlistairShaw\Vendirun\App\Http\Controllers\Blog', 'prefix' => 'blog'], function () use ($localePrefix)
+        {
+            Route::get('/', ['as' => $localePrefix . 'vendirun.blog', 'uses' => 'PostController@index']);
+            Route::get('search', ['as' => $localePrefix . 'vendirun.search', 'uses' => 'PostController@search']);
+            Route::any('{catchall}', ['uses' => 'PostController@post'])->where('catchall', '(.*)');
+        });
+
         // google map cache
         Route::post('vendirun/google-map-cache-get', ['as'=> $localePrefix . 'vendirun.mapCache', 'uses' => 'Cms\PageController@mapCacheRetrieve']);
         Route::post('vendirun/google-map-cache-set', ['as'=> $localePrefix . 'vendirun.mapCache', 'uses' => 'Cms\PageController@mapCacheSet']);

@@ -1,0 +1,29 @@
+.blog-list {
+    .blog-entry {
+        border: 2px solid #ccc;
+        margin-bottom: 20px;
+        .created {
+            float: left;
+        }
+        .author {
+            float: right;
+            margin-right: 20px;
+        }
+    }
+}
+
+.blog-post {
+    .tags {
+        @extend .clearfix;
+        margin-bottom: 15px;
+        padding-bottom: 5px;
+        border-bottom: 1px solid #ccc;
+        .created {
+            float: left;
+        }
+        .author {
+            float: right;
+            margin-right: 20px;
+        }
+    }
+}

@@ -8484,11 +8484,12 @@ button.close {
 .property-view.type1 .social-share:before,
 .property-categories .category-search-item:before,
 .property-categories .property-category-list-item .details:before,
-.clearfix:after, .image-container .nivo-controlNav:after, .property-search.type1 .heading:after, .property-search.type2 .property-results .property-result .details:after, .property-view.type1 .social-share:after, .property-categories .category-search-item:after, .property-categories .property-category-list-item .details:after {
+.blog-post .tags:before,
+.clearfix:after, .image-container .nivo-controlNav:after, .property-search.type1 .heading:after, .property-search.type2 .property-results .property-result .details:after, .property-view.type1 .social-share:after, .property-categories .category-search-item:after, .property-categories .property-category-list-item .details:after, .blog-post .tags:after {
   content: " ";
   display: table; }
 
-.clearfix:after, .image-container .nivo-controlNav:after, .property-search.type1 .heading:after, .property-search.type2 .property-results .property-result .details:after, .property-view.type1 .social-share:after, .property-categories .category-search-item:after, .property-categories .property-category-list-item .details:after {
+.clearfix:after, .image-container .nivo-controlNav:after, .property-search.type1 .heading:after, .property-search.type2 .property-results .property-result .details:after, .property-view.type1 .social-share:after, .property-categories .category-search-item:after, .property-categories .property-category-list-item .details:after, .blog-post .tags:after {
   clear: both; }
 
 .center-block {
@@ -10704,6 +10705,11 @@ footer {
       display: block;
       font-weight: 300;
       font-size: 0.8em; }
+  .property-view.type1 .property-attributes .label {
+    font-size: 1em;
+    font-weight: 300;
+    padding: 6px 12px;
+    border-radius: 0; }
 
 .property-view.type1 .sidebar h3 {
   margin: 0 0 12px 0; }
@@ -10940,6 +10946,25 @@ footer {
     background-image: url(../images/property/sold-badge.png); }
   .property-badge.rented {
     background-image: url(../images/property/rented-badge.png); }
+
+.blog-list .blog-entry {
+  border: 2px solid #ccc;
+  margin-bottom: 20px; }
+  .blog-list .blog-entry .created {
+    float: left; }
+  .blog-list .blog-entry .author {
+    float: right;
+    margin-right: 20px; }
+
+.blog-post .tags {
+  margin-bottom: 15px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #ccc; }
+  .blog-post .tags .created {
+    float: left; }
+  .blog-post .tags .author {
+    float: right;
+    margin-right: 20px; }
 
 /*# sourceMappingURL=app.css.map */
 /*# sourceMappingURL=production.css.map */

@@ -1,6 +1,7 @@
 <?php namespace AlistairShaw\Vendirun\App\Http\Composers;
 
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\VendirunApi;
+use App;
 use Config;
 use Illuminate\View\View;
 use Request;
@@ -67,7 +68,11 @@ class CmsViewComposer {
 
         $link = ($item->slug) ? URL::to($item->slug) : $item->url;
 
-        $view->with('activeClass', $activeClass)->with('link', $link);
+        // translations, if any
+        $translations = json_decode($item->translations, true);
+        if (isset($translations[App::getLocale()]) && $translations[App::getLocale()] !== '') $item->page_name = $translations[App::getLocale()];
+
+        $view->with('activeClass', $activeClass)->with('link', $link)->with('item', $item);
     }
 
     /**

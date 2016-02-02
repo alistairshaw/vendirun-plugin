@@ -46,7 +46,7 @@ foreach (array_merge([''], \AlistairShaw\Vendirun\App\Lib\LocaleHelper::validLoc
         });
 
         // blog
-        Route::group(['namespace' => 'AlistairShaw\Vendirun\App\Http\Controllers\Blog', 'prefix' => 'blog'], function () use ($localePrefix)
+        Route::group(['namespace' => 'Blog', 'prefix' => 'blog'], function () use ($localePrefix)
         {
             Route::get('/', ['as' => $localePrefix . 'vendirun.blog', 'uses' => 'PostController@index']);
             Route::get('search', ['as' => $localePrefix . 'vendirun.search', 'uses' => 'PostController@search']);

@@ -25,7 +25,7 @@
                     </div>
 
                     <div class="form-group">
-                        <button type="submit" class="btn btn-primary">trans('vendirun::forms.resetPassword')</button>
+                        <button type="submit" class="btn btn-primary">{{ trans('vendirun::forms.resetPassword') }}</button>
                     </div>
                     {!! Form::close() !!}
                 </div>

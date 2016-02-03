@@ -4,6 +4,7 @@ return [
     'login' => 'Log In',
     'loginOrRegister' => 'Log In / Register',
     'logout' => 'Log Out',
+    'register' => 'Register',
     'customer' => 'Customer',
     'contactUs' => 'Contact Us',
     'followUs' => 'Follow Us',

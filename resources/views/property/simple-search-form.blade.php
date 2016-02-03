@@ -1,4 +1,4 @@
-<form method="post" action="{{ route('vendirun.propertySearch') }}">
+<form method="post" action="{{ route(\AlistairShaw\Vendirun\App\Lib\LocaleHelper::getLanguagePrefixForLocale(App::getLocale()) . 'vendirun.propertySearch') }}">
     <input type="hidden" name="_token" value="{{{ csrf_token() }}}">
     <div class="form-group">
         <label class="sr-only">{{ trans('vendirun::property.search') }}</label>

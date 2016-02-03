@@ -122,4 +122,14 @@ class LocaleHelper {
             }
         }
     }
+
+    /**
+     * Empty string prefix if current locale is the primary
+     * @param $locale
+     * @return string
+     */
+    public static function getLanguagePrefixForLocale($locale)
+    {
+        return ($locale == ClientHelper::getClientInfo()->primary_language->language_code) ? '' : $locale . '.';
+    }
 }

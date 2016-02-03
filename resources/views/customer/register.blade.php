@@ -22,7 +22,7 @@
 
                     {!! Form::open(array('route' => 'vendirun.doRegister', 'autocomplete' => 'off')) !!}
                     <p></p>
-                    <h2>Register account</h2>
+                    <h2>{{ trans('vendirun::standard.register') }}</h2>
 
                     <p></p>
 
@@ -58,7 +58,7 @@
                     </div>
 
                     <div class="form-group pull-right">
-                        <button type="submit" class="btn btn-primary">trans('vendirun::forms.register')</button>
+                        <button type="submit" class="btn btn-primary">{{ trans('vendirun::standard.register') }}</button>
                     </div>
                     {!! Form::close() !!}
 
@@ -68,7 +68,7 @@
                     {!! Form::open(array('route' => 'vendirun.doLogin', 'autocomplete' => 'off')) !!}
                     <p></p>
 
-                    <h2>trans('vendirun::forms.login') </h2>
+                    <h2>{{ trans('vendirun::standard.login') }}</h2>
 
                     <div class="form-group">
                         {!! Form::label('email_login', trans('vendirun::forms.email') . ':*') !!}
@@ -81,10 +81,10 @@
                     </div>
 
                     <div class="form-group text-right">
-                        <button type="submit" class="btn btn-primary">{{ trans('vendirun::forms.login') }}</button>
+                        <button type="submit" class="btn btn-primary">{{ trans('vendirun::standard.login') }}</button>
                         <br>
                         <br>
-                        <a href="{{ route('vendirun.passwordRecovery') }}">{{ trans('vendirun::forms.passwordForgotten') }}</a>
+                        <a href="{{ route(\AlistairShaw\Vendirun\App\Lib\LocaleHelper::getLanguagePrefixForLocale(App::getLocale()) . 'vendirun.passwordRecovery') }}">{{ trans('vendirun::forms.passwordForgotten') }}</a>
                     </div>
                     {!! Form::close() !!}
                 </div>
@@ -92,7 +92,7 @@
         @else
             <div class="large-notice">
                 <div class="alert alert-success">
-                    <p>{{ trans('vendirun::standard.currentlyLoggedIn') }}  <a href="{{ route('vendirun.logout') }}">{{ trans('vendirun::standard.clickToLogOut') }}</a></p>
+                    <p>{{ trans('vendirun::standard.currentlyLoggedIn') }}  <a href="{{ route(\AlistairShaw\Vendirun\App\Lib\LocaleHelper::getLanguagePrefixForLocale(App::getLocale()) . 'vendirun.logout') }}">{{ trans('vendirun::standard.clickToLogOut') }}</a></p>
                 </div>
             </div>
         @endif

@@ -1,5 +1,6 @@
 <?php namespace AlistairShaw\Vendirun\App\Http\Controllers;
 
+use AlistairShaw\Vendirun\App\Lib\ClientHelper;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\VendirunApi;
 use App;
 use App\Http\Controllers\Controller;
@@ -20,7 +21,7 @@ class VendirunBaseController extends Controller {
 		Session::put('current_page_route', Request::path());
 
         // set public client information to the config so we have access to it everywhere
-		$clientInfo = VendirunApi::makeRequest('client/publicInfo')->getData();
+		$clientInfo = ClientHelper::getClientInfo();
         Config::set('clientInfo', $clientInfo);
 	}
 

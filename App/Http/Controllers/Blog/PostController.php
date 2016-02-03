@@ -3,6 +3,7 @@
 use AlistairShaw\Vendirun\App\Http\Controllers\VendirunBaseController;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\Exceptions\FailResponseException;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\VendirunApi;
+use App;
 use View;
 
 class PostController extends VendirunBaseController {
@@ -45,7 +46,9 @@ class PostController extends VendirunBaseController {
     {
         try
         {
-            $posts = VendirunApi::makeRequest('blog/search', $_GET);
+            $searchVars = $_GET;
+            $searchVars['language'] = App::getLocale();
+            $posts = VendirunApi::makeRequest('blog/search', $searchVars);
             $data['posts'] = $posts->getData();
             return View::make('vendirun::blog.search', $data);
         }

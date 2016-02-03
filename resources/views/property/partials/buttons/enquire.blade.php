@@ -1,3 +1,3 @@
-<a href="{{ route('vendirun.propertyView',[$property->id, urlencode($property->title)]) }}/#contact-us" class="btn btn-default btn-enquire" data-toggle="tooltip" title="{{ trans('vendirun::property.enquire') }}">
+<a href="{{ route(\AlistairShaw\Vendirun\App\Lib\LocaleHelper::getLanguagePrefixForLocale(App::getLocale()) . 'vendirun.propertyView',[$property->id, urlencode($property->title)]) }}/#contact-us" class="btn btn-default btn-enquire" data-toggle="tooltip" title="{{ trans('vendirun::property.enquire') }}">
     <i class="fa fa-envelope"></i> {{ $abbreviatedButtons ? '' : ' ' . trans('vendirun::property.enquire') }}
 </a>

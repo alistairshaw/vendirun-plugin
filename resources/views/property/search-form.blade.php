@@ -34,7 +34,7 @@
     </div>
     <div class="form-group text-right">
         <button type="button" class="btn btn-default js-close-filter"><i class="fa fa-chevron-left"></i></button>
-        <a href="{{ route('vendirun.propertyClearSearch') }}" class="btn btn-default">{{ trans('vendirun::forms.clear') }}</a>
+        <a href="{{ route(\AlistairShaw\Vendirun\App\Lib\LocaleHelper::getLanguagePrefixForLocale(App::getLocale()) . 'vendirun.propertyClearSearch') }}" class="btn btn-default">{{ trans('vendirun::forms.clear') }}</a>
         <button type="submit" class="btn btn-primary">{{ trans('vendirun::forms.search') }}</button>
     </div>
 </div>

@@ -66,7 +66,9 @@ class CmsViewComposer {
             if ($slug == '/' && Request::path() == '/') $activeClass = 'active';
         }
 
-        $link = ($item->slug) ? URL::to($item->slug) : $item->url;
+        $clientInfo = Config::get('clientInfo');
+        $locale = (App::getLocale() == $clientInfo->primary_language->language_code) ? '' : '/' . App::getLocale();
+        $link = ($item->slug) ? URL::to($locale . $item->slug) : $locale . $item->url;
 
         // translations, if any
         $translations = json_decode($item->translations, true);

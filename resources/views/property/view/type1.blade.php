@@ -19,7 +19,7 @@
                 <div class="image-container">
                     <ul class="{{ (count($property->images) > 1) ? 'property-slide-show' : 'property-single-image' }}">
                         @foreach ($property->images as $image)
-                            <a class="image-link" href="{{ route('vendirun.propertyView',[$property->id, urlencode($property->title)]) }}"><img src="{{ $image->mediumrect }}" class="img-responsive" data-thumb="{{ $image->thumbnailsq }}"></a>
+                            <a class="image-link" href="{{ route(\AlistairShaw\Vendirun\App\Lib\LocaleHelper::getLanguagePrefixForLocale(App::getLocale()) . 'vendirun.propertyView',[$property->id, urlencode($property->title)]) }}"><img src="{{ $image->mediumrect }}" class="img-responsive" data-thumb="{{ $image->thumbnailsq }}"></a>
                         @endforeach
                     </ul>
                     @if ($property->sold_at)

@@ -1,7 +1,9 @@
 <?php namespace AlistairShaw\Vendirun\App\Http\Controllers\Property;
 
 use AlistairShaw\Vendirun\App\Http\Controllers\VendirunAuthController;
+use AlistairShaw\Vendirun\App\Lib\LocaleHelper;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\VendirunApi;
+use App;
 use Redirect;
 use Session;
 use View;
@@ -19,7 +21,7 @@ class PropertyAuthController extends VendirunAuthController {
 
         if (!$response->getSuccess()) Session::flash('vendirun-alert-error', $response->getError());
 
-        return Redirect::route('vendirun.propertyView', ['id' => $propertyId]);
+        return Redirect::route(LocaleHelper::getLanguagePrefixForLocale(App::getLocale()) . 'vendirun.propertyView', ['id' => $propertyId]);
     }
 
     /**
@@ -32,7 +34,7 @@ class PropertyAuthController extends VendirunAuthController {
 
         if (!$response->getSuccess()) Session::flash('vendirun-alert-error', $response->getError());
 
-        return Redirect::route('vendirun.propertyView', ['id' => $propertyId]);
+        return Redirect::route(LocaleHelper::getLanguagePrefixForLocale(App::getLocale()) . 'vendirun.propertyView', ['id' => $propertyId]);
     }
 
     /**

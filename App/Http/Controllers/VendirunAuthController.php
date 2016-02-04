@@ -1,5 +1,7 @@
 <?php namespace AlistairShaw\Vendirun\App\Http\Controllers;
 
+use AlistairShaw\Vendirun\App\Lib\LocaleHelper;
+use App;
 use Redirect;
 use Request;
 use Session;
@@ -14,7 +16,7 @@ class VendirunAuthController extends VendirunBaseController {
         {
             Session::put('action', Request::url());
 
-            Redirect::route('vendirun.register')->send();
+            Redirect::route(LocaleHelper::getLanguagePrefixForLocale(App::getLocale()) . 'vendirun.register')->send();
         }
     }
 

@@ -8,7 +8,7 @@
         <div class="row">
             <div class="col-md-3 col-sm-4 hidden-xs hidden-sm">
                 <div class="search-form">
-                    <h3>Refine your search</h3>
+                    <h3>{{ trans('vendirun::property.refineSearch') }}</h3>
                     @include('vendirun::property.search-form')
                 </div>
             </div>
@@ -16,17 +16,17 @@
                 <div class="heading">
                     <div class="form-inline">
                         <div class="form-group order-by">
-                            <label for="order_by">Sort</label>
+                            <label for="order_by">{{ trans('vendirun::property.sort') }}</label>
                             <select class="form-control" name="order_by" id="order_by">
-                                <option value="created_DESC"{{ ($searchParams['order_by'] == 'created') ? ' selected' : '' }}>Newest</option>
-                                <option value="price_ASC"{{ ($searchParams['order_by'] == 'price' && $searchParams['order_direction'] == 'ASC') ? ' selected' : '' }}>Price (lowest first)</option>
-                                <option value="price_DESC"{{ ($searchParams['order_by'] == 'price' && $searchParams['order_direction'] == 'DESC') ? ' selected' : '' }}>Price (highest first)</option>
-                                <option value="reference_ASC"{{ ($searchParams['order_by'] == 'reference') ? ' selected' : '' }}>Reference</option>
+                                <option value="created_DESC"{{ ($searchParams['order_by'] == 'created') ? ' selected' : '' }}>{{ trans('vendirun::property.newest') }}</option>
+                                <option value="price_ASC"{{ ($searchParams['order_by'] == 'price' && $searchParams['order_direction'] == 'ASC') ? ' selected' : '' }}>{{ trans('vendirun::property.priceLowestFirst') }}</option>
+                                <option value="price_DESC"{{ ($searchParams['order_by'] == 'price' && $searchParams['order_direction'] == 'DESC') ? ' selected' : '' }}>{{ trans('vendirun::property.priceHighestFirst') }}</option>
+                                <option value="reference_ASC"{{ ($searchParams['order_by'] == 'reference') ? ' selected' : '' }}>{{ trans('vendirun::property.reference') }}</option>
                             </select>
                         </div>
 
                         <div class="form-group per-page">
-                            <label for="limit">Per Page</label>
+                            <label for="limit">{{ trans('vendirun::property.perPage') }}</label>
                             <select class="form-control" name="limit" id="limit">
                                 <option value="6"{{ ($searchParams['limit'] == 6) ? ' selected' : '' }}>6</option>
                                 <option value="12"{{ ($searchParams['limit'] == 12) ? ' selected' : '' }}>12</option>

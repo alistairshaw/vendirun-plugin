@@ -3,8 +3,10 @@
 namespace AlistairShaw\Vendirun\App\Http\Controllers\Customer;
 
 use AlistairShaw\Vendirun\App\Http\Controllers\VendirunBaseController;
+use AlistairShaw\Vendirun\App\Lib\LocaleHelper;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\Exceptions\FailResponseException;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\VendirunApi;
+use App;
 use Input;
 use Redirect;
 use Session;
@@ -31,7 +33,7 @@ class PasswordController extends VendirunBaseController {
         try
         {
             VendirunApi::makeRequest('customer/passwordRecovery', ['email' => Input::get('email')]);
-            return Redirect::route('vendirun.passwordRecoveryOk');
+            return Redirect::route(LocaleHelper::getLanguagePrefixForLocale(App::getLocale()) . 'vendirun.passwordRecoveryOk');
         }
         catch (FailResponseException $e)
         {
@@ -63,7 +65,7 @@ class PasswordController extends VendirunBaseController {
         try
         {
             VendirunApi::makeRequest('customer/passwordReset', ['email' => Input::get('email'), 'token' => Input::get('token'), 'password' => Input::get('password')]);
-            return Redirect::route('vendirun.passwordResetOk');
+            return Redirect::route(LocaleHelper::getLanguagePrefixForLocale(App::getLocale()) . 'vendirun.passwordResetOk');
         }
         catch (FailResponseException $e)
         {

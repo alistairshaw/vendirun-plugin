@@ -1,1 +1,1 @@
-<a href="#" class="js-popout-search">Filter <i class="fa fa-chevron-right"></i> </a>
+<a href="#" class="js-popout-search">{{ trans('vendirun::property.filter') }} <i class="fa fa-chevron-right"></i> </a>

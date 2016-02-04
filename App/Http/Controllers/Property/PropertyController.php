@@ -3,6 +3,7 @@
 namespace AlistairShaw\Vendirun\App\Http\Controllers\Property;
 
 use AlistairShaw\Vendirun\App\Http\Controllers\VendirunBaseController;
+use AlistairShaw\Vendirun\App\Lib\LocaleHelper;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\Exceptions\FailResponseException;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\VendirunApi;
 use App;
@@ -45,7 +46,7 @@ class PropertyController extends VendirunBaseController {
     {
         Session::forget('searchParams');
 
-        return Redirect::route('vendirun.propertySearch');
+        return Redirect::route(LocaleHelper::getLanguagePrefixForLocale(App::getLocale()) . 'vendirun.propertySearch');
     }
 
     /**
@@ -60,6 +61,7 @@ class PropertyController extends VendirunBaseController {
         {
             $property = VendirunApi::makeRequest('property/property', ['id' => $id]);
             $data['property'] = $property->getData();
+            $data['propertyName'] = $propertyName;
         }
         catch (FailResponseException $e)
         {
@@ -121,6 +123,7 @@ class PropertyController extends VendirunBaseController {
 
         $searchParams['order_by'] = Config::get('vendirun.propertyDefaultSortBy', 'created');
         $searchParams['order_direction'] = Config::get('vendirun.propertyDefaultSortOrder', 'DESC');
+
         if (Input::has('order_by'))
         {
             $searchArray = explode("_", Input::get('order_by'));

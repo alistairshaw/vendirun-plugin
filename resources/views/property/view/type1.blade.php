@@ -19,7 +19,7 @@
                 <div class="image-container">
                     <ul class="{{ (count($property->images) > 1) ? 'property-slide-show' : 'property-single-image' }}">
                         @foreach ($property->images as $image)
-                            <a class="image-link" href="{{ route('vendirun.propertyView',[$property->id, urlencode($property->title)]) }}"><img src="{{ $image->mediumrect }}" class="img-responsive" data-thumb="{{ $image->thumbnailsq }}"></a>
+                            <a class="image-link" href="{{ route(\AlistairShaw\Vendirun\App\Lib\LocaleHelper::getLanguagePrefixForLocale(App::getLocale()) . 'vendirun.propertyView',[$property->id, urlencode($property->title)]) }}"><img src="{{ $image->mediumrect }}" class="img-responsive" data-thumb="{{ $image->thumbnailsq }}"></a>
                         @endforeach
                     </ul>
                     @if ($property->sold_at)
@@ -30,7 +30,7 @@
                 @include('vendirun::property.partials.property-attributes')
 
                 <div class="description">
-                    <h3>Description</h3>
+                    <h3>{{ trans('vendirun::property.description') }}</h3>
                     {!! $property->long_description !!}
                 </div>
 
@@ -39,13 +39,13 @@
 
             <div class="col-sm-3">
                 <div class="sidebar">
-                    <h3>Like the look of this?</h3>
+                    <h3>{{ trans('vendirun::property.likeThis') }}</h3>
                     @include('vendirun::property.partials.property-buttons', ['propertyButtons' => ['enquire', 'recommend', 'property-card', 'favourite']])
 
-                    <h3>Share</h3>
+                    <h3>{{ trans('vendirun::standard.share') }}</h3>
                     @include('vendirun::cms.widgets.social-share')
 
-                    <h3>Related Properties</h3>
+                    <h3>{{ trans('vendirun::property.relatedProperties') }}</h3>
                     @include('vendirun::property.partials.related-property')
                 </div>
             </div>

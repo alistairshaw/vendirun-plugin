@@ -4,10 +4,10 @@
             <div class="row">
                 <div class="col-sm-12">
                     @if ($category->parent)
-                        <a href="{{ route('vendirun.category', [urlencode($category->parent->category_name)]) }}" class="btn btn-default"><i class="fa fa-angle-double-left"></i> Back to {{ $category->parent->category_name }}
+                        <a href="{{ route(\AlistairShaw\Vendirun\App\Lib\LocaleHelper::getLanguagePrefixForLocale(App::getLocale()) . 'vendirun.category', [urlencode($category->parent->category_name)]) }}" class="btn btn-default"><i class="fa fa-angle-double-left"></i> {{ trans('vendirun::property.backTo') }} {{ $category->parent->category_name }}
                         </a>
                     @else
-                        <a href="{{ route('vendirun.category', ['']) }}" class="btn btn-default"><i class="fa fa-angle-double-left"></i> Back to Categories</a>
+                        <a href="{{ route(\AlistairShaw\Vendirun\App\Lib\LocaleHelper::getLanguagePrefixForLocale(App::getLocale()) . 'vendirun.category', ['']) }}" class="btn btn-default"><i class="fa fa-angle-double-left"></i> {{ trans('vendirun::property.backToCategories') }}</a>
                     @endif
                 </div>
             </div>
@@ -27,7 +27,7 @@
 
                 <p>{{ $category->category_description }}</p>
 
-                <form method="post" action="{{ route('vendirun.propertySearch') }}">
+                <form method="post" action="{{ route(\AlistairShaw\Vendirun\App\Lib\LocaleHelper::getLanguagePrefixForLocale(App::getLocale()) . 'vendirun.propertySearch') }}">
                     <input type="hidden" name="_token" value="{!! csrf_token() !!}">
                     <input type="hidden" class="form-control" value="{{ $category->category_name }}" name="category">
                     <button type="submit" class="btn btn-default">View {{ $category->category_name }}</button>
@@ -43,7 +43,7 @@
                 <div class="col-sm-6 col-md-{{ $element_options['col_md'] }}">
                     <div class="thumbnail">
                         @if ($element_options['show_images'] == 'Yes')
-                            <a href="{{ route('vendirun.category', [urlencode($subCategory->category_name)]) }}">
+                            <a href="{{ route(\AlistairShaw\Vendirun\App\Lib\LocaleHelper::getLanguagePrefixForLocale(App::getLocale()) . 'vendirun.category', [urlencode($subCategory->category_name)]) }}">
                                 <img src="{{ reset($subCategory->images)->mediumrect }}" class="img-responsive">
                             </a>
                         @endif
@@ -55,8 +55,8 @@
                         </div>
 
                         <div class="buttons">
-                            <a class="btn btn-default" href="{{ route('vendirun.propertySearch') }}/?propertytype={{ $subCategory->id }}">View Properties</a>
-                            <a class="btn btn-primary" href="{{ route('vendirun.category', [urlencode($subCategory->category_name)]) }}">View Category</a>
+                            <a class="btn btn-default" href="{{ route(\AlistairShaw\Vendirun\App\Lib\LocaleHelper::getLanguagePrefixForLocale(App::getLocale()) . 'vendirun.propertySearch') }}/?propertytype={{ $subCategory->id }}">{{ trans('vendirun::property.viewProperties') }}</a>
+                            <a class="btn btn-primary" href="{{ route(\AlistairShaw\Vendirun\App\Lib\LocaleHelper::getLanguagePrefixForLocale(App::getLocale()) . 'vendirun.category', [urlencode($subCategory->category_name)]) }}">{{ trans('vendirun::property.viewCategory') }}</a>
                         </div>
                     </div>
                 </div>
@@ -81,12 +81,12 @@
 
                                         <p>{{ $subCategory->category_description }}</p>
 
-                                        <a class="btn btn-default" href="{{ route('vendirun.propertySearch') }}/?propertytype={{ $subCategory->id }}">View Properties</a>
-                                        <a class="btn btn-primary" href="{{ route('vendirun.category', [urlencode($subCategory->category_name)]) }}">View Category</a>
+                                        <a class="btn btn-default" href="{{ route(\AlistairShaw\Vendirun\App\Lib\LocaleHelper::getLanguagePrefixForLocale(App::getLocale()) . 'vendirun.propertySearch') }}/?propertytype={{ $subCategory->id }}">{{ trans('vendirun::property.viewProperties') }}</a>
+                                        <a class="btn btn-primary" href="{{ route(\AlistairShaw\Vendirun\App\Lib\LocaleHelper::getLanguagePrefixForLocale(App::getLocale()) . 'vendirun.category', [urlencode($subCategory->category_name)]) }}">{{ trans('vendirun::property.viewCategory') }}</a>
                                     </div>
                                 </div>
                                 <div class="col col-right">
-                                    <a href="{{ route('vendirun.category', [urlencode($subCategory->category_name)]) }}">
+                                    <a href="{{ route(\AlistairShaw\Vendirun\App\Lib\LocaleHelper::getLanguagePrefixForLocale(App::getLocale()) . 'vendirun.category', [urlencode($subCategory->category_name)]) }}">
                                         <img src="{{ reset($subCategory->images)->mediumsq }}" class="img-responsive">
                                     </a>
                                 </div>
@@ -96,7 +96,7 @@
                         <div class="col-sm-6 clearfix">
                             <div class="category-search-item">
                                 <div class="col">
-                                    <a href="{{ route('vendirun.category', [urlencode($subCategory->category_name)]) }}">
+                                    <a href="{{ route(\AlistairShaw\Vendirun\App\Lib\LocaleHelper::getLanguagePrefixForLocale(App::getLocale()) . 'vendirun.category', [urlencode($subCategory->category_name)]) }}">
                                         <img src="{{ reset($subCategory->images)->mediumsq }}" class="img-responsive">
                                     </a>
                                 </div>
@@ -109,8 +109,8 @@
 
                                         <p>{{ $subCategory->category_description }}</p>
 
-                                        <a class="btn btn-default" href="{{ route('vendirun.propertySearch') }}/?propertytype={{ $subCategory->id }}">View Properties</a>
-                                        <a class="btn btn-primary" href="{{ route('vendirun.category', [urlencode($subCategory->category_name)]) }}">View Category</a>
+                                        <a class="btn btn-default" href="{{ route(\AlistairShaw\Vendirun\App\Lib\LocaleHelper::getLanguagePrefixForLocale(App::getLocale()) . 'vendirun.propertySearch') }}/?propertytype={{ $subCategory->id }}">{{ trans('vendirun::property.viewProperties') }}</a>
+                                        <a class="btn btn-primary" href="{{ route(\AlistairShaw\Vendirun\App\Lib\LocaleHelper::getLanguagePrefixForLocale(App::getLocale()) . 'vendirun.category', [urlencode($subCategory->category_name)]) }}">{{ trans('vendirun::property.viewCategory') }}</a>
                                     </div>
                                 </div>
                             </div>
@@ -125,7 +125,7 @@
                 <div class="property-category-list-item clearfix">
                     @if ($element_options['show_images'] == 'Yes')
                         <div class="image-container">
-                            <a href="{{ route('vendirun.category', [urlencode($subCategory->category_name)]) }}">
+                            <a href="{{ route(\AlistairShaw\Vendirun\App\Lib\LocaleHelper::getLanguagePrefixForLocale(App::getLocale()) . 'vendirun.category', [urlencode($subCategory->category_name)]) }}">
                                 <img src="{{ reset($subCategory->images)->mediumrect }}" class="img-responsive">
                             </a>
                         </div>
@@ -136,8 +136,8 @@
                         <p>{{ $subCategory->category_description }}</p>
 
                         <div class="buttons">
-                            <a class="btn btn-default" href="{{ route('vendirun.propertySearch') }}/?propertytype={{  $subCategory->id }}">View Properties</a>
-                            <a class="btn btn-primary" href="{{ route('vendirun.category', [urlencode($subCategory->category_name)]) }}">View Category</a>
+                            <a class="btn btn-default" href="{{ route(\AlistairShaw\Vendirun\App\Lib\LocaleHelper::getLanguagePrefixForLocale(App::getLocale()) . 'vendirun.propertySearch') }}/?propertytype={{  $subCategory->id }}">{{ trans('vendirun::property.viewProperties') }}</a>
+                            <a class="btn btn-primary" href="{{ route(\AlistairShaw\Vendirun\App\Lib\LocaleHelper::getLanguagePrefixForLocale(App::getLocale()) . 'vendirun.category', [urlencode($subCategory->category_name)]) }}">{{ trans('vendirun::property.viewCategory') }}</a>
                         </div>
                     </div>
                 </div>

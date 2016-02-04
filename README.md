@@ -5,16 +5,6 @@
 * This package can be pulled in to any Laravel project and provides all of the default Vendirun front-end functionality
 * Latest Stable Version: 1.0.5.4
 
-### Setting up the package for further development ###
-
-* Create the folder: /packages/AlistairShaw/vendirun and clone the repo into it
-* composer require illuminate/html (in the root)
-* Edit the /config/app.php file and add the VendirunServiceProvider to the app (AlistairShaw\Vendirun\App\Providers\VendirunServiceProvider::class)
-* Edit your composer.json in the root and add the Vendirun namespace to the PSR-4 section ("AlistairShaw\\Vendirun\\": "packages/alistairshaw/vendirun/app/")
-* Run composer dump-autoload
-* Edit the /packages/AlistairShaw/vendirun/src/config/vendirun.php file, and set the correct endpoint, API key and client ID
-* Use 'artisan vendor:publish' to copy public assets to the right place (add tag --tag=public to only publish the images, css, etc and use --force to overwrite existing files)
-
 ### Importing the package into a new front-end ###
 
 * Add the repository to your composer.json:
@@ -34,6 +24,6 @@
 * Add the namespace to the PSR-4 section ("AlistairShaw\\Vendirun\\": "vendor/alistairshaw/vendirun")
 * Edit the /config/app.php file and add the VendirunServiceProvider to the app (AlistairShaw\Vendirun\App\Providers\VendirunServiceProvider::class)
 * composer dump-autoload
-* Use 'artisan vendor:publish' to copy public assets to the right place (add tag --tag=public to only publish the images, css, etc and use --force to overwrite existing files)
+* Use 'artisan vendor:publish' to copy public assets to the right place (add tag --tag=public to only publish the images, css, etc and --tag=languages to only publish the language files. Use --force to overwrite existing files)
 * Set the correct endpoint URL, client ID and API Key in the laravel .env file (see .env.example file)
 * The site is working! Now you just need to customise the CSS and any views you like

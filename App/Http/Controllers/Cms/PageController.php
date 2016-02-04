@@ -1,9 +1,9 @@
 <?php namespace AlistairShaw\Vendirun\App\Http\Controllers\Cms;
 
 use AlistairShaw\Vendirun\App\Http\Controllers\VendirunBaseController;
-use AlistairShaw\Vendirun\App\Lib\VendirunApi\CmsApi;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\Exceptions\FailResponseException;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\VendirunApi;
+use App;
 use Cache;
 use Request;
 use Response;
@@ -28,18 +28,20 @@ class PageController extends VendirunBaseController {
      * @param $slug
      * @return \Illuminate\View\View
      */
-    public function page($slug)
+    public function page($slug = '')
     {
+        $data = [];
         try
         {
-            $page = VendirunApi::makeRequest('cms/page', ['slug' => $slug]);
+            $page = VendirunApi::makeRequest('cms/page', ['slug' => $slug, 'locale' => App::getLocale()]);
             $data['page'] = $page->getData();
-            return View::make('vendirun::cms.page', $data);
         }
         catch (FailResponseException $e)
         {
             abort('404');
         }
+
+        return View::make('vendirun::cms.page', $data);
     }
 
     /**
@@ -51,6 +53,9 @@ class PageController extends VendirunBaseController {
         return View::make('vendirun::cms.menu', ['menuSlug' => 'main-menu']);
     }
 
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function mapCacheRetrieve()
     {
         $address = sha1(Request::input('address'));
@@ -66,18 +71,21 @@ class PageController extends VendirunBaseController {
         return Response::json(['success' => true, 'lat' => $lat, 'lng' => $lng]);
     }
 
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function mapCacheSet()
     {
         $address = sha1(Request::input('address'));
         $lat = Request::input('lat');
         $lng = Request::input('lng');
 
-        // dd($lat, $lng, $address);
-
         if ($lat && $lng)
         {
             Cache::forever('mapCacheLat' . $address, $lat);
             Cache::forever('mapCacheLng' . $address, $lng);
         }
+
+        return Response::json(['success' => true]);
     }
 }

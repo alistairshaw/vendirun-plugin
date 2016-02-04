@@ -1,8 +1,8 @@
 <?php namespace AlistairShaw\Vendirun\App\Providers;
 
+use AlistairShaw\Vendirun\App\Lib\LocaleHelper;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
-use Response;
 
 class VendirunServiceProvider extends ServiceProvider {
 
@@ -16,9 +16,10 @@ class VendirunServiceProvider extends ServiceProvider {
 		$this->loadViewsFrom(__DIR__.'/../../resources/views', 'vendirun');
 
 		// use artisan vendor:publish to copy views to standard view folder
-		$this->publishes([
+		// commented out since generally we don't want to publish all the views
+		/*$this->publishes([
 			__DIR__.'/../../resources/views' => base_path('resources/views/vendor/vendirun'),
-		]);
+		]);*/
 
 		// use artisan vendor:publish to copy config
 		$this->publishes([
@@ -33,6 +34,9 @@ class VendirunServiceProvider extends ServiceProvider {
 
 		// include my package custom routes
 		include __DIR__.'/../../routes.php';
+
+		// load translation files
+		$this->loadTranslationsFrom(__DIR__.'/../../resources/lang', 'vendirun');
 	}
 
 	/**
@@ -49,6 +53,15 @@ class VendirunServiceProvider extends ServiceProvider {
 		// register providers we need
 		$this->app->register('AlistairShaw\Vendirun\App\Providers\ComposerServiceProvider');
 		$this->app->register('Illuminate\Html\HtmlServiceProvider');
+
+        // middleware
+        $this->app['router']->middleware('localization', 'AlistairShaw\Vendirun\App\Http\Middleware\Localization');
+
+        // helpers
+        $this->app->bind('LocaleHelper', function()
+        {
+            return new LocaleHelper();
+        });
 
 		// aliases
 		$loader = AliasLoader::getInstance();

@@ -4,18 +4,18 @@
             <div class="image-container">
                 <ul class="{{ ((count($property->images) > 1) && (isset($limitImages) && $limitImages > 1)) ? 'property-slide-show' : 'property-single-image' }}">
                     @foreach (array_slice($property->images, 0, (isset($limitImages) ? $limitImages : 5)) as $image)
-                        <a class="image-link" href="{{ route('vendirun.propertyView',[$property->id, urlencode($property->title)]) }}"><img src="{{ $image->mediumrect }}" class="img-responsive" data-thumb="{{ $image->thumbnailsq }}"></a>
+                        <a class="image-link" href="{{ route(\AlistairShaw\Vendirun\App\Lib\LocaleHelper::getLanguagePrefixForLocale(App::getLocale()) . 'vendirun.propertyView',[$property->id, urlencode($property->title)]) }}"><img src="{{ $image->mediumrect }}" class="img-responsive" data-thumb="{{ $image->thumbnailsq }}"></a>
                     @endforeach
                 </ul>
                 @if ($property->sold_at)
-                    <div class="property-badge {{ $property->property_type == 'For Sale' ? 'sold' : 'rented' }}"></div>
+                    <div class="property-badge {{ $property->property_type == 'For Sale' ? trans('vendirun::property.sold') : trans('vendirun::property.rented') }}"></div>
                 @endif
             </div>
         </div>
         <div class="details">
             <div class="price">{{ $price }}</div>
             <h2>
-                <a href="{{ route('vendirun.propertyView',[$property->id, urlencode($property->title)]) }}">{{ $property->title }}</a>
+                <a href="{{ route(\AlistairShaw\Vendirun\App\Lib\LocaleHelper::getLanguagePrefixForLocale(App::getLocale()) . 'vendirun.propertyView',[$property->id, urlencode($property->title)]) }}">{{ $property->title }}</a>
             </h2>
 
             <div class="location">

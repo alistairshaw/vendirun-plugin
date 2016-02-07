@@ -13,6 +13,7 @@ return [
     'backToLocations' => 'Back to Locations',
     'viewProperties' => 'View Properties',
     'viewCategory' => 'View Category',
+    'view' => 'View',
     'viewLocation' => 'View Location',
     'refineSearch' => 'Refine your Search',
     'sort' => 'Sort',
@@ -40,12 +41,18 @@ return [
     'sold' => 'sold',
     'rented' => 'rented',
     'location' => 'Location',
+    'city' => 'City',
     'priceRangeFrom' => 'Price Range From',
     'priceRangeTo' => 'Price Range To',
     'bedrooms' => 'Bedrooms',
     'bathrooms' => 'Bathrooms',
+    'buildSize' => 'Build Size',
+    'terraceSize' => 'Terrace Size',
+    'gardenSize' => 'Garden Size',
+    'totalPlotSize' => 'Total Plot Size',
     'propertyType' => 'Property Type',
     'keywords' => 'Keywords',
     'simpleSearchExample' => 'e.g. Marbella, Country Property, 3 Bedroom Villa',
-    'searchNow' => 'Start your Search Now'
+    'searchNow' => 'Start your Search Now',
+    'any' => 'Any'
 ];

@@ -33,7 +33,9 @@
         <input type="text" class="form-control" name="keywords" id="keywords" value="{{ isset($searchParams['strings']) ? implode(',', (array)$searchParams['strings']) : '' }}">
     </div>
     <div class="form-group text-right">
-        <button type="button" class="btn btn-default js-close-filter"><i class="fa fa-chevron-left"></i></button>
+        @if (Config::get('vendirun.propertyListingsView') == 'type2')
+            <button type="button" class="btn btn-default js-close-filter"><i class="fa fa-chevron-left"></i></button>
+        @endif
         <a href="{{ route(\AlistairShaw\Vendirun\App\Lib\LocaleHelper::getLanguagePrefixForLocale(App::getLocale()) . 'vendirun.propertyClearSearch') }}" class="btn btn-default">{{ trans('vendirun::forms.clear') }}</a>
         <button type="submit" class="btn btn-primary">{{ trans('vendirun::forms.search') }}</button>
     </div>

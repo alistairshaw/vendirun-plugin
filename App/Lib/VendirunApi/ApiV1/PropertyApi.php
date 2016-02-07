@@ -75,11 +75,12 @@ class PropertyApi extends BaseApi {
     }
 
     /**
+     * @param array $params
      * @return array
      */
-    public function getCategoryList()
+    public function getCategoryList($params = [])
     {
         $url = 'property/category_list';
-        return $this->request($url);
+        return $this->request($url, $params);
     }
 } 

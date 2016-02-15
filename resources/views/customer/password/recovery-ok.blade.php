@@ -8,8 +8,8 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6 col-md-offset-3">
-                    <h1>We've Sent you an Email</h1>
-                    <p>You'll receive an email from us with a link to allow you to reset your password.</p>
+                    <h1>{{ trans('vendirun::forms.passwordRecoverySent') }}</h1>
+                    <p>{{ trans('vendirun::property.passwordRecoveryMessage') }}</p>
                 </div>
             </div>
         </div>

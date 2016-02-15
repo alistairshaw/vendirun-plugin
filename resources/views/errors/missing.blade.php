@@ -6,6 +6,6 @@
 @section('content')
     <div class="large-notice">
         <h1>404</h1>
-        <p>I'm afraid this page could not be found :(</p>
+        <p>{{ trans('vendirun::standard.fourOhFour') }}</p>
     </div>
 @stop

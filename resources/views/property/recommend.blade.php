@@ -6,7 +6,7 @@
 @section('content')
 
     <div class="container">
-        <h1>Send this property to a friend</h1>
+        <h1>{{ trans('vendirun::property.sendPropertyToFriend') }}</h1>
         <div class="row">
             <div class="col-sm-8">
                 @include('vendirun::forms.recommend-a-friend')

@@ -8,8 +8,8 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6 col-md-offset-3">
-                    <h1>Password Reset Successfully</h1>
-                    <p>You can now log in with your new password.</p>
+                    <h1>{{ trans('vendirun::forms.passwordResetSuccess') }}</h1>
+                    <p>{{ trans('vendirun::forms.passwordResetSuccessMessage') }}</p>
                 </div>
             </div>
         </div>

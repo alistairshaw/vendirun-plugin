@@ -5,3 +5,9 @@
         @endforeach
     </div>
 </div>
+
+<div class="property-attributes">
+    @foreach ($property->attributes as $attribute)
+        <div class="label label-info"><?php echo $attribute->property_attribute_name ?></div>
+    @endforeach
+</div>

@@ -11,7 +11,7 @@
                     {!! Form::open(array('route' => 'vendirun.doPasswordRecovery', 'autocomplete' => 'off')) !!}
                     <p></p>
 
-                    <h2>Recover your Password</h2>
+                    <h2>{{ trans('vendirun::forms.recoverYourPassword') }}</h2>
 
                     @if(isset($alertMessage))
                         <div class="alert alert-danger js-fade-out" data-time="5">
@@ -20,12 +20,12 @@
                     @endif
 
                     <div class="form-group">
-                        {!! Form::label('email', 'Enter your Email Address:') !!}
-                        {!! Form::text('email', Input::old('email'), array('placeholder'=>'Email Address', 'class'=>'form-control')) !!}
+                        {!! Form::label('email', trans('vendirun::forms.email')) !!}
+                        {!! Form::text('email', Input::old('email'), array('placeholder'=>trans('vendirun::forms.email'), 'class'=>'form-control')) !!}
                     </div>
 
                     <div class="form-group">
-                        <button type="submit" class="btn btn-primary">Reset my Password</button>
+                        <button type="submit" class="btn btn-primary">{{ trans('vendirun::forms.resetPassword') }}</button>
                     </div>
                     {!! Form::close() !!}
                 </div>

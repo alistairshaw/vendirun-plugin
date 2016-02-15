@@ -1,6 +1,7 @@
 
 @import "base/variables";
 @import "../../bower_components/bootstrap-sass/assets/stylesheets/_bootstrap";
+@import "../../bower_components/world-flags-sprite/stylesheets/flags16";
 @import "base/mixins";
 @import "base/common";
 
@@ -10,6 +11,7 @@
 @import "components/footer";
 @import "components/social-media-icons";
 @import "components/image-slideshow";
+@import "components/flags";
 
 @import "modules/property";
 @import "modules/blog";

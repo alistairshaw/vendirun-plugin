@@ -5,7 +5,7 @@
 <div class="well js-contact-us" id="contact-us">
     <div class="row">
         <div class="col-sm-12">
-            <h3>Quick Enquiry Form</h3>
+            <h3>{{ trans('vendirun::forms.quickEnquiry') }}</h3>
         </div>
     </div>
     <div class="row">
@@ -16,28 +16,28 @@
                 </div>
             @endif
             <div class="form-group">
-                {!! Form::label('fullname', 'Full Name') !!}
-                {!! Form::text('fullname', '', array('placeholder'=>'Full Name', 'class'=>'form-control')) !!}
+                {!! Form::label('fullname', trans('vendirun::forms.fullName')) !!}
+                {!! Form::text('fullname', '', array('placeholder'=>trans('vendirun::forms.fullName'), 'class'=>'form-control')) !!}
                 @if ($errors->has('fullname')) <p class="help-block">{{ $errors->first('fullname') }}</p> @endif
             </div>
             <div class="form-group">
-                {!! Form::label('email', 'Email Address') !!}
-                {!! Form::text('email', '', array('placeholder'=>'Email Address', 'class'=>'form-control')) !!}
+                {!! Form::label('email', trans('vendirun::forms.email')) !!}
+                {!! Form::text('email', '', array('placeholder'=>trans('vendirun::forms.email'), 'class'=>'form-control')) !!}
                 @if ($errors->has('email')) <p class="help-block">{{ $errors->first('email') }}</p> @endif
             </div>
             <div class="form-group">
-                {!! Form::label('telephone', 'Telephone') !!}
-                {!! Form::text('telephone', '', array('placeholder'=>'Telephone', 'class'=>'form-control')) !!}
+                {!! Form::label('telephone', trans('vendirun::forms.telephone')) !!}
+                {!! Form::text('telephone', '', array('placeholder'=>trans('vendirun::forms.telephone'), 'class'=>'form-control')) !!}
                 @if ($errors->has('telephone')) <p class="help-block">{{ $errors->first('telephone') }}</p> @endif
             </div>
         </div>
         <div class="col-sm-6">
             <div class="form-group">
-                {!! Form::label('message', 'Message') !!}
-                {!! Form::textarea('message', '', array('placeholder'=>'Message', 'class'=>'form-control')) !!}
+                {!! Form::label('message', trans('vendirun::forms.message')) !!}
+                {!! Form::textarea('message', '', array('placeholder'=>trans('vendirun::forms.message'), 'class'=>'form-control')) !!}
             </div>
             <div class="form-group">
-                <button type="submit" class="btn btn-primary">Send Message</button>
+                <button type="submit" class="btn btn-primary">{{ trans('vendirun::forms.sendMessage') }}</button>
             </div>
         </div>
     </div>

@@ -42,6 +42,7 @@ class ComposerServiceProvider extends ServiceProvider {
         $this->app->view->composer('vendirun::common.footer', 'AlistairShaw\Vendirun\App\Http\Composers\CmsViewComposer@footer');
         $this->app->view->composer('vendirun::common.head', 'AlistairShaw\Vendirun\App\Http\Composers\CmsViewComposer@head');
         $this->app->view->composer('vendirun::cms.widgets.social-share', 'AlistairShaw\Vendirun\App\Http\Composers\CmsViewComposer@social');
+        $this->app->view->composer('vendirun::common.language-select', 'AlistairShaw\Vendirun\App\Http\Composers\CmsViewComposer@languages');
 
         // customer
         $this->app->view->composer('vendirun::cms.menu.login-button', 'AlistairShaw\Vendirun\App\Http\Composers\CustomerViewComposer@customerDetails');

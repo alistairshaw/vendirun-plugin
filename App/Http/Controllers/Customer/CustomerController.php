@@ -3,8 +3,10 @@
 namespace AlistairShaw\Vendirun\App\Http\Controllers\Customer;
 
 use AlistairShaw\Vendirun\App\Http\Controllers\VendirunBaseController;
+use AlistairShaw\Vendirun\App\Lib\LocaleHelper;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\Exceptions\FailResponseException;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\VendirunApi;
+use App;
 use Input;
 use Mail;
 use Redirect;
@@ -56,7 +58,7 @@ class CustomerController extends VendirunBaseController {
         }
         catch (FailResponseException $e)
         {
-            return Redirect::route('vendirun.register')->withInput()->withErrors($e->getMessage());
+            return Redirect::route(LocaleHelper::getLanguagePrefixForLocale(App::getLocale()) . 'vendirun.register')->withInput()->withErrors($e->getMessage());
         }
     }
 
@@ -81,11 +83,11 @@ class CustomerController extends VendirunBaseController {
                 return Redirect::to($redirect);
             }
 
-            return Redirect::route('vendirun.register');
+            return Redirect::route(LocaleHelper::getLanguagePrefixForLocale(App::getLocale()) . 'vendirun.register');
         }
         catch (\Exception $e)
         {
-            return Redirect::route('vendirun.register')->withInput()->withErrors($e->getMessage());
+            return Redirect::route(LocaleHelper::getLanguagePrefixForLocale(App::getLocale()) . 'vendirun.register')->withInput()->withErrors($e->getMessage());
         }
     }
 
@@ -184,7 +186,7 @@ class CustomerController extends VendirunBaseController {
     {
         Session::flush();
 
-        return Redirect::route('vendirun.register');
+        return Redirect::route(LocaleHelper::getLanguagePrefixForLocale(App::getLocale()) . 'vendirun.register');
     }
 
 }

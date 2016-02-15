@@ -3,50 +3,50 @@
     {!! Form::hidden('property', (isset($property) ? $property->title : Input::old('property')), ['id'=>'propertyName']) !!}
     {!! Form::hidden('propertyId', (isset($property) ? $property->id : Input::old('propertyId')), ['id'=>'propertyId']) !!}
     {!! Form::hidden('formId', 'Recommend a Friend') !!}
-    <h2>Send to a Friend</h2>
-    <p>Fill in some basic information below, and we will send your friend an email with a link! Easy as that!</p>
-    <p><em>Don't worry, we won't ever share this info with anyone without asking you first.</em></p>
+    <h2>{{ trans('vendirun::forms.sendToFriend') }}</h2>
+    <p>{{ trans('vendirun::forms.sendToFriendNote') }}</p>
+    <p><em>{{ trans('vendirun::forms.privacyAssurance') }}</em></p>
 
     <div class="row">
         <div class="col-sm-6">
-            <h3>Your Details</h3>
+            <h3>{{ trans('vendirun::forms.yourDetails') }}</h3>
 
             <div class="form-group {{ $errors->has('fullName') ? 'has-error' : '' }}">
-                {!! Form::label('fullName', 'Your Name') !!}
-                {!! Form::text('fullName', Input::old('fullName'), ['placeholder'=>'Full Name', 'class'=>'form-control', 'required'=>'required']) !!}
+                {!! Form::label('fullName', trans('vendirun::forms.fullName')) !!}
+                {!! Form::text('fullName', Input::old('fullName'), ['placeholder'=>trans('vendirun::forms.fullName'), 'class'=>'form-control', 'required'=>'required']) !!}
                 @if ($errors->has('fullName'))
                     <p class="help-block">{{ $errors->first('fullName') }}</p>
                 @endif
             </div>
             <div class="form-group  {{ $errors->has('emailAddress') ? 'has-error' : '' }}">
-                {!! Form::label('emailAddress', 'Email Address') !!}
-                {!! Form::email('emailAddress', Input::old('emailAddress'), ['placeholder'=>'Email Address', 'class'=>'form-control', 'required'=>'required']) !!}
+                {!! Form::label('emailAddress', trans('vendirun::forms.email')) !!}
+                {!! Form::email('emailAddress', Input::old('emailAddress'), ['placeholder'=>trans('vendirun::forms.email'), 'class'=>'form-control', 'required'=>'required']) !!}
                 @if ($errors->has('emailAddress'))
                     <p class="help-block">{{ $errors->first('emailAddress') }}</p>
                 @endif
             </div>
         </div>
         <div class="col-sm-6">
-            <h3>Your Friend's Details</h3>
+            <h3>{{ trans('vendirun::forms.friendDetails') }}</h3>
 
             <div class="form-group {{ $errors->has('fullNameFriend') ? 'has-error' : '' }}">
-                {!! Form::label('fullName', 'Their Name') !!}
-                {!! Form::text('fullNameFriend', Input::old('fullNameFriend'), ['placeholder'=>'Full Name', 'class'=>'form-control', 'required'=>'required']) !!}
+                {!! Form::label('fullName', trans('vendirun::forms.fullName')) !!}
+                {!! Form::text('fullNameFriend', Input::old('fullNameFriend'), ['placeholder'=>trans('vendirun::forms.fullName'), 'class'=>'form-control', 'required'=>'required']) !!}
                 @if ($errors->has('fullNameFriend'))
                     <p class="help-block">{{ $errors->first('fullNameFriend') }}</p>
                 @endif
             </div>
             <div class="form-group {{ $errors->has('emailAddressFriend') ? 'has-error' : '' }}">
-                {!! Form::label('emailAddress', 'Email Address') !!}
-                {!! Form::email('emailAddressFriend', Input::old('emailAddressFriend'), ['placeholder'=>'Email Address', 'class'=>'form-control', 'required'=>'required']) !!}
+                {!! Form::label('emailAddress', trans('vendirun::forms.email')) !!}
+                {!! Form::email('emailAddressFriend', Input::old('emailAddressFriend'), ['placeholder'=>trans('vendirun::forms.email'), 'class'=>'form-control', 'required'=>'required']) !!}
                 @if ($errors->has('emailAddressFriend'))
                     <p class="help-block">{{ $errors->first('emailAddressFriend') }}</p>
                 @endif
             </div>
         </div>
         <div class="col-sm-12">
-            <button type="submit" class="btn btn-primary"><i class="fa fa-envelope"></i> Send</button>
-            <button type="button" class="btn btn-default js-send-to-friend-close"><i class="fa fa-remove"></i> Cancel</button>
+            <button type="submit" class="btn btn-primary"><i class="fa fa-envelope"></i> {{ trans('vendirun::forms.send') }}</button>
+            <button type="button" class="btn btn-default js-send-to-friend-close"><i class="fa fa-remove"></i> {{ trans('vendirun::forms.cancel') }}</button>
         </div>
     </div>
     {!! Form::close() !!}

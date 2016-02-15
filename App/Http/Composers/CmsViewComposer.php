@@ -1,6 +1,7 @@
 <?php namespace AlistairShaw\Vendirun\App\Http\Composers;
 
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\VendirunApi;
+use App;
 use Config;
 use Illuminate\View\View;
 use Request;
@@ -65,9 +66,15 @@ class CmsViewComposer {
             if ($slug == '/' && Request::path() == '/') $activeClass = 'active';
         }
 
-        $link = ($item->slug) ? URL::to($item->slug) : $item->url;
+        $clientInfo = Config::get('clientInfo');
+        $locale = (App::getLocale() == $clientInfo->primary_language->language_code) ? '' : '/' . App::getLocale();
+        $link = ($item->slug) ? URL::to($locale . $item->slug) : $locale . $item->url;
 
-        $view->with('activeClass', $activeClass)->with('link', $link);
+        // translations, if any
+        $translations = json_decode($item->translations, true);
+        if (isset($translations[App::getLocale()]) && $translations[App::getLocale()] !== '') $item->page_name = $translations[App::getLocale()];
+
+        $view->with('activeClass', $activeClass)->with('link', $link)->with('item', $item);
     }
 
     /**
@@ -92,6 +99,36 @@ class CmsViewComposer {
     public function social($view)
     {
         $view->with('clientData', Config::get('clientInfo'));
+    }
+
+    /**
+     * @param View $view
+     */
+    public function languages($view)
+    {
+        $clientInfo = Config::get('clientInfo');
+
+        $languages = [];
+
+        if (count($clientInfo->additional_languages) > 0)
+        {
+            $languages[] = [
+                'language_code' => $clientInfo->primary_language->language_code,
+                'language' => $clientInfo->primary_language->language,
+                'country_code' => strtolower($clientInfo->primary_language->country_code)
+            ];
+
+            foreach ($clientInfo->additional_languages as $language)
+            {
+                $languages[] = [
+                    'language_code' => $language->language_code,
+                    'language' => $language->language,
+                    'country_code' => strtolower($language->country_code)
+                ];
+            }
+        }
+
+        $view->with('languages', $languages)->with('clientInfo', $clientInfo);
     }
 
 }

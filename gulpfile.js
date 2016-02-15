@@ -50,7 +50,8 @@ elixir(function (mix) {
 	{
 		mix.copy('resources/bower_components/font-awesome/fonts', 'public/fonts');
 		mix.copy('resources/bower_components/select2/*.png', 'public/css');
-		mix.copy('resources/bower_components/lightbox/img', 'public/img');
+		mix.copy('resources/bower_components/lightbox/img', 'public/images');
+		mix.copy('resources/bower_components/world-flags-sprite/images', 'public/images');
 	}
 });
 

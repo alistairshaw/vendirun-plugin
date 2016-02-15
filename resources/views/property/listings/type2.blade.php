@@ -12,7 +12,7 @@
 
                 <div class="property-results">
 
-                    <h2 class="page-header">Search Results</h2>
+                    <h2 class="page-header">{{ trans('vendirun::property.searchResults') }}</h2>
 
                     @if ($properties && count($properties->result) > 0)
 
@@ -24,7 +24,7 @@
                             @endif
 
                             <div class="pull-right form-inline per-page">
-                                <label for="limit">Per Page</label>
+                                <label for="limit">{{ trans('vendirun::property.perPage') }}</label>
                                 <select class="form-control" name="limit" id="limit">
                                     <option value="5">5</option>
                                     <option value="10">10</option>
@@ -47,7 +47,7 @@
                             @endif
 
                             <div class="pull-right form-inline per-page">
-                                <label for="limit">Per Page</label>
+                                <label for="limit">{{ trans('vendirun::property.perPage') }}</label>
                                 <select class="form-control" name="limit" id="limit">
                                     <option value="5">5</option>
                                     <option value="10">10</option>
@@ -58,7 +58,7 @@
                             </div>
                         </div>
                     @else
-                        <p>No properties matched your search, please give it another go!</p>
+                        <p>{{ trans('vendirun::property.noMatches') }}</p>
                         @include('vendirun::property.simple-search-form')
                     @endif
                 </div>
@@ -69,7 +69,7 @@
             </div>
             <div class="col-sm-2 hide left-column hidden-sm hidden-xs">
                 <div class="well refine-search">
-                    <h3>Refine your search</h3>
+                    <h3>{{ trans('vendirun::property.refineSearch') }}</h3>
                     @include('vendirun::property.search-form')
                 </div>
             </div>

@@ -1,5 +1,4 @@
 @if (isset($social))
-    <?php if (!isset($options)) $options = json_decode($element->element_options, true) ?>
     <div class="social-media-icons {{ strtolower($socialType) }}">
         @if ($social->facebook)
             <a href="https://facebook.com/{{ $social->facebook }}" class="facebook" target="_blank"></a>

@@ -56,7 +56,7 @@ class BaseApi {
         if (!$noCache && Cache::has($key)) return Cache::get($key);
 
         $client = new GuzzleClient();
-        $res = null;
+        $res = NULL;
         try
         {
             $res = $client->post($this->endpoint . $url, [
@@ -66,6 +66,7 @@ class BaseApi {
             ]);
 
             if ($res->getStatusCode() !== 200) throw new NoApiConnectionException($url, $res->getStatusCode(), $key);
+
             $response = json_decode($res->getBody());
 
             if ($response == '' && $res->getBody() == '')
@@ -117,9 +118,15 @@ class BaseApi {
         }
 
         // if the API returns a valid failure response, try to get from cache or FailResponseException
-        if (!$response->success) $response = $this->getFromPermanentCache($noCache, $key, $response->error);
-
-        $this->setCache($response, $key, $cacheTime);
+        if (!$response->success && !$noCache) $response = $this->getFromPermanentCache($noCache, $key, $response->error);
+        if (!$response->success)
+        {
+            throw new FailResponseException(false, $response->error);
+        }
+        else
+        {
+            $this->setCache($response, $key, $cacheTime);
+        }
 
         return $response;
     }
@@ -142,6 +149,7 @@ class BaseApi {
                 if ($response) return $response;
             }
         }
+
         throw new FailResponseException(false, $errorMessage);
     }
 

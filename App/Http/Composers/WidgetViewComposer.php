@@ -15,8 +15,11 @@ class WidgetViewComposer {
      */
     public function social($view)
     {
-        $clientInfo = Config::get('clientInfo');
-        $view->with('social', $clientInfo->social)->with('socialType', Config::get('socialType', 'light'));
+        if ($clientInfo = Config::get('clientInfo'))
+        {
+            $view->with('social', $clientInfo->social);
+        }
+        $view->with('socialType', Config::get('socialType', 'light'));
     }
 
 }

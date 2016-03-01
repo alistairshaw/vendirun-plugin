@@ -11,6 +11,8 @@ class CurrencyHelper {
      */
     public static function formatWithCurrency($amount, $noDecimals = false)
     {
+        if ($amount == 0) return trans('vendirun::standard.priceOnRequest');
+
         $clientInfo = Config::get('clientInfo');
         $currency = $clientInfo->currency;
 

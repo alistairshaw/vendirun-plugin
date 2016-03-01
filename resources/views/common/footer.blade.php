@@ -21,15 +21,7 @@
         </div>
         <div class="col-sm-3">
             <h3>{{ trans('vendirun::standard.followUs') }}</h3>
-            @include('vendirun::cms.widgets.standard-social', [
-                'options' => [
-                    'social_type' => 'light',
-                    'social_facebook' => '#',
-                    'social_twitter' => '#',
-                    'social_googleplus' => '#',
-                    'social_rss' => '#'
-                ]]
-            )
+            @include('vendirun::cms.widgets.standard-social')
         </div>
     </div>
 </div>

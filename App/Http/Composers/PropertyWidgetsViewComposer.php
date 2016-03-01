@@ -27,8 +27,8 @@ class PropertyWidgetsViewComposer {
         if (isset($category->translations) && $category->translations)
         {
             $translations = json_decode($category->translations, true);
-            if (isset($translations[App::getLocale()]['category'])) $category->category_name  = $translations[App::getLocale()]['category'];
-            if (isset($translations[App::getLocale()]['description'])) $category->category_description  = $translations[App::getLocale()]['description'];
+            if (isset($translations[App::getLocale()]['category'])) $category->category_name = $translations[App::getLocale()]['category'];
+            if (isset($translations[App::getLocale()]['description'])) $category->category_description = $translations[App::getLocale()]['description'];
         }
 
         // translations for sub-categories
@@ -39,8 +39,8 @@ class PropertyWidgetsViewComposer {
             if ($cat->translations)
             {
                 $translations = json_decode($cat->translations, true);
-                if (isset($translations[App::getLocale()]['category'])) $cat->category_name  = $translations[App::getLocale()]['category'];
-                if (isset($translations[App::getLocale()]['description'])) $cat->category_description  = $translations[App::getLocale()]['description'];
+                if (isset($translations[App::getLocale()]['category'])) $cat->category_name = $translations[App::getLocale()]['category'];
+                if (isset($translations[App::getLocale()]['description'])) $cat->category_description = $translations[App::getLocale()]['description'];
             }
 
             $newSubCategories[] = $cat;
@@ -149,6 +149,10 @@ class PropertyWidgetsViewComposer {
             3500000 => currencyHelper::formatWithCurrency(350000000, true),
             4000000 => currencyHelper::formatWithCurrency(400000000, true)
         ];
+
+        $viewData = $view->getData();
+        if (isset($viewData['searchParams']['price_range_from']) && $viewData['searchParams']['price_range_from'] > 0) $priceArray[($viewData['searchParams']['price_range_from'])] = currencyHelper::formatWithCurrency($viewData['searchParams']['price_range_from'] * 100, true);
+        ksort($priceArray);
 
         $propertyTypeArray[''] = [trans('vendirun::property.any')];
         $categories = VendirunApi::makeRequest('property/getCategoryList', ['language' => App::getLocale()]);

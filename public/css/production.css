@@ -8478,18 +8478,18 @@ button.close {
     bottom: 20px; } }
 
 .clearfix:before,
-.image-container .nivo-controlNav:before,
+.image-container .nivo-directionNav:before,
 .property-search.type1 .heading:before,
 .property-search.type2 .property-results .property-result .details:before,
 .property-view.type1 .social-share:before,
 .property-categories .category-search-item:before,
 .property-categories .property-category-list-item .details:before,
 .blog-post .tags:before,
-.clearfix:after, .image-container .nivo-controlNav:after, .property-search.type1 .heading:after, .property-search.type2 .property-results .property-result .details:after, .property-view.type1 .social-share:after, .property-categories .category-search-item:after, .property-categories .property-category-list-item .details:after, .blog-post .tags:after {
+.clearfix:after, .image-container .nivo-directionNav:after, .property-search.type1 .heading:after, .property-search.type2 .property-results .property-result .details:after, .property-view.type1 .social-share:after, .property-categories .category-search-item:after, .property-categories .property-category-list-item .details:after, .blog-post .tags:after {
   content: " ";
   display: table; }
 
-.clearfix:after, .image-container .nivo-controlNav:after, .property-search.type1 .heading:after, .property-search.type2 .property-results .property-result .details:after, .property-view.type1 .social-share:after, .property-categories .category-search-item:after, .property-categories .property-category-list-item .details:after, .blog-post .tags:after {
+.clearfix:after, .image-container .nivo-directionNav:after, .property-search.type1 .heading:after, .property-search.type2 .property-results .property-result .details:after, .property-view.type1 .social-share:after, .property-categories .category-search-item:after, .property-categories .property-category-list-item .details:after, .blog-post .tags:after {
   clear: both; }
 
 .center-block {
@@ -9659,17 +9659,34 @@ footer {
     list-style: none; }
     .image-container .property-slide-show a.image-link:not(:first-child) img, .image-container .property-slide-show a.fancybox:not(:first-child) img {
       display: none; }
-  .image-container .nivo-controlNav {
+  .image-container .nivo-directionNav {
     padding: 0; }
-    .image-container .nivo-controlNav a.nivo-control {
-      border: 1px solid #fff;
+    .image-container .nivo-directionNav a {
       display: block;
-      width: 50px;
-      height: 50px;
-      float: left; }
-      .image-container .nivo-controlNav a.nivo-control img {
-        width: 100%;
-        height: 100%; }
+      width: 35px;
+      height: 35px;
+      text-align: center;
+      color: #333;
+      background: rgba(255, 255, 255, 0.6);
+      border-radius: 50%;
+      font-family: FontAwesome; }
+      .image-container .nivo-directionNav a.nivo-prevNav {
+        margin-left: 20px; }
+        .image-container .nivo-directionNav a.nivo-prevNav:before {
+          content: "\f137"; }
+      .image-container .nivo-directionNav a.nivo-nextNav {
+        margin-right: 20px; }
+        .image-container .nivo-directionNav a.nivo-nextNav:before {
+          content: "\f138"; }
+      .image-container .nivo-directionNav a:hover {
+        text-decoration: none;
+        color: #fff;
+        background: rgba(0, 0, 0, 0.6); }
+  .image-container .nivo-thumbs-enabled {
+    text-align: left;
+    padding: 0; }
+    .image-container .nivo-thumbs-enabled a img {
+      width: 50px; }
 
 .f16 .flag, .language-select .flag {
   background: url(../images/flags16.png) no-repeat; }
@@ -10709,7 +10726,9 @@ footer {
     font-size: 1em;
     font-weight: 300;
     padding: 6px 12px;
-    border-radius: 0; }
+    border-radius: 0;
+    margin: 3px 0;
+    display: inline-block; }
 
 .property-view.type1 .sidebar h3 {
   margin: 0 0 12px 0; }

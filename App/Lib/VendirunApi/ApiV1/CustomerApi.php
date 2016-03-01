@@ -16,9 +16,10 @@ class CustomerApi extends BaseApi {
 	public function store($params)
 	{
 		$url = 'customer/store';
-        try
+        return $this->request($url, $params, true);
+        /*try
         {
-            return $this->request($url, $params, true);
+
         }
         catch (\Exception $e)
         {
@@ -26,9 +27,7 @@ class CustomerApi extends BaseApi {
             unset($params['password']);
             unset($params['password_confirmation']);
             $this->apiSubmissionFailed('contact-form', $params);
-        }
-
-        return false;
+        }*/
 	}
 
 	/**

@@ -52,6 +52,11 @@ return [
      * Which property information view to use as a default,
      * there are currently 2 options: type1 and type2
      */
-    'propertyInfoView' => 'type1'
+    'propertyInfoView' => 'type1',
+
+    /**
+     * Can be light or dark
+     */
+    'socialType' => 'light'
 
 ];

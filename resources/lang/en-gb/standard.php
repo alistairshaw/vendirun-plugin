@@ -16,5 +16,6 @@ return [
     'currentlyLoggedIn' => 'You are currently logged in',
     'clickToLogOut' => 'Click here to log out',
     'fourOhFour' => 'I\'m afraid this page could not be found :(',
-    'share' => 'Share'
+    'share' => 'Share',
+    'priceOnRequest' => 'Price on Request'
 ];

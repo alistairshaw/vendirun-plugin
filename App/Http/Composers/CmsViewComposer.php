@@ -67,7 +67,7 @@ class CmsViewComposer {
         }
 
         $clientInfo = Config::get('clientInfo');
-        $locale = (App::getLocale() == $clientInfo->primary_language->language_code) ? '' : '/' . App::getLocale();
+        $locale = (isset($clientInfo->primary_language->language_code) && App::getLocale() == $clientInfo->primary_language->language_code) ? '' : '/' . App::getLocale();
         $link = ($item->slug) ? URL::to($locale . $item->slug) : $locale . $item->url;
 
         // translations, if any

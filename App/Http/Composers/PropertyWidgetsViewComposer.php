@@ -152,6 +152,7 @@ class PropertyWidgetsViewComposer {
 
         $viewData = $view->getData();
         if (isset($viewData['searchParams']['price_range_from']) && $viewData['searchParams']['price_range_from'] > 0) $priceArray[($viewData['searchParams']['price_range_from'])] = currencyHelper::formatWithCurrency($viewData['searchParams']['price_range_from'] * 100, true);
+        if (isset($viewData['searchParams']['price_range_to']) && $viewData['searchParams']['price_range_to'] > 0) $priceArray[($viewData['searchParams']['price_range_to'])] = currencyHelper::formatWithCurrency($viewData['searchParams']['price_range_to'] * 100, true);
         ksort($priceArray);
 
         $propertyTypeArray[''] = [trans('vendirun::property.any')];

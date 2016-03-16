@@ -46,6 +46,7 @@ class ComposerServiceProvider extends ServiceProvider {
 
         // widgets
         $this->app->view->composer('vendirun::cms.widgets.standard-social', 'AlistairShaw\Vendirun\App\Http\Composers\WidgetViewComposer@social');
+        $this->app->view->composer('vendirun::cms.widgets.standard-staff', 'AlistairShaw\Vendirun\App\Http\Composers\WidgetViewComposer@staff');
 
 
         // customer

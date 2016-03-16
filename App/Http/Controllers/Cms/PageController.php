@@ -88,4 +88,16 @@ class PageController extends VendirunBaseController {
 
         return Response::json(['success' => true]);
     }
+
+    /**
+     * @param $staffId
+     * @return \Illuminate\View\View
+     */
+    public function staff($staffId)
+    {
+        $staff = VendirunApi::makeRequest('client/staff', ['id' => $staffId])->getData();
+        if (!$staff) abort(404);
+
+        return View::make('vendirun::cms.staff', ['person' => $staff]);
+    }
 }

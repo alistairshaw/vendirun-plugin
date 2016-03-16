@@ -1,0 +1,57 @@
+.staff {
+    .staff-item {
+        display: block;
+        background: $gray-lighter;
+        box-shadow: 1px 1px 1px $gray-darker;
+        padding: 20px 30px;
+        text-align: center;
+        .photo {
+            margin-bottom: 12px;
+        }
+        .name {
+            font-size: 1.2em;
+            font-weight: 500;
+        }
+        .job-title {
+            text-transform: uppercase;
+            font-size: 0.8em;
+            margin-bottom: 20px;
+        }
+        .excerpt {
+            color: $gray-light;
+            font-size: 0.9em;
+        }
+        &:hover {
+            text-decoration: none;
+            background: darken($gray-lighter, 20%);
+            box-shadow: 1px 1px 1px darken($gray-darker, 20%);
+            .excerpt {
+                color: white;
+            }
+        }
+    }
+}
+
+.cms-staff {
+    .photo {
+
+    }
+    .name {
+        font-weight: 300;
+        margin: 0;
+    }
+    .job-title {
+        text-transform: uppercase;
+        font-weight: 300;
+        margin-top: 4px;
+    }
+    .excerpt {
+        padding: 20px;
+        background: $gray-lighter;
+        border-bottom: 2px solid $brand-primary;
+        margin: 20px 0;
+    }
+    .description {
+        margin-bottom: 40px;
+    }
+}

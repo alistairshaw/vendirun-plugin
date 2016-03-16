@@ -118,10 +118,10 @@ class BaseApi {
         }
 
         // if the API returns a valid failure response, try to get from cache or FailResponseException
-        if (!$response->success && !$noCache) $response = $this->getFromPermanentCache($noCache, $key, $response->error);
+        if (!$response->success && !$noCache) $response = $this->getFromPermanentCache($noCache, $key, 'API returned a failure');
         if (!$response->success)
         {
-            throw new FailResponseException(false, $response->error);
+            throw new FailResponseException(false, 'API returned a failure');
         }
         else
         {

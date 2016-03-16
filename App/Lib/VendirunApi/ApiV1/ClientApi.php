@@ -8,7 +8,20 @@ class ClientApi extends BaseApi {
     public function publicInfo()
     {
         $url = 'client';
+
         return $this->request($url, [], false, 60);
+    }
+
+    /**
+     * @param array $params
+     * @return array
+     * @throws \AlistairShaw\Vendirun\App\Lib\VendirunApi\Exceptions\FailResponseException
+     */
+    public function staff($params = [])
+    {
+        $url = 'client/staff';
+
+        return $this->request($url, $params, false, 60);
     }
 
 }

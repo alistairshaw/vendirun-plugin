@@ -53,6 +53,9 @@ foreach (array_merge([''], \AlistairShaw\Vendirun\App\Lib\LocaleHelper::validLoc
             Route::any('{catchall}', ['uses' => 'PostController@post'])->where('catchall', '(.*)');
         });
 
+        // staff
+        Route::get('/staff/{staffId}/{staffName}', ['as' => $localePrefix . 'vendirun.staff', 'uses' => 'Cms\PageController@staff']);
+
         // google map cache
         Route::post('vendirun/google-map-cache-get', ['as'=> $localePrefix . 'vendirun.mapCache', 'uses' => 'Cms\PageController@mapCacheRetrieve']);
         Route::post('vendirun/google-map-cache-set', ['as'=> $localePrefix . 'vendirun.mapCache', 'uses' => 'Cms\PageController@mapCacheSet']);

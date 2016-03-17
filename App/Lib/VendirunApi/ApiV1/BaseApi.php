@@ -49,7 +49,7 @@ class BaseApi {
      * @throws InvalidResponseException
      * @throws NoApiConnectionException
      */
-    protected function request($url, $params = [], $noCache = false, $cacheTime = 5)
+    protected function request($url, $params = [], $noCache = false, $cacheTime = 1)
     {
         $key = $url . json_encode($params);
 

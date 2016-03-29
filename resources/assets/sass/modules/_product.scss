@@ -1,0 +1,115 @@
+.product-search {
+    .search-form {
+        h3 {
+            background: $well-bg;
+            padding: 8px 12px;
+            border: 1px solid $gray-lighter;
+            border-bottom: 0;
+            margin: 0;
+        }
+        .form-inputs {
+            border: 1px solid $gray-lighter;
+            padding: 12px;
+        }
+    }
+    .heading {
+        @extend .clearfix;
+        padding: 6px 12px;
+        background: $well-bg;
+        margin-bottom: 12px;
+        font-size: 0.8em;
+        label {
+            margin-right: 10px;
+        }
+        select {
+            border-radius: 0;
+        }
+        .order-by {
+            @extend .pull-left;
+        }
+        .per-page {
+            @extend .pull-right;
+        }
+    }
+    .multiple {
+        .product-result {
+            @extend .col-sm-4;
+        }
+    }
+    .product-result {
+        > div {
+            box-shadow: 1px 1px 2px #999;
+        }
+        .part-one {
+            text-align: center;
+            .image-container {
+                position: relative;
+                display: block;
+                ul {
+                    margin: 0;
+                    padding: 0;
+                    li {
+                        list-style: none;
+                        margin: 0;
+                        padding: 0;
+                    }
+                }
+            }
+        }
+        .details {
+            background: $gray-lighter;
+            padding: 12px;
+            .price {
+                text-align: center;
+                font-size: 1.2em;
+                font-weight: bold;
+                color: $brand-primary;
+            }
+            h2 {
+                font-size: 0.9em;
+                font-weight: bold;
+                text-align: center;
+                margin: 0 0 8px 0;
+                height: 45px;
+                overflow: hidden;
+                a {
+                    color: $gray-darker;
+                    &:hover {
+                        text-decoration: none;
+                    }
+                }
+            }
+            .short-description {
+                display: none;
+            }
+            .amenities {
+                display: none;
+            }
+            .location {
+                text-align: center;
+                h3 {
+                    font-size: 0.9em;
+                    text-transform: uppercase;
+                    font-weight: 300;
+                    margin: 0;
+                }
+                h4 {
+                    font-size: 1em;
+                    margin: 0;
+                }
+            }
+        }
+        .product-attributes {
+            display: none;
+        }
+        .buttons {
+            padding: 6px 0 12px 0;
+            text-align: center;
+            background: $well-bg;
+            .btn {
+                width: 37px;
+            }
+            margin-bottom: 22px;
+        }
+    }
+}

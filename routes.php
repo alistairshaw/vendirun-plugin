@@ -24,6 +24,11 @@ foreach (array_merge([''], \AlistairShaw\Vendirun\App\Lib\LocaleHelper::validLoc
             Route::get('view-favourite-properties', ['as'=> $localePrefix . 'vendirun.viewFavouriteProperties', 'uses' => 'Property\PropertyAuthController@viewFavouriteProperties']);
         });
 
+        Route::group(['prefix' => 'property'], function() use ($localePrefix)
+        {
+            Route::any('/', ['as'=> $localePrefix . 'vendirun.productSearch', 'uses' => 'Product\ProductController@index']);
+        });
+
         Route::group(['prefix' => 'customer'], function() use ($localePrefix)
         {
             Route::post('contact-form-submit', ['as' => $localePrefix . 'vendirun.contactFormSubmit', 'uses' => 'Customer\CustomerController@processContactForm']);

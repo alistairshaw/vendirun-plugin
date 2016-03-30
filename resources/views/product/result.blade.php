@@ -1,8 +1,8 @@
-<div class="property-result">
+<div class="product-result">
     <div>
         <div class="part-one">
             <div class="image-container">
-                <ul class="{{ ((count($product->images) > 1) && (isset($limitImages) && $limitImages > 1)) ? 'property-slide-show' : 'property-single-image' }}">
+                <ul class="{{ ((count($product->images) > 1) && (isset($limitImages) && $limitImages > 1)) ? 'product-slide-show' : 'product-single-image' }}">
                     @foreach (array_slice($product->images, 0, (isset($limitImages) ? $limitImages : 5)) as $image)
                         <img src="{{ $image->mediumrect }}" class="img-responsive" data-thumb="{{ $image->thumbnailsq }}">
                     @endforeach
@@ -10,14 +10,11 @@
             </div>
         </div>
         <div class="details">
-            <div class="price">{{ '£2.99' }}</div>
+            <div class="price">{{ $price }}</div>
             <h2>
-                <a href="{{ route(\AlistairShaw\Vendirun\App\Lib\LocaleHelper::getLanguagePrefixForLocale(App::getLocale()) . 'vendirun.propertyView',[$product->id, urlencode($product->product_name)]) }}">{{ $product->product_name }}</a>
+                <a href="{{ route(\AlistairShaw\Vendirun\App\Lib\LocaleHelper::getLanguagePrefixForLocale(App::getLocale()) . 'vendirun.productView',[$product->id, urlencode($product->product_name)]) }}">{{ $product->product_name }}</a>
             </h2>
 
-            <div class="location">
-                <h3>{{ $product->product_name }}&nbsp;</h3>
-            </div>
             <div class="short-description">
                 {!! $product->short_description !!}
             </div>

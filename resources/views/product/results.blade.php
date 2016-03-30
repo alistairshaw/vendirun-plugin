@@ -4,11 +4,11 @@
 @section('keywords', '')
 @section('body-class', 'product-search')
 @section('content')
-    <div class="container product-search type1">
+    <div class="container product-search">
         <div class="row">
             <div class="col-md-3 col-sm-4 hidden-xs hidden-sm">
                 <div class="search-form">
-                    {{-- Product search form here --}}
+
                 </div>
             </div>
             <div class="col-md-9 col-md-8">
@@ -36,7 +36,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="js-main-results multiple">
+                <div class="js-product-results multiple">
                     <div class="row">
                         @foreach ($products->result as $product)
                             @include('vendirun::product.result', ['product' => $product, 'limitImages' => 1, 'abbreviatedButtons' => true])

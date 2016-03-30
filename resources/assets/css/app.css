@@ -1419,7 +1419,7 @@ blockquote {
       content: '\2014 \00A0'; }
 
 .blockquote-reverse,
-blockquote.pull-right, .property-search.type1 .heading blockquote.per-page, .property-view.type1 .heading blockquote.price {
+blockquote.pull-right, .property-search.type1 .heading blockquote.per-page, .property-view.type1 .heading blockquote.price, .product-search .heading blockquote.per-page {
   padding-right: 15px;
   padding-left: 0;
   border-right: 5px solid #eeeeee;
@@ -1431,10 +1431,12 @@ blockquote.pull-right, .property-search.type1 .heading blockquote.per-page, .pro
   blockquote.pull-right footer:before,
   .property-search.type1 .heading blockquote.per-page footer:before,
   .property-view.type1 .heading blockquote.price footer:before,
+  .product-search .heading blockquote.per-page footer:before,
   blockquote.pull-right small:before,
   .property-search.type1 .heading blockquote.per-page small:before,
   .property-view.type1 .heading blockquote.price small:before,
-  blockquote.pull-right .small:before, .property-search.type1 .heading blockquote.per-page .small:before, .property-view.type1 .heading blockquote.price .small:before {
+  .product-search .heading blockquote.per-page small:before,
+  blockquote.pull-right .small:before, .property-search.type1 .heading blockquote.per-page .small:before, .property-view.type1 .heading blockquote.price .small:before, .product-search .heading blockquote.per-page .small:before {
     content: ''; }
   .blockquote-reverse footer:after,
   .blockquote-reverse small:after,
@@ -1442,10 +1444,12 @@ blockquote.pull-right, .property-search.type1 .heading blockquote.per-page, .pro
   blockquote.pull-right footer:after,
   .property-search.type1 .heading blockquote.per-page footer:after,
   .property-view.type1 .heading blockquote.price footer:after,
+  .product-search .heading blockquote.per-page footer:after,
   blockquote.pull-right small:after,
   .property-search.type1 .heading blockquote.per-page small:after,
   .property-view.type1 .heading blockquote.price small:after,
-  blockquote.pull-right .small:after, .property-search.type1 .heading blockquote.per-page .small:after, .property-view.type1 .heading blockquote.price .small:after {
+  .product-search .heading blockquote.per-page small:after,
+  blockquote.pull-right .small:after, .property-search.type1 .heading blockquote.per-page .small:after, .property-view.type1 .heading blockquote.price .small:after, .product-search .heading blockquote.per-page .small:after {
     content: '\00A0 \2014'; }
 
 address {
@@ -1547,7 +1551,7 @@ pre {
   .row:after, .property-advanced-search-widget .form-inputs:after {
     clear: both; }
 
-.col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, .col-xs-4, .col-sm-4, .property-search.type1 .multiple .property-result, .property-view.type1 .property-attributes .item, .col-md-4, .property-advanced-search-widget .form-inputs .form-group, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .property-view.type1 .property-attributes .item, .col-sm-6, .property-search.type2 .property-results .property-result .property-attributes .item, .property-view.type2 .property-attributes .item, .property-advanced-search-widget .form-inputs .form-group, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 {
+.col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, .col-xs-4, .col-sm-4, .property-search.type1 .multiple .property-result, .property-view.type1 .property-attributes .item, .product-search .multiple .product-result, .col-md-4, .property-advanced-search-widget .form-inputs .form-group, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .property-view.type1 .property-attributes .item, .col-sm-6, .property-search.type2 .property-results .property-result .property-attributes .item, .property-view.type2 .property-attributes .item, .property-advanced-search-widget .form-inputs .form-group, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 {
   position: relative;
   min-height: 1px;
   padding-left: 15px;
@@ -1710,7 +1714,7 @@ pre {
   margin-left: 100%; }
 
 @media (min-width: 768px) {
-  .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .property-search.type1 .multiple .property-result, .property-view.type1 .property-attributes .item, .col-sm-5, .col-sm-6, .property-search.type2 .property-results .property-result .property-attributes .item, .property-view.type2 .property-attributes .item, .property-advanced-search-widget .form-inputs .form-group, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12 {
+  .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .property-search.type1 .multiple .property-result, .property-view.type1 .property-attributes .item, .product-search .multiple .product-result, .col-sm-5, .col-sm-6, .property-search.type2 .property-results .property-result .property-attributes .item, .property-view.type2 .property-attributes .item, .property-advanced-search-widget .form-inputs .form-group, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12 {
     float: left; }
   .col-sm-1 {
     width: 8.33333%; }
@@ -1718,7 +1722,7 @@ pre {
     width: 16.66667%; }
   .col-sm-3 {
     width: 25%; }
-  .col-sm-4, .property-search.type1 .multiple .property-result, .property-view.type1 .property-attributes .item {
+  .col-sm-4, .property-search.type1 .multiple .property-result, .property-view.type1 .property-attributes .item, .product-search .multiple .product-result {
     width: 33.33333%; }
   .col-sm-5 {
     width: 41.66667%; }
@@ -3304,7 +3308,7 @@ tbody.collapse.in {
   border-radius: 0;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
   background-clip: padding-box; }
-  .dropdown-menu.pull-right, .property-search.type1 .heading .dropdown-menu.per-page, .property-view.type1 .heading .dropdown-menu.price {
+  .dropdown-menu.pull-right, .property-search.type1 .heading .dropdown-menu.per-page, .property-view.type1 .heading .dropdown-menu.price, .product-search .heading .dropdown-menu.per-page {
     right: 0;
     left: auto; }
   .dropdown-menu .divider {
@@ -3378,7 +3382,7 @@ tbody.collapse.in {
   top: 0;
   z-index: 990; }
 
-.pull-right > .dropdown-menu, .property-search.type1 .heading .per-page > .dropdown-menu, .property-view.type1 .heading .price > .dropdown-menu {
+.pull-right > .dropdown-menu, .property-search.type1 .heading .per-page > .dropdown-menu, .property-view.type1 .heading .price > .dropdown-menu, .product-search .heading .per-page > .dropdown-menu {
   right: 0;
   left: auto; }
 
@@ -4677,11 +4681,11 @@ a.thumbnail.active {
     max-width: none; }
 
 .media-right,
-.media > .pull-right, .property-search.type1 .heading .media > .per-page, .property-view.type1 .heading .media > .price {
+.media > .pull-right, .property-search.type1 .heading .media > .per-page, .property-view.type1 .heading .media > .price, .product-search .heading .media > .per-page {
   padding-left: 10px; }
 
 .media-left,
-.media > .pull-left, .property-search.type1 .heading .media > .order-by {
+.media > .pull-left, .property-search.type1 .heading .media > .order-by, .product-search .heading .media > .order-by {
   padding-right: 10px; }
 
 .media-left,
@@ -5794,12 +5798,13 @@ button.close {
 .property-view.type1 .social-share:before,
 .property-categories .category-search-item:before,
 .property-categories .property-category-list-item .details:before,
+.product-search .heading:before,
 .blog-post .tags:before,
-.clearfix:after, .image-container .nivo-directionNav:after, .property-search.type1 .heading:after, .property-search.type2 .property-results .property-result .details:after, .property-view.type1 .social-share:after, .property-categories .category-search-item:after, .property-categories .property-category-list-item .details:after, .blog-post .tags:after {
+.clearfix:after, .image-container .nivo-directionNav:after, .property-search.type1 .heading:after, .property-search.type2 .property-results .property-result .details:after, .property-view.type1 .social-share:after, .property-categories .category-search-item:after, .property-categories .property-category-list-item .details:after, .product-search .heading:after, .blog-post .tags:after {
   content: " ";
   display: table; }
 
-.clearfix:after, .image-container .nivo-directionNav:after, .property-search.type1 .heading:after, .property-search.type2 .property-results .property-result .details:after, .property-view.type1 .social-share:after, .property-categories .category-search-item:after, .property-categories .property-category-list-item .details:after, .blog-post .tags:after {
+.clearfix:after, .image-container .nivo-directionNav:after, .property-search.type1 .heading:after, .property-search.type2 .property-results .property-result .details:after, .property-view.type1 .social-share:after, .property-categories .category-search-item:after, .property-categories .property-category-list-item .details:after, .product-search .heading:after, .blog-post .tags:after {
   clear: both; }
 
 .center-block {
@@ -5807,10 +5812,10 @@ button.close {
   margin-left: auto;
   margin-right: auto; }
 
-.pull-right, .property-search.type1 .heading .per-page, .property-view.type1 .heading .price {
+.pull-right, .property-search.type1 .heading .per-page, .property-view.type1 .heading .price, .product-search .heading .per-page {
   float: right !important; }
 
-.pull-left, .property-search.type1 .heading .order-by {
+.pull-left, .property-search.type1 .heading .order-by, .product-search .heading .order-by {
   float: left !important; }
 
 .hide {
@@ -8318,6 +8323,88 @@ footer {
     background-image: url(../images/property/sold-badge.png); }
   .property-badge.rented {
     background-image: url(../images/property/rented-badge.png); }
+
+.product-search .search-form h3 {
+  background: #f0f0f0;
+  padding: 8px 12px;
+  border: 1px solid #eeeeee;
+  border-bottom: 0;
+  margin: 0; }
+
+.product-search .search-form .form-inputs {
+  border: 1px solid #eeeeee;
+  padding: 12px; }
+
+.product-search .heading {
+  padding: 6px 12px;
+  background: #f0f0f0;
+  margin-bottom: 12px;
+  font-size: 0.8em; }
+  .product-search .heading label {
+    margin-right: 10px; }
+  .product-search .heading select {
+    border-radius: 0; }
+
+.product-search .product-result > div {
+  box-shadow: 1px 1px 2px #999; }
+
+.product-search .product-result .part-one {
+  text-align: center; }
+  .product-search .product-result .part-one .image-container {
+    position: relative;
+    display: block; }
+    .product-search .product-result .part-one .image-container ul {
+      margin: 0;
+      padding: 0; }
+      .product-search .product-result .part-one .image-container ul li {
+        list-style: none;
+        margin: 0;
+        padding: 0; }
+
+.product-search .product-result .details {
+  background: #eeeeee;
+  padding: 12px; }
+  .product-search .product-result .details .price {
+    text-align: center;
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #337ab7; }
+  .product-search .product-result .details h2 {
+    font-size: 0.9em;
+    font-weight: bold;
+    text-align: center;
+    margin: 0 0 8px 0;
+    height: 45px;
+    overflow: hidden; }
+    .product-search .product-result .details h2 a {
+      color: #222222; }
+      .product-search .product-result .details h2 a:hover {
+        text-decoration: none; }
+  .product-search .product-result .details .short-description {
+    display: none; }
+  .product-search .product-result .details .amenities {
+    text-align: center; }
+  .product-search .product-result .details .location {
+    text-align: center; }
+    .product-search .product-result .details .location h3 {
+      font-size: 0.9em;
+      text-transform: uppercase;
+      font-weight: 300;
+      margin: 0; }
+    .product-search .product-result .details .location h4 {
+      font-size: 1em;
+      margin: 0; }
+
+.product-search .product-result .product-attributes {
+  display: none; }
+
+.product-search .product-result .buttons {
+  padding: 6px 0 12px 0;
+  text-align: center;
+  background: #f0f0f0;
+  margin-bottom: 22px; }
+  .product-search .product-result .buttons .btn {
+    width: 37px; }
 
 .blog-list .blog-entry {
   border: 2px solid #ccc;

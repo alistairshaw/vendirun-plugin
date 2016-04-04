@@ -8406,6 +8406,23 @@ footer {
   .product-search .product-result .buttons .btn {
     width: 37px; }
 
+ul.product-categories {
+  padding: 0; }
+  ul.product-categories li {
+    list-style: none;
+    margin-bottom: 3px; }
+    ul.product-categories li a {
+      display: block;
+      padding: 12px 24px;
+      text-align: center;
+      border: 1px solid #ccc;
+      background: #f0f0f0;
+      color: #337ab7; }
+      ul.product-categories li a:hover, ul.product-categories li a.selected {
+        background: #337ab7;
+        color: white;
+        text-decoration: none; }
+
 .blog-list .blog-entry {
   border: 2px solid #ccc;
   margin-bottom: 20px; }

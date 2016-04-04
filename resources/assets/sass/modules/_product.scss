@@ -114,3 +114,24 @@
         }
     }
 }
+
+ul.product-categories {
+    padding: 0;
+    li {
+        list-style: none;
+        margin-bottom: 3px;
+        a {
+            display: block;
+            padding: 12px 24px;
+            text-align: center;
+            border: 1px solid #ccc;
+            background: #f0f0f0;
+            color: $brand-primary;
+            &:hover, &.selected {
+                background: $brand-primary;
+                color: white;
+                text-decoration: none;
+            }
+        }
+    }
+}

@@ -25,6 +25,7 @@ class ComposerServiceProvider extends ServiceProvider {
 
         // product stuff
         $this->app->view->composer('vendirun::product.result', 'AlistairShaw\Vendirun\App\Http\Composers\ProductViewComposer@productView');
+        $this->app->view->composer('vendirun::product.refine.category-list', 'AlistairShaw\Vendirun\App\Http\Composers\ProductViewComposer@categories');
 
         $this->app->view->composer('vendirun::property.result', 'AlistairShaw\Vendirun\App\Http\Composers\PropertyWidgetsViewComposer@propertyView');
         $this->app->view->composer('vendirun::property.view.type1', 'AlistairShaw\Vendirun\App\Http\Composers\PropertyWidgetsViewComposer@propertyView');

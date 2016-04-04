@@ -28,19 +28,10 @@ class ProductApi extends BaseApi {
      * @param array $params
      * @return mixed
      */
-    public function getCategory($params)
+    public function category($params)
     {
         $url = 'product/category';
         return $this->request($url, $params);
     }
 
-    /**
-     * @param array $params
-     * @return array
-     */
-    public function getCategoryList($params = [])
-    {
-        $url = 'product/category_list';
-        return $this->request($url, $params);
-    }
 } 

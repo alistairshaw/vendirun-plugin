@@ -26,8 +26,8 @@ foreach (array_merge([''], \AlistairShaw\Vendirun\App\Lib\LocaleHelper::validLoc
 
         Route::group(['prefix' => 'product'], function() use ($localePrefix)
         {
-            Route::any('/', ['as'=> $localePrefix . 'vendirun.productSearch', 'uses' => 'Product\ProductController@index']);
-            Route::any('/view/{id}/{productName}', ['as'=> $localePrefix . 'vendirun.productView', 'uses' => 'Product\ProductController@view']);
+            Route::any('/{category?}', ['as'=> $localePrefix . 'vendirun.productSearch', 'uses' => 'Product\ProductController@index']);
+            Route::any('view/{id}/{productName}', ['as'=> $localePrefix . 'vendirun.productView', 'uses' => 'Product\ProductController@view']);
         });
 
         Route::group(['prefix' => 'customer'], function() use ($localePrefix)

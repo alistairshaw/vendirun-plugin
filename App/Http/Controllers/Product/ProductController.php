@@ -17,11 +17,12 @@ use Request;
 class ProductController extends VendirunBaseController {
 
     /**
+     * @param string $category
      * @return \Illuminate\View\View
      */
-    public function index()
+    public function index($category = '')
     {
-        $productSearchParams = $this->productSearchParams();
+        $productSearchParams = $this->productSearchParams($category);
         $data = [];
         try
         {
@@ -56,9 +57,10 @@ class ProductController extends VendirunBaseController {
     }
 
     /**
+     * @param string $category
      * @return mixed
      */
-    private function productSearchParams()
+    private function productSearchParams($category = '')
     {
         if (isset($_POST) && count($_POST) > 0)
         {
@@ -70,14 +72,11 @@ class ProductController extends VendirunBaseController {
             $productSearchParams = Session::get('productSearchParams');
         }
 
+        if ($category) $productSearchParams['category'] = $category;
+
         if (isset($_GET['page']))
         {
             $productSearchParams['offset'] = $_GET['page'] - 1;
-        }
-
-        if (isset($_GET['category']))
-        {
-            $productSearchParams['category'] = $_GET['category'];
         }
 
         if (Input::get('keywords'))

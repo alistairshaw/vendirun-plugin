@@ -8,7 +8,7 @@
         <div class="row">
             <div class="col-md-3 col-sm-4 hidden-xs hidden-sm">
                 <div class="search-form">
-                    @include('vendirun::product.refine.category-list')
+                    @include('vendirun::product.refine.form')
                 </div>
             </div>
             <div class="col-md-9 col-md-8">

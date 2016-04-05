@@ -34,4 +34,10 @@ class ProductApi extends BaseApi {
         return $this->request($url, $params);
     }
 
+    public function colors($params)
+    {
+        $url = 'product/colors';
+        return $this->request($url, $params);
+    }
+
 } 

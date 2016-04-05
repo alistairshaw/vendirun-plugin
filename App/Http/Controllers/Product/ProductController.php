@@ -26,10 +26,9 @@ class ProductController extends VendirunBaseController {
         $data = [];
         try
         {
+            $data['category'] = $category;
             $data['products'] = VendirunApi::makeRequest('product/search', $productSearchParams)->getData();
             $data['productSearchParams'] = (array)$data['products']->search_params;
-
-            //dd($data['products']);
 
             $data['pagination'] = ($data['products']) ? $data['pagination'] = new LengthAwarePaginator($data['products']->result, $data['products']->total_rows, $data['products']->limit, Request::get('page'), ['path' => '/product/']) : false;
         }
@@ -70,6 +69,7 @@ class ProductController extends VendirunBaseController {
         else
         {
             $productSearchParams = Session::get('productSearchParams');
+            if (Input::get('color')) $productSearchParams['color'] = Input::get('color');
         }
 
         if ($category) $productSearchParams['category'] = $category;

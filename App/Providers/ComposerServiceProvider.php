@@ -15,17 +15,20 @@ class ComposerServiceProvider extends ServiceProvider {
 
     public function register()
     {
-        // property stuff
+        $this->registerPropertyComposers();
+        $this->registerProductComposers();
+        $this->registerCmsComposers();
+        $this->registerCustomerComposers();
+    }
+
+    private function registerPropertyComposers()
+    {
         $this->app->view->composer('vendirun::cms.widgets.property-categories', 'AlistairShaw\Vendirun\App\Http\Composers\PropertyWidgetsViewComposer@propertyCategories');
         $this->app->view->composer('vendirun::cms.widgets.property-locations', 'AlistairShaw\Vendirun\App\Http\Composers\PropertyWidgetsViewComposer@propertyLocations');
         $this->app->view->composer('vendirun::property.category', 'AlistairShaw\Vendirun\App\Http\Composers\PropertyWidgetsViewComposer@propertyCategories');
         $this->app->view->composer('vendirun::property.location', 'AlistairShaw\Vendirun\App\Http\Composers\PropertyWidgetsViewComposer@propertyLocations');
         $this->app->view->composer('vendirun::property.search-form', 'AlistairShaw\Vendirun\App\Http\Composers\PropertyWidgetsViewComposer@propertySearchForm');
         $this->app->view->composer('vendirun::property.partials.property-attributes', 'AlistairShaw\Vendirun\App\Http\Composers\PropertyWidgetsViewComposer@propertyAttributes');
-
-        // product stuff
-        $this->app->view->composer('vendirun::product.result', 'AlistairShaw\Vendirun\App\Http\Composers\ProductViewComposer@productView');
-        $this->app->view->composer('vendirun::product.refine.category-list', 'AlistairShaw\Vendirun\App\Http\Composers\ProductViewComposer@categories');
 
         $this->app->view->composer('vendirun::property.result', 'AlistairShaw\Vendirun\App\Http\Composers\PropertyWidgetsViewComposer@propertyView');
         $this->app->view->composer('vendirun::property.view.type1', 'AlistairShaw\Vendirun\App\Http\Composers\PropertyWidgetsViewComposer@propertyView');
@@ -36,7 +39,17 @@ class ComposerServiceProvider extends ServiceProvider {
         // stuff for the buttons
         $this->app->view->composer('vendirun::property.partials.property-buttons', 'AlistairShaw\Vendirun\App\Http\Composers\PropertyWidgetsViewComposer@getFavourites');
         $this->app->view->composer('vendirun::property.partials.property-buttons', 'AlistairShaw\Vendirun\App\Http\Composers\PropertyWidgetsViewComposer@propertyButtons');
+    }
 
+    private function registerProductComposers()
+    {
+        $this->app->view->composer('vendirun::product.result', 'AlistairShaw\Vendirun\App\Http\Composers\ProductViewComposer@productView');
+        $this->app->view->composer('vendirun::product.refine.category-list', 'AlistairShaw\Vendirun\App\Http\Composers\ProductViewComposer@categories');
+        $this->app->view->composer('vendirun::product.refine.colors', 'AlistairShaw\Vendirun\App\Http\Composers\ProductViewComposer@colors');
+    }
+
+    private function registerCmsComposers()
+    {
         // menu
         $this->app->view->composer('vendirun::cms.menu', 'AlistairShaw\Vendirun\App\Http\Composers\CmsViewComposer@menu');
         $this->app->view->composer('vendirun::cms.menu.item', 'AlistairShaw\Vendirun\App\Http\Composers\CmsViewComposer@menuItem');
@@ -51,8 +64,10 @@ class ComposerServiceProvider extends ServiceProvider {
         // widgets
         $this->app->view->composer('vendirun::cms.widgets.standard-social', 'AlistairShaw\Vendirun\App\Http\Composers\WidgetViewComposer@social');
         $this->app->view->composer('vendirun::cms.widgets.standard-staff', 'AlistairShaw\Vendirun\App\Http\Composers\WidgetViewComposer@staff');
+    }
 
-        // customer
+    private function registerCustomerComposers()
+    {
         $this->app->view->composer('vendirun::cms.menu.login-button', 'AlistairShaw\Vendirun\App\Http\Composers\CustomerViewComposer@customerDetails');
     }
 

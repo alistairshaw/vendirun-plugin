@@ -12,5 +12,7 @@ return [
     'sku' => 'SKU',
     'backTo' => 'Back to',
     'browseProducts' => 'Browse All Products',
-    'colors' => 'Colours'
+    'colors' => 'Colours',
+    'sizes' => 'Sizes',
+    'types' => 'Types'
 ];

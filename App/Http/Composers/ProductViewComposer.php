@@ -36,9 +36,40 @@ class ProductViewComposer {
     public function colors(View $view)
     {
         $viewData = $view->getData();
-        $category = (isset($viewData['category'])) ? $viewData['category'] : '';
-        $colors = VendirunApi::makeRequest('product/colors', ['locale' => App::getLocale(), 'category' => $category])->getData();
-        $view->with('colors', $colors)->with('category', $category);
+        $data['category'] = (isset($viewData['category'])) ? $viewData['category'] : '';
+        $data['size'] = (isset($viewData['selectedSize'])) ? $viewData['selectedSize'] : '';
+        $data['type'] = (isset($viewData['selectedType'])) ? $viewData['selectedType'] : '';
+        $data['locale'] = App::getLocale();
+        $colors = VendirunApi::makeRequest('product/colors', $data)->getData();
+        $view->with('colors', $colors)->with('category', $data['category']);
+    }
+
+    /**
+     * @param View $view
+     */
+    public function sizes(View $view)
+    {
+        $viewData = $view->getData();
+        $data['category'] = (isset($viewData['category'])) ? $viewData['category'] : '';
+        $data['color'] = (isset($viewData['selectedColor'])) ? $viewData['selectedColor'] : '';
+        $data['type'] = (isset($viewData['selectedType'])) ? $viewData['selectedType'] : '';
+        $data['locale'] = App::getLocale();
+        $sizes = VendirunApi::makeRequest('product/sizes', $data)->getData();
+        $view->with('sizes', $sizes)->with('category', $data['category']);
+    }
+
+    /**
+     * @param View $view
+     */
+    public function types(View $view)
+    {
+        $viewData = $view->getData();
+        $data['category'] = (isset($viewData['category'])) ? $viewData['category'] : '';
+        $data['color'] = (isset($viewData['selectedColor'])) ? $viewData['selectedColor'] : '';
+        $data['size'] = (isset($viewData['selectedSize'])) ? $viewData['selectedSize'] : '';
+        $data['locale'] = App::getLocale();
+        $types = VendirunApi::makeRequest('product/types', $data)->getData();
+        $view->with('types', $types)->with('category', $data['category']);
     }
 
 }

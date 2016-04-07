@@ -46,6 +46,8 @@ class ComposerServiceProvider extends ServiceProvider {
         $this->app->view->composer('vendirun::product.result', 'AlistairShaw\Vendirun\App\Http\Composers\ProductViewComposer@productView');
         $this->app->view->composer('vendirun::product.refine.category-list', 'AlistairShaw\Vendirun\App\Http\Composers\ProductViewComposer@categories');
         $this->app->view->composer('vendirun::product.refine.colors', 'AlistairShaw\Vendirun\App\Http\Composers\ProductViewComposer@colors');
+        $this->app->view->composer('vendirun::product.refine.sizes', 'AlistairShaw\Vendirun\App\Http\Composers\ProductViewComposer@sizes');
+        $this->app->view->composer('vendirun::product.refine.types', 'AlistairShaw\Vendirun\App\Http\Composers\ProductViewComposer@types');
     }
 
     private function registerCmsComposers()

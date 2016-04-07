@@ -27,10 +27,23 @@ class ProductController extends VendirunBaseController {
         try
         {
             $data['category'] = $category;
+            $data['selectedColor'] = Input::get('color', '');
+            $data['selectedSize'] = Input::get('size', '');
+            $data['selectedType'] = Input::get('type', '');
             $data['products'] = VendirunApi::makeRequest('product/search', $productSearchParams)->getData();
             $data['productSearchParams'] = (array)$data['products']->search_params;
 
-            $data['pagination'] = ($data['products']) ? $data['pagination'] = new LengthAwarePaginator($data['products']->result, $data['products']->total_rows, $data['products']->limit, Request::get('page'), ['path' => '/product/']) : false;
+            $data['pagination'] = ($data['products']) ? $data['pagination'] =
+                new LengthAwarePaginator(
+                    $data['products']->result,
+                    $data['products']->total_rows,
+                    $data['products']->limit,
+                    Request::get('page'),
+                    [
+                        'path'  => Request::url(),
+                        'query' => Request::query()
+                    ]
+                ) : false;
         }
         catch (\Exception $e)
         {
@@ -70,6 +83,8 @@ class ProductController extends VendirunBaseController {
         {
             $productSearchParams = Session::get('productSearchParams');
             if (Input::get('color')) $productSearchParams['color'] = Input::get('color');
+            if (Input::get('size')) $productSearchParams['size'] = Input::get('size');
+            if (Input::get('type')) $productSearchParams['type'] = Input::get('type');
         }
 
         if ($category) $productSearchParams['category'] = $category;

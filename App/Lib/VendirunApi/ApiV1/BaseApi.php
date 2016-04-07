@@ -154,6 +154,17 @@ class BaseApi {
     }
 
     /**
+     * @param $url
+     * @param $params
+     */
+    protected function clearCache($url, $params)
+    {
+        $key = $url . json_encode($params);
+        Cache::forget('Permanent' . $key);
+        Cache::forget($key);
+    }
+
+    /**
      * @param     $response
      * @param     $key
      * @param int $cacheTime
@@ -163,7 +174,7 @@ class BaseApi {
         // only use the cache in production
         if (App::environment() == 'production')
         {
-            Cache::put($key, $response, $cacheTime);
+            if ($cacheTime > 0) Cache::put($key, $response, $cacheTime);
             Cache::forever('Permanent' . $key, $response);
         }
     }

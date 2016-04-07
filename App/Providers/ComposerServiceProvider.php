@@ -36,7 +36,6 @@ class ComposerServiceProvider extends ServiceProvider {
 
         $this->app->view->composer('vendirun::property.favourite-properties', 'AlistairShaw\Vendirun\App\Http\Composers\PropertyWidgetsViewComposer@getFavourites');
 
-        // stuff for the buttons
         $this->app->view->composer('vendirun::property.partials.property-buttons', 'AlistairShaw\Vendirun\App\Http\Composers\PropertyWidgetsViewComposer@getFavourites');
         $this->app->view->composer('vendirun::property.partials.property-buttons', 'AlistairShaw\Vendirun\App\Http\Composers\PropertyWidgetsViewComposer@propertyButtons');
     }
@@ -48,6 +47,10 @@ class ComposerServiceProvider extends ServiceProvider {
         $this->app->view->composer('vendirun::product.refine.colors', 'AlistairShaw\Vendirun\App\Http\Composers\ProductViewComposer@colors');
         $this->app->view->composer('vendirun::product.refine.sizes', 'AlistairShaw\Vendirun\App\Http\Composers\ProductViewComposer@sizes');
         $this->app->view->composer('vendirun::product.refine.types', 'AlistairShaw\Vendirun\App\Http\Composers\ProductViewComposer@types');
+
+        $this->app->view->composer('vendirun::product.partials.product-buttons', 'AlistairShaw\Vendirun\App\Http\Composers\ProductViewComposer@productButtons');
+
+        $this->app->view->composer('vendirun::product.list', 'AlistairShaw\Vendirun\App\Http\Composers\ProductViewComposer@getFavourites');
     }
 
     private function registerCmsComposers()

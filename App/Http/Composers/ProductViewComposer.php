@@ -4,6 +4,7 @@ use AlistairShaw\Vendirun\App\Lib\CurrencyHelper;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\VendirunApi;
 use App;
 use Illuminate\View\View;
+use Session;
 
 class ProductViewComposer {
 
@@ -70,6 +71,50 @@ class ProductViewComposer {
         $data['locale'] = App::getLocale();
         $types = VendirunApi::makeRequest('product/types', $data)->getData();
         $view->with('types', $types)->with('category', $data['category']);
+    }
+
+    /**
+     * @param View $view
+     */
+    public function productButtons(View $view)
+    {
+        $viewData = $view->getData();
+
+        $validPropertyButtons = ['details', 'enquire', 'favourite', 'recommend'];
+        if (!isset($viewData['productButtons']))
+        {
+            $productButtons = $validPropertyButtons;
+        }
+        else
+        {
+            $productButtons = [];
+            foreach ($viewData['productButtons'] as $button)
+            {
+                if (in_array($button, $validPropertyButtons)) $productButtons[] = $button;
+            }
+        }
+
+        $view->with('productButtons', $productButtons);
+        if (!isset($viewData['abbreviatedButtons'])) $view->with('abbreviatedButtons', false);
+    }
+
+    /**
+     * @param View $view
+     */
+    public function getFavourites(View $view)
+    {
+        $favouriteProductsArray = [];
+        try
+        {
+            $favouriteProducts = VendirunApi::makeRequest('product/favourites', ['token' => Session::get('token')])->getData();
+            foreach ($favouriteProducts->result as $favourite) $favouriteProductsArray[] = $favourite->id;
+        }
+        catch (\Exception $e)
+        {
+            $favouriteProducts = NULL;
+        }
+
+        $view->with('favouriteProducts')->with('favouriteProductsArray', $favouriteProductsArray);
     }
 
 }

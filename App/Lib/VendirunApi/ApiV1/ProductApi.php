@@ -76,4 +76,40 @@ class ProductApi extends BaseApi {
         return $this->request($url, $params);
     }
 
+    /**
+     * @param $params
+     * @return object
+     * @throws FailResponseException
+     */
+    public function favourites($params)
+    {
+        $url = 'product/get_favourites';
+        
+        return $this->request($url, $params, true);
+    }
+
+    /**
+     * @param $params
+     * @return object
+     * @throws FailResponseException
+     */
+    public function addFavourite($params)
+    {
+        $url = 'product/add_favourite';
+        
+        return $this->request($url, $params, true);
+    }
+
+    /**
+     * @param $params
+     * @return object
+     * @throws FailResponseException
+     */
+    public function removeFavourite($params)
+    {
+        $url = 'product/remove_favourite';
+
+        return $this->request($url, $params, true);
+    }
+
 } 

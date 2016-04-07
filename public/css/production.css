@@ -10523,6 +10523,13 @@ footer {
 .cms-staff .description {
   margin-bottom: 40px; }
 
+.btn-favourite {
+  background: #ccac00;
+  color: white; }
+
+.btn-add-to-favourites {
+  color: #8a6d3b; }
+
 .property-search.type1 .search-form h3 {
   background: #f0f0f0;
   padding: 8px 12px;
@@ -11088,10 +11095,10 @@ footer {
   .product-search .product-result .product-attributes {
     display: none; }
   .product-search .product-result .buttons {
-    padding: 6px 0 12px 0;
+    padding: 0;
     text-align: center;
-    background: #f0f0f0;
-    margin-bottom: 22px; }
+    margin-bottom: 12px;
+    background: #f0f0f0; }
     .product-search .product-result .buttons .btn {
       width: 37px; }
 

@@ -84,7 +84,6 @@
                 display: none;
             }
             .amenities {
-                //display: none;
                 text-align: center;
             }
             .location {
@@ -105,13 +104,13 @@
             display: none;
         }
         .buttons {
-            padding: 6px 0 12px 0;
+            padding: 0;
             text-align: center;
+            margin-bottom: 12px;
             background: $well-bg;
             .btn {
                 width: 37px;
             }
-            margin-bottom: 22px;
         }
     }
 }

@@ -104,9 +104,7 @@ class ProductController extends VendirunBaseController {
             $productSearchParams['sku'] = Input::get('sku');
         }
 
-        $defaultLimit = 12;
-        $productSearchParams['limit'] = (Input::has('limit')) ? Input::get('limit') : $defaultLimit;
-
+        $productSearchParams['limit'] = Input::get('limit', 12);
         $productSearchParams['order_by'] = Config::get('vendirun.productDefaultSortBy', 'price');
         $productSearchParams['order_direction'] = Config::get('vendirun.productDefaultSortOrder', 'ASC');
 

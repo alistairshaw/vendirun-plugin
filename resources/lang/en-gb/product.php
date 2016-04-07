@@ -14,5 +14,10 @@ return [
     'browseProducts' => 'Browse All Products',
     'colors' => 'Colours',
     'sizes' => 'Sizes',
-    'types' => 'Types'
+    'types' => 'Types',
+    'productDetails' => 'Product Details',
+    'enquire' => 'Enquire about this Product',
+    'addToFavourites' => 'Add to Wishlist',
+    'removeFromFavourites' => 'Remove from Wishlist',
+    'favourites' => 'My Wishlist'
 ];

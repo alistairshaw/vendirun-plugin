@@ -27,7 +27,14 @@ foreach (array_merge([''], \AlistairShaw\Vendirun\App\Lib\LocaleHelper::validLoc
         Route::group(['prefix' => 'shop'], function() use ($localePrefix)
         {
             Route::any('view/{id}/{productName}', ['as'=> $localePrefix . 'vendirun.productView', 'uses' => 'Product\ProductController@view']);
-            Route::any('/{category?}', ['as'=> $localePrefix . 'vendirun.productSearch', 'uses' => 'Product\ProductController@index'])->where('category', '(.*)');;
+
+            // require user to be logged in
+            Route::get('add-to-favourite/{id}', ['as'=> $localePrefix . 'vendirun.productAddFavourite', 'uses' => 'Product\FavouriteController@addFavourite']);
+            Route::get('remove-favourite/{id}', ['as'=> $localePrefix . 'vendirun.productRemoveFavourite', 'uses' => 'Product\FavouriteController@removeFavourite']);
+            Route::get('wishlist', ['as'=> $localePrefix . 'vendirun.productFavourites', 'uses' => 'Product\FavouriteController@index']);
+
+            // this one must be last to catch any undefined routes
+            Route::any('/{category?}', ['as'=> $localePrefix . 'vendirun.productSearch', 'uses' => 'Product\ProductController@index'])->where('category', '(.*)');
         });
 
         Route::group(['prefix' => 'customer'], function() use ($localePrefix)

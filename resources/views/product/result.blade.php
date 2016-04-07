@@ -18,6 +18,9 @@
             <div class="short-description">
                 {!! $product->short_description !!}
             </div>
+            <div class="buttons">
+                @include('vendirun::product.partials.product-buttons', ['abbreviatedButtons' => true, 'productButtons' => ['details', 'enquire', 'favourite', 'recommend']])
+            </div>
             <div class="amenities">
                 @foreach ($product->categories as $category)
                     <label class="label label-primary" title="{{ $category->category_name }}">{{ $category->category_name }}</label>

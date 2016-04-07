@@ -43,6 +43,7 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ trans('vendirun::product.products') }} <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
                         <li><a href="{{ route(\AlistairShaw\Vendirun\App\Lib\LocaleHelper::getLanguagePrefixForLocale(App::getLocale()) . 'vendirun.productSearch') }}">{{ trans('vendirun::product.browse') }}</a></li>
+                        <li><a href="{{ route(\AlistairShaw\Vendirun\App\Lib\LocaleHelper::getLanguagePrefixForLocale(App::getLocale()) . 'vendirun.productFavourites') }}">{{ trans('vendirun::product.favourites') }}</a></li>
                     </ul>
                 </li>
 

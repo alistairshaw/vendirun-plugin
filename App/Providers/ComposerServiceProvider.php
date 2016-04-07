@@ -51,6 +51,7 @@ class ComposerServiceProvider extends ServiceProvider {
         $this->app->view->composer('vendirun::product.partials.product-buttons', 'AlistairShaw\Vendirun\App\Http\Composers\ProductViewComposer@productButtons');
 
         $this->app->view->composer('vendirun::product.list', 'AlistairShaw\Vendirun\App\Http\Composers\ProductViewComposer@getFavourites');
+        $this->app->view->composer('vendirun::product.recommend', 'AlistairShaw\Vendirun\App\Http\Composers\ProductViewComposer@getFavourites');
     }
 
     private function registerCmsComposers()

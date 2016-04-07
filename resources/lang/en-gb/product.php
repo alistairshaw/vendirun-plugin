@@ -19,5 +19,6 @@ return [
     'enquire' => 'Enquire about this Product',
     'addToFavourites' => 'Add to Wishlist',
     'removeFromFavourites' => 'Remove from Wishlist',
-    'favourites' => 'My Wishlist'
+    'favourites' => 'My Wishlist',
+    'sendProductToFriend' => 'Share with a Friend'
 ];

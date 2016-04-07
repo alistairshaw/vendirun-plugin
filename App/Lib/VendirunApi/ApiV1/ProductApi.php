@@ -21,9 +21,9 @@ class ProductApi extends BaseApi {
      * @return object
      * @throws FailResponseException
      */
-    public function property($params)
+    public function product($params)
     {
-        $url = 'product/find';
+        $url = 'product';
 
         return $this->request($url, $params);
     }

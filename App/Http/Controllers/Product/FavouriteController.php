@@ -3,6 +3,7 @@
 use AlistairShaw\Vendirun\App\Http\Controllers\VendirunAuthController;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\VendirunApi;
 use App;
+use Cache;
 use Config;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Input;
@@ -66,6 +67,7 @@ class FavouriteController extends VendirunAuthController {
     public function addFavourite($productId)
     {
         $response = VendirunApi::makeRequest('product/addFavourite', ['token' => Session::get('token'), 'product_id' => $productId]);
+        Cache::forget('favourites-' . Session::get('token'));
 
         if (!$response->getSuccess()) Session::flash('vendirun-alert-error', $response->getError());
 
@@ -79,6 +81,7 @@ class FavouriteController extends VendirunAuthController {
     public function removeFavourite($productId)
     {
         $response = VendirunApi::makeRequest('product/removeFavourite', ['token' => Session::get('token'), 'product_id' => $productId]);
+        Cache::forget('favourites-' . Session::get('token'));
 
         if (!$response->getSuccess()) Session::flash('vendirun-alert-error', $response->getError());
 

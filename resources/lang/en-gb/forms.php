@@ -24,7 +24,7 @@ return [
     'message' => 'Message',
     'sendMessage' => 'Send Message',
     'sendToFriend' => 'Send to a Friend',
-    'sentToFriendNote' => 'Fill in some basic information below, and we will send your friend an email with a link! Easy as that!',
+    'sendToFriendNote' => 'Fill in some basic information below, and we will send your friend an email with a link! Easy as that!',
     'privacyAssurance' => 'Don\'t worry, we won\'t ever share this info with anyone else.',
     'yourDetails' => 'Your Details',
     'friendDetails' => 'Your Friend\'s Details',

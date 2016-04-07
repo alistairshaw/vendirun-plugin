@@ -1,5 +1,6 @@
 <div class="recommend-a-friend js-recommend-a-friend-form{{ (isset($hideRacForm) && $hideRacForm) ? ' hide' : '' }}">
     {!! Form::open(['route' => 'vendirun.recommendAFriend', 'autocomplete' => 'off', 'class' => 'js-validate-form']) !!}
+    {!! Form::token() !!}
     {!! Form::hidden('property', (isset($property) ? $property->title : Input::old('property')), ['id'=>'propertyName']) !!}
     {!! Form::hidden('propertyId', (isset($property) ? $property->id : Input::old('propertyId')), ['id'=>'propertyId']) !!}
     {!! Form::hidden('formId', 'Recommend a Friend') !!}

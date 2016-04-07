@@ -53,7 +53,7 @@ class ProductController extends VendirunBaseController {
         return View::make('vendirun::product.results', $data);
     }
 
-    public function view($id, $productName)
+    public function view($id, $productName = '')
     {
 
     }

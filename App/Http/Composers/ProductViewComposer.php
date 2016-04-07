@@ -3,6 +3,7 @@
 use AlistairShaw\Vendirun\App\Lib\CurrencyHelper;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\VendirunApi;
 use App;
+use Cache;
 use Illuminate\View\View;
 use Session;
 
@@ -103,18 +104,28 @@ class ProductViewComposer {
      */
     public function getFavourites(View $view)
     {
-        $favouriteProductsArray = [];
-        try
+        $cacheKey = 'favourites-' . Session::get('token');
+
+        if (!$favouriteProducts = Cache::get($cacheKey))
         {
-            $favouriteProducts = VendirunApi::makeRequest('product/favourites', ['token' => Session::get('token')])->getData();
-            foreach ($favouriteProducts->result as $favourite) $favouriteProductsArray[] = $favourite->id;
-        }
-        catch (\Exception $e)
-        {
-            $favouriteProducts = NULL;
+            try
+            {
+                $favouriteProducts = VendirunApi::makeRequest('product/favourites', ['token' => Session::get('token')])->getData();
+            }
+            catch (\Exception $e)
+            {
+                $favouriteProducts = NULL;
+            }
         }
 
-        $view->with('favouriteProducts')->with('favouriteProductsArray', $favouriteProductsArray);
+        Cache::forever($cacheKey, $favouriteProducts);
+
+        $favouriteProductsArray = [];
+        if ($favouriteProducts) foreach ($favouriteProducts->result as $favourite) $favouriteProductsArray[] = $favourite->id;
+
+        //dd($favouriteProductsArray);
+
+        $view->with('favouriteProducts', $favouriteProducts)->with('favouriteProductsArray', $favouriteProductsArray);
     }
 
 }

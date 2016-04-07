@@ -69,7 +69,14 @@ class FavouriteController extends VendirunAuthController {
         $response = VendirunApi::makeRequest('product/addFavourite', ['token' => Session::get('token'), 'product_id' => $productId]);
         Cache::forget('favourites-' . Session::get('token'));
 
-        if (!$response->getSuccess()) Session::flash('vendirun-alert-error', $response->getError());
+        if (!$response->getSuccess())
+        {
+            Session::flash('vendirun-alert-error', $response->getError());
+        }
+        else
+        {
+            if (Session::has('primaryPagePath')) return Redirect::to(Session::get('primaryPagePath'));
+        }
 
         return Redirect::back();
     }
@@ -83,7 +90,14 @@ class FavouriteController extends VendirunAuthController {
         $response = VendirunApi::makeRequest('product/removeFavourite', ['token' => Session::get('token'), 'product_id' => $productId]);
         Cache::forget('favourites-' . Session::get('token'));
 
-        if (!$response->getSuccess()) Session::flash('vendirun-alert-error', $response->getError());
+        if (!$response->getSuccess())
+        {
+            Session::flash('vendirun-alert-error', $response->getError());
+        }
+        else
+        {
+            if (Session::has('primaryPagePath')) return Redirect::to(Session::get('primaryPagePath'));
+        }
 
         return Redirect::back();
     }

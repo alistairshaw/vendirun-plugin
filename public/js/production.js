@@ -18206,7 +18206,7 @@ var sendToFriend = function () {
 };
 
 $(document).ready(function () {
-    if ($('.js-recommend-a-friend-form').length) sendToFriend();
+    if ($('.js-recommend-a-friend-form').length && !$('.js-static-raf').length) sendToFriend();
 });
 var thumbnails = {
     init: function () {

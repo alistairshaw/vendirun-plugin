@@ -17,6 +17,8 @@ use Request;
 
 class PropertyController extends VendirunBaseController {
 
+    protected $primaryPages = true;
+
     /**
      * @return \Illuminate\View\View
      */

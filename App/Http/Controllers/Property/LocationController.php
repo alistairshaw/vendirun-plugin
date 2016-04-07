@@ -6,6 +6,8 @@ use View;
 
 class LocationController extends VendirunBaseController {
 
+    protected $primaryPages = true;
+
     /**
      * @param string $locationName
      * @return View

@@ -81,7 +81,7 @@ class ProductViewComposer {
     {
         $viewData = $view->getData();
 
-        $validPropertyButtons = ['details', 'enquire', 'favourite', 'recommend'];
+        $validPropertyButtons = ['details', 'enquire', 'favourite', 'recommend', 'add-to-cart'];
         if (!isset($viewData['productButtons']))
         {
             $productButtons = $validPropertyButtons;

@@ -26,6 +26,11 @@ foreach (array_merge([''], \AlistairShaw\Vendirun\App\Lib\LocaleHelper::validLoc
 
         Route::group(['prefix' => 'shop'], function() use ($localePrefix)
         {
+            Route::group(['prefix' => 'cart'], function() use ($localePrefix)
+            {
+                Route::get('add', ['as'=> $localePrefix . 'vendirun.productAddToCart', 'uses' => 'Product\CartController@add']);
+            });
+
             Route::any('view/{id}/{productName?}', ['as'=> $localePrefix . 'vendirun.productView', 'uses' => 'Product\ProductController@view']);
 
             // require user to be logged in

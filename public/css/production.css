@@ -11161,6 +11161,9 @@ ul.refine-list {
   ul.refine-list.color-list li:hover {
     background: black; }
 
+.cms-product-recommend .recommend-a-friend {
+  margin-top: 0; }
+
 .blog-list .blog-entry {
   border: 2px solid #ccc;
   margin-bottom: 20px; }

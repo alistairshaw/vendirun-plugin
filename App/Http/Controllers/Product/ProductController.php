@@ -16,6 +16,8 @@ use Request;
 
 class ProductController extends VendirunBaseController {
 
+    protected $primaryPages = true;
+
     /**
      * @param string $category
      * @return \Illuminate\View\View

@@ -19,7 +19,7 @@
                 {!! $product->short_description !!}
             </div>
             <div class="buttons">
-                @include('vendirun::product.partials.product-buttons', ['abbreviatedButtons' => true, 'productButtons' => ['details', 'enquire', 'favourite', 'recommend']])
+                @include('vendirun::product.partials.product-buttons', ['abbreviatedButtons' => true, 'productButtons' => ['details', 'enquire', 'favourite', 'recommend', 'add-to-cart']])
             </div>
             <div class="amenities">
                 @foreach ($product->categories as $category)

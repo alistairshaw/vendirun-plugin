@@ -34,7 +34,9 @@ class CustomerController extends VendirunBaseController {
             'password' => 'required'
         ]);
 
-        return $this->login(Input::get('email_login'), Input::get('password'));
+        $r = $this->login(Input::get('email_login'), Input::get('password'));
+
+        return $r;
     }
 
     /**
@@ -76,12 +78,13 @@ class CustomerController extends VendirunBaseController {
             Session::flash('vendirun-alert-success', 'Login Successful');
             Session::put('token', $login->getData()->token);
 
-            if (Session::has('action'))
+            if (Session::has('attemptedAction'))
             {
-                $redirect = Session::get('action');
-
-                return Redirect::to($redirect);
+                $redirect = Session::get('attemptedAction');
+                return redirect($redirect);
             }
+
+            if (Session::has('primaryPagePath')) return Redirect::to(Session::get('primaryPagePath'));
 
             return Redirect::route(LocaleHelper::getLanguagePrefixForLocale(App::getLocale()) . 'vendirun.register');
         }
@@ -173,7 +176,6 @@ class CustomerController extends VendirunBaseController {
     public function register()
     {
         $data = Session::all();
-
         $data['bodyClass'] = 'property-search';
 
         return View::make('vendirun::customer.register', $data);
@@ -184,9 +186,10 @@ class CustomerController extends VendirunBaseController {
      */
     public function logout()
     {
-        Session::flush();
+        Session::remove('token');
+        if (Session::has('primaryPagePath')) return Redirect::to(Session::get('primaryPagePath'));
 
-        return Redirect::route(LocaleHelper::getLanguagePrefixForLocale(App::getLocale()) . 'vendirun.register');
+        return Redirect::route(LocaleHelper::getLanguagePrefixForLocale(App::getLocale()) . 'vendirun.home');
     }
 
 }

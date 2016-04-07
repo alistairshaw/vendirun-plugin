@@ -47,7 +47,7 @@
         </div>
         <div class="col-sm-12">
             <button type="submit" class="btn btn-primary"><i class="fa fa-envelope"></i> {{ trans('vendirun::forms.send') }}</button>
-            <button type="button" class="btn btn-default js-send-to-friend-close"><i class="fa fa-remove"></i> {{ trans('vendirun::forms.cancel') }}</button>
+            <a href="{{ URL::previous() }}" class="btn btn-default js-send-to-friend-close"><i class="fa fa-remove"></i> {{ trans('vendirun::forms.cancel') }}</a>
         </div>
     </div>
     {!! Form::close() !!}

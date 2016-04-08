@@ -55,9 +55,16 @@ class ProductController extends VendirunBaseController {
         return View::make('vendirun::product.results', $data);
     }
 
+    /**
+     * @param        $id
+     * @param string $productName
+     * @return \Illuminate\View\View
+     */
     public function view($id, $productName = '')
     {
+        $data['product'] = VendirunApi::makeRequest('product/product', ['id' => $id])->getData();
 
+        return View::make('vendirun::product.view', $data);
     }
 
     /**
@@ -67,7 +74,7 @@ class ProductController extends VendirunBaseController {
     {
         Session::forget('productSearchParams');
 
-        return Redirect::route(LocaleHelper::getLanguagePrefixForLocale(App::getLocale()) . 'vendirun.productSearch');
+        return Redirect::route(LocaleHelper::localePrefix() . 'vendirun.productSearch');
     }
 
     /**

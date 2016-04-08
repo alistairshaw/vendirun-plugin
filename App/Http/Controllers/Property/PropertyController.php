@@ -48,7 +48,7 @@ class PropertyController extends VendirunBaseController {
     {
         Session::forget('searchParams');
 
-        return Redirect::route(LocaleHelper::getLanguagePrefixForLocale(App::getLocale()) . 'vendirun.propertySearch');
+        return Redirect::route(LocaleHelper::localePrefix() . 'vendirun.propertySearch');
     }
 
     /**

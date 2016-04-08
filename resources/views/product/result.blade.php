@@ -12,7 +12,7 @@
         <div class="details">
             <div class="price">{{ $price }}</div>
             <h2>
-                <a href="{{ route(\AlistairShaw\Vendirun\App\Lib\LocaleHelper::getLanguagePrefixForLocale(App::getLocale()) . 'vendirun.productView',[$product->id, urlencode($product->product_name)]) }}">{{ $product->product_name }}</a>
+                <a href="{{ route(LocaleHelper::localePrefix() . 'vendirun.productView',[$product->id, urlencode($product->product_name)]) }}">{{ $product->product_name }}</a>
             </h2>
 
             <div class="short-description">

@@ -67,5 +67,6 @@ class VendirunServiceProvider extends ServiceProvider {
 		$loader = AliasLoader::getInstance();
 		$loader->alias('Form', 'Illuminate\Html\FormFacade');
 		$loader->alias('HTML', 'Illuminate\Html\HtmlFacade');
+		$loader->alias('LocaleHelper', 'AlistairShaw\Vendirun\App\Lib\LocaleHelper');
 	}
 }

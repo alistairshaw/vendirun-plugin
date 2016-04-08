@@ -8,7 +8,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="{{ route(\AlistairShaw\Vendirun\App\Lib\LocaleHelper::getLanguagePrefixForLocale(App::getLocale()) . 'vendirun.home') }}">
+            <a class="navbar-brand" href="{{ route(LocaleHelper::localePrefix() . 'vendirun.home') }}">
                 @include('vendirun::common.logo')
             </a>
         </div>
@@ -19,22 +19,22 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ trans('vendirun::standard.customer') }} <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="{{ route(\AlistairShaw\Vendirun\App\Lib\LocaleHelper::getLanguagePrefixForLocale(App::getLocale()) . 'vendirun.register') }}">{{ trans('vendirun::standard.loginOrRegister') }}</a></li>
+                        <li><a href="{{ route(LocaleHelper::localePrefix() . 'vendirun.register') }}">{{ trans('vendirun::standard.loginOrRegister') }}</a></li>
                         <li class="divider"></li>
-                        <li><a href="{{ route(\AlistairShaw\Vendirun\App\Lib\LocaleHelper::getLanguagePrefixForLocale(App::getLocale()) . 'vendirun.logout') }}">{{ trans('vendirun::standard.logout') }}</a></li>
+                        <li><a href="{{ route(LocaleHelper::localePrefix() . 'vendirun.logout') }}">{{ trans('vendirun::standard.logout') }}</a></li>
                     </ul>
                 </li>
 
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ trans('vendirun::property.property') }} <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="{{ route(\AlistairShaw\Vendirun\App\Lib\LocaleHelper::getLanguagePrefixForLocale(App::getLocale()) . 'vendirun.propertySearch') }}">{{ trans('vendirun::property.listings') }}</a></li>
-                        <li><a href="{{ route(\AlistairShaw\Vendirun\App\Lib\LocaleHelper::getLanguagePrefixForLocale(App::getLocale()) . 'vendirun.searchProperties') }}">{{ trans('vendirun::property.search') }}</a></li>
-                        <li><a href="{{ route(\AlistairShaw\Vendirun\App\Lib\LocaleHelper::getLanguagePrefixForLocale(App::getLocale()) . 'vendirun.location') }}">{{ trans('vendirun::property.locations') }}</a></li>
-                        <li><a href="{{ route(\AlistairShaw\Vendirun\App\Lib\LocaleHelper::getLanguagePrefixForLocale(App::getLocale()) . 'vendirun.category') }}">{{ trans('vendirun::property.categories') }}</a></li>
+                        <li><a href="{{ route(LocaleHelper::localePrefix() . 'vendirun.propertySearch') }}">{{ trans('vendirun::property.listings') }}</a></li>
+                        <li><a href="{{ route(LocaleHelper::localePrefix() . 'vendirun.searchProperties') }}">{{ trans('vendirun::property.search') }}</a></li>
+                        <li><a href="{{ route(LocaleHelper::localePrefix() . 'vendirun.location') }}">{{ trans('vendirun::property.locations') }}</a></li>
+                        <li><a href="{{ route(LocaleHelper::localePrefix() . 'vendirun.category') }}">{{ trans('vendirun::property.categories') }}</a></li>
                         @if (Session::has('token'))
                             <li class="divider"></li>
-                            <li><a href="{{ route(\AlistairShaw\Vendirun\App\Lib\LocaleHelper::getLanguagePrefixForLocale(App::getLocale()) . 'vendirun.viewFavouriteProperties') }}">{{ trans('vendirun::property.favourites') }}</a></li>
+                            <li><a href="{{ route(LocaleHelper::localePrefix() . 'vendirun.viewFavouriteProperties') }}">{{ trans('vendirun::property.favourites') }}</a></li>
                         @endif
                     </ul>
                 </li>
@@ -42,14 +42,15 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ trans('vendirun::product.products') }} <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="{{ route(\AlistairShaw\Vendirun\App\Lib\LocaleHelper::getLanguagePrefixForLocale(App::getLocale()) . 'vendirun.productSearch') }}">{{ trans('vendirun::product.browse') }}</a></li>
-                        <li><a href="{{ route(\AlistairShaw\Vendirun\App\Lib\LocaleHelper::getLanguagePrefixForLocale(App::getLocale()) . 'vendirun.productFavourites') }}">{{ trans('vendirun::product.favourites') }}</a></li>
+                        <li><a href="{{ route(LocaleHelper::localePrefix() . 'vendirun.productSearch') }}">{{ trans('vendirun::product.browse') }}</a></li>
+                        <li><a href="{{ route(LocaleHelper::localePrefix() . 'vendirun.productFavourites') }}">{{ trans('vendirun::product.favourites') }}</a></li>
+                        <li><a href="{{ route(LocaleHelper::localePrefix() . 'vendirun.productCart') }}">{{ trans('vendirun::product.cart') }}</a></li>
                     </ul>
                 </li>
 
-                <li><a href="{{ route(\AlistairShaw\Vendirun\App\Lib\LocaleHelper::getLanguagePrefixForLocale(App::getLocale()) . 'vendirun.blog') }}">Blog</a></li>
+                <li><a href="{{ route(LocaleHelper::localePrefix() . 'vendirun.blog') }}">Blog</a></li>
 
-                <li><a href="{{ route(\AlistairShaw\Vendirun\App\Lib\LocaleHelper::getLanguagePrefixForLocale(App::getLocale()) . 'vendirun.menu') }}">Menu</a></li>
+                <li><a href="{{ route(LocaleHelper::localePrefix() . 'vendirun.menu') }}">Menu</a></li>
             </ul>
 
             <ul class="nav navbar-nav navbar-right">

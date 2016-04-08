@@ -21,5 +21,6 @@ return [
     'removeFromFavourites' => 'Remove from Wishlist',
     'favourites' => 'My Wishlist',
     'sendProductToFriend' => 'Share with a Friend',
-    'addToCart' => 'Add to Cart'
+    'addToCart' => 'Add to Cart',
+    'cart' => 'Shopping Cart'
 ];

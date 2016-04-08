@@ -18,7 +18,7 @@ class VendirunAuthController extends VendirunBaseController {
             Session::put('attemptedAction', $path);
             Session::save();
 
-            Redirect::route(LocaleHelper::getLanguagePrefixForLocale(App::getLocale()) . 'vendirun.register')->send();
+            Redirect::route(LocaleHelper::localePrefix() . 'vendirun.register')->send();
         }
     }
 

@@ -13,7 +13,7 @@
                     @include('vendirun::property.result', array('property'=>$item, 'limitImages' => 1, 'abbreviatedButtons' => true))
                 @empty
                     <div class="large-notice">
-                        <p>{{ trans('vendirun::property.noFavourites') }} <a href="{{ route(\AlistairShaw\Vendirun\App\Lib\LocaleHelper::getLanguagePrefixForLocale(App::getLocale()) . 'vendirun.propertySearch') }}">{{ trans('vendirun::property.clickToFind') }}</a></p>
+                        <p>{{ trans('vendirun::property.noFavourites') }} <a href="{{ route(LocaleHelper::localePrefix() . 'vendirun.propertySearch') }}">{{ trans('vendirun::property.clickToFind') }}</a></p>
                     </div>
                 @endforelse
             </div>

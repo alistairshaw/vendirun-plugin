@@ -1,3 +1,3 @@
-<a href="{{ route(\AlistairShaw\Vendirun\App\Lib\LocaleHelper::getLanguagePrefixForLocale(App::getLocale()) . 'vendirun.productView',[$product->id, urlencode($product->product_name)]) }}/#contact-us" class="btn btn-default btn-enquire" data-toggle="tooltip" title="{{ trans('vendirun::product.enquire') }}">
+<a href="{{ route(LocaleHelper::localePrefix() . 'vendirun.productView',[$product->id, urlencode($product->product_name)]) }}/#contact-us" class="btn btn-default btn-enquire" data-toggle="tooltip" title="{{ trans('vendirun::product.enquire') }}">
     <i class="fa fa-envelope"></i> {{ $abbreviatedButtons ? '' : ' ' . trans('vendirun::product.enquire') }}
 </a>

@@ -18055,6 +18055,16 @@ $(window).load(function () {
         effect: 'slideInRight',
         animSpeed: 200
 	});
+
+    $('.product-slide-show').nivoSlider({
+        manualAdvance: true,
+        prevText: '',
+        nextText: '',
+        controlNav: true,
+        controlNavThumbs: true,
+        effect: 'slideInRight',
+        animSpeed: 200
+    });
 });
 /**
  * Sets up the form validation for the standard selector or any ID that you pass in

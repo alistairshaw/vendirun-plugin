@@ -11164,6 +11164,12 @@ ul.refine-list {
 .cms-product-recommend .recommend-a-friend {
   margin-top: 0; }
 
+.product-slide-show, .product-single-image {
+  padding: 0; }
+
+.product.product-view h1:first-child {
+  margin-top: 0; }
+
 .blog-list .blog-entry {
   border: 2px solid #ccc;
   margin-bottom: 20px; }

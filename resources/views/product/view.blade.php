@@ -13,6 +13,7 @@
             </div>
             <div class="col-md-9 col-md-8">
                 <h1>{{ $product->product_name }}</h1>
+                @include('vendirun::product.partials.product-types')
             </div>
         </div>
     </div>

@@ -69,6 +69,9 @@ class VendirunServiceProvider extends ServiceProvider {
             return new CurrencyHelper();
         });
 
+        // dependency injection
+        $this->app->bind('AlistairShaw\Vendirun\App\Lib\Social\SocialLinks', 'AlistairShaw\Vendirun\App\Lib\Social\SocialLinksStandard');
+
 		// aliases
 		$loader = AliasLoader::getInstance();
 		$loader->alias('Form', 'Illuminate\Html\FormFacade');

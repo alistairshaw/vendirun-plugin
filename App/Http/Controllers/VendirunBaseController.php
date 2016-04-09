@@ -12,10 +12,10 @@ use View;
 
 class VendirunBaseController extends Controller {
 
-	/**
-	 * @var object VendirunApi
-	 */
-	protected $vendirunApi;
+    /**
+     * @var object VendirunApi
+     */
+    protected $vendirunApi;
 
     /**
      * Use this flag on controllers that contain primary pages that we can redirect to.
@@ -28,18 +28,24 @@ class VendirunBaseController extends Controller {
      */
     protected $primaryPages = false;
 
-	public function __construct()
+    public function __construct()
     {
-        $path = Request::getPathInfo() . (Request::getQueryString() ? ('?' . Request::getQueryString()) : '');
-        if ($this->primaryPages)
-        {
-            Session::put('primaryPagePath', $path);
-            Session::save();
-        }
+        if ($this->primaryPages) $this->setPrimaryPath();
 
         // set public client information to the config so we have access to it everywhere
-		$clientInfo = ClientHelper::getClientInfo();
+        $clientInfo = ClientHelper::getClientInfo();
         Config::set('clientInfo', $clientInfo);
-	}
+    }
+
+    /**
+     * Call this from a controller to make just one function a primary path if necessary
+     */
+    protected function setPrimaryPath()
+    {
+        $path = Request::getPathInfo() . (Request::getQueryString() ? ('?' . Request::getQueryString()) : '');
+
+        Session::put('primaryPagePath', $path);
+        Session::save();
+    }
 
 }

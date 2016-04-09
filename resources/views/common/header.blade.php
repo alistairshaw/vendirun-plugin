@@ -55,6 +55,7 @@
 
             <ul class="nav navbar-nav navbar-right">
                 @include('vendirun::cms.menu.login-button')
+                @include('vendirun::product.partials.cart.cart-widget')
                 <li>
                     @include('vendirun::common.language-select')
                 </li>

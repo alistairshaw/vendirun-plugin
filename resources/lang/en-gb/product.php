@@ -22,5 +22,10 @@ return [
     'favourites' => 'My Wishlist',
     'sendProductToFriend' => 'Share with a Friend',
     'addToCart' => 'Add to Cart',
-    'cart' => 'Shopping Cart'
+    'cart' => 'Shopping Cart',
+    'checkout' => 'Check Out',
+    'totalCartAmount' => 'Cart Total',
+    'emptyCart' => 'Empty Cart',
+    'noItemsInCart' => 'No Items in Cart',
+    'relatedProducts' => 'Related Products'
 ];

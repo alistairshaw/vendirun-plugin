@@ -1,3 +1,8 @@
-<a href="{{ route(LocaleHelper::localePrefix() . $abbreviatedButtons ? 'vendirun.productView' : 'vendirun.productAddToCart', ['productId' => $product->id, 'productName' => urlencode(strtolower($product->product_name))]) }}" data-product-name="{{ $product->product_name }}" data-product-id="{{ $product->id }}" class="btn btn-default" data-toggle="tooltip" title="{{ trans('vendirun::product.addToCart') }}">
+<a href="{{ $addToCartRoute }}"
+   data-product-name="{{ $product->product_name }}"
+   data-product-id="{{ $product->id }}"
+   class="btn btn-default"
+   data-toggle="tooltip"
+   title="{{ trans('vendirun::product.addToCart') }}">
     <i class="fa fa-shopping-cart"></i> {{ $abbreviatedButtons ? '' : ' ' . trans('vendirun::product.addToCart') }}
 </a>

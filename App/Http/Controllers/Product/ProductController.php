@@ -33,6 +33,7 @@ class ProductController extends VendirunBaseController {
             $data['selectedSize'] = Input::get('size', '');
             $data['selectedType'] = Input::get('type', '');
             $data['products'] = VendirunApi::makeRequest('product/search', $productSearchParams)->getData();
+
             $data['productSearchParams'] = (array)$data['products']->search_params;
 
             $data['pagination'] = ($data['products']) ? $data['pagination'] =
@@ -58,11 +59,24 @@ class ProductController extends VendirunBaseController {
     /**
      * @param        $id
      * @param string $productName
+     * @param int $productVariationId
      * @return \Illuminate\View\View
      */
-    public function view($id, $productName = '')
+    public function view($id, $productName = '', $productVariationId = null)
     {
-        $data['product'] = VendirunApi::makeRequest('product/product', ['id' => $id])->getData();
+        $searchParams = $this->productSearchParams();
+        $searchParams['id'] = $id;
+        $searchParams['product_variation_id'] = $productVariationId;
+        $data['product'] = VendirunApi::makeRequest('product/product', $searchParams)->getData();
+
+        $data['selectedVariation'] = $data['product']->variations{0};
+        if ($productVariationId)
+        {
+            foreach ($data['product']->variations as $var)
+            {
+                if ($var->id == $productVariationId) $data['selectedVariation'] = $var;
+            }
+        }
 
         return View::make('vendirun::product.view', $data);
     }
@@ -79,9 +93,10 @@ class ProductController extends VendirunBaseController {
 
     /**
      * @param string $category
+     * @param bool   $single
      * @return mixed
      */
-    private function productSearchParams($category = '')
+    private function productSearchParams($category = '', $single = false)
     {
         if (isset($_POST) && count($_POST) > 0)
         {
@@ -96,32 +111,35 @@ class ProductController extends VendirunBaseController {
             if (Input::get('type')) $productSearchParams['type'] = Input::get('type');
         }
 
-        if ($category) $productSearchParams['category'] = $category;
-
-        if (isset($_GET['page']))
+        if (!$single)
         {
-            $productSearchParams['offset'] = $_GET['page'] - 1;
-        }
+            if ($category) $productSearchParams['category'] = $category;
 
-        if (Input::get('keywords'))
-        {
-            $productSearchParams['search_string'] = Input::get('keywords');
-        }
+            if (isset($_GET['page']))
+            {
+                $productSearchParams['offset'] = $_GET['page'] - 1;
+            }
 
-        if (Input::get('sku'))
-        {
-            $productSearchParams['sku'] = Input::get('sku');
-        }
+            if (Input::get('searchString'))
+            {
+                $productSearchParams['search_string'] = Input::get('searchString');
+            }
 
-        $productSearchParams['limit'] = Input::get('limit', 12);
-        $productSearchParams['order_by'] = Config::get('vendirun.productDefaultSortBy', 'price');
-        $productSearchParams['order_direction'] = Config::get('vendirun.productDefaultSortOrder', 'ASC');
+            if (Input::get('sku'))
+            {
+                $productSearchParams['sku'] = Input::get('sku');
+            }
 
-        if (Input::has('order_by'))
-        {
-            $searchArray = explode("_", Input::get('order_by'));
-            $productSearchParams['order_by'] = $searchArray[0];
-            $productSearchParams['order_direction'] = (count($searchArray) == 2) ? $searchArray[1] : 'ASC';
+            $productSearchParams['limit'] = Input::get('limit', 12);
+            $productSearchParams['order_by'] = Config::get('vendirun.productDefaultSortBy', 'price');
+            $productSearchParams['order_direction'] = Config::get('vendirun.productDefaultSortOrder', 'ASC');
+
+            if (Input::has('order_by'))
+            {
+                $searchArray = explode("_", Input::get('order_by'));
+                $productSearchParams['order_by'] = $searchArray[0];
+                $productSearchParams['order_direction'] = (count($searchArray) == 2) ? $searchArray[1] : 'ASC';
+            }
         }
 
         return $productSearchParams;

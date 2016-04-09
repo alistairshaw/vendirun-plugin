@@ -1,7 +1,7 @@
-@if (count($colors) > 0)
+@if (count($products->colors) > 0)
     <h3>{{ trans('vendirun::product.colors') }}</h3>
     <ul class="refine-list color-list">
-        @foreach ($colors as $color)
+        @foreach ($products->colors as $color)
             @if ($color->name == $selectedColor)
                 <li class="selected">
                     <a href="{{ URL::route('vendirun.productSearch', array_merge(Request::query(), ['category' => $category, 'color' => ''])) }}" style="background-color: {{ $color->hex }};" data-toggle="tooltip" title="{{ $color->name }}">

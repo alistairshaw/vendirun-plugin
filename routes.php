@@ -29,10 +29,13 @@ foreach (array_merge([''], LocaleHelper::validLocales()) as $locale)
             Route::group(['prefix' => 'cart'], function () use ($localePrefix)
             {
                 Route::get('/', ['as' => $localePrefix . 'vendirun.productCart', 'uses' => 'Product\CartController@index']);
+                Route::get('clear', ['as' => $localePrefix . 'vendirun.productCartClear', 'uses' => 'Product\CartController@clear']);
                 Route::get('add/{productVariationId}', ['as' => $localePrefix . 'vendirun.productAddToCart', 'uses' => 'Product\CartController@add']);
+                Route::get('remove/{productVariationId}', ['as' => $localePrefix . 'vendirun.productRemoveFromCart', 'uses' => 'Product\CartController@remove']);
+                Route::post('add', ['as' => $localePrefix . 'vendirun.productAddToCartPost', 'uses' => 'Product\CartController@add']);
             });
 
-            Route::any('view/{id}/{productName?}', ['as' => $localePrefix . 'vendirun.productView', 'uses' => 'Product\ProductController@view']);
+            Route::any('view/{id}/{productName}/{productVariationId?}', ['as' => $localePrefix . 'vendirun.productView', 'uses' => 'Product\ProductController@view']);
 
             // require user to be logged in
             Route::get('add-to-favourite/{id}', ['as' => $localePrefix . 'vendirun.productAddFavourite', 'uses' => 'Product\FavouriteController@addFavourite']);

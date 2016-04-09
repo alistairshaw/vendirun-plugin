@@ -2,26 +2,68 @@
 
 use AlistairShaw\Vendirun\App\Http\Controllers\VendirunBaseController;
 use AlistairShaw\Vendirun\App\Lib\Cart\Cart;
+use Input;
 use Redirect;
+use Request;
 use Session;
+use View;
 
 class CartController extends VendirunBaseController {
 
     public function index()
     {
-        echo '<h1>Cart List</h1>';
+        $this->setPrimaryPath();
+
         $cart = new Cart();
-        dd($cart->getProducts());
+        $data['cart'] = $cart->getProducts();
+
+        return View::make('vendirun::product.cart', $data);
     }
 
-    public function add($productVariationId)
+    /**
+     * @param null $productVariationId
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function add($productVariationId = null)
+    {
+        if (!$productVariationId) $productVariationId = Request::input('productVariationId');
+        $quantity = Request::input('quantity', 1);
+
+        $cart = new Cart();
+        for ($i = 0; $i <= $quantity; $i++)
+        {
+            $cart->add($productVariationId);
+        }
+
+        Session::flash('vendirun-alert-success', 'Item Added to Cart');
+        if (Session::has('primaryPagePath')) return Redirect::to(Session::get('primaryPagePath'));
+        return Redirect::back();
+    }
+
+    /**
+     * @param null $productVariationId
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function remove($productVariationId = null)
     {
         $cart = new Cart();
-        $cart->add($productVariationId);
-        
-        //Session::flash('vendirun-alert-success', 'Item Added to Cart');
-        //if (Session::has('primaryPagePath')) return Redirect::to(Session::get('primaryPagePath'));
-        //return Redirect::back();
+        $cart->remove($productVariationId);
+
+        Session::flash('vendirun-alert-success', 'Item Removed from Cart');
+        if (Session::has('primaryPagePath')) return Redirect::to(Session::get('primaryPagePath'));
+        return Redirect::back();
     }
 
+    /**
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function clear()
+    {
+        $cart = new Cart();
+        $cart->clear();
+
+        Session::flash('vendirun-alert-success', 'Cart Emptied');
+        if (Session::has('primaryPagePath')) return Redirect::to(Session::get('primaryPagePath'));
+        return Redirect::back();
+    }
 }

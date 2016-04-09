@@ -1,10 +1,13 @@
 <?php namespace AlistairShaw\Vendirun\App\Http\Composers;
 
+use AlistairShaw\Vendirun\App\Lib\Cart\Cart;
 use AlistairShaw\Vendirun\App\Lib\CurrencyHelper;
+use AlistairShaw\Vendirun\App\Lib\LocaleHelper;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\VendirunApi;
 use App;
 use Cache;
 use Illuminate\View\View;
+use Request;
 use Session;
 
 class ProductViewComposer {
@@ -35,48 +38,6 @@ class ProductViewComposer {
     /**
      * @param View $view
      */
-    public function colors(View $view)
-    {
-        $viewData = $view->getData();
-        $data['category'] = (isset($viewData['category'])) ? $viewData['category'] : '';
-        $data['size'] = (isset($viewData['selectedSize'])) ? $viewData['selectedSize'] : '';
-        $data['type'] = (isset($viewData['selectedType'])) ? $viewData['selectedType'] : '';
-        $data['locale'] = App::getLocale();
-        $colors = VendirunApi::makeRequest('product/colors', $data)->getData();
-        $view->with('colors', $colors)->with('category', $data['category']);
-    }
-
-    /**
-     * @param View $view
-     */
-    public function sizes(View $view)
-    {
-        $viewData = $view->getData();
-        $data['category'] = (isset($viewData['category'])) ? $viewData['category'] : '';
-        $data['color'] = (isset($viewData['selectedColor'])) ? $viewData['selectedColor'] : '';
-        $data['type'] = (isset($viewData['selectedType'])) ? $viewData['selectedType'] : '';
-        $data['locale'] = App::getLocale();
-        $sizes = VendirunApi::makeRequest('product/sizes', $data)->getData();
-        $view->with('sizes', $sizes)->with('category', $data['category']);
-    }
-
-    /**
-     * @param View $view
-     */
-    public function types(View $view)
-    {
-        $viewData = $view->getData();
-        $data['category'] = (isset($viewData['category'])) ? $viewData['category'] : '';
-        $data['color'] = (isset($viewData['selectedColor'])) ? $viewData['selectedColor'] : '';
-        $data['size'] = (isset($viewData['selectedSize'])) ? $viewData['selectedSize'] : '';
-        $data['locale'] = App::getLocale();
-        $types = VendirunApi::makeRequest('product/types', $data)->getData();
-        $view->with('types', $types)->with('category', $data['category']);
-    }
-
-    /**
-     * @param View $view
-     */
     public function productButtons(View $view)
     {
         $viewData = $view->getData();
@@ -95,7 +56,12 @@ class ProductViewComposer {
             }
         }
 
-        $view->with('productButtons', $productButtons);
+        // route to view product
+        if (!isset($viewData['abbreviatedButtons'])) $viewData['abbreviatedButtons'] = false;
+        $addToCartRoute = route(LocaleHelper::localePrefix() . $viewData['abbreviatedButtons'] ? 'vendirun.productView' : 'vendirun.productAddToCart'
+            , array_merge(['productId' => $viewData['product']->id, 'productName' => urlencode(strtolower($viewData['product']->product_name))], Request::query()));
+
+        $view->with('productButtons', $productButtons)->with('addToCartRoute', $addToCartRoute);
         if (!isset($viewData['abbreviatedButtons'])) $view->with('abbreviatedButtons', false);
     }
 
@@ -123,9 +89,16 @@ class ProductViewComposer {
         $favouriteProductsArray = [];
         if ($favouriteProducts) foreach ($favouriteProducts->result as $favourite) $favouriteProductsArray[] = $favourite->id;
 
-        //dd($favouriteProductsArray);
-
         $view->with('favouriteProducts', $favouriteProducts)->with('favouriteProductsArray', $favouriteProductsArray);
     }
 
+    public function cart(View $view)
+    {
+        $viewData = $view->getData();
+        if (!isset($viewData['cart']))
+        {
+            $cart = new Cart();
+            $view->with('cart', $cart->getProducts());
+        }
+    }
 }

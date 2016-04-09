@@ -33,7 +33,7 @@ class PasswordController extends VendirunBaseController {
         try
         {
             VendirunApi::makeRequest('customer/passwordRecovery', ['email' => Input::get('email')]);
-            return Redirect::route(LocaleHelper::getLanguagePrefixForLocale(App::getLocale()) . 'vendirun.passwordRecoveryOk');
+            return Redirect::route(LocaleHelper::localePrefix() . 'vendirun.passwordRecoveryOk');
         }
         catch (FailResponseException $e)
         {
@@ -65,7 +65,7 @@ class PasswordController extends VendirunBaseController {
         try
         {
             VendirunApi::makeRequest('customer/passwordReset', ['email' => Input::get('email'), 'token' => Input::get('token'), 'password' => Input::get('password')]);
-            return Redirect::route(LocaleHelper::getLanguagePrefixForLocale(App::getLocale()) . 'vendirun.passwordResetOk');
+            return Redirect::route(LocaleHelper::localePrefix() . 'vendirun.passwordResetOk');
         }
         catch (FailResponseException $e)
         {

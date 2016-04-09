@@ -17,6 +17,7 @@
     </div>
 
     <div class="google_plus">
-        <div class="g-plus" data-action="share" data-href="{{ Request::fullUrl() }}" data-annotation="bubble"></div>
+        <script src="https://apis.google.com/js/platform.js" async defer></script>
+        <g:plus action="share" data-annotation="false"></g:plus>
     </div>
 </div>

@@ -1,6 +1,7 @@
 <?php namespace AlistairShaw\Vendirun\App\Lib;
 
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\VendirunApi;
+use App;
 use Config;
 use Request;
 
@@ -71,7 +72,7 @@ class LocaleHelper {
             'sv'
         ];
     }
-
+    
     /**
      * @param $locale
      * @return bool
@@ -128,8 +129,9 @@ class LocaleHelper {
      * @param $locale
      * @return string
      */
-    public static function getLanguagePrefixForLocale($locale)
+    public static function localePrefix($locale = '')
     {
+        if (!$locale) $locale = App::getLocale();
         return ($locale == ClientHelper::getClientInfo()->primary_language->language_code) ? '' : $locale . '.';
     }
 }

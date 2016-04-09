@@ -84,7 +84,7 @@
                         <button type="submit" class="btn btn-primary">{{ trans('vendirun::standard.login') }}</button>
                         <br>
                         <br>
-                        <a href="{{ route(\AlistairShaw\Vendirun\App\Lib\LocaleHelper::getLanguagePrefixForLocale(App::getLocale()) . 'vendirun.passwordRecovery') }}">{{ trans('vendirun::forms.passwordForgotten') }}</a>
+                        <a href="{{ route(LocaleHelper::localePrefix() . 'vendirun.passwordRecovery') }}">{{ trans('vendirun::forms.passwordForgotten') }}</a>
                     </div>
                     {!! Form::close() !!}
                 </div>
@@ -92,7 +92,7 @@
         @else
             <div class="large-notice">
                 <div class="alert alert-success">
-                    <p>{{ trans('vendirun::standard.currentlyLoggedIn') }}  <a href="{{ route(\AlistairShaw\Vendirun\App\Lib\LocaleHelper::getLanguagePrefixForLocale(App::getLocale()) . 'vendirun.logout') }}">{{ trans('vendirun::standard.clickToLogOut') }}</a></p>
+                    <p>{{ trans('vendirun::standard.currentlyLoggedIn') }}  <a href="{{ route(LocaleHelper::localePrefix() . 'vendirun.logout') }}">{{ trans('vendirun::standard.clickToLogOut') }}</a></p>
                 </div>
             </div>
         @endif

@@ -8,7 +8,6 @@ use AlistairShaw\Vendirun\App\Lib\VendirunApi\Exceptions\FailResponseException;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\VendirunApi;
 use App;
 use Input;
-use Mail;
 use Redirect;
 use Request;
 use Illuminate\Http\Request as IlRequest;
@@ -34,7 +33,9 @@ class CustomerController extends VendirunBaseController {
             'password' => 'required'
         ]);
 
-        return $this->login(Input::get('email_login'), Input::get('password'));
+        $r = $this->login(Input::get('email_login'), Input::get('password'));
+
+        return $r;
     }
 
     /**
@@ -58,7 +59,7 @@ class CustomerController extends VendirunBaseController {
         }
         catch (FailResponseException $e)
         {
-            return Redirect::route(LocaleHelper::getLanguagePrefixForLocale(App::getLocale()) . 'vendirun.register')->withInput()->withErrors($e->getMessage());
+            return Redirect::route(LocaleHelper::localePrefix() . 'vendirun.register')->withInput()->withErrors($e->getMessage());
         }
     }
 
@@ -76,18 +77,19 @@ class CustomerController extends VendirunBaseController {
             Session::flash('vendirun-alert-success', 'Login Successful');
             Session::put('token', $login->getData()->token);
 
-            if (Session::has('action'))
+            if (Session::has('attemptedAction'))
             {
-                $redirect = Session::get('action');
-
-                return Redirect::to($redirect);
+                $redirect = Session::get('attemptedAction');
+                return redirect($redirect);
             }
 
-            return Redirect::route(LocaleHelper::getLanguagePrefixForLocale(App::getLocale()) . 'vendirun.register');
+            if (Session::has('primaryPagePath')) return Redirect::to(Session::get('primaryPagePath'));
+
+            return Redirect::route(LocaleHelper::localePrefix() . 'vendirun.register');
         }
         catch (\Exception $e)
         {
-            return Redirect::route(LocaleHelper::getLanguagePrefixForLocale(App::getLocale()) . 'vendirun.register')->withInput()->withErrors($e->getMessage());
+            return Redirect::route(LocaleHelper::localePrefix() . 'vendirun.register')->withInput()->withErrors($e->getMessage());
         }
     }
 
@@ -173,7 +175,6 @@ class CustomerController extends VendirunBaseController {
     public function register()
     {
         $data = Session::all();
-
         $data['bodyClass'] = 'property-search';
 
         return View::make('vendirun::customer.register', $data);
@@ -184,9 +185,10 @@ class CustomerController extends VendirunBaseController {
      */
     public function logout()
     {
-        Session::flush();
+        Session::remove('token');
+        if (Session::has('primaryPagePath')) return Redirect::to(Session::get('primaryPagePath'));
 
-        return Redirect::route(LocaleHelper::getLanguagePrefixForLocale(App::getLocale()) . 'vendirun.register');
+        return Redirect::route(LocaleHelper::localePrefix() . 'vendirun.home');
     }
 
 }

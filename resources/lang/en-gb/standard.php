@@ -17,5 +17,6 @@ return [
     'clickToLogOut' => 'Click here to log out',
     'fourOhFour' => 'I\'m afraid this page could not be found :(',
     'share' => 'Share',
-    'priceOnRequest' => 'Price on Request'
+    'priceOnRequest' => 'Price on Request',
+    'shareThis' => 'Share This'
 ];

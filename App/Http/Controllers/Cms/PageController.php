@@ -11,11 +11,8 @@ use View;
 
 class PageController extends VendirunBaseController {
 
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
+    protected $primaryPages = true;
+    
     /**
      * @return \Illuminate\View\View
      */
@@ -60,8 +57,6 @@ class PageController extends VendirunBaseController {
     {
         $address = sha1(Request::input('address'));
         if (!Request::input('address')) return Response::json(['success' => false]);
-
-        //dd($address);
 
         $lat = Cache::get('mapCacheLat' . $address, false);
         $lng = Cache::get('mapCacheLng' . $address, false);

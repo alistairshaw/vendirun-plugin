@@ -4,6 +4,7 @@ use AlistairShaw\Vendirun\App\Lib\VendirunApi\VendirunApi;
 use App;
 use Config;
 use Illuminate\View\View;
+use URL;
 
 class WidgetViewComposer {
 
@@ -26,4 +27,31 @@ class WidgetViewComposer {
         $view->with('staff', $staff);
     }
 
+    /**
+     * @param View        $view
+     */
+    public function socialShare($view)
+    {
+        $viewData = $view->getData();
+
+        $socialLinks = App::make('AlistairShaw\Vendirun\App\Lib\Social\SocialLinks');
+
+        // get page title, description and image
+        switch (true)
+        {
+            case (isset($viewData['product'])):
+                $pageTitle = $viewData['product']->product_name;
+                $pageText = $viewData['product']->short_description;
+                $pageImage = $viewData['product']->images{0}->mediumsq;
+                break;
+            default:
+                $pageTitle = '';
+                $pageText = '';
+                $pageImage = '';
+        }
+
+        $social = $socialLinks->getLinks(URL::full(), $pageTitle, $pageText, $pageImage);
+        dd($social);
+        $view->with('social', $social);
+    }
 }

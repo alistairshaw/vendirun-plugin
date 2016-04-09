@@ -1,0 +1,1 @@
+{{ trans('vendirun::product.noItemsInCart') }}

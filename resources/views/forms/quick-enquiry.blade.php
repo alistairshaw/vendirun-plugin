@@ -1,4 +1,5 @@
 {!! Form::open(array('route' => 'vendirun.contactFormSubmit', 'autocomplete' => 'off')) !!}
+{!! Form::token() !!}
 {!! Form::hidden('property', $property->title) !!}
 {!! Form::hidden('propertyId', $property->id) !!}
 {!! Form::hidden('formId', 'Quick Enquiry') !!}

@@ -49,7 +49,7 @@ class BaseApi {
      * @throws InvalidResponseException
      * @throws NoApiConnectionException
      */
-    protected function request($url, $params = [], $noCache = false, $cacheTime = 5)
+    protected function request($url, $params = [], $noCache = false, $cacheTime = 1)
     {
         $key = $url . json_encode($params);
 
@@ -118,10 +118,10 @@ class BaseApi {
         }
 
         // if the API returns a valid failure response, try to get from cache or FailResponseException
-        if (!$response->success && !$noCache) $response = $this->getFromPermanentCache($noCache, $key, $response->error);
+        if (!$response->success && !$noCache) $response = $this->getFromPermanentCache($noCache, $key, 'API returned a failure');
         if (!$response->success)
         {
-            throw new FailResponseException(false, $response->error);
+            throw new FailResponseException(false, 'API returned a failure');
         }
         else
         {
@@ -154,6 +154,17 @@ class BaseApi {
     }
 
     /**
+     * @param $url
+     * @param $params
+     */
+    protected function clearCache($url, $params)
+    {
+        $key = $url . json_encode($params);
+        Cache::forget('Permanent' . $key);
+        Cache::forget($key);
+    }
+
+    /**
      * @param     $response
      * @param     $key
      * @param int $cacheTime
@@ -163,7 +174,7 @@ class BaseApi {
         // only use the cache in production
         if (App::environment() == 'production')
         {
-            Cache::put($key, $response, $cacheTime);
+            if ($cacheTime > 0) Cache::put($key, $response, $cacheTime);
             Cache::forever('Permanent' . $key, $response);
         }
     }

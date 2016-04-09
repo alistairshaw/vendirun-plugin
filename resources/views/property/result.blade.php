@@ -15,7 +15,7 @@
         <div class="details">
             <div class="price">{{ $price }}</div>
             <h2>
-                <a href="{{ route(\AlistairShaw\Vendirun\App\Lib\LocaleHelper::getLanguagePrefixForLocale(App::getLocale()) . 'vendirun.propertyView',[$property->id, urlencode($property->title)]) }}">{{ $property->title }}</a>
+                <a href="{{ route(LocaleHelper::localePrefix() . 'vendirun.propertyView',[$property->id, urlencode($property->title)]) }}">{{ $property->title }}</a>
             </h2>
 
             <div class="location">

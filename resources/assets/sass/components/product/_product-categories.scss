@@ -1,0 +1,40 @@
+ul.product-categories {
+    padding: 0;
+    margin-bottom: 30px;
+    li {
+        list-style: none;
+        margin-bottom: 6px;
+        a {
+            display: block;
+            padding: 12px 24px;
+            text-align: center;
+            //border: 1px solid #ccc;
+            background: #f0f0f0;
+            color: $brand-primary;
+            &:hover {
+                background: $brand-primary;
+                color: white;
+                text-decoration: none;
+            }
+        }
+        &.back {
+            a {
+                padding: 10px 0 0 0;
+                text-align: left;
+                border: 0;
+                background: none;
+                font-size: 0.9em;
+                &:hover {
+                    color: $gray-darker;
+                }
+            }
+        }
+        &.selected {
+            a {
+                background: $brand-primary;
+                color: white;
+                text-decoration: none;
+            }
+        }
+    }
+}

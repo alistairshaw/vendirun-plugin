@@ -21,7 +21,7 @@ class PropertyAuthController extends VendirunAuthController {
 
         if (!$response->getSuccess()) Session::flash('vendirun-alert-error', $response->getError());
 
-        return Redirect::route(LocaleHelper::getLanguagePrefixForLocale(App::getLocale()) . 'vendirun.propertyView', ['id' => $propertyId]);
+        return Redirect::route(LocaleHelper::localePrefix() . 'vendirun.propertyView', ['id' => $propertyId]);
     }
 
     /**
@@ -34,7 +34,7 @@ class PropertyAuthController extends VendirunAuthController {
 
         if (!$response->getSuccess()) Session::flash('vendirun-alert-error', $response->getError());
 
-        return Redirect::route(LocaleHelper::getLanguagePrefixForLocale(App::getLocale()) . 'vendirun.propertyView', ['id' => $propertyId]);
+        return Redirect::route(LocaleHelper::localePrefix() . 'vendirun.propertyView', ['id' => $propertyId]);
     }
 
     /**

@@ -1,5 +1,6 @@
 <?php namespace AlistairShaw\Vendirun\App\Providers;
 
+use AlistairShaw\Vendirun\App\Lib\CurrencyHelper;
 use AlistairShaw\Vendirun\App\Lib\LocaleHelper;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
@@ -63,9 +64,19 @@ class VendirunServiceProvider extends ServiceProvider {
             return new LocaleHelper();
         });
 
+        $this->app->bind('LocaleHelper', function()
+        {
+            return new CurrencyHelper();
+        });
+
+        // dependency injection
+        $this->app->bind('AlistairShaw\Vendirun\App\Lib\Social\SocialLinks', 'AlistairShaw\Vendirun\App\Lib\Social\SocialLinksStandard');
+
 		// aliases
 		$loader = AliasLoader::getInstance();
 		$loader->alias('Form', 'Illuminate\Html\FormFacade');
 		$loader->alias('HTML', 'Illuminate\Html\HtmlFacade');
+		$loader->alias('LocaleHelper', 'AlistairShaw\Vendirun\App\Lib\LocaleHelper');
+		$loader->alias('CurrencyHelper', 'AlistairShaw\Vendirun\App\Lib\CurrencyHelper');
 	}
 }

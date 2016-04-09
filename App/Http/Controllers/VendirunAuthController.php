@@ -14,9 +14,11 @@ class VendirunAuthController extends VendirunBaseController {
 
         if (!Session::has('token'))
         {
-            Session::put('action', Request::url());
+            $path = Request::getPathInfo() . (Request::getQueryString() ? ('?' . Request::getQueryString()) : '');
+            Session::put('attemptedAction', $path);
+            Session::save();
 
-            Redirect::route(LocaleHelper::getLanguagePrefixForLocale(App::getLocale()) . 'vendirun.register')->send();
+            Redirect::route(LocaleHelper::localePrefix() . 'vendirun.register')->send();
         }
     }
 

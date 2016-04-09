@@ -1,5 +1,6 @@
 <div class="recommend-a-friend js-recommend-a-friend-form{{ (isset($hideRacForm) && $hideRacForm) ? ' hide' : '' }}">
     {!! Form::open(['route' => 'vendirun.recommendAFriend', 'autocomplete' => 'off', 'class' => 'js-validate-form']) !!}
+    {!! Form::token() !!}
     {!! Form::hidden('property', (isset($property) ? $property->title : Input::old('property')), ['id'=>'propertyName']) !!}
     {!! Form::hidden('propertyId', (isset($property) ? $property->id : Input::old('propertyId')), ['id'=>'propertyId']) !!}
     {!! Form::hidden('formId', 'Recommend a Friend') !!}
@@ -46,7 +47,7 @@
         </div>
         <div class="col-sm-12">
             <button type="submit" class="btn btn-primary"><i class="fa fa-envelope"></i> {{ trans('vendirun::forms.send') }}</button>
-            <button type="button" class="btn btn-default js-send-to-friend-close"><i class="fa fa-remove"></i> {{ trans('vendirun::forms.cancel') }}</button>
+            <a href="{{ URL::previous() }}" class="btn btn-default js-send-to-friend-close"><i class="fa fa-remove"></i> {{ trans('vendirun::forms.cancel') }}</a>
         </div>
     </div>
     {!! Form::close() !!}

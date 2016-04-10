@@ -22,7 +22,7 @@
         </div>
     </div>
 </div>
-<div class="js-product-results multiple">
+<div class="product-results multiple">
     <div class="row">
         @foreach ($products->result as $product)
             @include('vendirun::product.result', ['product' => $product, 'limitImages' => 1, 'abbreviatedButtons' => true])

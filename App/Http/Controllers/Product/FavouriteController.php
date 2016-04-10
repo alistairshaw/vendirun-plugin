@@ -6,7 +6,6 @@ use App;
 use Cache;
 use Config;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Input;
 use Redirect;
 use Request;
 use Session;
@@ -21,13 +20,13 @@ class FavouriteController extends VendirunAuthController {
     {
         $data = [];
 
-        $productSearchParams['limit'] = Input::get('limit', 12);
+        $productSearchParams['limit'] = Request::get('limit', 12);
         $productSearchParams['order_by'] = Config::get('vendirun.productDefaultSortBy', 'price');
         $productSearchParams['order_direction'] = Config::get('vendirun.productDefaultSortOrder', 'ASC');
 
-        if (Input::has('order_by'))
+        if (Request::has('order_by'))
         {
-            $searchArray = explode("_", Input::get('order_by'));
+            $searchArray = explode("_", Request::get('order_by'));
             $productSearchParams['order_by'] = $searchArray[0];
             $productSearchParams['order_direction'] = (count($searchArray) == 2) ? $searchArray[1] : 'ASC';
         }

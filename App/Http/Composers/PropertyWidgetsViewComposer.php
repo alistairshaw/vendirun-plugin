@@ -155,7 +155,7 @@ class PropertyWidgetsViewComposer {
         if (isset($viewData['searchParams']['price_range_to']) && $viewData['searchParams']['price_range_to'] > 0) $priceArray[($viewData['searchParams']['price_range_to'])] = currencyHelper::formatWithCurrency($viewData['searchParams']['price_range_to'] * 100, true);
         ksort($priceArray);
 
-        $propertyTypeArray[''] = [trans('vendirun::property.any')];
+        $propertyTypeArray[] = trans('vendirun::property.any');
         $categories = VendirunApi::makeRequest('property/getCategoryList', ['language' => App::getLocale()]);
         if ($categories->getSuccess())
         {

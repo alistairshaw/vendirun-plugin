@@ -20,7 +20,7 @@
             <div class="col-md-8">
                 <h1>{{ $product->product_name }}</h1>
                 <form method="POST" action="{{ route(LocaleHelper::localePrefix() . 'vendirun.productAddToCartPost') }}">
-                    {!! Form::token() !!}
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     @include('vendirun::product.partials.product-variations')
                     @include('vendirun::product.partials.add-to-cart')
                     <div class="well">

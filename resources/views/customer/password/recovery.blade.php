@@ -8,26 +8,24 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6 col-md-offset-3">
-                    {!! Form::open(array('route' => 'vendirun.doPasswordRecovery', 'autocomplete' => 'off')) !!}
-                    <p></p>
+                    <form method="post" action="{{ route('vendirun.doPasswordRecovery') }}">
+                        <h2>{{ trans('vendirun::forms.recoverYourPassword') }}</h2>
 
-                    <h2>{{ trans('vendirun::forms.recoverYourPassword') }}</h2>
+                        @if(isset($alertMessage))
+                            <div class="alert alert-danger js-fade-out" data-time="5">
+                                <i class="fa fa-exclamation-triangle"></i> {{ $alertMessage }}
+                            </div>
+                        @endif
 
-                    @if(isset($alertMessage))
-                        <div class="alert alert-danger js-fade-out" data-time="5">
-                            <i class="fa fa-exclamation-triangle"></i> {{ $alertMessage }}
+                        <div class="form-group">
+                            <label for="email">{{ trans('vendirun::forms.email') }}</label>
+                            <input type="email" class="form-control" name="email" placeholder="{{ trans('vendirun::forms.email') }}">
                         </div>
-                    @endif
 
-                    <div class="form-group">
-                        {!! Form::label('email', trans('vendirun::forms.email')) !!}
-                        {!! Form::text('email', Input::old('email'), array('placeholder'=>trans('vendirun::forms.email'), 'class'=>'form-control')) !!}
-                    </div>
-
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-primary">{{ trans('vendirun::forms.resetPassword') }}</button>
-                    </div>
-                    {!! Form::close() !!}
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">{{ trans('vendirun::forms.resetPassword') }}</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

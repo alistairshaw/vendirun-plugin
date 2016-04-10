@@ -2,7 +2,6 @@
 
 use AlistairShaw\Vendirun\App\Http\Controllers\VendirunBaseController;
 use AlistairShaw\Vendirun\App\Lib\Cart\Cart;
-use Input;
 use Redirect;
 use Request;
 use Session;

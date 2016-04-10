@@ -5,6 +5,7 @@ use AlistairShaw\Vendirun\App\Lib\VendirunApi\Exceptions\FailResponseException;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\VendirunApi;
 use App;
 use Cache;
+use Config;
 use Request;
 use Response;
 use View;

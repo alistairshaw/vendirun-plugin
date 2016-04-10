@@ -8,7 +8,6 @@ use AlistairShaw\Vendirun\App\Lib\VendirunApi\VendirunApi;
 use App;
 use Config;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Input;
 use Redirect;
 use Session;
 use View;
@@ -29,9 +28,9 @@ class ProductController extends VendirunBaseController {
         try
         {
             $data['category'] = $category;
-            $data['selectedColor'] = Input::get('color', '');
-            $data['selectedSize'] = Input::get('size', '');
-            $data['selectedType'] = Input::get('type', '');
+            $data['selectedColor'] = Request::get('color', '');
+            $data['selectedSize'] = Request::get('size', '');
+            $data['selectedType'] = Request::get('type', '');
             $data['products'] = VendirunApi::makeRequest('product/search', $productSearchParams)->getData();
 
             $data['productSearchParams'] = (array)$data['products']->search_params;
@@ -100,15 +99,15 @@ class ProductController extends VendirunBaseController {
     {
         if (isset($_POST) && count($_POST) > 0)
         {
-            $productSearchParams = Input::all();
+            $productSearchParams = Request::all();
             Session::put('productSearchParams', $productSearchParams);
         }
         else
         {
             $productSearchParams = Session::get('productSearchParams');
-            if (Input::get('color')) $productSearchParams['color'] = Input::get('color');
-            if (Input::get('size')) $productSearchParams['size'] = Input::get('size');
-            if (Input::get('type')) $productSearchParams['type'] = Input::get('type');
+            if (Request::get('color')) $productSearchParams['color'] = Request::get('color');
+            if (Request::get('size')) $productSearchParams['size'] = Request::get('size');
+            if (Request::get('type')) $productSearchParams['type'] = Request::get('type');
         }
 
         if (!$single)
@@ -120,23 +119,23 @@ class ProductController extends VendirunBaseController {
                 $productSearchParams['offset'] = $_GET['page'] - 1;
             }
 
-            if (Input::get('searchString'))
+            if (Request::get('searchString'))
             {
-                $productSearchParams['search_string'] = Input::get('searchString');
+                $productSearchParams['search_string'] = Request::get('searchString');
             }
 
-            if (Input::get('sku'))
+            if (Request::get('sku'))
             {
-                $productSearchParams['sku'] = Input::get('sku');
+                $productSearchParams['sku'] = Request::get('sku');
             }
 
-            $productSearchParams['limit'] = Input::get('limit', 12);
+            $productSearchParams['limit'] = Request::get('limit', 12);
             $productSearchParams['order_by'] = Config::get('vendirun.productDefaultSortBy', 'price');
             $productSearchParams['order_direction'] = Config::get('vendirun.productDefaultSortOrder', 'ASC');
 
-            if (Input::has('order_by'))
+            if (Request::has('order_by'))
             {
-                $searchArray = explode("_", Input::get('order_by'));
+                $searchArray = explode("_", Request::get('order_by'));
                 $productSearchParams['order_by'] = $searchArray[0];
                 $productSearchParams['order_direction'] = (count($searchArray) == 2) ? $searchArray[1] : 'ASC';
             }

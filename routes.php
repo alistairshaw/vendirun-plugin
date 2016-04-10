@@ -2,7 +2,7 @@
 
 foreach (array_merge([''], LocaleHelper::validLocales()) as $locale)
 {
-    Route::group(['middleware' => 'localization', 'prefix' => $locale, 'namespace' => 'AlistairShaw\Vendirun\App\Http\Controllers'], function () use ($locale)
+    Route::group(['middleware' => ['localization', 'web'], 'prefix' => $locale, 'namespace' => 'AlistairShaw\Vendirun\App\Http\Controllers'], function () use ($locale)
     {
         $localePrefix = $locale ? $locale . '.' : '';
 
@@ -92,4 +92,4 @@ foreach (array_merge([''], LocaleHelper::validLocales()) as $locale)
 }
 
 // capture any undefined routes and pass to the CMS controller
-Route::any('{catchall}', ['middleware' => 'localization', 'as' => 'cmsPage', 'uses' => 'AlistairShaw\Vendirun\App\Http\Controllers\Cms\PageController@page'])->where('catchall', '(.*)');
+Route::any('{catchall}', ['middleware' => ['localization', 'web'], 'as' => 'cmsPage', 'uses' => 'AlistairShaw\Vendirun\App\Http\Controllers\Cms\PageController@page'])->where('catchall', '(.*)');

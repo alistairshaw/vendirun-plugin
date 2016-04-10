@@ -9,7 +9,6 @@ use AlistairShaw\Vendirun\App\Lib\VendirunApi\VendirunApi;
 use App;
 use Config;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Input;
 use Redirect;
 use Session;
 use View;
@@ -80,7 +79,7 @@ class PropertyController extends VendirunBaseController {
     {
         if (isset($_POST) && count($_POST) > 0)
         {
-            $searchParams = Input::all();
+            $searchParams = Request::all();
             Session::put('searchParams', $searchParams);
         }
         else
@@ -103,14 +102,14 @@ class PropertyController extends VendirunBaseController {
             $searchParams['location'] = $_GET['location'];
         }
 
-        if (Input::get('keywords'))
+        if (Request::get('keywords'))
         {
-            $searchParams['search_string'] = Input::get('keywords');
+            $searchParams['search_string'] = Request::get('keywords');
         }
 
-        if (Input::get('reference'))
+        if (Request::get('reference'))
         {
-            $searchParams['reference'] = Input::get('reference');
+            $searchParams['reference'] = Request::get('reference');
         }
 
         switch (Config::get('vendirun.propertyListingsView'))
@@ -121,14 +120,14 @@ class PropertyController extends VendirunBaseController {
             default:
                 $defaultLimit = 12;
         }
-        $searchParams['limit'] = (Input::has('limit')) ? Input::get('limit') : $defaultLimit;
+        $searchParams['limit'] = (Request::has('limit')) ? Request::get('limit') : $defaultLimit;
 
         $searchParams['order_by'] = Config::get('vendirun.propertyDefaultSortBy', 'created');
         $searchParams['order_direction'] = Config::get('vendirun.propertyDefaultSortOrder', 'DESC');
 
-        if (Input::has('order_by'))
+        if (Request::has('order_by'))
         {
-            $searchArray = explode("_", Input::get('order_by'));
+            $searchArray = explode("_", Request::get('order_by'));
             $searchParams['order_by'] = $searchArray[0];
             $searchParams['order_direction'] = (count($searchArray) == 2) ? $searchArray[1] : 'ASC';
         }

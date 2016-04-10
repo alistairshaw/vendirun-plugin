@@ -1,8 +1,10 @@
 .product-result {
-    @extend .clearfix;
-    @include card-box-shadow();
-    margin-bottom: 30px;
-    background: white;
+    .wrapper {
+        @extend .clearfix;
+        @include card-box-shadow();
+        margin-bottom: 30px;
+        background: white;
+    }
     .part-one {
         text-align: center;
         .image-container {
@@ -17,7 +19,7 @@
                     padding: 0;
                 }
             }
-        }
+        }//x
     }
     .details {
         padding: 12px;

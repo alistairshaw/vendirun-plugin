@@ -37,7 +37,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="js-main-results multiple">
+                <div class="multiple">
                     <div class="row">
                         @foreach ($properties->result as $property)
                             @include('vendirun::property.result', ['property' => $property, 'limitImages' => 1, 'abbreviatedButtons' => true])

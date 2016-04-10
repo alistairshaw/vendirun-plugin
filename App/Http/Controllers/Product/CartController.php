@@ -29,7 +29,7 @@ class CartController extends VendirunBaseController {
         $quantity = Request::input('quantity', 1);
 
         $cart = new Cart();
-        for ($i = 0; $i <= $quantity; $i++)
+        for ($i = 1; $i <= $quantity; $i++)
         {
             $cart->add($productVariationId);
         }

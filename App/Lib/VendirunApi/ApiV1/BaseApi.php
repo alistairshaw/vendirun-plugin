@@ -26,13 +26,28 @@ class BaseApi {
     private $result;
 
     /**
-     * @param null $api_key
+     * @var string
+     */
+    private $apiKey;
+
+    /**
+     * @var int
+     */
+    private $cid;
+
+    /**
+     * @var string
+     */
+    private $endpoint;
+
+    /**
+     * @param null $apiKey
      * @param null $cid
      * @param null $endpoint
      */
-    public function __construct($api_key = NULL, $cid = NULL, $endpoint = NULL)
+    public function __construct($apiKey = NULL, $cid = NULL, $endpoint = NULL)
     {
-        $this->api_key = $api_key;
+        $this->apiKey = $apiKey;
         $this->cid = $cid;
         $this->endpoint = $endpoint;
     }
@@ -61,7 +76,7 @@ class BaseApi {
         {
             $res = $client->post($this->endpoint . $url, [
                 'form_params' => $params,
-                'auth' => [$this->cid, $this->api_key],
+                'auth' => [$this->cid, $this->apiKey],
                 'decode_content' => 'json'
             ]);
 
@@ -110,15 +125,16 @@ class BaseApi {
         }
         catch (\Exception $e)
         {
-            if (App::environment() == 'local')
-            {
-                dd($e);
-            }
+            if (App::environment() == 'local') dd($e);
             $response = $this->getFromPermanentCache($noCache, $key, 'Unknown error on connecting to ' . $url);
         }
 
         // if the API returns a valid failure response, try to get from cache or FailResponseException
-        if (!$response->success && !$noCache) $response = $this->getFromPermanentCache($noCache, $key, 'API returned a failure');
+        if (!$response->success && !$noCache)
+        {
+            if (App::environment() == 'local') dd($response);
+            $response = $this->getFromPermanentCache($noCache, $key, 'API returned a failure');
+        }
         if (!$response->success)
         {
             throw new FailResponseException(false, 'API returned a failure');

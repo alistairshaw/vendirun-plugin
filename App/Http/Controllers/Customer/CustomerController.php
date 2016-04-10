@@ -2,11 +2,13 @@
 
 namespace AlistairShaw\Vendirun\App\Http\Controllers\Customer;
 
+use AlistairShaw\Vendirun\App\Events\CustomerLoggedIn;
 use AlistairShaw\Vendirun\App\Http\Controllers\VendirunBaseController;
 use AlistairShaw\Vendirun\App\Lib\LocaleHelper;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\Exceptions\FailResponseException;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\VendirunApi;
 use App;
+use Event;
 use Redirect;
 use Request;
 use Illuminate\Http\Request as IlRequest;
@@ -94,6 +96,8 @@ class CustomerController extends VendirunBaseController {
         try
         {
             $login = VendirunApi::makeRequest('customer/login', ['email' => $email, 'password' => $password]);
+
+            Event::fire(new CustomerLoggedIn($login->getData()->token));
 
             Session::flash('vendirun-alert-success', 'Login Successful');
             Session::put('token', $login->getData()->token);

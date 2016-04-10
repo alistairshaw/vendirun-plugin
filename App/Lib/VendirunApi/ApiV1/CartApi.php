@@ -26,4 +26,26 @@ class CartApi extends BaseApi {
         $url = 'cart/current';
         return $this->request($url, $params);
     }
+
+    /**
+     * @param $params
+     * @return object
+     * @throws FailResponseException
+     */
+    public function update($params)
+    {
+        $url = 'cart/update';
+        return $this->request($url, $params);
+    }
+
+    /**
+     * @param $params
+     * @return object
+     * @throws FailResponseException
+     */
+    public function fetch($params)
+    {
+        $url = 'cart/index';
+        return $this->request($url, $params);
+    }
 } 

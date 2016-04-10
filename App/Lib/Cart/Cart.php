@@ -1,6 +1,7 @@
 <?php namespace AlistairShaw\Vendirun\App\Lib\Cart;
 
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\VendirunApi;
+use Mockery\CountValidator\Exception;
 use Session;
 
 class Cart {
@@ -30,7 +31,7 @@ class Cart {
      * @param array $items
      * @param null  $countryId | Use this to calculate correct shipping and tax rates
      */
-    public function __construct($items = [], $countryId = null)
+    public function __construct($items = [], $countryId = NULL)
     {
         $this->countryId = $countryId;
 
@@ -40,7 +41,14 @@ class Cart {
         }
         else
         {
-            $this->items = Session::get('shoppingCart', []);
+            if (Session::has('shoppingCart'))
+            {
+                $this->items = Session::get('shoppingCart');
+            }
+            else
+            {
+                $this->retrieve();
+            }
         }
     }
 
@@ -50,7 +58,6 @@ class Cart {
     public function add($productVariationId)
     {
         $this->items[] = $productVariationId;
-        var_dump($this->items);
         $this->persist();
     }
 
@@ -79,6 +86,15 @@ class Cart {
     public function clear()
     {
         $this->items = [];
+        $this->persist();
+    }
+
+    /**
+     * Use this function on login or when you want to force
+     *    an update to the API
+     */
+    public function updateApi()
+    {
         $this->persist();
     }
 
@@ -158,10 +174,67 @@ class Cart {
             if (!isset($final[$item])) $final[$item] = 0;
             $final[$item]++;
         }
+
         return $final;
     }
 
     private function persist()
+    {
+        if (Session::has('token'))
+        {
+            try
+            {
+                $data = [
+                    'token' => Session::get('token'),
+                    'ids' => $this->items
+                ];
+                $this->setCart(VendirunApi::makeRequest('cart/update', $data)->getData());
+            }
+            catch (Exception $e)
+            {
+                $this->saveToSession();
+            }
+        }
+        else
+        {
+            $this->saveToSession();
+        }
+    }
+
+    private function retrieve()
+    {
+        try
+        {
+            $data = [
+                'token' => Session::get('token')
+            ];
+            $this->setCart(VendirunApi::makeRequest('cart/fetch', $data)->getData());
+        }
+        catch (Exception $e)
+        {
+            $this->items = [];
+            $this->saveToSession();
+        }
+    }
+
+    /**
+     * @param $cart
+     */
+    private function setCart($cart)
+    {
+        $newItems = [];
+        foreach ($cart->items as $item)
+        {
+            for ($i = 1; $i <= $item->quantity; $i++)
+            {
+                $newItems[] = $item->product_variation_id;
+            }
+        }
+        $this->items = $newItems;
+        $this->saveToSession();
+    }
+
+    private function saveToSession()
     {
         Session::put('shoppingCart', $this->items);
         Session::save();
@@ -179,6 +252,7 @@ class Cart {
             {
                 $this->priceIncludesTax = $row->price_includes_tax;
                 $this->chargeTaxOnShipping = $row->charge_tax_on_shipping;
+
                 return (float)$row->percentage;
             }
             foreach ($row->countries as $country_id)

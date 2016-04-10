@@ -53,7 +53,7 @@ class VendirunServiceProvider extends ServiceProvider {
 
 		// register providers we need
 		$this->app->register('AlistairShaw\Vendirun\App\Providers\ComposerServiceProvider');
-		//$this->app->register('Illuminate\Html\HtmlServiceProvider');
+		$this->app->register('AlistairShaw\Vendirun\App\Providers\EventServiceProvider');
 
         // middleware
         $this->app['router']->middleware('localization', 'AlistairShaw\Vendirun\App\Http\Middleware\Localization');

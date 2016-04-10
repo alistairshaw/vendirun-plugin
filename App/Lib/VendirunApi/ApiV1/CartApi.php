@@ -13,7 +13,7 @@ class CartApi extends BaseApi {
     {
         $url = 'cart/add/' . $params['productVariationId'] . '/' . $params['quantity'];
 
-        return $this->request($url, $params);
+        return $this->request($url, $params, true);
     }
 
     /**
@@ -24,7 +24,7 @@ class CartApi extends BaseApi {
     public function current($params)
     {
         $url = 'cart/current';
-        return $this->request($url, $params);
+        return $this->request($url, $params, true);
     }
 
     /**
@@ -35,7 +35,7 @@ class CartApi extends BaseApi {
     public function update($params)
     {
         $url = 'cart/update';
-        return $this->request($url, $params);
+        return $this->request($url, $params, true);
     }
 
     /**
@@ -46,6 +46,6 @@ class CartApi extends BaseApi {
     public function fetch($params)
     {
         $url = 'cart/index';
-        return $this->request($url, $params);
+        return $this->request($url, $params, true);
     }
 } 

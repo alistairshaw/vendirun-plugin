@@ -51,7 +51,6 @@ class WidgetViewComposer {
         }
 
         $social = $socialLinks->getLinks(URL::full(), $pageTitle, $pageText, $pageImage);
-        //dd($social);
-        $view->with('social', $social);
+        $view->with('socialLinks', $social);
     }
 }

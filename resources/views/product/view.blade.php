@@ -23,10 +23,10 @@
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     @include('vendirun::product.partials.product-variations')
                     @include('vendirun::product.partials.add-to-cart')
-                    <div class="well">
+                    <div class="main-short-description">
                         {!! $product->short_description !!}
                     </div>
-                    <div class="long-description">
+                    <div class="main-long-description">
                         {!! $product->long_description !!}
                     </div>
                 </form>

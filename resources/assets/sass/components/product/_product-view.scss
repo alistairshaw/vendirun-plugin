@@ -62,4 +62,10 @@
             }
         }
     }
+    .main-short-description {
+        @extend .well;
+        p:last-child {
+            margin-bottom: 0;
+        }
+    }
 }

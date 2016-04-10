@@ -1,5 +1,6 @@
 <?php namespace AlistairShaw\Vendirun\App\Lib\Cart;
 
+use AlistairShaw\Vendirun\App\Lib\VendirunApi\Exceptions\FailResponseException;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\VendirunApi;
 use Mockery\CountValidator\Exception;
 use Session;
@@ -210,7 +211,7 @@ class Cart {
             ];
             $this->setCart(VendirunApi::makeRequest('cart/fetch', $data)->getData());
         }
-        catch (Exception $e)
+        catch (FailResponseException $e)
         {
             $this->items = [];
             $this->saveToSession();

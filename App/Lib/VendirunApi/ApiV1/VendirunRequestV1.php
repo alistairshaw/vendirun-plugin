@@ -48,6 +48,9 @@ class VendirunRequestV1 extends AbstractVendirunRequest implements VendirunReque
             case 'cart':
                 $this->api = new CartApi(Config::get('vendirun.apiKey'), Config::get('vendirun.clientId'), Config::get('vendirun.apiEndPoint'));
                 break;
+            case 'util':
+                $this->api = new UtilApi(Config::get('vendirun.apiKey'), Config::get('vendirun.clientId'), Config::get('vendirun.apiEndPoint'));
+                break;
             default:
                 throw new InvalidApiRequestException($request);
         }

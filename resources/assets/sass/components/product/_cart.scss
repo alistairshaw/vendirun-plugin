@@ -64,6 +64,23 @@
             font-size: 1.5em;
             margin: 0 0 20px 0;
         }
+        .shipping {
+            background: $gray-lighter;
+            margin: 0 0 20px 0;
+            span {
+                font-size: 1.1em;
+                font-weight: 500;
+            }
+        }
+    }
+    .ship-to {
+        @include card-box-shadow();
+        background: white;
+        padding: 20px;
+        margin-bottom: 30px;
+        h3 {
+            margin-top: 0;
+        }
     }
     .cart-options {
         @include card-box-shadow();

@@ -28,13 +28,30 @@ class Cart {
     protected $chargeTaxOnShipping;
 
     /**
+     * @var int
+     */
+    protected $orderShippingCharge;
+
+    /**
+     * @var string
+     */
+    protected $shippingType;
+
+    /**
+     * @var array
+     */
+    protected $availableShippingTypes = [];
+
+    /**
      * Cart constructor.
      * @param array $items
      * @param null  $countryId | Use this to calculate correct shipping and tax rates
+     * @param null  $shippingType
      */
-    public function __construct($items = [], $countryId = NULL)
+    public function __construct($items = [], $countryId = NULL, $shippingType = NULL)
     {
         $this->countryId = $countryId;
+        $this->shippingType = $shippingType;
 
         if (count($items))
         {
@@ -108,6 +125,8 @@ class Cart {
             'totalProducts' => 0,
             'totalQuantity' => count($this->items),
             'products' => [],
+            'shipping' => 0,
+            'countryId' => $this->countryId,
             'subTotal' => 0,
             'tax' => 0,
             'total' => 0
@@ -118,7 +137,9 @@ class Cart {
         $products = VendirunApi::makeRequest('product/search', ['variation_list_only' => implode(",", $this->items)])->getData();
         $finalCart['totalProducts'] = $products->total_rows;
 
-        // todo: fix this monstrosity
+        $totalShipping = 0;
+
+        // todo: fix this monstrosity - make factory classes for products and items and VOs for each
         foreach ($this->getUniqueList() as $productVariationId => $quantity)
         {
             foreach ($products->result as $product)
@@ -142,6 +163,10 @@ class Cart {
 
                         $itemTotal = $itemSubTotal + $itemTax;
 
+                        $itemShipping = $this->shippingForItem($product->shipping, $quantity);
+                        if ($itemShipping === null) $totalShipping = null;
+                        if ($totalShipping !== null) $totalShipping += $itemShipping;
+
                         $finalCart['items'][] = (object)[
                             'productVariationId' => $productVariationId,
                             'quantity' => $quantity,
@@ -153,7 +178,8 @@ class Cart {
                             'basePrice' => $var->price,
                             'itemTax' => $itemTax,
                             'itemSubTotal' => $itemSubTotal,
-                            'itemTotal' => $itemTotal
+                            'itemTotal' => $itemTotal,
+                            'shippingForItem' => $itemShipping
                         ];
 
                         $finalCart['subTotal'] += $itemSubTotal;
@@ -163,6 +189,11 @@ class Cart {
                 }
             }
         }
+
+        if ($totalShipping !== null) $totalShipping += $this->orderShippingCharge;
+        $finalCart['shipping'] = $totalShipping;
+        $finalCart['shippingType'] = $this->shippingType;
+        $finalCart['availableShippingTypes'] = $this->availableShippingTypes;
 
         return (object)$finalCart;
     }
@@ -263,6 +294,46 @@ class Cart {
         }
 
         return 0;
+    }
+
+    /**
+     * @param $shipping
+     * @param $quantity
+     * @return int|null
+     */
+    private function shippingForItem($shipping, $quantity)
+    {
+        $this->availableShippingTypes = [];
+
+        $hasPrices = false;
+        $price = null;
+
+        foreach ($shipping as $sh)
+        {
+            if (in_array($this->countryId, $sh->countries))
+            {
+                if ($sh->order_price > $this->orderShippingCharge) $this->orderShippingCharge = $sh->order_price;
+                $this->availableShippingTypes[] = $sh->shipping_type;
+
+                $hasPrices = true;
+                if (!$this->shippingType) $this->shippingType = $sh->shipping_type;
+
+                if ($this->shippingType && $this->shippingType == $sh->shipping_type)
+                {
+                    $price = $sh->product_price;
+                }
+            }
+        }
+
+        if ($hasPrices && !$price && $this->shippingType)
+        {
+            $this->shippingType = NULL;
+            return $this->shippingForItem($shipping, $quantity);
+        }
+
+        if ($price !== null) $price *= $quantity;
+
+        return $price;
     }
 
 }

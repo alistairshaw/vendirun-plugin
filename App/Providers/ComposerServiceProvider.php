@@ -19,6 +19,7 @@ class ComposerServiceProvider extends ServiceProvider {
         $this->registerProductComposers();
         $this->registerCmsComposers();
         $this->registerCustomerComposers();
+        $this->registerWidgetComposers();
     }
 
     private function registerPropertyComposers()
@@ -51,6 +52,7 @@ class ComposerServiceProvider extends ServiceProvider {
         $this->app->view->composer('vendirun::product.list', 'AlistairShaw\Vendirun\App\Http\Composers\ProductViewComposer@getFavourites');
         $this->app->view->composer('vendirun::product.recommend', 'AlistairShaw\Vendirun\App\Http\Composers\ProductViewComposer@getFavourites');
         $this->app->view->composer('vendirun::product.partials.related-products', 'AlistairShaw\Vendirun\App\Http\Composers\ProductViewComposer@getFavourites');
+        $this->app->view->composer('vendirun::product.partials.cart.ship-to', 'AlistairShaw\Vendirun\App\Http\Composers\WidgetViewComposer@regions');
     }
 
     private function registerCmsComposers()
@@ -65,16 +67,18 @@ class ComposerServiceProvider extends ServiceProvider {
         $this->app->view->composer('vendirun::common.head', 'AlistairShaw\Vendirun\App\Http\Composers\CmsViewComposer@head');
         $this->app->view->composer('vendirun::cms.widgets.social-share', 'AlistairShaw\Vendirun\App\Http\Composers\CmsViewComposer@social');
         $this->app->view->composer('vendirun::common.language-select', 'AlistairShaw\Vendirun\App\Http\Composers\CmsViewComposer@languages');
-
-        // widgets
-        $this->app->view->composer('vendirun::cms.widgets.standard-social', 'AlistairShaw\Vendirun\App\Http\Composers\WidgetViewComposer@social');
-        $this->app->view->composer('vendirun::cms.widgets.social-share', 'AlistairShaw\Vendirun\App\Http\Composers\WidgetViewComposer@socialShare');
-        $this->app->view->composer('vendirun::cms.widgets.standard-staff', 'AlistairShaw\Vendirun\App\Http\Composers\WidgetViewComposer@staff');
     }
 
     private function registerCustomerComposers()
     {
         $this->app->view->composer('vendirun::cms.menu.login-button', 'AlistairShaw\Vendirun\App\Http\Composers\CustomerViewComposer@customerDetails');
+    }
+
+    private function registerWidgetComposers()
+    {
+        $this->app->view->composer('vendirun::cms.widgets.standard-social', 'AlistairShaw\Vendirun\App\Http\Composers\WidgetViewComposer@social');
+        $this->app->view->composer('vendirun::cms.widgets.social-share', 'AlistairShaw\Vendirun\App\Http\Composers\WidgetViewComposer@socialShare');
+        $this->app->view->composer('vendirun::cms.widgets.standard-staff', 'AlistairShaw\Vendirun\App\Http\Composers\WidgetViewComposer@staff');
     }
 
 }

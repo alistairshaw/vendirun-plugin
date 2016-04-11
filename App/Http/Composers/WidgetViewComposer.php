@@ -53,4 +53,13 @@ class WidgetViewComposer {
         $social = $socialLinks->getLinks(URL::full(), $pageTitle, $pageText, $pageImage);
         $view->with('socialLinks', $social);
     }
+
+    /**
+     * @param $view
+     */
+    public function regions($view)
+    {
+        $regions = VendirunApi::makeRequest('util/countries')->getData();
+        $view->with('regions', $regions);
+    }
 }

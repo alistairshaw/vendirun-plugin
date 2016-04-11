@@ -2,6 +2,8 @@
 
 use AlistairShaw\Vendirun\App\Http\Controllers\VendirunBaseController;
 use AlistairShaw\Vendirun\App\Lib\Cart\Cart;
+use AlistairShaw\Vendirun\App\Lib\VendirunApi\VendirunApi;
+use Config;
 use Redirect;
 use Request;
 use Session;
@@ -13,7 +15,7 @@ class CartController extends VendirunBaseController {
     {
         $this->setPrimaryPath();
 
-        $cart = new Cart();
+        $cart = new Cart([], Request::input('countryId', $this->_getDefaultCountry()), Request::input('shippingType', null));
         $data['cart'] = $cart->getProducts();
 
         return View::make('vendirun::product.cart', $data);
@@ -64,5 +66,25 @@ class CartController extends VendirunBaseController {
         Session::flash('vendirun-alert-success', 'Cart Emptied');
         if (Session::has('primaryPagePath')) return Redirect::to(Session::get('primaryPagePath'));
         return Redirect::back();
+    }
+
+    private function _getDefaultCountry()
+    {
+        // if user is logged in, get their primary address country
+        if (Session::has('token'))
+        {
+            $customer = VendirunApi::makeRequest('customer/find', ['token' => Session::get('token')])->getData();
+            if (count($customer->primary_address) > 0 && $customer->primary_address->country_id)
+            {
+                return $customer->primary_address->country_id;
+            }
+        }
+
+        // get company default country
+        $clientInfo = Config::get('clientInfo');
+        if ($clientInfo->country_id) return $clientInfo->country_id;
+
+        // use UK as super-default if company default not set
+        return 79;
     }
 }

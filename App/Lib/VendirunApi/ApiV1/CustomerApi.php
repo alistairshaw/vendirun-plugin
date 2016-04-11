@@ -30,6 +30,12 @@ class CustomerApi extends BaseApi {
         }*/
 	}
 
+    public function find($params)
+    {
+        $url = 'customer/find/' . $params['token'];
+        return $this->request($url, $params);
+    }
+
 	/**
 	 * @param array $params
 	 * @return array

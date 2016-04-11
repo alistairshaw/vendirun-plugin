@@ -12,6 +12,7 @@
             </div>
             <div class="cart-sidebar">
                 @include('vendirun::product.partials.cart.checkout-button')
+                @include('vendirun::product.partials.cart.ship-to')
                 @include('vendirun::product.partials.cart.options')
             </div>
         </div>

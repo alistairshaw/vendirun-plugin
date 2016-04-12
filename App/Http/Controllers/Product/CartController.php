@@ -67,24 +67,4 @@ class CartController extends VendirunBaseController {
         if (Session::has('primaryPagePath')) return Redirect::to(Session::get('primaryPagePath'));
         return Redirect::back();
     }
-
-    private function _getDefaultCountry()
-    {
-        // if user is logged in, get their primary address country
-        if (Session::has('token'))
-        {
-            $customer = VendirunApi::makeRequest('customer/find', ['token' => Session::get('token')])->getData();
-            if (count($customer->primary_address) > 0 && $customer->primary_address->country_id)
-            {
-                return $customer->primary_address->country_id;
-            }
-        }
-
-        // get company default country
-        $clientInfo = Config::get('clientInfo');
-        if ($clientInfo->country_id) return $clientInfo->country_id;
-
-        // use UK as super-default if company default not set
-        return 79;
-    }
 }

@@ -1,0 +1,30 @@
+<div class="address-form">
+    <div class="form-group">
+        <label for="{{ $prefix }}address1">{{ trans('vendirun::forms.address1') }}</label>
+        <input type="text" class="form-control" name="{{ $prefix }}address1" id="{{ $prefix }}address1" value="{{ $address['address1'] }}">
+    </div>
+    <div class="form-group">
+        <label for="{{ $prefix }}address2">{{ trans('vendirun::forms.address2') }}</label>
+        <input type="text" class="form-control" name="{{ $prefix }}address2" id="{{ $prefix }}address2" value="{{ $address['address2'] }}">
+    </div>
+    <div class="form-group">
+        <label for="{{ $prefix }}address3">{{ trans('vendirun::forms.address3') }}</label>
+        <input type="text" class="form-control" name="{{ $prefix }}address3" id="{{ $prefix }}address3" value="{{ $address['address3'] }}">
+    </div>
+    <div class="form-group">
+        <label for="{{ $prefix }}city">{{ trans('vendirun::forms.city') }}</label>
+        <input type="text" class="form-control" name="{{ $prefix }}city" id="{{ $prefix }}city" value="{{ $address['city'] }}">
+    </div>
+    <div class="form-group">
+        <label for="{{ $prefix }}state">{{ trans('vendirun::forms.state') }}</label>
+        <input type="text" class="form-control" name="{{ $prefix }}state" id="{{ $prefix }}state" value="{{ $address['state'] }}">
+    </div>
+    <div class="form-group">
+        <label for="{{ $prefix }}postcode">{{ trans('vendirun::forms.postcode') }}</label>
+        <input type="text" class="form-control" name="{{ $prefix }}postcode" id="{{ $prefix }}postcode" value="{{ $address['postcode'] }}">
+    </div>
+    <div class="form-group">
+        <label for="{{ $prefix }}countryId">{{ trans('vendirun::forms.country') }}</label>
+        @include('vendirun::customer.partials.country-select')
+    </div>
+</div>

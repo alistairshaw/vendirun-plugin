@@ -17,6 +17,7 @@ class ComposerServiceProvider extends ServiceProvider {
     {
         $this->registerPropertyComposers();
         $this->registerProductComposers();
+        $this->registerCheckoutComposers();
         $this->registerCmsComposers();
         $this->registerCustomerComposers();
         $this->registerWidgetComposers();
@@ -47,12 +48,17 @@ class ComposerServiceProvider extends ServiceProvider {
         $this->app->view->composer('vendirun::product.refine.category-list', 'AlistairShaw\Vendirun\App\Http\Composers\ProductViewComposer@categories');
 
         $this->app->view->composer('vendirun::product.partials.product-buttons', 'AlistairShaw\Vendirun\App\Http\Composers\ProductViewComposer@productButtons');
+        $this->app->view->composer('vendirun::product.partials.product-images', 'AlistairShaw\Vendirun\App\Http\Composers\ProductViewComposer@productImages');
         $this->app->view->composer('vendirun::product.partials.cart.cart-widget', 'AlistairShaw\Vendirun\App\Http\Composers\ProductViewComposer@cart');
 
         $this->app->view->composer('vendirun::product.list', 'AlistairShaw\Vendirun\App\Http\Composers\ProductViewComposer@getFavourites');
         $this->app->view->composer('vendirun::product.recommend', 'AlistairShaw\Vendirun\App\Http\Composers\ProductViewComposer@getFavourites');
         $this->app->view->composer('vendirun::product.partials.related-products', 'AlistairShaw\Vendirun\App\Http\Composers\ProductViewComposer@getFavourites');
-        $this->app->view->composer('vendirun::product.partials.cart.ship-to', 'AlistairShaw\Vendirun\App\Http\Composers\WidgetViewComposer@regions');
+    }
+
+    private function registerCheckoutComposers()
+    {
+        $this->app->view->composer('vendirun::checkout.partials.checkout-form', 'AlistairShaw\Vendirun\App\Http\Composers\WidgetViewComposer@titles');
     }
 
     private function registerCmsComposers()
@@ -72,6 +78,8 @@ class ComposerServiceProvider extends ServiceProvider {
     private function registerCustomerComposers()
     {
         $this->app->view->composer('vendirun::cms.menu.login-button', 'AlistairShaw\Vendirun\App\Http\Composers\CustomerViewComposer@customerDetails');
+        $this->app->view->composer('vendirun::customer.partials.address-form', 'AlistairShaw\Vendirun\App\Http\Composers\CustomerViewComposer@address');
+        $this->app->view->composer('vendirun::customer.partials.country-select', 'AlistairShaw\Vendirun\App\Http\Composers\WidgetViewComposer@regions');
     }
 
     private function registerWidgetComposers()

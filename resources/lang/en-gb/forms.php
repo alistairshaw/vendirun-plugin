@@ -28,4 +28,17 @@ return [
     'privacyAssurance' => 'Don\'t worry, we won\'t ever share this info with anyone else.',
     'yourDetails' => 'Your Details',
     'friendDetails' => 'Your Friend\'s Details',
+    'address1' => 'Address Line 1',
+    'address2' => 'Address Line 2',
+    'address3' => 'Address Line 3',
+    'city' => 'City',
+    'state' => 'County',
+    'postcode' => 'Postcode',
+    'country' => 'Country',
+    'creditCard' => 'Credit Card',
+    'payPal' => 'PayPal',
+    'cardHolderName' => 'Card Holder\'s Name',
+    'cardNumber' => 'Card Number',
+    'cardExpiry' => 'Card Expiry Date',
+    'cvv' => 'CVV/CVV2'
 ];

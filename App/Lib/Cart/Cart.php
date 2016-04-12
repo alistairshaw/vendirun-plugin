@@ -28,6 +28,11 @@ class Cart {
     protected $chargeTaxOnShipping;
 
     /**
+     * @var float
+     */
+    protected $defaultTaxRate;
+
+    /**
      * @var int
      */
     protected $orderShippingCharge;
@@ -124,8 +129,10 @@ class Cart {
         $finalCart = [
             'totalProducts' => 0,
             'totalQuantity' => count($this->items),
-            'products' => [],
+            'items' => [],
             'shipping' => 0,
+            'shippingType' => '',
+            'availableShippingTypes' => [],
             'countryId' => $this->countryId,
             'subTotal' => 0,
             'tax' => 0,
@@ -144,56 +151,57 @@ class Cart {
         {
             foreach ($products->result as $product)
             {
-                foreach ($product->variations as $var)
+                $var = $product->variations{0};
+                if ($var->id == $productVariationId)
                 {
-                    if ($var->id == $productVariationId)
+                    $taxRate = $this->calculateTaxRate($product->tax);
+
+                    if ($this->priceIncludesTax)
                     {
-                        $taxRate = $this->calculateTaxRate($product->tax);
-
-                        if ($this->priceIncludesTax)
-                        {
-                            $itemSubTotal = (int)(round(($var->price * 100 / ($taxRate + 100) * $quantity), 0));
-                            $itemTax = ($var->price * $quantity) - $itemSubTotal;
-                        }
-                        else
-                        {
-                            $itemSubTotal = $var->price * $quantity;
-                            $itemTax = (int)(round(($var->price * $taxRate / 100 * $quantity), 0));
-                        }
-
-                        $itemTotal = $itemSubTotal + $itemTax;
-
-                        $itemShipping = $this->shippingForItem($product->shipping, $quantity);
-                        if ($itemShipping === null) $totalShipping = null;
-                        if ($totalShipping !== null) $totalShipping += $itemShipping;
-
-                        $finalCart['items'][] = (object)[
-                            'productVariationId' => $productVariationId,
-                            'quantity' => $quantity,
-                            'taxRate' => $taxRate,
-                            'chargeTaxOnShipping' => $this->chargeTaxOnShipping,
-                            'priceIncludesTax' => $this->priceIncludesTax,
-                            'productVariation' => $var,
-                            'product' => $product,
-                            'basePrice' => $var->price,
-                            'itemTax' => $itemTax,
-                            'itemSubTotal' => $itemSubTotal,
-                            'itemTotal' => $itemTotal,
-                            'shippingForItem' => $itemShipping
-                        ];
-
-                        $finalCart['subTotal'] += $itemSubTotal;
-                        $finalCart['tax'] += $itemTax;
-                        $finalCart['total'] += $itemTotal;
+                        $itemSubTotal = (int)(round(($var->price * 100 / ($taxRate + 100) * $quantity), 0));
+                        $itemTax = ($var->price * $quantity) - $itemSubTotal;
                     }
+                    else
+                    {
+                        $itemSubTotal = $var->price * $quantity;
+                        $itemTax = (int)(round(($var->price * $taxRate / 100 * $quantity), 0));
+                    }
+
+                    $itemTotal = $itemSubTotal + $itemTax;
+
+                    $itemShipping = $this->shippingForItem($product->shipping, $quantity);
+                    if ($itemShipping === NULL) $totalShipping = NULL;
+                    if ($totalShipping !== NULL) $totalShipping += $itemShipping;
+
+                    $finalCart['items'][] = (object)[
+                        'productVariationId' => $productVariationId,
+                        'quantity' => $quantity,
+                        'taxRate' => $taxRate,
+                        'chargeTaxOnShipping' => $this->chargeTaxOnShipping,
+                        'priceIncludesTax' => $this->priceIncludesTax,
+                        'productVariation' => $var,
+                        'product' => $product,
+                        'basePrice' => $var->price,
+                        'itemTax' => $itemTax,
+                        'itemSubTotal' => $itemSubTotal,
+                        'itemTotal' => $itemTotal,
+                        'shippingForItem' => $itemShipping
+                    ];
+
+                    $finalCart['subTotal'] += $itemSubTotal;
+                    $finalCart['tax'] += $itemTax;
+                    $finalCart['total'] += $itemTotal;
                 }
             }
         }
 
-        if ($totalShipping !== null) $totalShipping += $this->orderShippingCharge;
+        if ($totalShipping !== NULL) $totalShipping += $this->orderShippingCharge;
+
         $finalCart['shipping'] = $totalShipping;
         $finalCart['shippingType'] = $this->shippingType;
         $finalCart['availableShippingTypes'] = $this->availableShippingTypes;
+
+        if ($this->chargeTaxOnShipping) $finalCart['tax'] += (int)($finalCart['shipping'] / 100 * $this->defaultTaxRate);
 
         return (object)$finalCart;
     }
@@ -274,26 +282,41 @@ class Cart {
 
     /**
      * @param $tax
-     * @return mixed
+     * @return int
      */
     private function calculateTaxRate($tax)
     {
+        $default = 0;
+        $defaultIncludesTax = NULL;
+
         foreach ($tax as $row)
         {
             if (!$this->countryId && !$row->id)
             {
                 $this->priceIncludesTax = $row->price_includes_tax;
                 $this->chargeTaxOnShipping = $row->charge_tax_on_shipping;
+                $this->defaultTaxRate = (float)$row->percentage;
 
                 return (float)$row->percentage;
             }
-            foreach ($row->countries as $country_id)
+            if (in_array($this->countryId, (array)$row->countries))
             {
-                if ($this->countryId == $country_id) return (float)$row->percentage;
+                $this->chargeTaxOnShipping = $row->charge_tax_on_shipping;
+                $this->defaultTaxRate = (float)$row->percentage;
+                return (float)$row->percentage;
+            }
+            if ($row->id === NULL)
+            {
+                $default = (float)$row->percentage;
+                $defaultIncludesTax = $row->price_includes_tax;
+                $this->defaultTaxRate = (float)$row->percentage;
+                $this->chargeTaxOnShipping = $row->charge_tax_on_shipping;
             }
         }
 
-        return 0;
+        $this->priceIncludesTax = $defaultIncludesTax;
+
+        return $default;
     }
 
     /**
@@ -306,13 +329,12 @@ class Cart {
         $this->availableShippingTypes = [];
 
         $hasPrices = false;
-        $price = null;
+        $price = NULL;
 
         foreach ($shipping as $sh)
         {
             if (in_array($this->countryId, $sh->countries))
             {
-                if ($sh->order_price > $this->orderShippingCharge) $this->orderShippingCharge = $sh->order_price;
                 $this->availableShippingTypes[] = $sh->shipping_type;
 
                 $hasPrices = true;
@@ -320,18 +342,20 @@ class Cart {
 
                 if ($this->shippingType && $this->shippingType == $sh->shipping_type)
                 {
+                    if ($sh->order_price > $this->orderShippingCharge) $this->orderShippingCharge = $sh->order_price;
                     $price = $sh->product_price;
                 }
             }
         }
 
-        if ($hasPrices && !$price && $this->shippingType)
+        if ($hasPrices && $price === NULL && $this->shippingType)
         {
             $this->shippingType = NULL;
+
             return $this->shippingForItem($shipping, $quantity);
         }
 
-        if ($price !== null) $price *= $quantity;
+        if ($price !== NULL) $price *= $quantity;
 
         return $price;
     }

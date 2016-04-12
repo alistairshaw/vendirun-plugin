@@ -1,4 +1,4 @@
-<a href="{{ $addToCartRoute }}"
+<a href="{{ $viewProductRoute }}"
    data-product-name="{{ $product->product_name }}"
    data-product-id="{{ $product->id }}"
    class="btn btn-default"

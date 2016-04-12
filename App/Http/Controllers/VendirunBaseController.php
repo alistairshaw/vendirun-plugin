@@ -48,4 +48,28 @@ class VendirunBaseController extends Controller {
         Session::save();
     }
 
+    /**
+     * @param bool $customer
+     * @return int
+     */
+    protected function _getDefaultCountry($customer = false)
+    {
+        // if user is logged in, get their primary address country
+        if (Session::has('token'))
+        {
+            if (!$customer) $customer = VendirunApi::makeRequest('customer/find', ['token' => Session::get('token')])->getData();
+            if (count($customer->primary_address) > 0 && $customer->primary_address->country_id)
+            {
+                return $customer->primary_address->country_id;
+            }
+        }
+
+        // get company default country
+        $clientInfo = Config::get('clientInfo');
+        if ($clientInfo->country_id) return $clientInfo->country_id;
+
+        // use UK as super-default if company default not set
+        return 79;
+    }
+
 }

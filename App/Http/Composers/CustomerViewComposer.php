@@ -30,4 +30,27 @@ class CustomerViewComposer {
         }
     }
 
+    /**
+     * @param View $view
+     */
+    public function address($view)
+    {
+        $viewData = $view->getData();
+        if (!isset($viewData['address']) || !$viewData['address'])
+        {
+            $address = [
+                'address1' => '',
+                'address2' => '',
+                'address3' => '',
+                'city' => '',
+                'state' => '',
+                'postcode' => '',
+                'country_id' => ''
+            ];
+
+            $view->with('address', $address);
+        }
+
+        if (!isset($viewData['prefix'])) $view->with('prefix', '');
+    }
 }

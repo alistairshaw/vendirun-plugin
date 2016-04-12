@@ -34,6 +34,11 @@ foreach (array_merge([''], LocaleHelper::validLocales()) as $locale)
                 Route::get('remove/{productVariationId}', ['as' => $localePrefix . 'vendirun.productRemoveFromCart', 'uses' => 'Product\CartController@remove']);
                 Route::post('add', ['as' => $localePrefix . 'vendirun.productAddToCartPost', 'uses' => 'Product\CartController@add']);
             });
+            
+            Route::group(['prefix' => 'checkout'], function() use ($localePrefix)
+            {
+                Route::get('/', ['as' => $localePrefix . 'vendirun.checkout', 'uses' => 'Checkout\CheckoutController@index']);
+            });
 
             Route::any('view/{id}/{productName}/{productVariationId?}', ['as' => $localePrefix . 'vendirun.productView', 'uses' => 'Product\ProductController@view']);
 

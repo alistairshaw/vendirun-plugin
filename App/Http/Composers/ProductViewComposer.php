@@ -57,12 +57,32 @@ class ProductViewComposer {
         }
 
         // route to view product
-        if (!isset($viewData['abbreviatedButtons'])) $viewData['abbreviatedButtons'] = false;
-        $addToCartRoute = route(LocaleHelper::localePrefix() . $viewData['abbreviatedButtons'] ? 'vendirun.productView' : 'vendirun.productAddToCart'
-            , array_merge(['productId' => $viewData['product']->id, 'productName' => urlencode(strtolower($viewData['product']->product_name))], Request::query()));
+        $viewProductRoute = $this->getProductRoute($viewData['product']);
 
-        $view->with('productButtons', $productButtons)->with('addToCartRoute', $addToCartRoute);
+        $view->with('productButtons', $productButtons)->with('viewProductRoute', $viewProductRoute);
         if (!isset($viewData['abbreviatedButtons'])) $view->with('abbreviatedButtons', false);
+    }
+
+    public function productImages(View $view)
+    {
+        $viewData = $view->getData();
+
+        $view->with('viewProductRoute', $this->getProductRoute($viewData['product']));
+    }
+
+    /**
+     * @param      $product
+     * @param int  $variationId
+     * @param bool $addToCart
+     * @return
+     */
+    private function getProductRoute($product, $variationId = 0, $addToCart = false)
+    {
+        return route(LocaleHelper::localePrefix() . $addToCart ? 'vendirun.productAddToCart' : 'vendirun.productView'
+            , array_merge(
+                ['productId' => $product->id, 'productName' => urlencode(strtolower($product->product_name)), 'variationId' => $variationId]
+                , Request::query())
+        );
     }
 
     /**

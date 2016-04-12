@@ -62,4 +62,13 @@ class WidgetViewComposer {
         $regions = VendirunApi::makeRequest('util/countries')->getData();
         $view->with('regions', $regions);
     }
+
+    /**
+     * @param $view
+     */
+    public function titles($view)
+    {
+        $titles = VendirunApi::makeRequest('util/titles')->getData();
+        $view->with('titles', $titles);
+    }
 }

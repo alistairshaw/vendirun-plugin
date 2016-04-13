@@ -28,8 +28,8 @@
         <input type="text" class="form-control" name="companyName" id="companyName" value="{{ $customer ? $customer->organisation_name : '' }}">
     </div>
     @if ($customer)
-        <code>Show list of addresses to choose from/edit</code>
+        @include('vendirun::customer.partials.address-form', ['selected' => $customer->primary_address->id, 'prefix' => 'shipping'])
     @else
-        @include('vendirun::customer.partials.address-form', ['address' => $customer ? $customer->primary_address : false])
+        @include('vendirun::customer.partials.address-form', ['prefix' => 'shipping'])
     @endif
 </div>

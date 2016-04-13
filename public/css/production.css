@@ -4219,16 +4219,16 @@ pre {
   .container-fluid:after {
     clear: both; }
 
-.row, .property-advanced-search-widget .form-inputs, .product-cart .wrapper, .product-cart .cart-items .cart-table, .checkout .wrapper, .checkout .checkout-form .payment .expiry-cvv {
+.row, .property-advanced-search-widget .form-inputs, .product-cart .wrapper, .product-cart .cart-items .cart-table, .checkout .wrapper, .checkout .checkout-form .shipping-method, .checkout .checkout-form .payment .expiry-cvv {
   margin-left: -15px;
   margin-right: -15px; }
-  .row:before, .property-advanced-search-widget .form-inputs:before, .product-cart .wrapper:before, .product-cart .cart-items .cart-table:before, .checkout .wrapper:before, .checkout .checkout-form .payment .expiry-cvv:before, .row:after, .property-advanced-search-widget .form-inputs:after, .product-cart .wrapper:after, .product-cart .cart-items .cart-table:after, .checkout .wrapper:after, .checkout .checkout-form .payment .expiry-cvv:after {
+  .row:before, .property-advanced-search-widget .form-inputs:before, .product-cart .wrapper:before, .product-cart .cart-items .cart-table:before, .checkout .wrapper:before, .checkout .checkout-form .shipping-method:before, .checkout .checkout-form .payment .expiry-cvv:before, .row:after, .property-advanced-search-widget .form-inputs:after, .product-cart .wrapper:after, .product-cart .cart-items .cart-table:after, .checkout .wrapper:after, .checkout .checkout-form .shipping-method:after, .checkout .checkout-form .payment .expiry-cvv:after {
     content: " ";
     display: table; }
-  .row:after, .property-advanced-search-widget .form-inputs:after, .product-cart .wrapper:after, .product-cart .cart-items .cart-table:after, .checkout .wrapper:after, .checkout .checkout-form .payment .expiry-cvv:after {
+  .row:after, .property-advanced-search-widget .form-inputs:after, .product-cart .wrapper:after, .product-cart .cart-items .cart-table:after, .checkout .wrapper:after, .checkout .checkout-form .shipping-method:after, .checkout .checkout-form .payment .expiry-cvv:after {
     clear: both; }
 
-.col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .product-cart .wrapper .cart-sidebar, .col-md-3, .col-lg-3, .col-xs-4, .checkout .checkout-form .payment .expiry-cvv .cvv, .col-sm-4, .property-search.type1 .multiple .property-result, .property-view.type1 .property-attributes .item, .product-search .multiple .product-result, .checkout .checkout-sidebar, .col-md-4, .property-advanced-search-widget .form-inputs .form-group, .product-cart .cart-items .cart-table .cart-column, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .property-view.type1 .property-attributes .item, .col-sm-6, .property-search.type2 .property-results .property-result .property-attributes .item, .property-view.type2 .property-attributes .item, .property-advanced-search-widget .form-inputs .form-group, .product-cart .cart-items .cart-table .cart-column, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .checkout .checkout-form .payment .expiry-cvv .expiry, .col-sm-8, .checkout .checkout-form, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .product-cart .wrapper .cart-items, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 {
+.col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .product-cart .wrapper .cart-sidebar, .checkout .checkout-form .shipping-method .shipping-price, .checkout .checkout-form .shipping-method .options, .col-md-3, .col-lg-3, .col-xs-4, .checkout .checkout-form .payment .expiry-cvv .cvv, .col-sm-4, .property-search.type1 .multiple .property-result, .property-view.type1 .property-attributes .item, .product-search .multiple .product-result, .checkout .checkout-sidebar, .col-md-4, .property-advanced-search-widget .form-inputs .form-group, .product-cart .cart-items .cart-table .cart-column, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .property-view.type1 .property-attributes .item, .col-sm-6, .property-search.type2 .property-results .property-result .property-attributes .item, .property-view.type2 .property-attributes .item, .property-advanced-search-widget .form-inputs .form-group, .product-cart .cart-items .cart-table .cart-column, .checkout .checkout-form .shipping-method .method-select, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .checkout .checkout-form .payment .expiry-cvv .expiry, .col-sm-8, .checkout .checkout-form, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .product-cart .wrapper .cart-items, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 {
   position: relative;
   min-height: 1px;
   padding-left: 15px;
@@ -4391,19 +4391,19 @@ pre {
   margin-left: 100%; }
 
 @media (min-width: 768px) {
-  .col-sm-1, .col-sm-2, .col-sm-3, .product-cart .wrapper .cart-sidebar, .col-sm-4, .property-search.type1 .multiple .property-result, .property-view.type1 .property-attributes .item, .product-search .multiple .product-result, .checkout .checkout-sidebar, .col-sm-5, .col-sm-6, .property-search.type2 .property-results .property-result .property-attributes .item, .property-view.type2 .property-attributes .item, .property-advanced-search-widget .form-inputs .form-group, .product-cart .cart-items .cart-table .cart-column, .col-sm-7, .col-sm-8, .checkout .checkout-form, .col-sm-9, .product-cart .wrapper .cart-items, .col-sm-10, .col-sm-11, .col-sm-12 {
+  .col-sm-1, .col-sm-2, .col-sm-3, .product-cart .wrapper .cart-sidebar, .checkout .checkout-form .shipping-method .shipping-price, .checkout .checkout-form .shipping-method .options, .col-sm-4, .property-search.type1 .multiple .property-result, .property-view.type1 .property-attributes .item, .product-search .multiple .product-result, .checkout .checkout-sidebar, .col-sm-5, .col-sm-6, .property-search.type2 .property-results .property-result .property-attributes .item, .property-view.type2 .property-attributes .item, .property-advanced-search-widget .form-inputs .form-group, .product-cart .cart-items .cart-table .cart-column, .checkout .checkout-form .shipping-method .method-select, .col-sm-7, .col-sm-8, .checkout .checkout-form, .col-sm-9, .product-cart .wrapper .cart-items, .col-sm-10, .col-sm-11, .col-sm-12 {
     float: left; }
   .col-sm-1 {
     width: 8.3333333333%; }
   .col-sm-2 {
     width: 16.6666666667%; }
-  .col-sm-3, .product-cart .wrapper .cart-sidebar {
+  .col-sm-3, .product-cart .wrapper .cart-sidebar, .checkout .checkout-form .shipping-method .shipping-price, .checkout .checkout-form .shipping-method .options {
     width: 25%; }
   .col-sm-4, .property-search.type1 .multiple .property-result, .property-view.type1 .property-attributes .item, .product-search .multiple .product-result, .checkout .checkout-sidebar {
     width: 33.3333333333%; }
   .col-sm-5 {
     width: 41.6666666667%; }
-  .col-sm-6, .property-search.type2 .property-results .property-result .property-attributes .item, .property-view.type2 .property-attributes .item, .property-advanced-search-widget .form-inputs .form-group, .product-cart .cart-items .cart-table .cart-column {
+  .col-sm-6, .property-search.type2 .property-results .property-result .property-attributes .item, .property-view.type2 .property-attributes .item, .property-advanced-search-widget .form-inputs .form-group, .product-cart .cart-items .cart-table .cart-column, .checkout .checkout-form .shipping-method .method-select {
     width: 50%; }
   .col-sm-7 {
     width: 58.3333333333%; }
@@ -10691,7 +10691,7 @@ footer {
 .property-view.type2 .amenities-well {
   position: relative;
   background: #FFF; }
-  .property-view.type2 .amenities-well .col-sm-6, .property-view.type2 .amenities-well .property-search.type2 .property-results .property-result .property-attributes .item, .property-search.type2 .property-results .property-result .property-attributes .property-view.type2 .amenities-well .item, .property-view.type2 .amenities-well .property-attributes .item, .property-view.type2 .property-attributes .amenities-well .item, .property-view.type2 .amenities-well .property-advanced-search-widget .form-inputs .form-group, .property-advanced-search-widget .form-inputs .property-view.type2 .amenities-well .form-group, .property-view.type2 .amenities-well .product-cart .cart-items .cart-table .cart-column, .product-cart .cart-items .cart-table .property-view.type2 .amenities-well .cart-column {
+  .property-view.type2 .amenities-well .col-sm-6, .property-view.type2 .amenities-well .property-search.type2 .property-results .property-result .property-attributes .item, .property-search.type2 .property-results .property-result .property-attributes .property-view.type2 .amenities-well .item, .property-view.type2 .amenities-well .property-attributes .item, .property-view.type2 .property-attributes .amenities-well .item, .property-view.type2 .amenities-well .property-advanced-search-widget .form-inputs .form-group, .property-advanced-search-widget .form-inputs .property-view.type2 .amenities-well .form-group, .property-view.type2 .amenities-well .product-cart .cart-items .cart-table .cart-column, .product-cart .cart-items .cart-table .property-view.type2 .amenities-well .cart-column, .property-view.type2 .amenities-well .checkout .checkout-form .shipping-method .method-select, .checkout .checkout-form .shipping-method .property-view.type2 .amenities-well .method-select {
     position: static; }
   .property-view.type2 .amenities-well .amenities {
     text-align: right; }
@@ -10715,10 +10715,10 @@ footer {
     font-weight: bold;
     width: 110px; }
 
-.property-categories .row, .property-categories .property-advanced-search-widget .form-inputs, .property-advanced-search-widget .property-categories .form-inputs, .property-categories .product-cart .wrapper, .product-cart .property-categories .wrapper, .property-categories .product-cart .cart-items .cart-table, .product-cart .cart-items .property-categories .cart-table, .property-categories .checkout .wrapper, .checkout .property-categories .wrapper, .property-categories .checkout .checkout-form .payment .expiry-cvv, .checkout .checkout-form .payment .property-categories .expiry-cvv {
+.property-categories .row, .property-categories .property-advanced-search-widget .form-inputs, .property-advanced-search-widget .property-categories .form-inputs, .property-categories .product-cart .wrapper, .product-cart .property-categories .wrapper, .property-categories .product-cart .cart-items .cart-table, .product-cart .cart-items .property-categories .cart-table, .property-categories .checkout .wrapper, .checkout .property-categories .wrapper, .property-categories .checkout .checkout-form .shipping-method, .checkout .checkout-form .property-categories .shipping-method, .property-categories .checkout .checkout-form .payment .expiry-cvv, .checkout .checkout-form .payment .property-categories .expiry-cvv {
   margin: 0; }
 
-.property-categories .col-sm-6, .property-categories .property-search.type2 .property-results .property-result .property-attributes .item, .property-search.type2 .property-results .property-result .property-attributes .property-categories .item, .property-categories .property-view.type2 .property-attributes .item, .property-view.type2 .property-attributes .property-categories .item, .property-categories .property-advanced-search-widget .form-inputs .form-group, .property-advanced-search-widget .form-inputs .property-categories .form-group, .property-categories .product-cart .cart-items .cart-table .cart-column, .product-cart .cart-items .cart-table .property-categories .cart-column {
+.property-categories .col-sm-6, .property-categories .property-search.type2 .property-results .property-result .property-attributes .item, .property-search.type2 .property-results .property-result .property-attributes .property-categories .item, .property-categories .property-view.type2 .property-attributes .item, .property-view.type2 .property-attributes .property-categories .item, .property-categories .property-advanced-search-widget .form-inputs .form-group, .property-advanced-search-widget .form-inputs .property-categories .form-group, .property-categories .product-cart .cart-items .cart-table .cart-column, .product-cart .cart-items .cart-table .property-categories .cart-column, .property-categories .checkout .checkout-form .shipping-method .method-select, .checkout .checkout-form .shipping-method .property-categories .method-select {
   padding-left: 0;
   padding-right: 0; }
 
@@ -11189,6 +11189,13 @@ ul.refine-list {
 .checkout .checkout-form .step {
   padding: 20px;
   margin: 10px 0 40px 0; }
+  .checkout .checkout-form .step h2 {
+    font-size: 1.2em;
+    font-weight: normal;
+    margin: 30px 0; }
+
+.checkout .checkout-form .shipping-method .shipping-price {
+  font-size: 1.4em; }
 
 .checkout .checkout-form .payment .options label {
   margin-right: 40px; }

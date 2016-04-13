@@ -46,6 +46,7 @@ elixir(function (mix) {
             'property/property-view.js',
             'property/property-results.js',
             'social.js',
+            'stripe.js',
             'main.js'
         ], 'public/js/production.js')
 

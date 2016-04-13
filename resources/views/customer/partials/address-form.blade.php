@@ -25,6 +25,6 @@
     </div>
     <div class="form-group">
         <label for="{{ $prefix }}countryId">{{ trans('vendirun::forms.country') }}</label>
-        @include('vendirun::customer.partials.country-select')
+        @include('vendirun::customer.partials.country-select', ['fieldId' => $prefix . 'countryId', 'fieldName' => $prefix . 'countryId'])
     </div>
 </div>

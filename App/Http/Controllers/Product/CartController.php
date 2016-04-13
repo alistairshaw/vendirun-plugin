@@ -1,9 +1,8 @@
 <?php namespace AlistairShaw\Vendirun\App\Http\Controllers\Product;
 
+use AlistairShaw\Vendirun\App\Entities\Cart\CartFactory;
+use AlistairShaw\Vendirun\App\Entities\Cart\CartRepository;
 use AlistairShaw\Vendirun\App\Http\Controllers\VendirunBaseController;
-use AlistairShaw\Vendirun\App\Lib\Cart\Cart;
-use AlistairShaw\Vendirun\App\Lib\VendirunApi\VendirunApi;
-use Config;
 use Redirect;
 use Request;
 use Session;
@@ -11,29 +10,29 @@ use View;
 
 class CartController extends VendirunBaseController {
 
-    public function index()
+    public function index(CartRepository $cartRepository)
     {
         $this->setPrimaryPath();
 
-        $cart = new Cart([], Request::input('countryId', $this->_getDefaultCountry()), Request::input('shippingType', null));
-        $data['cart'] = $cart->getProducts();
+        $cartFactory = new CartFactory($cartRepository);
+        $data['cart'] = $cartFactory->make(Request::input('countryId', null), Request::input('shippingType', null));
 
         return View::make('vendirun::product.cart', $data);
     }
 
     /**
-     * @param null $productVariationId
+     * @param null           $productVariationId
+     * @param CartRepository $cartRepository
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function add($productVariationId = null)
+    public function add($productVariationId = null, CartRepository $cartRepository)
     {
         if (!$productVariationId) $productVariationId = Request::input('productVariationId');
         $quantity = Request::input('quantity', 1);
 
-        $cart = new Cart();
         for ($i = 1; $i <= $quantity; $i++)
         {
-            $cart->add($productVariationId);
+            $cartRepository->add($productVariationId);
         }
 
         Session::flash('vendirun-alert-success', 'Item Added to Cart');
@@ -42,13 +41,13 @@ class CartController extends VendirunBaseController {
     }
 
     /**
-     * @param null $productVariationId
+     * @param null           $productVariationId
+     * @param CartRepository $cartRepository
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function remove($productVariationId = null)
+    public function remove($productVariationId = null, CartRepository $cartRepository)
     {
-        $cart = new Cart();
-        $cart->remove($productVariationId);
+        $cartRepository->remove($productVariationId);
 
         Session::flash('vendirun-alert-success', 'Item Removed from Cart');
         if (Session::has('primaryPagePath')) return Redirect::to(Session::get('primaryPagePath'));
@@ -56,12 +55,12 @@ class CartController extends VendirunBaseController {
     }
 
     /**
+     * @param CartRepository $cartRepository
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function clear()
+    public function clear(CartRepository $cartRepository)
     {
-        $cart = new Cart();
-        $cart->clear();
+        $cartRepository->clear();
 
         Session::flash('vendirun-alert-success', 'Cart Emptied');
         if (Session::has('primaryPagePath')) return Redirect::to(Session::get('primaryPagePath'));

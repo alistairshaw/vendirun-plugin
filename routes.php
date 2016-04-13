@@ -38,6 +38,8 @@ foreach (array_merge([''], LocaleHelper::validLocales()) as $locale)
             Route::group(['prefix' => 'checkout'], function() use ($localePrefix)
             {
                 Route::get('/', ['as' => $localePrefix . 'vendirun.checkout', 'uses' => 'Checkout\CheckoutController@index']);
+                Route::post('/', ['as' => $localePrefix . 'vendirun.checkoutProcess', 'uses' => 'Checkout\CheckoutController@process']);
+                Route::post('/thanks', ['as' => $localePrefix . 'vendirun.checkoutSuccess', 'uses' => 'Checkout\CheckoutController@success']);
             });
 
             Route::any('view/{id}/{productName}/{productVariationId?}', ['as' => $localePrefix . 'vendirun.productView', 'uses' => 'Product\ProductController@view']);

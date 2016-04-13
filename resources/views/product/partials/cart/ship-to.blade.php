@@ -5,12 +5,12 @@
             <label class="sr-only" for="shipToCountryId">Choose your country:</label>
             @include('vendirun::customer.partials.country-select', ['fieldId' => 'shipToCountryId'])
         </div>
-        @if (isset($cart) && count($cart->availableShippingTypes) > 0)
+        @if (isset($cart) && count($cart->getAvailableShippingTypes()) > 0)
             <div class="form-group">
                 <label class="sr-only" for="shipToShippingType">Choose your shipping type:</label>
                 <select name="shippingType" id="shipToShippingType" class="form-control">
-                    @foreach ($cart->availableShippingTypes as $type)
-                        <option value="{{ $type }}"{{ (isset($cart) && $cart->shippingType == $type) ? ' selected' : '' }}>{{ $type }}</option>
+                    @foreach ($cart->getAvailableShippingTypes() as $type)
+                        <option value="{{ $type }}"{{ (isset($cart) && $cart->getShippingType() == $type) ? ' selected' : '' }}>{{ $type }}</option>
                     @endforeach
                 </select>
             </div>

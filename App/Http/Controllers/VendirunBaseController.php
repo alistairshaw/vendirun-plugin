@@ -54,6 +54,9 @@ class VendirunBaseController extends Controller {
      */
     protected function _getDefaultCountry($customer = false)
     {
+        // if country ID is in the GET then obviously, that
+        if (Request::has('countryId')) return Request::get('countryId');
+
         // if user is logged in, get their primary address country
         if (Session::has('token'))
         {

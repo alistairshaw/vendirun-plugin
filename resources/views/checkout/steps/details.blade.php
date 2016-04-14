@@ -5,14 +5,6 @@
     </div>
     <div class="form-group form-inline clearfix">
         <div class="form-group">
-            <label for="title">Title</label><br>
-            <select class="form-control" name="title" id="title">
-                @foreach ($titles as $title)
-                    <option value="{{ $title->id }}">{{ $title->title }}</option>
-                @endforeach
-            </select>
-        </div>
-        <div class="form-group pull-right">
             <label>
                 <input type="checkbox" name="company" id="company" value="1"{{ $customer && $customer->organisation_name ? ' checked' : '' }}>
                 {{ trans('vendirun::checkout.companyPurchase') }}

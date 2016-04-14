@@ -13,20 +13,25 @@ class OrderRequest extends Request {
     {
         if (Request::has('recalculateShipping')) return [];
 
-        return [
-            'title' => 'required',
+        $validation = [
             'emailAddress' => 'required|email',
             'fullName' => 'required',
             'cardHolderName' => 'required',
             'shippingAddressId' => 'required_without_all:shippingaddress1,shippingcity,shippingcountry',
-            'billingAddressId' => 'required_without_all:billingaddress1,billingcity,billingcountry',
             'shippingaddress1' => 'required_without:shippingAddressId',
             'shippingcity' => 'required_without:shippingAddressId',
-            'shippingcountryId' => 'required_without:shippingAddressId',
-            'billingaddress1' => 'required_without:billingAddressId',
-            'billingcity' => 'required_without:billingAddressId',
-            'billingcountryId' => 'required_without:billingAddressId',
+            'shippingcountryId' => 'required_without:shippingAddressId'
         ];
+
+        if (!Request::has('billingAddressSameAsShipping'))
+        {
+            $validation['billingAddressId'] = 'required_without_all:billingaddress1,billingcity,billingcountry';
+            $validation['billingaddress1'] = 'required_without:billingAddressId';
+            $validation['billingcity'] = 'required_without:billingAddressId';
+            $validation['billingcountryId'] = 'required_without:billingAddressId';
+        }
+
+        return $validation;
     }
 
 }

@@ -1,6 +1,7 @@
 <?php namespace AlistairShaw\Vendirun\App\Listeners;
 
-use AlistairShaw\Vendirun\App\Lib\Cart\Cart;
+use AlistairShaw\Vendirun\App\Entities\Cart\CartFactory;
+use App;
 use Session;
 
 class UpdateShoppingCart
@@ -13,7 +14,9 @@ class UpdateShoppingCart
     {
         Session::put('token', $token->token);
 
-        $cart = new Cart();
-        $cart->updateApi();
+        $cartRepository = App::make('AlistairShaw\Vendirun\App\Entities\Cart\CartRepository');
+
+        $cartFactory = new CartFactory($cartRepository);
+        $cartRepository->saveCart($cartFactory->make()->getItems());
     }
 }

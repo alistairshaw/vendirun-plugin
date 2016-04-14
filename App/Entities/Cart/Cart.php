@@ -1,7 +1,5 @@
 <?php namespace AlistairShaw\Vendirun\App\Entities\Cart;
 
-use AlistairShaw\Vendirun\App\Entities\Cart\Helpers\TaxCalculator;
-
 class Cart {
 
     /**

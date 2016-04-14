@@ -78,4 +78,14 @@ class Address {
         ];
     }
 
+    /**
+     * @param Address $address
+     * @return bool
+     */
+    public function isEqualTo(Address $address)
+    {
+        if ($this->getArray() === $address->getArray()) return true;
+        return false;
+    }
+
 }

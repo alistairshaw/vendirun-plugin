@@ -10,8 +10,8 @@ interface OrderRepository {
 
     /**
      * @param Order $order
-     * @return bool
+     * @return Order
      */
-    public function saveOrder($order);
+    public function saveOrder(Order $order);
 
 }

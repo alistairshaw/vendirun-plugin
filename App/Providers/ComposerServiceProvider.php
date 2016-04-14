@@ -58,7 +58,7 @@ class ComposerServiceProvider extends ServiceProvider {
 
     private function registerCheckoutComposers()
     {
-        $this->app->view->composer('vendirun::checkout.partials.checkout-form', 'AlistairShaw\Vendirun\App\Http\Composers\WidgetViewComposer@titles');
+        
     }
 
     private function registerCmsComposers()

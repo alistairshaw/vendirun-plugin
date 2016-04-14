@@ -1,15 +1,18 @@
 <?php namespace AlistairShaw\Vendirun\App\Http\Controllers\Checkout;
 
+use AlistairShaw\Vendirun\App\Entities\Cart\Cart;
 use AlistairShaw\Vendirun\App\Entities\Cart\CartFactory;
 use AlistairShaw\Vendirun\App\Entities\Cart\CartRepository;
+use AlistairShaw\Vendirun\App\Entities\Customer\CustomerFactory;
+use AlistairShaw\Vendirun\App\Entities\Customer\CustomerRepository;
+use AlistairShaw\Vendirun\App\Entities\Order\Order;
 use AlistairShaw\Vendirun\App\Entities\Order\OrderFactory;
 use AlistairShaw\Vendirun\App\Entities\Order\OrderRepository;
 use AlistairShaw\Vendirun\App\Http\Controllers\VendirunBaseController;
 use AlistairShaw\Vendirun\App\Http\Requests\OrderRequest;
-use AlistairShaw\Vendirun\App\Lib\Cart\Cart;
-use AlistairShaw\Vendirun\App\Lib\Cart\Order;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\Exceptions\FailResponseException;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\VendirunApi;
+use AlistairShaw\Vendirun\App\ValueObjects\Name;
 use Config;
 use Redirect;
 use Request;
@@ -55,20 +58,21 @@ class CheckoutController extends VendirunBaseController {
     }
 
     /**
-     * @return $this
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function recalculateShipping()
     {
-        return Redirect::route('vendirun.checkout', ['countryId' => Request::get('shippingcountryId'), 'shippingTypeId' => Request::get('shippingTypeId')])->withInput();
+        return Redirect::route('vendirun.checkout', ['countryId' => Request::get('shippingcountryId'), 'shippingTypeId' => Request::get('shippingTypeId')]);
     }
 
     /**
-     * @param OrderRequest    $request
-     * @param CartRepository  $cartRepository
-     * @param OrderRepository $orderRepository
+     * @param OrderRequest       $request
+     * @param CartRepository     $cartRepository
+     * @param OrderRepository    $orderRepository
+     * @param CustomerRepository $customerRepository
      * @return $this|CheckoutController|\Illuminate\Http\RedirectResponse
      */
-    public function process(OrderRequest $request, CartRepository $cartRepository, OrderRepository $orderRepository)
+    public function process(OrderRequest $request, CartRepository $cartRepository, OrderRepository $orderRepository, CustomerRepository $customerRepository)
     {
         if (Request::has('recalculateShipping')) return $this->recalculateShipping();
 
@@ -86,12 +90,27 @@ class CheckoutController extends VendirunBaseController {
         }
 
         $cartFactory = new CartFactory($cartRepository);
-        $cart = $cartFactory->make(Request::input('countryId', null), Request::input('shippingType', null));
+        $cart = $cartFactory->make($countryId, Request::input('shippingType', null));
+
+        $name = new Name(Request::get('fullName'));
+        $email = Request::get('email');
+        
+        if (Session::has('token'))
+        {
+            $customer = $customerRepository->find(Session::get('token'));
+            $customer->setName($name);
+            $customer->setPrimaryEmail($email);
+            $customerRepository->save($customer);
+        }
+        else
+        {
+            $customerFactory = new CustomerFactory($customerRepository);
+            $customer = $customerFactory->make(null, Request::get('fullName'), Request::get('emailAddress'));
+        }
 
         $orderFactory = new OrderFactory($orderRepository);
-        $order = $orderFactory->fromCart($cart, Request::all());
-        $orderRepository->saveOrder($order);
-        dd('ORDER CREATED');
+        $order = $orderFactory->fromCart($cart, $customer, Request::all());
+        $order = $orderRepository->saveOrder($order);
 
         if (!$gateways->paypal) return $this->processStripe($gateways->stripeSettings, $cart, $order);
         if (!$gateways->stripe) return $this->processPaypal($gateways->paypalSettings);
@@ -132,7 +151,7 @@ class CheckoutController extends VendirunBaseController {
      * @param $order
      * @return $this|\Illuminate\Http\RedirectResponse
      */
-    private function processStripe($settings, $cart, $order)
+    private function processStripe($settings, Cart $cart, Order $order)
     {
         Stripe::setApiKey($settings->sandbox_mode ? $settings->test_secret : $settings->secret);
 
@@ -140,18 +159,19 @@ class CheckoutController extends VendirunBaseController {
         try
         {
             $clientInfo = Config::get('clientInfo');
-            $cartProducts = $cart->getProducts();
             $token = Request::get('stripeToken');
-            
+
             $charge = Charge::create(array(
-                "amount" => $cartProducts->total + $cartProducts->shipping,
-                "currency" => "gbp",
+                "amount" => $order->getTotalPrice(),
+                "currency" => $clientInfo->currency->currency_iso,
                 "source" => $token,
                 "description" => $clientInfo->name,
                 "metadata" => [
-                    "order_id" => "6735"
+                    "order_id" => $order->getId()
                 ]
             ));
+
+            dd('Payment Taken', $charge);
 
             return Redirect::route('vendirun.checkoutSuccess');
         }

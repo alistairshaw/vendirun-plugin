@@ -73,6 +73,7 @@ class VendirunServiceProvider extends ServiceProvider {
         $this->app->bind('AlistairShaw\Vendirun\App\Lib\Social\SocialLinks', 'AlistairShaw\Vendirun\App\Lib\Social\SocialLinksStandard');
         $this->app->bind('AlistairShaw\Vendirun\App\Entities\Cart\CartRepository', 'AlistairShaw\Vendirun\App\Entities\Cart\ApiCartRepository');
         $this->app->bind('AlistairShaw\Vendirun\App\Entities\Order\OrderRepository', 'AlistairShaw\Vendirun\App\Entities\Order\ApiOrderRepository');
+        $this->app->bind('AlistairShaw\Vendirun\App\Entities\Customer\CustomerRepository', 'AlistairShaw\Vendirun\App\Entities\Customer\ApiCustomerRepository');
 
 		// aliases
 		$loader = AliasLoader::getInstance();

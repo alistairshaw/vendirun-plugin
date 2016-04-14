@@ -1,6 +1,6 @@
 <?php namespace AlistairShaw\Vendirun\App\Http\Composers;
 
-use AlistairShaw\Vendirun\App\Lib\Cart\Cart;
+use AlistairShaw\Vendirun\App\Entities\Cart\CartFactory;
 use AlistairShaw\Vendirun\App\Lib\CurrencyHelper;
 use AlistairShaw\Vendirun\App\Lib\LocaleHelper;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\VendirunApi;
@@ -112,13 +112,16 @@ class ProductViewComposer {
         $view->with('favouriteProducts', $favouriteProducts)->with('favouriteProductsArray', $favouriteProductsArray);
     }
 
+    /**
+     * @param View $view
+     */
     public function cart(View $view)
     {
         $viewData = $view->getData();
         if (!isset($viewData['cart']))
         {
-            $cart = new Cart();
-            $view->with('cart', $cart->getProducts());
+            $cartFactory = new CartFactory(App::make('AlistairShaw\Vendirun\App\Entities\Cart\CartRepository'));
+            $view->with('cart', $cartFactory->make());
         }
     }
 }

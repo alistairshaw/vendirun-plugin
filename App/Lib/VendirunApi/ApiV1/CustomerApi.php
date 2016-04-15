@@ -17,6 +17,7 @@ class CustomerApi extends BaseApi {
 	{
 		$url = 'customer/store';
         return $this->request($url, $params, true);
+        //todo: put this back so it sends an email when a customer signs up if API access is unavailable
         /*try
         {
 

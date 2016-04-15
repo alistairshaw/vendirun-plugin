@@ -16,7 +16,6 @@ class UpdateShoppingCart
 
         $cartRepository = App::make('AlistairShaw\Vendirun\App\Entities\Cart\CartRepository');
 
-        $cartFactory = new CartFactory($cartRepository);
-        $cartRepository->saveCart($cartFactory->make()->getItems());
+        $cartRepository->saveCart(Session::get('shoppingCart'));
     }
 }

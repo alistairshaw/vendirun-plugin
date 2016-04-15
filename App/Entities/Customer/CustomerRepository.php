@@ -3,10 +3,9 @@
 interface CustomerRepository {
 
     /**
-     * @param string $customerToken
      * @return Customer
      */
-    public function find($customerToken);
+    public function find();
 
     /**
      * @param Customer $customer

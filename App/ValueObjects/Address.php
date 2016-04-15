@@ -88,4 +88,12 @@ class Address {
         return false;
     }
 
+    /**
+     * @return int
+     */
+    public function getCountryId()
+    {
+        return $this->countryId;
+    }
+
 }

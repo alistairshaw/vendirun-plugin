@@ -3,8 +3,10 @@
 use AlistairShaw\Vendirun\App\Entities\Cart\CartItem\CartItemFactory;
 use AlistairShaw\Vendirun\App\Entities\Cart\Helpers\ShippingCalculator;
 use AlistairShaw\Vendirun\App\Entities\Cart\Helpers\TaxCalculator;
+use AlistairShaw\Vendirun\App\Entities\Customer\Helpers\CustomerHelper;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\Exceptions\FailResponseException;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\VendirunApi;
+use App;
 use Config;
 use Request;
 use Session;
@@ -34,10 +36,10 @@ class CartFactory {
     public function make($countryId = null, $shippingType = null)
     {
         // if no country select a default
-        if (!$countryId) $countryId = $this->getDefaultCountry();
+        if (!$countryId) $countryId = CustomerHelper::getDefaultCountry();
 
         $productVariationIds = $this->cartRepository->getCart();
-        $products = $this->cartRepository->getProducts($productVariationIds)->result;
+        $products = $this->cartRepository->getProducts()->result;
         $availableShippingTypes = ShippingCalculator::availableShippingTypes($products, $countryId);
 
         if ((count($availableShippingTypes) > 0) && !in_array($shippingType, $availableShippingTypes)) $shippingType = $availableShippingTypes[0];
@@ -52,7 +54,7 @@ class CartFactory {
 
         $params = [
             'ids' => $productVariationIds,
-            'items' => $cartItemFactory->makeFromIds($productVariationIds, $priceIncludesTax),
+            'items' => $cartItemFactory->makeFromIds($priceIncludesTax),
             'countryId' => $countryId,
             'shippingType' => $shippingType,
             'priceIncludesTax' => $priceIncludesTax,
@@ -63,32 +65,6 @@ class CartFactory {
         ];
 
         return new Cart($this->cartRepository, $params);
-    }
-
-    /**
-     * @return int
-     */
-    private function getDefaultCountry()
-    {
-        // if country ID is in the GET then obviously, that
-        if (Request::has('countryId')) return Request::get('countryId');
-
-        // if user is logged in, get their primary address country
-        if (Session::has('token'))
-        {
-            $customer = VendirunApi::makeRequest('customer/find', ['token' => Session::get('token')])->getData();
-            if (count($customer->primary_address) > 0 && $customer->primary_address->country_id)
-            {
-                return $customer->primary_address->country_id;
-            }
-        }
-
-        // get company default country
-        $clientInfo = Config::get('clientInfo');
-        if ($clientInfo->country_id) return $clientInfo->country_id;
-
-        // use UK as super-default if company default not set
-        return 79;
     }
 
 }

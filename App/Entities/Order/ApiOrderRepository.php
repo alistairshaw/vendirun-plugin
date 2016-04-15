@@ -1,9 +1,9 @@
 <?php namespace AlistairShaw\Vendirun\App\Entities\Order;
 
+use AlistairShaw\Vendirun\App\Entities\Customer\Helpers\CustomerHelper;
 use AlistairShaw\Vendirun\App\Entities\Order\OrderItem\OrderItem;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\Exceptions\FailResponseException;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\VendirunApi;
-use Session;
 
 class ApiOrderRepository implements OrderRepository {
 
@@ -17,7 +17,7 @@ class ApiOrderRepository implements OrderRepository {
     {
         $params = [
             'id' => $id,
-            'token' => Session::get('token'),
+            'token' => CustomerHelper::checkLoggedinCustomer(),
             'remove_one_time_token' => $removeOneTimeToken
         ];
 
@@ -25,6 +25,7 @@ class ApiOrderRepository implements OrderRepository {
         {
             $orderFactory = new OrderFactory($this);
             $apiResult = VendirunApi::makeRequest('order/find', $params)->getData();
+
             $order = $orderFactory->fromApi($apiResult);
 
             $order->setOneTimeToken($oneTimeToken);
@@ -61,6 +62,7 @@ class ApiOrderRepository implements OrderRepository {
 
         $params = [
             'id' => $order->getId(),
+            'customer_id' => $order->getCustomer()->getId(),
             'full_name' => $order->getCustomer()->fullName(),
             'company_name' => $order->getCustomer()->getCompanyName(),
             'jobrole' => $order->getCustomer()->getJobRole(),

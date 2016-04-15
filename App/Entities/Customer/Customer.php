@@ -1,6 +1,7 @@
 <?php namespace AlistairShaw\Vendirun\App\Entities\Customer;
 
 use AlistairShaw\NameExploder\NameExploder;
+use AlistairShaw\Vendirun\App\ValueObjects\Address;
 use AlistairShaw\Vendirun\App\ValueObjects\Name;
 
 class Customer {
@@ -36,12 +37,17 @@ class Customer {
     private $taxNumber;
 
     /**
+     * @var array
+     */
+    private $addresses;
+
+    /**
      * Customer constructor.
      * @param null   $id
      * @param Name   $name
      * @param string $primaryEmail
      */
-    public function __construct($id = null, Name $name = null, $primaryEmail = '')
+    public function __construct($id = NULL, Name $name = NULL, $primaryEmail = '')
     {
         $this->id = $id;
         $this->name = $name;
@@ -142,6 +148,43 @@ class Customer {
     public function setTaxNumber($taxNumber)
     {
         $this->taxNumber = $taxNumber;
+    }
+
+    /**
+     * @return array
+     */
+    public function getAddresses()
+    {
+        return $this->addresses;
+    }
+
+    /**
+     * @param Address $address
+     */
+    public function addAddress(Address $address)
+    {
+        $this->addresses[] = $address;
+    }
+
+    /**
+     * @return Address
+     */
+    public function getPrimaryAddress()
+    {
+        if (count($this->addresses) == 0) return NULL;
+
+        return $this->addresses[0];
+    }
+
+    /**
+     * @param null $addressId
+     * @return Address|mixed
+     */
+    public function getAddressFromAddressId($addressId = NULL)
+    {
+        foreach ($this->addresses as $address) if ($address->getId() == $addressId) return $address;
+
+        return $this->getPrimaryAddress();
     }
 
 }

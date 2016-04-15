@@ -2,16 +2,16 @@
 
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\Exceptions\FailResponseException;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\VendirunApi;
+use AlistairShaw\Vendirun\App\ValueObjects\Address;
 use AlistairShaw\Vendirun\App\ValueObjects\Name;
 use Session;
 
 class ApiCustomerRepository implements CustomerRepository {
 
     /**
-     * @param string $customerToken
      * @return Customer
      */
-    public function find($customerToken)
+    public function find()
     {
         try
         {
@@ -19,15 +19,31 @@ class ApiCustomerRepository implements CustomerRepository {
                 'token' => Session::get('token')
             ];
             $apiCustomer = VendirunApi::makeRequest('customer/find', $data)->getData();
-            
-            $name = new Name($apiCustomer->title, $apiCustomer->first_name, '', $apiCustomer->last_name);
-            $customer = new Customer($apiCustomer->id, $name, $apiCustomer->primary_email);
+
+            $customerFactory = new CustomerFactory($this);
+            $customer = $customerFactory->make($apiCustomer->id, $apiCustomer->fullname, $apiCustomer->primary_email);
             $customer->setCompanyName($apiCustomer->organisation_name);
-            $customer->setJobRole($apiCustomer->job_role);
+            $customer->setJobRole($apiCustomer->jobrole);
+
+            foreach ($apiCustomer->addresses as $address)
+            {
+                $customer->addAddress(new Address([
+                    'id' => $address->id,
+                    'address1' => $address->address1,
+                    'address2' => $address->address2,
+                    'address3' => $address->address3,
+                    'city' => $address->city,
+                    'state' => $address->state,
+                    'postcode' => $address->postcode,
+                    'countryId' => $address->country_id
+                ]));
+            }
+            
             return $customer;
         }
         catch (FailResponseException $e)
         {
+            Session::remove('token');
             return false;
         }
     }

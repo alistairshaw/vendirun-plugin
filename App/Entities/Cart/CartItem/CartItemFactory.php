@@ -65,16 +65,15 @@ class CartItemFactory {
     }
 
     /**
-     * @param array $productVariationIds
      * @param bool  $priceIncludesTax
      * @return array
      */
-    public function makeFromIds($productVariationIds, $priceIncludesTax)
+    public function makeFromIds($priceIncludesTax)
     {
-        $products = $this->cartRepository->getProducts($productVariationIds);
+        $products = $this->cartRepository->getProducts();
 
         $final = [];
-        foreach ($this->getUniqueList($productVariationIds) as $productVariationId => $quantity)
+        foreach ($this->getUniqueList($this->cartRepository->getCart()) as $productVariationId => $quantity)
         {
             foreach ($products->result as $product)
             {

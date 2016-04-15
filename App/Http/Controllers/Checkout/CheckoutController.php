@@ -5,6 +5,7 @@ use AlistairShaw\Vendirun\App\Entities\Cart\CartFactory;
 use AlistairShaw\Vendirun\App\Entities\Cart\CartRepository;
 use AlistairShaw\Vendirun\App\Entities\Customer\CustomerFactory;
 use AlistairShaw\Vendirun\App\Entities\Customer\CustomerRepository;
+use AlistairShaw\Vendirun\App\Entities\Customer\Helpers\CustomerHelper;
 use AlistairShaw\Vendirun\App\Entities\Order\Order;
 use AlistairShaw\Vendirun\App\Entities\Order\OrderFactory;
 use AlistairShaw\Vendirun\App\Entities\Order\OrderRepository;
@@ -26,33 +27,24 @@ use View;
 class CheckoutController extends VendirunBaseController {
 
     /**
-     * @var bool
-     */
-    protected $primaryPages = true;
-
-    /**
-     * @param CartRepository $cartRepository
+     * @param CartRepository     $cartRepository
+     * @param CustomerRepository $customerRepository
      * @return \Illuminate\Contracts\View\View
      */
-    public function index(CartRepository $cartRepository)
+    public function index(CartRepository $cartRepository, CustomerRepository $customerRepository)
     {
+        $this->setPrimaryPath();
+
+        $data['customer'] = $customerRepository->find();
+        $data['defaultAddress'] = $data['customer'] ? $data['customer']->getPrimaryAddress() : NULL;
+
         $countryId = NULL;
-        $data['customer'] = false;
-        if (Session::has('token'))
-        {
-            try
-            {
-                $data['customer'] = VendirunApi::makeRequest('customer/find', ['token' => Session::get('token')])->getData();
-            }
-            catch (FailResponseException $e)
-            {
-                // if we get a fail response, means customer is invalid, remove token from session
-                Session::remove('token');
-            }
-        }
+        $countryId = CustomerHelper::getDefaultCountry();
+        if ($data['defaultAddress']) $countryId = $data['defaultAddress']->getCountryId();
+        if (Request::old('shippingaddressId')) $countryId = $data['customer']->getAddressFromAddressId(Request::old('shippingaddressId'))->getCountryId();
 
         $cartFactory = new CartFactory($cartRepository);
-        $data['cart'] = $cartFactory->make(Request::input('countryId', NULL), Request::input('shippingType', NULL));
+        $data['cart'] = $cartFactory->make($countryId, Request::get('shippingType', NULL));
         $data['paymentGateways'] = $this->getPaymentGateways();
 
         if (count($data['cart']->getItems()) == 0) return Redirect::route(LocaleHelper::localePrefix() . 'vendirun.productCart');
@@ -61,11 +53,23 @@ class CheckoutController extends VendirunBaseController {
     }
 
     /**
+     * @param CustomerRepository $customerRepository
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function recalculateShipping()
+    public function recalculateShipping(CustomerRepository $customerRepository)
     {
-        return Redirect::route('vendirun.checkout', ['countryId' => Request::get('shippingcountryId'), 'shippingTypeId' => Request::get('shippingTypeId')]);
+        $customer = $customerRepository->find();
+
+        $countryId = NULL;
+        $countryId = CustomerHelper::getDefaultCountry();
+        if (Request::has('countryId')) $countryId = Request::get('countryId');
+        if (Request::has('shippingaddressId'))
+        {
+            $customerCountryId = $customer->getAddressFromAddressId(Request::get('shippingaddressId'));
+            if ($customerCountryId) $countryId = $customerCountryId->getCountryId();
+        }
+
+        return Redirect::route('vendirun.checkout', ['countryId' => $countryId, 'shippingTypeId' => Request::get('shippingTypeId', NULL)])->withInput();
     }
 
     /**
@@ -77,37 +81,27 @@ class CheckoutController extends VendirunBaseController {
      */
     public function process(OrderRequest $request, CartRepository $cartRepository, OrderRepository $orderRepository, CustomerRepository $customerRepository)
     {
-        if (Request::has('recalculateShipping')) return $this->recalculateShipping();
-
-        // Create new order
-        if ($request->get('shippingcountryId'))
-        {
-            $countryId = $request->get('shippingcountryId');
-        }
-        else
-        {
-            //todo: get country from shipping address ID
-            $countryId = '';
-        }
-
-        $cartFactory = new CartFactory($cartRepository);
-        $cart = $cartFactory->make($countryId, Request::input('shippingType', NULL));
+        if (Request::has('recalculateShipping')) return $this->recalculateShipping($customerRepository);
 
         $name = new Name(Request::get('fullName'));
         $email = Request::get('email');
-
-        if (Session::has('token'))
+        if ($customer = $customerRepository->find())
         {
-            $customer = $customerRepository->find(Session::get('token'));
             $customer->setName($name);
             $customer->setPrimaryEmail($email);
             $customerRepository->save($customer);
+            $shippingAddress = $customer->getAddressFromAddressId($request->get('shippingaddressId'));
+            $countryId = $shippingAddress->getCountryId();
         }
         else
         {
             $customerFactory = new CustomerFactory($customerRepository);
             $customer = $customerFactory->make(NULL, Request::get('fullName'), Request::get('emailAddress'));
+            $countryId = $request->get('shippingcountryId', NULL);
         }
+
+        $cartFactory = new CartFactory($cartRepository);
+        $cart = $cartFactory->make($countryId, Request::input('shippingType', NULL));
 
         $orderFactory = new OrderFactory($orderRepository);
         $order = $orderFactory->fromCart($cart, $customer, Request::all());
@@ -119,7 +113,7 @@ class CheckoutController extends VendirunBaseController {
 
         Session::set('orderOneTimeToken', $order->getOneTimeToken());
 
-        //$cartRepository->clear(); //todo put this back
+        $cartRepository->clear();
 
         return $this->processPayment($order);
     }
@@ -131,7 +125,7 @@ class CheckoutController extends VendirunBaseController {
      */
     public function success(OrderRepository $orderRepository, $orderId)
     {
-        // if null, we'll get the most recent order from session
+        // if NULL, we'll get the most recent order from session
         try
         {
             $data['order'] = $orderRepository->find($orderId, Session::get('orderOneTimeToken', NULL));

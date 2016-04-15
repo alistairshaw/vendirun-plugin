@@ -2,6 +2,7 @@
 
 namespace AlistairShaw\Vendirun\App\Http\Controllers\Customer;
 
+use AlistairShaw\Vendirun\App\Entities\Customer\Helpers\CustomerHelper;
 use AlistairShaw\Vendirun\App\Http\Controllers\VendirunBaseController;
 use AlistairShaw\Vendirun\App\Lib\LocaleHelper;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\Exceptions\FailResponseException;
@@ -20,7 +21,7 @@ class PasswordController extends VendirunBaseController {
     public function recovery()
     {
         // log out if logged in
-        if (Session::has('token')) Session::flush();
+        if (CustomerHelper::checkLoggedinCustomer()) Session::flush();
 
         return View::make('vendirun::customer.password.recovery');
     }

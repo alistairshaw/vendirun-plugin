@@ -1,0 +1,19 @@
+.address-select {
+    @extend .row;
+    label {
+        @extend .col-sm-4;
+        ul.address {
+            padding: 20px;
+            margin: 0 0 10px 0;
+            border: 1px solid #ccc;
+            cursor: pointer;
+            li {
+                list-style: none;
+                &.selector {
+                    margin-top: 10px;
+                    @extend .text-center;
+                }
+            }
+        }
+    }
+}

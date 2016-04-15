@@ -17,18 +17,18 @@ class OrderRequest extends Request {
             'emailAddress' => 'required|email',
             'fullName' => 'required',
             'cardHolderName' => 'required',
-            'shippingAddressId' => 'required_without_all:shippingaddress1,shippingcity,shippingcountry',
-            'shippingaddress1' => 'required_without:shippingAddressId',
-            'shippingcity' => 'required_without:shippingAddressId',
-            'shippingcountryId' => 'required_without:shippingAddressId'
+            'shippingaddressId' => 'required_without_all:shippingaddress1,shippingcity,shippingcountry',
+            'shippingaddress1' => 'required_without:shippingaddressId',
+            'shippingcity' => 'required_without:shippingaddressId',
+            'shippingcountryId' => 'required_without:shippingaddressId'
         ];
 
         if (!Request::has('billingAddressSameAsShipping'))
         {
-            $validation['billingAddressId'] = 'required_without_all:billingaddress1,billingcity,billingcountry';
-            $validation['billingaddress1'] = 'required_without:billingAddressId';
-            $validation['billingcity'] = 'required_without:billingAddressId';
-            $validation['billingcountryId'] = 'required_without:billingAddressId';
+            $validation['billingaddressId'] = 'required_without_all:billingaddress1,billingcity,billingcountry';
+            $validation['billingaddress1'] = 'required_without:billingaddressId';
+            $validation['billingcity'] = 'required_without:billingaddressId';
+            $validation['billingcountryId'] = 'required_without:billingaddressId';
         }
 
         return $validation;

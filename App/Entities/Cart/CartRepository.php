@@ -26,10 +26,9 @@ interface CartRepository {
     public function getCart();
 
     /**
-     * @param $ids
      * @return object
      */
-    public function getProducts($ids);
+    public function getProducts();
 
     /**
      * @return bool

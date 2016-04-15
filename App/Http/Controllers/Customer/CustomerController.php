@@ -113,7 +113,7 @@ class CustomerController extends VendirunBaseController {
 
             return Redirect::route(LocaleHelper::localePrefix() . 'vendirun.home');
         }
-        catch (\Exception $e)
+        catch (FailResponseException $e)
         {
             return Redirect::route(LocaleHelper::localePrefix() . 'vendirun.register')->withInput()->withErrors('Invalid Username or Password');
         }

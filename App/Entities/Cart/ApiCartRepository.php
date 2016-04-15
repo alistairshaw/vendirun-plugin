@@ -1,5 +1,6 @@
 <?php namespace AlistairShaw\Vendirun\App\Entities\Cart;
 
+use AlistairShaw\Vendirun\App\Entities\Customer\Helpers\CustomerHelper;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\Exceptions\FailResponseException;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\VendirunApi;
 use Session;
@@ -13,7 +14,8 @@ class ApiCartRepository implements CartRepository {
     public function add($id)
     {
         $items = $this->getCart();
-        $items[] = $id;
+        $items[] = (int)$id;
+        var_dump($items);
         return $this->saveCart($items);
     }
 
@@ -40,20 +42,30 @@ class ApiCartRepository implements CartRepository {
     }
 
     /**
-     * @param array $items
+     * @param $items
      * @return bool
+     * @throws \Exception
      */
     public function saveCart($items)
     {
-        Session::put('shoppingCart', $items);
+        if (!is_array($items)) throw new \Exception('Invalid cart items passed to repository');
+        if (count($items) == 0)
+        {
+            Session::put('shoppingCart', []);
+        }
+        else
+        {
+            if (!is_int($items[0])) throw new \Exception('Invalid cart item passed to repository');
+            Session::put('shoppingCart', $items);
+        }
         Session::save();
 
-        if (Session::has('token'))
+        if ($token = CustomerHelper::checkLoggedinCustomer())
         {
             try
             {
                 $data = [
-                    'token' => Session::get('token'),
+                    'token' => $token,
                     'ids' => $items
                 ];
                 VendirunApi::makeRequest('cart/update', $data)->getData();
@@ -73,7 +85,7 @@ class ApiCartRepository implements CartRepository {
     public function getCart()
     {
         if (Session::has('shoppingCart')) return Session::get('shoppingCart');
-        if (!Session::has('token')) return [];
+        if (!CustomerHelper::checkLoggedinCustomer()) return [];
 
         try
         {
@@ -109,12 +121,11 @@ class ApiCartRepository implements CartRepository {
     }
 
     /**
-     * @param $productVariationIds
      * @return object
      */
-    public function getProducts($productVariationIds)
+    public function getProducts()
     {
-        return VendirunApi::makeRequest('product/search', ['variation_list_only' => implode(",", $productVariationIds)])->getData();
+        return VendirunApi::makeRequest('product/search', ['variation_list_only' => implode(",", $this->getCart())])->getData();
     }
 
     /**

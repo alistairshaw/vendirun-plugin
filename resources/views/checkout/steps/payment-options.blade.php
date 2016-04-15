@@ -21,12 +21,12 @@
 
             <div class="form-group">
                 <label for="textinput">{{ trans('vendirun::forms.cardHolderName') }}</label>
-                <input type="text" name="cardHolderName" maxlength="70" placeholder="{{ trans('vendirun::forms.cardHolderName') }}" class="form-control" value="{{ old('cardHolderName', 'Alistair Shaw') }}">
+                <input type="text" name="cardHolderName" maxlength="70" placeholder="{{ trans('vendirun::forms.cardHolderName') }}" class="form-control" value="{{ old('cardHolderName', '') }}">
             </div>
 
             <div class="form-group">
                 <label for="textinput">{{ trans('vendirun::forms.cardNumber') }}</label>
-                <input type="text" maxlength="19" placeholder="{{ trans('vendirun::forms.cardNumber') }}" class="form-control" data-stripe="number" value="4242424242424242">
+                <input type="text" maxlength="19" placeholder="{{ trans('vendirun::forms.cardNumber') }}" class="form-control" data-stripe="number" value="">
             </div>
 
             <div class="expiry-cvv">
@@ -60,7 +60,7 @@
                 <div class="cvv">
                     <div class="form-group">
                         <label for="textinput">{{ trans('vendirun::forms.cvv') }}</label>
-                        <input type="text" id="cvv" placeholder="{{ trans('vendirun::forms.cvv') }}" maxlength="4" class="form-control" data-stripe="cvc" value="123">
+                        <input type="text" id="cvv" placeholder="{{ trans('vendirun::forms.cvv') }}" maxlength="4" class="form-control" data-stripe="cvc" value="">
                     </div>
                 </div>
             </div>
@@ -74,7 +74,7 @@
         </label>
     </div>
     @if ($customer)
-        @include('vendirun::customer.partials.address-form', ['selected' => $customer->primary_address->id, 'prefix' => 'billing'])
+        @include('vendirun::customer.partials.address-select', ['selected' => $defaultAddress, 'prefix' => 'billing'])
     @else
         @include('vendirun::customer.partials.address-form', ['prefix' => 'billing'])
     @endif

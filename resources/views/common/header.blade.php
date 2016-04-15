@@ -32,7 +32,7 @@
                         <li><a href="{{ route(LocaleHelper::localePrefix() . 'vendirun.searchProperties') }}">{{ trans('vendirun::property.search') }}</a></li>
                         <li><a href="{{ route(LocaleHelper::localePrefix() . 'vendirun.location') }}">{{ trans('vendirun::property.locations') }}</a></li>
                         <li><a href="{{ route(LocaleHelper::localePrefix() . 'vendirun.category') }}">{{ trans('vendirun::property.categories') }}</a></li>
-                        @if (Session::has('token'))
+                        @if (CustomerHelper::checkLoggedinCustomer())
                             <li class="divider"></li>
                             <li><a href="{{ route(LocaleHelper::localePrefix() . 'vendirun.viewFavouriteProperties') }}">{{ trans('vendirun::property.favourites') }}</a></li>
                         @endif

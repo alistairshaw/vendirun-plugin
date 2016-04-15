@@ -31,9 +31,9 @@ class OrderFactory {
      */
     public function fromCart(Cart $cart, Customer $customer, $params)
     {
-        if (isset($params['shippingAddressId']))
+        if (isset($params['shippingaddressId']))
         {
-            $shippingAddress = new Address(['id' => $params['shippingAddressId']]);
+            $shippingAddress = $customer->getAddressFromAddressId($params['shippingaddressId']);
         }
         else
         {
@@ -55,9 +55,9 @@ class OrderFactory {
         }
         else
         {
-            if (isset($params['billingAddressId']))
+            if (isset($params['billingaddressId']))
             {
-                $billingAddress = new Address(['id' => $params['billingAddressId']]);
+                $billingAddress = $customer->getAddressFromAddressId($params['billingaddressId']);
             }
             else
             {
@@ -88,7 +88,9 @@ class OrderFactory {
             }
         }
 
-        return new Order($customer, $billingAddress, $shippingAddress, $items, $cart->getShippingType());
+        $order = new Order($customer, $billingAddress, $shippingAddress, $items, $cart->getShippingType());
+
+        return $order;
     }
 
     /**
@@ -117,10 +119,10 @@ class OrderFactory {
             'countryId' => $order->shipping_address->country_id,
         ]);
 
-        $customer = new Customer($order->customer_id, new Name($order->customer_id ? $order->customer->full_name : $order->guest_full_name));
+        $customer = new Customer($order->customer_id, new Name($order->customer_id ? $order->customer->fullname : $order->guest_full_name));
         $customer->setJobRole($order->customer_id ? $order->customer->jobrole : $order->guest_jobrole);
         $customer->setPrimaryEmail($order->customer_id ? $order->customer->primary_email : $order->guest_email);
-        $customer->setCompanyName($order->customer_id ? $order->customer->company_name : $order->guest_company_name);
+        $customer->setCompanyName($order->customer_id ? $order->customer->organisation_name : $order->guest_company_name);
         $customer->setTaxNumber($order->customer_id ? $order->customer->tax_number : $order->guest_tax_number);
 
         $items = [];

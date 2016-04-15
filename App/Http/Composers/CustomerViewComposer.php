@@ -1,5 +1,6 @@
 <?php namespace AlistairShaw\Vendirun\App\Http\Composers;
 
+use AlistairShaw\Vendirun\App\Entities\Customer\Helpers\CustomerHelper;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\VendirunApi;
 use Illuminate\View\View;
 use Session;
@@ -12,10 +13,8 @@ class CustomerViewComposer {
     public function customerDetails($view)
     {
         // check if token exists and confirm login
-        if (Session::has('token'))
+        if ($token = CustomerHelper::checkLoggedinCustomer())
         {
-            $token = Session::get('token');
-
             $loggedIn = VendirunApi::makeRequest('customer/tokenAuth', ['token' => $token]);
             if ($loggedIn->getSuccess())
             {

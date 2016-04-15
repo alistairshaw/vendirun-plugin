@@ -1,14 +1,11 @@
 <?php namespace AlistairShaw\Vendirun\App\Http\Controllers;
 
 use AlistairShaw\Vendirun\App\Lib\ClientHelper;
-use AlistairShaw\Vendirun\App\Lib\VendirunApi\VendirunApi;
 use App;
 use App\Http\Controllers\Controller;
 use Config;
-use Redirect;
 use Session;
 use Request;
-use View;
 
 class VendirunBaseController extends Controller {
 
@@ -46,33 +43,6 @@ class VendirunBaseController extends Controller {
         $path = Request::getPathInfo() . (Request::getQueryString() ? ('?' . Request::getQueryString()) : '');
 
         Session::put('primaryPagePath', $path);
-    }
-
-    /**
-     * @param bool $customer
-     * @return int
-     */
-    protected function _getDefaultCountry($customer = false)
-    {
-        // if country ID is in the GET then obviously, that
-        if (Request::has('countryId')) return Request::get('countryId');
-
-        // if user is logged in, get their primary address country
-        if (Session::has('token'))
-        {
-            if (!$customer) $customer = VendirunApi::makeRequest('customer/find', ['token' => Session::get('token')])->getData();
-            if (count($customer->primary_address) > 0 && $customer->primary_address->country_id)
-            {
-                return $customer->primary_address->country_id;
-            }
-        }
-
-        // get company default country
-        $clientInfo = Config::get('clientInfo');
-        if ($clientInfo->country_id) return $clientInfo->country_id;
-
-        // use UK as super-default if company default not set
-        return 79;
     }
 
 }

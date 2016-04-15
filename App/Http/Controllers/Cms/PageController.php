@@ -64,7 +64,7 @@ class PageController extends VendirunBaseController {
      */
     public function menu()
     {
-        return View::make('vendirun::cms.menu', ['menuSlug' => 'main-menu']);
+        return View::make('vendirun::cms.menu-example');
     }
 
     /**

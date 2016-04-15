@@ -17,7 +17,6 @@ class ComposerServiceProvider extends ServiceProvider {
     {
         $this->registerPropertyComposers();
         $this->registerProductComposers();
-        $this->registerCheckoutComposers();
         $this->registerCmsComposers();
         $this->registerCustomerComposers();
         $this->registerWidgetComposers();
@@ -54,11 +53,6 @@ class ComposerServiceProvider extends ServiceProvider {
         $this->app->view->composer('vendirun::product.list', 'AlistairShaw\Vendirun\App\Http\Composers\ProductViewComposer@getFavourites');
         $this->app->view->composer('vendirun::product.recommend', 'AlistairShaw\Vendirun\App\Http\Composers\ProductViewComposer@getFavourites');
         $this->app->view->composer('vendirun::product.partials.related-products', 'AlistairShaw\Vendirun\App\Http\Composers\ProductViewComposer@getFavourites');
-    }
-
-    private function registerCheckoutComposers()
-    {
-        
     }
 
     private function registerCmsComposers()

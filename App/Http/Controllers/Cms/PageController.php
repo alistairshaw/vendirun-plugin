@@ -13,14 +13,26 @@ use View;
 class PageController extends VendirunBaseController {
 
     protected $primaryPages = true;
-    
+
     /**
      * @return \Illuminate\View\View
      */
     public function index()
     {
-        if (view()->exists('home')) {
-            return View::make('home');
+        if (view()->exists('home'))
+        {
+            $data = [];
+            try
+            {
+                $page = VendirunApi::makeRequest('cms/page', ['slug' => '', 'locale' => App::getLocale()]);
+                $data['page'] = $page->getData();
+            }
+            catch (FailResponseException $e)
+            {
+                abort('404');
+            }
+
+            return View::make('home', $data);
         }
 
         return $this->page('');

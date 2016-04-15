@@ -19,6 +19,10 @@ class PageController extends VendirunBaseController {
      */
     public function index()
     {
+        if (view()->exists('home')) {
+            return View::make('home');
+        }
+
         return $this->page('');
     }
 

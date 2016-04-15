@@ -2,12 +2,13 @@
 
 ###Vendirun Laravel Package
 
-* This package can be pulled in to any Laravel project and provides all of the default Vendirun front-end functionality
-* Latest Stable Version: 1.0.6.5
+This package can be pulled in to any Laravel project and provides all of the default Vendirun front-end functionality
+
+Latest Stable Version: 1.0.6.5
 
 ###Importing the package into a new front-end
 
-* Add the repository to your composer.json:
+Add the repository to your composer.json:
 ```php
 "repositories": [
     {
@@ -16,7 +17,7 @@
     }
   ],
 ```
-* Add the package to the require list:
+Add the package to the require list:
 ```php
 "require": {
         "php": ">=5.5.9",
@@ -24,16 +25,26 @@
         "alistairshaw/vendirun": "1.*"
     },
 ```
-* Add the namespace to the PSR-4 section
+Add the namespace to the PSR-4 section
 ```php
 "AlistairShaw\\Vendirun\\": "vendor/alistairshaw/vendirun"
 ```
-* Edit the /config/app.php file and add the VendirunServiceProvider to the app
+Edit the /config/app.php file and add the VendirunServiceProvider to the app
 ```php
-AlistairShaw\Vendirun\App\Providers\VendirunServiceProvider::class)
+AlistairShaw\Vendirun\App\Providers\VendirunServiceProvider::class
+
+composer dump-autoload
+
+// use this to publish all the assets including views
+artisan vendor:publish
+
+// RECOMMENDED: only copy the public assets
+artisan vendor:publish --tag=public
+
+// add --force to overwrite existing files
+artisan vendor:publish --tag=public --force
 ```
-* composer dump-autoload
-* Use 'artisan vendor:publish' to copy public assets to the right place (add tag --tag=public to only publish the images, css, etc and --tag=languages to only publish the language files. Use --force to overwrite existing files)
-* Set the correct endpoint URL, client ID and API Key in the laravel .env file (see .env.example file)
-* The site is working! Now you just need to customise the CSS and any views you like
+Set the correct endpoint URL, client ID and API Key in the laravel .env file (see .env.example file)
+
+The site is working! Now you just need to customise the CSS and any views you like
 

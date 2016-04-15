@@ -34,6 +34,7 @@ class VendirunBaseController extends Controller {
 
         // set public client information to the config so we have access to it everywhere
         $clientInfo = ClientHelper::getClientInfo();
+
         Config::set('clientInfo', $clientInfo);
     }
 
@@ -45,7 +46,6 @@ class VendirunBaseController extends Controller {
         $path = Request::getPathInfo() . (Request::getQueryString() ? ('?' . Request::getQueryString()) : '');
 
         Session::put('primaryPagePath', $path);
-        Session::save();
     }
 
     /**

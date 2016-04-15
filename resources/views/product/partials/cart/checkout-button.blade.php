@@ -2,7 +2,7 @@
     <h2 class="price">
         <small>{{ trans('vendirun::product.totalCartAmount') }}</small>
         <br>
-        <span>{{ CurrencyHelper::formatWithCurrency($cart->displayPrice(), false, '') }}</span>
+        <span>{{ CurrencyHelper::formatWithCurrency($cart->displayTotal(), false, '') }}</span>
     </h2>
     <div class="shipping">
         <small>Shipping</small><br>

@@ -46,10 +46,7 @@ class CartFactory {
         $clientInfo = Config::get('clientInfo');
         $priceIncludesTax = $clientInfo->business_settings->tax->price_includes_tax;
 
-        $taxRate = TaxCalculator::calculateProductTaxRate($clientInfo->business_settings->tax->country_tax_rates, $countryId, $clientInfo->business_settings->tax->default_tax_rate);
         $orderShippingPrice = ShippingCalculator::orderShippingCharge($products, $countryId, $shippingType);
-        $orderShippingTax = $priceIncludesTax ? TaxCalculator::taxFromTotal($orderShippingPrice, $taxRate) : TaxCalculator::totalPlusTax($orderShippingPrice, $taxRate);
-        if ($priceIncludesTax) $orderShippingPrice -= $orderShippingTax;
 
         $cartItemFactory = new CartItemFactory($this->cartRepository, $countryId, $shippingType);
 
@@ -62,7 +59,6 @@ class CartFactory {
             'chargeTaxOnShipping' => $clientInfo->business_settings->tax->charge_tax_on_shipping,
             'defaultTaxRate' => $clientInfo->business_settings->tax->default_tax_rate,
             'orderShippingPrice' => $orderShippingPrice,
-            'orderShippingTax' => $orderShippingTax,
             'availableShippingTypes' => $availableShippingTypes,
         ];
 

@@ -46,13 +46,8 @@ class CartItemFactory {
         $productVariation = $product->variations{0};
 
         $taxRate = TaxCalculator::calculateProductTaxRate($product->tax, $this->countryId);
-        $itemTax = TaxCalculator::calculateItemTax($product->tax, $this->countryId, $productVariation->price, $quantity);
-        $basePrice = $productVariation->price * $quantity;
-        if ($priceIncludesTax) $basePrice -= $itemTax;
 
-        $shippingPrice = ShippingCalculator::shippingForItem($product->shipping, $quantity, $this->countryId, $this->shippingType);
-        $shippingTax = $priceIncludesTax ? TaxCalculator::taxFromTotal($shippingPrice, $taxRate, 1) : TaxCalculator::totalPlusTax($shippingPrice, $taxRate, 1);
-        if ($priceIncludesTax) $shippingPrice -= $shippingTax;
+        $shippingPrice = ShippingCalculator::shippingForItem($product->shipping, 1, $this->countryId, $this->shippingType);
 
         $params = [
             'productVariationId' => $productVariation->id,
@@ -60,10 +55,9 @@ class CartItemFactory {
             'taxRate' => $taxRate,
             'productVariation' => $productVariation,
             'product' => $product,
-            'basePrice' => $basePrice,
-            'itemTax' => $itemTax,
+            'basePrice' => $productVariation->price,
             'shippingPrice' => $shippingPrice,
-            'shippingTax' => $shippingTax,
+            'shippingTaxRate' => $taxRate,
             'priceIncludesTax' => $priceIncludesTax
         ];
 

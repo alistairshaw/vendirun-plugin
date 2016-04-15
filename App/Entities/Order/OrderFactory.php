@@ -84,7 +84,7 @@ class OrderFactory {
 
             for ($i = 1; $i <= $item->getQuantity(); $i++)
             {
-                $items[] = new OrderItem(NULL, $item->getProductVariation()->id, $item->getTaxRate(), $item->singleItemPrice(), $item->getProduct()->product_name, $sku, 0, 0);
+                $items[] = new OrderItem(NULL, $item->getProductVariation()->id, $item->getTaxRate(), $item->getSingleItemPrice($i), $item->getProduct()->product_name, $sku, 0, 0);
             }
         }
 

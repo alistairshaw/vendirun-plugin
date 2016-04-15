@@ -8,8 +8,8 @@
         <h1>{{ trans('vendirun::checkout.checkout') }}</h1>
         <div class="wrapper">
             <div class="checkout-form">
-                @if (isset($paymentError))
-                    <div class="alert alert-danger">{{ $paymentError }}</div>
+                @if (Session::has('paymentError'))
+                    <div class="alert alert-danger">{{ Session::get('paymentError') }}</div>
                 @endif
                 @include('vendirun::checkout.partials.checkout-form')
             </div>

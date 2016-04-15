@@ -24,4 +24,16 @@ class OrderApi extends BaseApi {
 
         return $this->request($url, $params);
     }
+
+    /**
+     * @param $params
+     * @return object
+     * @throws \AlistairShaw\Vendirun\App\Lib\VendirunApi\Exceptions\FailResponseException
+     */
+    public function payment($params)
+    {
+        $url = 'order/payment';
+
+        return $this->request($url, $params);
+    }
 }

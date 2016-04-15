@@ -4,9 +4,9 @@
         <table class="table">
             <tr>
                 <td>SubTotal</td>
-                <td>{{ CurrencyHelper::formatWithCurrency($cart->displayPrice()) }}</td>
+                <td>{{ CurrencyHelper::formatWithCurrency($cart->displayTotal()) }}</td>
             </tr>
-            @if (!$cart->priceIncludesTax())
+            @if (!$cart->getPriceIncludesTax())
             <tr>
                 <td>Tax</td>
                 <td>{{ CurrencyHelper::formatWithCurrency($cart->tax()) }}</td>

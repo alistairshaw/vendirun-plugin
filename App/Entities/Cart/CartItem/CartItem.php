@@ -1,5 +1,7 @@
 <?php namespace AlistairShaw\Vendirun\App\Entities\Cart\CartItem;
 
+use AlistairShaw\Vendirun\App\Entities\Cart\Helpers\TaxCalculator;
+
 class CartItem {
 
     /**
@@ -31,11 +33,6 @@ class CartItem {
      * @var int
      */
     private $basePrice;
-
-    /**
-     * @var float
-     */
-    private $itemTax;
     
     /**
      * @var int
@@ -45,7 +42,7 @@ class CartItem {
     /**
      * @var int
      */
-    private $shippingTax;
+    private $shippingTaxRate;
 
     /**
      * @var bool
@@ -64,9 +61,8 @@ class CartItem {
         $this->productVariation = $params['productVariation'];
         $this->product = $params['product'];
         $this->basePrice = $params['basePrice'];
-        $this->itemTax = $params['itemTax'];
         $this->shippingPrice = $params['shippingPrice'];
-        $this->shippingTax = $params['shippingTax'];
+        $this->shippingTaxRate = $params['shippingTaxRate'];
         $this->priceIncludesTax = $params['priceIncludesTax'];
     }
 
@@ -103,59 +99,76 @@ class CartItem {
     }
 
     /**
+     * Note: if there is more than one item, we need to split the amounts carefully
+     *    so we don't lose any pennies here and there
+     * @param int $count
      * @return int
      */
-    public function displayPrice()
+    public function getSingleItemPrice($count = 1)
     {
-        return $this->priceIncludesTax ? $this->basePrice + $this->itemTax : $this->basePrice;
+        if (!$this->priceIncludesTax) return $this->basePrice;
+
+        $totalWithoutTax = $this->totalBeforeTax();
+        $singleItemPrice = (int)($totalWithoutTax / $this->quantity);
+        if ($count == $this->quantity) $singleItemPrice += $totalWithoutTax % $this->quantity;
+
+        return $singleItemPrice;
     }
 
     /**
-     * @return int
-     */
-    public function displayShipping()
-    {
-        return $this->priceIncludesTax ? $this->shippingPrice + $this->shippingTax : $this->shippingPrice;
-    }
-
-    /**
+     * including price, tax and shipping
      * @return int
      */
     public function total()
     {
-        return $this->basePrice + $this->itemTax + $this->shippingPrice + $this->shippingTax;
+        return $this->totalBeforeTax() + $this->taxWithoutShipping() + $this->shipping();
     }
 
     /**
+     * including price and tax
      * @return int
      */
-    public function basePrice()
+    public function totalWithoutShipping()
     {
-        return $this->basePrice;
+        $total = $this->quantity * $this->basePrice;
+        return $this->priceIncludesTax ? $total :  $total + $this->taxWithoutShipping();
     }
 
     /**
+     * price before tax and without shipping
      * @return int
      */
-    public function singleItemPrice()
+    public function totalBeforeTax()
     {
-        return (int)round($this->basePrice / $this->quantity, 0);
+        $total = $this->basePrice * $this->quantity;
+        return $this->priceIncludesTax ? $total - $this->taxWithoutShipping() : $total;
     }
 
     /**
-     * @return float
+     * just price without shipping or tax
+     * @return int
      */
-    public function tax()
+    public function displayTotal()
     {
-        return $this->itemTax;
+        return $this->quantity * $this->basePrice;
     }
 
     /**
+     * total shipping including tax
      * @return int
      */
     public function shipping()
     {
-        return $this->shippingPrice;
+        return $this->shippingBeforeTax() + $this->shippingTax();
+    }
+
+    /**
+     * total shipping before tax
+     * @return int
+     */
+    public function shippingBeforeTax()
+    {
+        return $this->priceIncludesTax ? ($this->shippingPrice * $this->quantity) - $this->shippingTax() : $this->shippingPrice * $this->quantity;
     }
 
     /**
@@ -163,6 +176,34 @@ class CartItem {
      */
     public function shippingTax()
     {
-        return $this->shippingTax;
+        return $this->priceIncludesTax ? TaxCalculator::taxFromTotal($this->shippingPrice, $this->taxRate, $this->quantity) : (int)($this->shippingPrice / 100 * $this->taxRate) * $this->quantity;
+    }
+
+    /**
+     * shipping display value
+     * @return int
+     */
+    public function displayShipping()
+    {
+        return $this->shippingPrice * $this->quantity;
+    }
+
+    /**
+     * total amount of tax including shipping tax
+     * @return int
+     */
+    public function tax()
+    {
+        $tax = $this->priceIncludesTax ? TaxCalculator::taxFromTotal($this->basePrice, $this->taxRate, $this->quantity) : ($this->basePrice * $this->quantity / 100 * $this->taxRate);
+        return $tax + $this->shippingTax();
+    }
+
+    /**
+     * total amount of tax excluding shipping tax
+     * @return int
+     */
+    public function taxWithoutShipping()
+    {
+        return $this->tax() - $this->shippingTax();
     }
 }

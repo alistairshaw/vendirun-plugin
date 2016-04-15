@@ -8,21 +8,28 @@ use Session;
 class ApiOrderRepository implements OrderRepository {
 
     /**
-     * @param $id
+     * @param      $id
+     * @param null $oneTimeToken
+     * @param bool $removeOneTimeToken
      * @return Order
      */
-    public function getOrder($id = null)
+    public function find($id = null, $oneTimeToken = null, $removeOneTimeToken = true)
     {
         $params = [
             'id' => $id,
-            'one_time_token' => Session::get('orderOneTimeToken'),
-            'token' => Session::get('token')
+            'token' => Session::get('token'),
+            'remove_one_time_token' => $removeOneTimeToken
         ];
 
         try
         {
             $orderFactory = new OrderFactory($this);
-            return $orderFactory->fromApi(VendirunApi::makeRequest('order/find', $params)->getData());
+            $apiResult = VendirunApi::makeRequest('order/find', $params)->getData();
+            $order = $orderFactory->fromApi($apiResult);
+
+            $order->setOneTimeToken($oneTimeToken);
+
+            return $order;
         }
         catch (FailResponseException $e)
         {
@@ -34,13 +41,22 @@ class ApiOrderRepository implements OrderRepository {
      * @param Order $order
      * @return bool
      */
-    public function saveOrder(Order $order)
+    public function save(Order $order)
     {
         $products = [];
+        $items = [];
         foreach ($order->getItems() as $item)
         {
             /* @var $item OrderItem */
             $products[] =  $item->getProductVariationId();
+            $items[] = [
+                'product_variation_id' => $item->getProductVariationId(),
+                'product_name' => $item->getProductName(),
+                'product_sku' => $item->getProductSku(),
+                'price' => $item->getPrice(),
+                'tax_rate' => $item->getTaxRate(),
+                'is_shipping' => $item->isShipping()
+            ];
         }
 
         $params = [
@@ -68,14 +84,13 @@ class ApiOrderRepository implements OrderRepository {
             'billing_country_id' => $order->getBillingAddress()->getArray()['countryId'],
             'billing_address_same_as_shipping' => $order->getBillingAddress()->isEqualTo($order->getShippingAddress()),
             'products' => $products,
-            'shipping_type' => $order->getShippingType()
+            'shipping_type' => $order->getShippingType(),
+            'items' => $items
         ];
 
         $result = VendirunApi::makeRequest('order/store', $params)->getData();
 
-        Session::set('orderOneTimeToken', $result->one_time_token);
-
-        return $this->getOrder($result->order_id);
+        return $this->find($result->order_id, $result->one_time_token, false);
     }
 
 }

@@ -1,5 +1,6 @@
 <?php namespace AlistairShaw\Vendirun\App\Entities\Order;
 
+use AlistairShaw\Vendirun\App\Entities\Cart\Helpers\TaxCalculator;
 use AlistairShaw\Vendirun\App\Entities\Customer\Customer;
 use AlistairShaw\Vendirun\App\Entities\Order\OrderItem\OrderItem;
 use AlistairShaw\Vendirun\App\ValueObjects\Address;
@@ -35,6 +36,13 @@ class Order {
      * @var string
      */
     private $shippingType;
+
+    /**
+     * This allows us to recall one order one time, for the order confirmation screen,
+     *    if the customer is checking out as a guest
+     * @var string
+     */
+    private $oneTimeToken;
 
     /**
      * Order constructor.
@@ -118,13 +126,58 @@ class Order {
     {
         if (!$this->items) return 0;
         $total = 0;
-        foreach ($this->items as $item)
+        foreach ($this->concatItems() as $item)
         {
-            /* @var $item OrderItem */
-            $total += $item->getItemTotal();
+            $total += $item['price'] + TaxCalculator::totalPlusTax($item['price'], $item['taxRate']);
         }
 
         return $total;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOneTimeToken()
+    {
+        return $this->oneTimeToken;
+    }
+
+    /**
+     * @param string $oneTimeToken
+     */
+    public function setOneTimeToken($oneTimeToken)
+    {
+        $this->oneTimeToken = $oneTimeToken;
+    }
+
+    /**
+     * @return array
+     */
+    public function concatItems()
+    {
+        $final = [];
+        foreach ($this->getItems() as $item)
+        {
+            /* @var $item OrderItem */
+            if (isset($final[$item->getProductVariationId()]))
+            {
+                $final[$item->getProductVariationId()]['price'] += $item->getPrice();
+                $final[$item->getProductVariationId()]['quantity']++;
+            }
+            else
+            {
+                $final[$item->getProductVariationId()] = [
+                    'productSku' => $item->getProductSku(),
+                    'productName' => $item->getProductName(),
+                    'price' => $item->getPrice(),
+                    'quantity' => 1,
+                    'discount' => 0,
+                    'taxRate' => $item->getTaxRate()
+                ];
+            }
+        }
+
+        return $final;
     }
 
 }

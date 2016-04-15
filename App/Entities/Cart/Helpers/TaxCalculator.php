@@ -16,6 +16,7 @@ class TaxCalculator {
             if (in_array($countryId, (array)$row->countries)) return (float)$row->percentage;
             if ($row->id === NULL) $default = (float)$row->percentage;
         }
+
         return $default;
     }
 
@@ -54,6 +55,7 @@ class TaxCalculator {
             if (in_array($countryId, (array)$row->countries)) return (bool)$row->price_includes_tax;
             if ($row->id === NULL) $default = (float)$row->price_includes_tax;
         }
+
         return $default;
     }
 
@@ -65,7 +67,8 @@ class TaxCalculator {
      */
     public static function taxFromTotal($amount, $taxRate, $quantity = 1)
     {
-        $itemSubTotal = (int)(round(($amount * $quantity * 100 / ($taxRate + 100)), 0, PHP_ROUND_HALF_UP));
+        $itemSubTotal = (int)(round(($amount * $quantity * 100 / ($taxRate + 100)), 0, PHP_ROUND_HALF_DOWN));
+
         return ($amount * $quantity) - $itemSubTotal;
     }
 
@@ -77,7 +80,7 @@ class TaxCalculator {
      */
     public static function totalPlusTax($amount, $taxRate, $quantity = 1)
     {
-        return (int)(round(($amount * $quantity * $taxRate / 100), 0));
+        return (int)(round(($amount * $quantity * $taxRate / 100), 0, PHP_ROUND_HALF_DOWN));
     }
 
 }

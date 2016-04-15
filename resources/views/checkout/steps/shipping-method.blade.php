@@ -2,7 +2,7 @@
     <div class="method-select">
         <div class="form-group">
             @if (count($cart->getAvailableShippingTypes()) <= 1)
-                <div class="form-control-static">{{ $cart->shippingType }}</div>
+                <div class="form-control-static">{{ $cart->getShippingType() }}</div>
             @else
                 <select class="form-control" name="shippingTypeId" id="shippingTypeId">
                     @foreach ($cart->getAvailableShippingTypes() as $type)

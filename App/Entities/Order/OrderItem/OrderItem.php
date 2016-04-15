@@ -74,10 +74,43 @@ class OrderItem {
     }
 
     /**
+     * @return string
+     */
+    public function getProductName()
+    {
+        return $this->productName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getProductSku()
+    {
+        return $this->productSku;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isShipping()
+    {
+        return $this->isShipping;
+    }
+
+    /**
      * @return int
      */
-    public function getItemTotal()
+    public function getPrice()
     {
-        return $this->price + (int)($this->price / 100 * $this->taxRate);
+        return $this->price;
     }
+
+    /**
+     * @return float
+     */
+    public function getTaxRate()
+    {
+        return $this->taxRate;
+    }
+
 }

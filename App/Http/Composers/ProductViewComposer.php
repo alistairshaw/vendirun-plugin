@@ -20,7 +20,7 @@ class ProductViewComposer {
         $viewData = $view->getData();
         $product = $viewData['product'];
 
-        $view->with('price', CurrencyHelper::formatWithCurrency($product->price, true));
+        $view->with('price', CurrencyHelper::formatWithCurrency($product->price));
     }
 
     /**

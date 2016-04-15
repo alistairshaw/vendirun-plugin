@@ -5,8 +5,10 @@
 @section('body-class', 'checkout')
 @section('content')
     <div class="container">
-        <h1>{{ trans('vendirun::orderComplete') }}</h1>
-        <p>{{ trans('vendirun::thanksForOrder') }}</p>
-        <code>Order Details Go Here</code>
+        <h1>{{ trans('vendirun::checkout.orderComplete') }}</h1>
+        <p>{{ trans('vendirun::checkout.thanksForOrder') }}</p>
+        @if ($order)
+            @include ('vendirun::order.order-review')
+        @endif
     </div>
 @stop

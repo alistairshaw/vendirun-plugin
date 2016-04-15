@@ -3,15 +3,16 @@
 interface OrderRepository {
 
     /**
-     * @param $id
+     * @param        $id
+     * @param string $oneTimeToken
      * @return Order
      */
-    public function getOrder($id);
+    public function find($id, $oneTimeToken = '');
 
     /**
      * @param Order $order
      * @return Order
      */
-    public function saveOrder(Order $order);
+    public function save(Order $order);
 
 }

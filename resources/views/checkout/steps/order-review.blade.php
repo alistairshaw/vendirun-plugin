@@ -2,11 +2,11 @@
     <table class="table">
         <tr>
             <td>{{ trans('vendirun::checkout.subTotal') }}</td>
-            <td>{{ CurrencyHelper::formatWithCurrency($cart->subTotal()) }}</td>
+            <td>{{ CurrencyHelper::formatWithCurrency($cart->totalBeforeTax()) }}</td>
         </tr>
         <tr>
             <td>{{ trans('vendirun::checkout.shipping') }}</td>
-            <td>{{ CurrencyHelper::formatWithCurrency($cart->shipping()) }}</td>
+            <td>{{ CurrencyHelper::formatWithCurrency($cart->shippingBeforeTax()) }}</td>
         </tr>
         @if ($cart->tax() > 0)
             <tr>

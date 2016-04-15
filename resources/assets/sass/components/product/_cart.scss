@@ -1,0 +1,94 @@
+.product-cart {
+    .wrapper {
+        @extend .row;
+        .cart-items {
+            @extend .col-sm-9;
+        }
+        .cart-sidebar {
+            @extend .col-sm-3;
+        }
+    }
+    .cart-items {
+        .cart-table {
+            @extend .row;
+            margin-bottom: 40px;
+            .cart-column {
+                @extend .col-sm-6;
+                @extend .col-md-4;
+                .cart-item {
+                    @include card-box-shadow();
+                    padding: 20px;
+                    margin-bottom: 30px;
+                    background: white;
+                    text-align: center;
+                    .product-single-image {
+                        padding: 10px;
+                        border: 0;
+                    }
+                    h3 {
+                        color: $brand-primary;
+                        font-size: 1.2em;
+                        font-weight: 300;
+                        height: 2.3em;
+                        overflow: hidden;
+                        margin: 12px 0 12px 0;
+                    }
+                    h4 {
+                        font-size: 0.9em;
+                        color: $gray-light;
+                        margin: 0 0 12px 0;
+                    }
+                    .price {
+                        padding: 15px 0;
+                        font-size: 1.2em;
+                        font-weight: bold;
+                        background-color: $alert-success-bg;
+                        margin-bottom: 12px;
+                    }
+                    .quantity {
+                        span {
+                            padding: 0 12px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .checkout-button {
+        @include card-box-shadow();
+        text-align: center;
+        background: $alert-success-bg;
+        padding: 20px;
+        margin-bottom: 30px;
+        .price {
+            font-size: 1.5em;
+            margin: 0 0 20px 0;
+        }
+        .shipping {
+            background: $gray-lighter;
+            margin: 0 0 20px 0;
+            span {
+                font-size: 1.1em;
+                font-weight: 500;
+            }
+        }
+    }
+    .ship-to {
+        @include card-box-shadow();
+        background: white;
+        padding: 20px;
+        margin-bottom: 30px;
+        h3 {
+            margin-top: 0;
+        }
+    }
+    .cart-options {
+        @include card-box-shadow();
+        background: white;
+        padding: 20px;
+        margin-bottom: 30px;
+        a {
+            display: block;
+        }
+    }
+}

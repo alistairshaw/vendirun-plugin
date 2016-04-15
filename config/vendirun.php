@@ -57,6 +57,12 @@ return [
     /**
      * Can be light or dark
      */
-    'socialType' => 'light'
+    'socialType' => 'light',
+
+    /**
+     * By default, how to sort product search results
+     */
+    'productDefaultSortBy' => 'price',
+    'productDefaultSortOrder' => 'ASC'
 
 ];

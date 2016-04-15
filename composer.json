@@ -10,8 +10,10 @@
     ],
     "require": {
         "php": ">=5.5.9",
-        "laravel/framework": "5.1.*",
-        "illuminate/html": "^5.0@dev",
-        "guzzlehttp/guzzle": "^6.0@dev"
+        "laravel/framework": "5.2.*",
+        "guzzlehttp/guzzle": "^6.0@dev",
+        "social-links/social-links": "1.9.*",
+        "stripe/stripe-php": "3.*",
+        "alistairshaw/name-exploder": "^0.1.0"
     }
 }

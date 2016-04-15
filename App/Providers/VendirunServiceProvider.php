@@ -1,5 +1,6 @@
 <?php namespace AlistairShaw\Vendirun\App\Providers;
 
+use AlistairShaw\Vendirun\App\Lib\CurrencyHelper;
 use AlistairShaw\Vendirun\App\Lib\LocaleHelper;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
@@ -52,7 +53,7 @@ class VendirunServiceProvider extends ServiceProvider {
 
 		// register providers we need
 		$this->app->register('AlistairShaw\Vendirun\App\Providers\ComposerServiceProvider');
-		$this->app->register('Illuminate\Html\HtmlServiceProvider');
+		$this->app->register('AlistairShaw\Vendirun\App\Providers\EventServiceProvider');
 
         // middleware
         $this->app['router']->middleware('localization', 'AlistairShaw\Vendirun\App\Http\Middleware\Localization');
@@ -63,9 +64,24 @@ class VendirunServiceProvider extends ServiceProvider {
             return new LocaleHelper();
         });
 
+        $this->app->bind('LocaleHelper', function()
+        {
+            return new CurrencyHelper();
+        });
+
+        // dependency injection
+        $this->app->bind('AlistairShaw\Vendirun\App\Lib\Social\SocialLinks', 'AlistairShaw\Vendirun\App\Lib\Social\SocialLinksStandard');
+        $this->app->bind('AlistairShaw\Vendirun\App\Entities\Cart\CartRepository', 'AlistairShaw\Vendirun\App\Entities\Cart\ApiCartRepository');
+        $this->app->bind('AlistairShaw\Vendirun\App\Entities\Order\OrderRepository', 'AlistairShaw\Vendirun\App\Entities\Order\ApiOrderRepository');
+        $this->app->bind('AlistairShaw\Vendirun\App\Entities\Customer\CustomerRepository', 'AlistairShaw\Vendirun\App\Entities\Customer\ApiCustomerRepository');
+
 		// aliases
 		$loader = AliasLoader::getInstance();
 		$loader->alias('Form', 'Illuminate\Html\FormFacade');
 		$loader->alias('HTML', 'Illuminate\Html\HtmlFacade');
+		$loader->alias('LocaleHelper', 'AlistairShaw\Vendirun\App\Lib\LocaleHelper');
+		$loader->alias('CurrencyHelper', 'AlistairShaw\Vendirun\App\Lib\CurrencyHelper');
+		$loader->alias('TaxCalculator', 'AlistairShaw\Vendirun\App\Entities\Cart\Helpers\TaxCalculator');
+		$loader->alias('CustomerHelper', 'AlistairShaw\Vendirun\App\Entities\Customer\Helpers\CustomerHelper');
 	}
 }

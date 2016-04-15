@@ -1,5 +1,7 @@
 <?php namespace AlistairShaw\Vendirun\App\Http\Controllers;
 
+use AlistairShaw\Vendirun\App\Entities\Customer\CustomerRepository;
+use AlistairShaw\Vendirun\App\Entities\Customer\Helpers\CustomerHelper;
 use AlistairShaw\Vendirun\App\Lib\LocaleHelper;
 use App;
 use Redirect;
@@ -12,11 +14,13 @@ class VendirunAuthController extends VendirunBaseController {
     {
         parent::__construct();
 
-        if (!Session::has('token'))
+        if (!CustomerHelper::checkLoggedinCustomer())
         {
-            Session::put('action', Request::url());
+            $path = Request::getPathInfo() . (Request::getQueryString() ? ('?' . Request::getQueryString()) : '');
+            Session::put('attemptedAction', $path);
+            Session::save();
 
-            Redirect::route(LocaleHelper::getLanguagePrefixForLocale(App::getLocale()) . 'vendirun.register')->send();
+            Redirect::route(LocaleHelper::localePrefix() . 'vendirun.register')->send();
         }
     }
 

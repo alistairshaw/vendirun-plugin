@@ -8,10 +8,7 @@ use View;
 
 class PostController extends VendirunBaseController {
 
-    public function __construct()
-    {
-        parent::__construct();
-    }
+    protected $primaryPages = true;
 
     /**
      * @return \Illuminate\View\View

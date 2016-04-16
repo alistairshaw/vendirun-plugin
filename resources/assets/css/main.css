@@ -6716,53 +6716,77 @@ footer {
     .social-media-icons a:hover {
       text-decoration: none; }
     .social-media-icons a.facebook {
-      background: url("../images/social/facebook-gray.jpg") no-repeat 1px 1px; }
+      background: url("../images/social/facebook-gray.jpg") no-repeat 1px 1px;
+      background-size: cover; }
       .social-media-icons a.facebook:hover {
-        background: url("../images/social/facebook.jpg") no-repeat 1px 1px; }
+        background: url("../images/social/facebook.jpg") no-repeat 1px 1px;
+        background-size: cover; }
     .social-media-icons a.twitter {
-      background: url("../images/social/twitter-gray.jpg") no-repeat 1px 1px; }
+      background: url("../images/social/twitter-gray.jpg") no-repeat 1px 1px;
+      background-size: cover; }
       .social-media-icons a.twitter:hover {
-        background: url("../images/social/twitter.jpg") no-repeat 1px 1px; }
+        background: url("../images/social/twitter.jpg") no-repeat 1px 1px;
+        background-size: cover; }
     .social-media-icons a.googleplus {
-      background: url("../images/social/plus-gray.jpg") no-repeat 1px 1px; }
+      background: url("../images/social/plus-gray.jpg") no-repeat 1px 1px;
+      background-size: cover; }
       .social-media-icons a.googleplus:hover {
-        background: url("../images/social/plus.jpg") no-repeat 1px 1px; }
+        background: url("../images/social/plus.jpg") no-repeat 1px 1px;
+        background-size: cover; }
     .social-media-icons a.rss {
-      background: url("../images/social/rss-gray.jpg") no-repeat 1px 1px; }
+      background: url("../images/social/rss-gray.jpg") no-repeat 1px 1px;
+      background-size: cover; }
       .social-media-icons a.rss:hover {
-        background: url("../images/social/rss.jpg") no-repeat 1px 1px; }
+        background: url("../images/social/rss.jpg") no-repeat 1px 1px;
+        background-size: cover; }
   .social-media-icons.dark a.facebook {
-    background: url("../images/social/facebook-dark.jpg") no-repeat 1px 1px; }
+    background: url("../images/social/facebook-dark.jpg") no-repeat 1px 1px;
+    background-size: cover; }
     .social-media-icons.dark a.facebook:hover {
-      background: url("../images/social/facebook.jpg") no-repeat 1px 1px; }
+      background: url("../images/social/facebook.jpg") no-repeat 1px 1px;
+      background-size: cover; }
   .social-media-icons.dark a.twitter {
-    background: url("../images/social/twitter-dark.jpg") no-repeat 1px 1px; }
+    background: url("../images/social/twitter-dark.jpg") no-repeat 1px 1px;
+    background-size: cover; }
     .social-media-icons.dark a.twitter:hover {
-      background: url("../images/social/twitter.jpg") no-repeat 1px 1px; }
+      background: url("../images/social/twitter.jpg") no-repeat 1px 1px;
+      background-size: cover; }
   .social-media-icons.dark a.googleplus {
-    background: url("../images/social/plus-dark.jpg") no-repeat 1px 1px; }
+    background: url("../images/social/plus-dark.jpg") no-repeat 1px 1px;
+    background-size: cover; }
     .social-media-icons.dark a.googleplus:hover {
-      background: url("../images/social/plus.jpg") no-repeat 1px 1px; }
+      background: url("../images/social/plus.jpg") no-repeat 1px 1px;
+      background-size: cover; }
   .social-media-icons.dark a.rss {
-    background: url("../images/social/rss-dark.jpg") no-repeat 1px 1px; }
+    background: url("../images/social/rss-dark.jpg") no-repeat 1px 1px;
+    background-size: cover; }
     .social-media-icons.dark a.rss:hover {
-      background: url("../images/social/rss.jpg") no-repeat 1px 1px; }
+      background: url("../images/social/rss.jpg") no-repeat 1px 1px;
+      background-size: cover; }
   .social-media-icons.coloured a.facebook {
-    background: url("../images/social/facebook.jpg") no-repeat 1px 1px; }
+    background: url("../images/social/facebook.jpg") no-repeat 1px 1px;
+    background-size: cover; }
     .social-media-icons.coloured a.facebook:hover {
-      background: url("../images/social/facebook.jpg") no-repeat 1px 1px; }
+      background: url("../images/social/facebook.jpg") no-repeat 1px 1px;
+      background-size: cover; }
   .social-media-icons.coloured a.twitter {
-    background: url("../images/social/twitter.jpg") no-repeat 1px 1px; }
+    background: url("../images/social/twitter.jpg") no-repeat 1px 1px;
+    background-size: cover; }
     .social-media-icons.coloured a.twitter:hover {
-      background: url("../images/social/twitter.jpg") no-repeat 1px 1px; }
+      background: url("../images/social/twitter.jpg") no-repeat 1px 1px;
+      background-size: cover; }
   .social-media-icons.coloured a.googleplus {
-    background: url("../images/social/plus.jpg") no-repeat 1px 1px; }
+    background: url("../images/social/plus.jpg") no-repeat 1px 1px;
+    background-size: cover; }
     .social-media-icons.coloured a.googleplus:hover {
-      background: url("../images/social/plus.jpg") no-repeat 1px 1px; }
+      background: url("../images/social/plus.jpg") no-repeat 1px 1px;
+      background-size: cover; }
   .social-media-icons.coloured a.rss {
-    background: url("../images/social/rss.jpg") no-repeat 1px 1px; }
+    background: url("../images/social/rss.jpg") no-repeat 1px 1px;
+    background-size: cover; }
     .social-media-icons.coloured a.rss:hover {
-      background: url("../images/social/rss.jpg") no-repeat 1px 1px; }
+      background: url("../images/social/rss.jpg") no-repeat 1px 1px;
+      background-size: cover; }
 
 .social-share {
   padding: 0;

@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'logout' => 'Log Out',
     'fullName' => 'Full Name',
     'email' => 'Email Address',
     'telephone' => 'Telephone',

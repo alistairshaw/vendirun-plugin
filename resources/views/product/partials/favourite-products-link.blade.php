@@ -1,0 +1,1 @@
+<a href="{{ route(LocaleHelper::localePrefix() . 'vendirun.productFavourites') }}"><i class="fa fa-star"></i> {{ trans('vendirun::product.favourites') }}</a>

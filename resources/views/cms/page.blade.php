@@ -5,7 +5,7 @@
 @section('body-class', 'cms-page cms-page-' . str_replace('/', '-', $page->slug ? $page->slug : 'home'))
 @section('content')
     @foreach ($page->page_blocks as $block)
-        <div class="{{ $block->class }}">
+        <div class="vendirun-cms-block {{ $block->class }}">
             <div class="container{{ $block->full_width ? '-fluid' : '' }} vr-cms-content">
                 <div class="row">
                     <div class="clearfix" style="margin: {{ $block->margin }}; padding: {{ $block->padding }};">

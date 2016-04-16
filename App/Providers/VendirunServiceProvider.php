@@ -77,8 +77,6 @@ class VendirunServiceProvider extends ServiceProvider {
 
 		// aliases
 		$loader = AliasLoader::getInstance();
-		$loader->alias('Form', 'Illuminate\Html\FormFacade');
-		$loader->alias('HTML', 'Illuminate\Html\HtmlFacade');
 		$loader->alias('LocaleHelper', 'AlistairShaw\Vendirun\App\Lib\LocaleHelper');
 		$loader->alias('CurrencyHelper', 'AlistairShaw\Vendirun\App\Lib\CurrencyHelper');
 		$loader->alias('TaxCalculator', 'AlistairShaw\Vendirun\App\Entities\Cart\Helpers\TaxCalculator');

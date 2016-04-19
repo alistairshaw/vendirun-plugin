@@ -76,4 +76,26 @@ class CustomerApi extends BaseApi {
         $url = 'customer/password_reset';
         return $this->request($url, $params, true);
     }
+
+    /**
+     * @param $params
+     * @return object
+     * @throws FailResponseException
+     */
+    public function verifyEmail($params)
+    {
+        $url = 'customer/verify_email';
+        return $this->request($url, $params, true);
+    }
+
+    /**
+     * @param $params
+     * @return object
+     * @throws FailResponseException
+     */
+    public function verifyEmailData($params)
+    {
+        $url = 'customer/get_email_verification_data/' . $params['id'];
+        return $this->request($url, $params);
+    }
 }

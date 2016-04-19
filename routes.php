@@ -63,6 +63,8 @@ Route::group(['middleware' => ['web']], function ()
                 Route::post('recommend-a-friend', ['as' => $localePrefix . 'vendirun.recommendAFriend', 'uses' => 'Customer\CustomerController@recommendAFriend']);
                 Route::get('logout', ['as' => $localePrefix . 'vendirun.logout', 'uses' => 'Customer\CustomerController@logout']);
                 Route::any('register', ['as' => $localePrefix . 'vendirun.register', 'uses' => 'Customer\CustomerController@register']);
+                Route::get('email-confirm', ['as' => $localePrefix . 'vendirun.emailConfirm', 'uses' => 'Customer\CustomerController@emailConfirm']);
+                Route::get('email-confirm/action', ['as' => $localePrefix . 'vendirun.emailConfirmAction', 'uses' => 'Customer\CustomerController@emailConfirmAction']);
 
                 Route::group(['prefix' => 'password'], function () use ($localePrefix)
                 {

@@ -2,7 +2,7 @@
 @section('title', 'Checkout')
 @section('description', 'Checkout of your Shopping Cart')
 @section('keywords', '')
-@section('body-class', 'checkout')
+@section('body-class', 'vendirun-app checkout')
 @section('content')
     <div class="container">
         <h1>{{ trans('vendirun::checkout.checkout') }}</h1>

@@ -2,7 +2,7 @@
 @section('title', $product->product_name)
 @section('description', $product->short_description)
 @section('keywords', $product->keywords)
-@section('body-class', 'product product-view')
+@section('body-class', 'vendirun-app product product-view')
 @section('content')
     <div class="container">
         <div class="row">

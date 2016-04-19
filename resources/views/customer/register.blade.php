@@ -2,7 +2,7 @@
 @section('title', 'New Registration')
 @section('description', '')
 @section('keywords', '')
-@section('body-class', 'customer-registration')
+@section('body-class', 'vendirun-app customer-registration')
 @section('content')
     <div class="container">
         @if (count($errors) > 0)

@@ -2,7 +2,7 @@
 @section('title', $property->title)
 @section('description', $property->short_description)
 @section('keywords', $property->keywords)
-@section('body-class', 'cms-property-recommend')
+@section('body-class', 'vendirun-app cms-property-recommend')
 @section('content')
 
     <div class="container">

@@ -2,7 +2,7 @@
 @section('title', $product->product_name)
 @section('description', $product->short_description)
 @section('keywords', $product->keywords)
-@section('body-class', 'cms-product-recommend js-static-raf')
+@section('body-class', 'vendirun-app cms-product-recommend js-static-raf')
 @section('content')
 
     <div class="container">

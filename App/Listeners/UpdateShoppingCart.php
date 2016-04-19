@@ -13,9 +13,8 @@ class UpdateShoppingCart
     public function handle($token)
     {
         Session::put('token', $token->token);
-
+        
         $cartRepository = App::make('AlistairShaw\Vendirun\App\Entities\Cart\CartRepository');
-
-        $cartRepository->saveCart(Session::get('shoppingCart'));
+        $cartRepository->saveCart(Session::get('shoppingCart', []));
     }
 }

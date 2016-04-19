@@ -2,7 +2,7 @@
 @section('title', 'Shopping Cart')
 @section('description', 'Checkout')
 @section('keywords', '')
-@section('body-class', 'product-cart')
+@section('body-class', 'vendirun-app product-cart')
 @section('content')
     <div class="container">
         <h1>Shopping Cart</h1>

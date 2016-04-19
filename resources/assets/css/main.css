@@ -1529,16 +1529,16 @@ pre {
   .container-fluid:after {
     clear: both; }
 
-.row, .address-select, .property-advanced-search-widget .form-inputs, .product-cart .wrapper, .product-cart .cart-items .cart-table, .checkout .wrapper, .checkout .checkout-form .shipping-method, .checkout .checkout-form .payment .expiry-cvv {
+.row, .address-select, .property-advanced-search-widget .form-inputs, .product-cart .wrapper, .product-cart .cart-items .cart-table, .blog-list .blog-entry .blog-entry-container, .cms-blog-posts-widget, .checkout .wrapper, .checkout .checkout-form .shipping-method, .checkout .checkout-form .payment .expiry-cvv {
   margin-left: -15px;
   margin-right: -15px; }
-  .row:before, .address-select:before, .property-advanced-search-widget .form-inputs:before, .product-cart .wrapper:before, .product-cart .cart-items .cart-table:before, .checkout .wrapper:before, .checkout .checkout-form .shipping-method:before, .checkout .checkout-form .payment .expiry-cvv:before, .row:after, .address-select:after, .property-advanced-search-widget .form-inputs:after, .product-cart .wrapper:after, .product-cart .cart-items .cart-table:after, .checkout .wrapper:after, .checkout .checkout-form .shipping-method:after, .checkout .checkout-form .payment .expiry-cvv:after {
+  .row:before, .address-select:before, .property-advanced-search-widget .form-inputs:before, .product-cart .wrapper:before, .product-cart .cart-items .cart-table:before, .blog-list .blog-entry .blog-entry-container:before, .cms-blog-posts-widget:before, .checkout .wrapper:before, .checkout .checkout-form .shipping-method:before, .checkout .checkout-form .payment .expiry-cvv:before, .row:after, .address-select:after, .property-advanced-search-widget .form-inputs:after, .product-cart .wrapper:after, .product-cart .cart-items .cart-table:after, .blog-list .blog-entry .blog-entry-container:after, .cms-blog-posts-widget:after, .checkout .wrapper:after, .checkout .checkout-form .shipping-method:after, .checkout .checkout-form .payment .expiry-cvv:after {
     content: " ";
     display: table; }
-  .row:after, .address-select:after, .property-advanced-search-widget .form-inputs:after, .product-cart .wrapper:after, .product-cart .cart-items .cart-table:after, .checkout .wrapper:after, .checkout .checkout-form .shipping-method:after, .checkout .checkout-form .payment .expiry-cvv:after {
+  .row:after, .address-select:after, .property-advanced-search-widget .form-inputs:after, .product-cart .wrapper:after, .product-cart .cart-items .cart-table:after, .blog-list .blog-entry .blog-entry-container:after, .cms-blog-posts-widget:after, .checkout .wrapper:after, .checkout .checkout-form .shipping-method:after, .checkout .checkout-form .payment .expiry-cvv:after {
     clear: both; }
 
-.col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .product-cart .wrapper .cart-sidebar, .checkout .checkout-form .shipping-method .shipping-price, .checkout .checkout-form .shipping-method .options, .col-md-3, .col-lg-3, .col-xs-4, .checkout .checkout-form .payment .expiry-cvv .cvv, .col-sm-4, .address-select label, .property-search.type1 .multiple .property-result, .property-view.type1 .property-attributes .item, .product-search .multiple .product-result, .checkout .checkout-sidebar, .col-md-4, .property-advanced-search-widget .form-inputs .form-group, .product-cart .cart-items .cart-table .cart-column, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .property-view.type1 .property-attributes .item, .col-sm-6, .property-search.type2 .property-results .property-result .property-attributes .item, .property-view.type2 .property-attributes .item, .property-advanced-search-widget .form-inputs .form-group, .product-cart .cart-items .cart-table .cart-column, .checkout .checkout-form .shipping-method .method-select, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .checkout .checkout-form .payment .expiry-cvv .expiry, .col-sm-8, .checkout .checkout-form, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .product-cart .wrapper .cart-items, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 {
+.col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .product-cart .wrapper .cart-sidebar, .blog-list .blog-entry .blog-entry-container .image-container, .checkout .checkout-form .shipping-method .shipping-price, .checkout .checkout-form .shipping-method .options, .col-md-3, .col-lg-3, .col-xs-4, .checkout .checkout-form .payment .expiry-cvv .cvv, .col-sm-4, .address-select label, .property-search.type1 .multiple .property-result, .property-view.type1 .property-attributes .item, .product-search .multiple .product-result, .cms-blog-posts-widget .blog-entry, .checkout .checkout-sidebar, .col-md-4, .property-advanced-search-widget .form-inputs .form-group, .product-cart .cart-items .cart-table .cart-column, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .property-view.type1 .property-attributes .item, .col-sm-6, .property-search.type2 .property-results .property-result .property-attributes .item, .property-view.type2 .property-attributes .item, .property-advanced-search-widget .form-inputs .form-group, .product-cart .cart-items .cart-table .cart-column, .checkout .checkout-form .shipping-method .method-select, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .checkout .checkout-form .payment .expiry-cvv .expiry, .col-sm-8, .checkout .checkout-form, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .product-cart .wrapper .cart-items, .blog-list .blog-entry .blog-entry-container .blog-item-container, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .cms-blog-posts-widget .blog-entry .blog-entry-container .image-container, .cms-blog-posts-widget .blog-entry .blog-entry-container .blog-item-container, .col-md-12, .col-lg-12 {
   position: relative;
   min-height: 1px;
   padding-left: 15px;
@@ -1701,15 +1701,15 @@ pre {
   margin-left: 100%; }
 
 @media (min-width: 768px) {
-  .col-sm-1, .col-sm-2, .col-sm-3, .product-cart .wrapper .cart-sidebar, .checkout .checkout-form .shipping-method .shipping-price, .checkout .checkout-form .shipping-method .options, .col-sm-4, .address-select label, .property-search.type1 .multiple .property-result, .property-view.type1 .property-attributes .item, .product-search .multiple .product-result, .checkout .checkout-sidebar, .col-sm-5, .col-sm-6, .property-search.type2 .property-results .property-result .property-attributes .item, .property-view.type2 .property-attributes .item, .property-advanced-search-widget .form-inputs .form-group, .product-cart .cart-items .cart-table .cart-column, .checkout .checkout-form .shipping-method .method-select, .col-sm-7, .col-sm-8, .checkout .checkout-form, .col-sm-9, .product-cart .wrapper .cart-items, .col-sm-10, .col-sm-11, .col-sm-12 {
+  .col-sm-1, .col-sm-2, .col-sm-3, .product-cart .wrapper .cart-sidebar, .blog-list .blog-entry .blog-entry-container .image-container, .checkout .checkout-form .shipping-method .shipping-price, .checkout .checkout-form .shipping-method .options, .col-sm-4, .address-select label, .property-search.type1 .multiple .property-result, .property-view.type1 .property-attributes .item, .product-search .multiple .product-result, .cms-blog-posts-widget .blog-entry, .checkout .checkout-sidebar, .col-sm-5, .col-sm-6, .property-search.type2 .property-results .property-result .property-attributes .item, .property-view.type2 .property-attributes .item, .property-advanced-search-widget .form-inputs .form-group, .product-cart .cart-items .cart-table .cart-column, .checkout .checkout-form .shipping-method .method-select, .col-sm-7, .col-sm-8, .checkout .checkout-form, .col-sm-9, .product-cart .wrapper .cart-items, .blog-list .blog-entry .blog-entry-container .blog-item-container, .col-sm-10, .col-sm-11, .col-sm-12, .cms-blog-posts-widget .blog-entry .blog-entry-container .image-container, .cms-blog-posts-widget .blog-entry .blog-entry-container .blog-item-container {
     float: left; }
   .col-sm-1 {
     width: 8.3333333333%; }
   .col-sm-2 {
     width: 16.6666666667%; }
-  .col-sm-3, .product-cart .wrapper .cart-sidebar, .checkout .checkout-form .shipping-method .shipping-price, .checkout .checkout-form .shipping-method .options {
+  .col-sm-3, .product-cart .wrapper .cart-sidebar, .blog-list .blog-entry .blog-entry-container .image-container, .checkout .checkout-form .shipping-method .shipping-price, .checkout .checkout-form .shipping-method .options {
     width: 25%; }
-  .col-sm-4, .address-select label, .property-search.type1 .multiple .property-result, .property-view.type1 .property-attributes .item, .product-search .multiple .product-result, .checkout .checkout-sidebar {
+  .col-sm-4, .address-select label, .property-search.type1 .multiple .property-result, .property-view.type1 .property-attributes .item, .product-search .multiple .product-result, .cms-blog-posts-widget .blog-entry, .checkout .checkout-sidebar {
     width: 33.3333333333%; }
   .col-sm-5 {
     width: 41.6666666667%; }
@@ -1719,13 +1719,13 @@ pre {
     width: 58.3333333333%; }
   .col-sm-8, .checkout .checkout-form {
     width: 66.6666666667%; }
-  .col-sm-9, .product-cart .wrapper .cart-items {
+  .col-sm-9, .product-cart .wrapper .cart-items, .blog-list .blog-entry .blog-entry-container .blog-item-container {
     width: 75%; }
   .col-sm-10 {
     width: 83.3333333333%; }
   .col-sm-11 {
     width: 91.6666666667%; }
-  .col-sm-12 {
+  .col-sm-12, .cms-blog-posts-widget .blog-entry .blog-entry-container .image-container, .cms-blog-posts-widget .blog-entry .blog-entry-container .blog-item-container {
     width: 100%; }
   .col-sm-pull-0 {
     right: auto; }
@@ -8062,7 +8062,7 @@ footer {
     font-weight: bold;
     width: 110px; }
 
-.property-categories .row, .property-categories .address-select, .property-categories .property-advanced-search-widget .form-inputs, .property-advanced-search-widget .property-categories .form-inputs, .property-categories .product-cart .wrapper, .product-cart .property-categories .wrapper, .property-categories .product-cart .cart-items .cart-table, .product-cart .cart-items .property-categories .cart-table, .property-categories .checkout .wrapper, .checkout .property-categories .wrapper, .property-categories .checkout .checkout-form .shipping-method, .checkout .checkout-form .property-categories .shipping-method, .property-categories .checkout .checkout-form .payment .expiry-cvv, .checkout .checkout-form .payment .property-categories .expiry-cvv {
+.property-categories .row, .property-categories .address-select, .property-categories .property-advanced-search-widget .form-inputs, .property-advanced-search-widget .property-categories .form-inputs, .property-categories .product-cart .wrapper, .product-cart .property-categories .wrapper, .property-categories .product-cart .cart-items .cart-table, .product-cart .cart-items .property-categories .cart-table, .property-categories .blog-list .blog-entry .blog-entry-container, .blog-list .blog-entry .property-categories .blog-entry-container, .property-categories .cms-blog-posts-widget, .property-categories .checkout .wrapper, .checkout .property-categories .wrapper, .property-categories .checkout .checkout-form .shipping-method, .checkout .checkout-form .property-categories .shipping-method, .property-categories .checkout .checkout-form .payment .expiry-cvv, .checkout .checkout-form .payment .property-categories .expiry-cvv {
   margin: 0; }
 
 .property-categories .col-sm-6, .property-categories .property-search.type2 .property-results .property-result .property-attributes .item, .property-search.type2 .property-results .property-result .property-attributes .property-categories .item, .property-categories .property-view.type2 .property-attributes .item, .property-view.type2 .property-attributes .property-categories .item, .property-categories .property-advanced-search-widget .form-inputs .form-group, .property-advanced-search-widget .form-inputs .property-categories .form-group, .property-categories .product-cart .cart-items .cart-table .cart-column, .product-cart .cart-items .cart-table .property-categories .cart-column, .property-categories .checkout .checkout-form .shipping-method .method-select, .checkout .checkout-form .shipping-method .property-categories .method-select {
@@ -8491,6 +8491,8 @@ ul.refine-list {
 .blog-list .blog-entry {
   border: 2px solid #ccc;
   margin-bottom: 20px; }
+  .blog-list .blog-entry .blog-entry-container .image-container a {
+    display: block; }
   .blog-list .blog-entry .created {
     float: left; }
   .blog-list .blog-entry .author {
@@ -8506,6 +8508,15 @@ ul.refine-list {
   .blog-post .tags .author {
     float: right;
     margin-right: 20px; }
+
+.cms-blog-posts-widget .blog-entry {
+  border: 0; }
+  .cms-blog-posts-widget .blog-entry .blog-entry-container .image-container a {
+    overflow: hidden;
+    height: 200px;
+    border: 1px solid #ccc; }
+    .cms-blog-posts-widget .blog-entry .blog-entry-container .image-container a img {
+      width: 100%; }
 
 .checkout .checkout-form .step-header {
   position: relative;

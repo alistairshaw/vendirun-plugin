@@ -24,16 +24,17 @@ class PostController extends VendirunBaseController {
      */
     public function post($slug)
     {
+        $data = [];
         try
         {
             $post = VendirunApi::makeRequest('blog/post', ['slug' => $slug]);
             $data['post'] = $post->getData();
-            return View::make('vendirun::blog.post', $data);
         }
         catch (FailResponseException $e)
         {
             abort('404');
         }
+        return View::make('vendirun::blog.post', $data);
     }
 
     /**
@@ -41,17 +42,18 @@ class PostController extends VendirunBaseController {
      */
     public function search()
     {
+        $data = [];
         try
         {
             $searchVars = $_GET;
             $searchVars['language'] = App::getLocale();
             $posts = VendirunApi::makeRequest('blog/search', $searchVars);
             $data['posts'] = $posts->getData();
-            return View::make('vendirun::blog.search', $data);
         }
         catch (FailResponseException $e)
         {
             abort('404');
         }
+        return View::make('vendirun::blog.search', $data);
     }
 }

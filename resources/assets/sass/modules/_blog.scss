@@ -2,6 +2,18 @@
     .blog-entry {
         border: 2px solid #ccc;
         margin-bottom: 20px;
+        .blog-entry-container {
+            @extend .row;
+            .image-container {
+                @extend .col-sm-3;
+                a {
+                    display: block;
+                }
+            }
+            .blog-item-container {
+                @extend .col-sm-9;
+            }
+        }
         .created {
             float: left;
         }
@@ -25,5 +37,29 @@
             float: right;
             margin-right: 20px;
         }
+    }
+}
+
+.cms-blog-posts-widget {
+    @extend .row;
+    .blog-entry {
+        @extend .col-sm-4;
+        .blog-entry-container {
+            .image-container {
+                @extend .col-sm-12;
+                a {
+                    overflow: hidden;
+                    height: 200px;
+                    border: 1px solid #ccc;
+                    img {
+                        width: 100%;
+                    }
+                }
+            }
+            .blog-item-container {
+                @extend .col-sm-12;
+            }
+        }
+        border: 0;
     }
 }

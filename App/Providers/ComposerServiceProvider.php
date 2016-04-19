@@ -20,6 +20,7 @@ class ComposerServiceProvider extends ServiceProvider {
         $this->registerCmsComposers();
         $this->registerCustomerComposers();
         $this->registerWidgetComposers();
+        $this->registerBlogComposers();
     }
 
     private function registerPropertyComposers()
@@ -81,6 +82,11 @@ class ComposerServiceProvider extends ServiceProvider {
         $this->app->view->composer('vendirun::cms.widgets.standard-social', 'AlistairShaw\Vendirun\App\Http\Composers\WidgetViewComposer@social');
         $this->app->view->composer('vendirun::cms.widgets.social-share', 'AlistairShaw\Vendirun\App\Http\Composers\WidgetViewComposer@socialShare');
         $this->app->view->composer('vendirun::cms.widgets.standard-staff', 'AlistairShaw\Vendirun\App\Http\Composers\WidgetViewComposer@staff');
+    }
+
+    private function registerBlogComposers()
+    {
+        $this->app->view->composer('vendirun::blog.posts', 'AlistairShaw\Vendirun\App\Http\Composers\BlogViewComposer@posts');
     }
 
 }

@@ -2,13 +2,14 @@
 
 namespace AlistairShaw\Vendirun\App\Http\Controllers\Customer;
 
+use AlistairShaw\Vendirun\App\Entities\Customer\Helpers\CustomerHelper;
 use AlistairShaw\Vendirun\App\Http\Controllers\VendirunBaseController;
 use AlistairShaw\Vendirun\App\Lib\LocaleHelper;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\Exceptions\FailResponseException;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\VendirunApi;
 use App;
-use Input;
 use Redirect;
+use Request;
 use Session;
 use View;
 
@@ -20,7 +21,7 @@ class PasswordController extends VendirunBaseController {
     public function recovery()
     {
         // log out if logged in
-        if (Session::has('token')) Session::flush();
+        if (CustomerHelper::checkLoggedinCustomer()) Session::flush();
 
         return View::make('vendirun::customer.password.recovery');
     }
@@ -32,8 +33,8 @@ class PasswordController extends VendirunBaseController {
     {
         try
         {
-            VendirunApi::makeRequest('customer/passwordRecovery', ['email' => Input::get('email')]);
-            return Redirect::route(LocaleHelper::getLanguagePrefixForLocale(App::getLocale()) . 'vendirun.passwordRecoveryOk');
+            VendirunApi::makeRequest('customer/passwordRecovery', ['email' => Request::get('email')]);
+            return Redirect::route(LocaleHelper::localePrefix() . 'vendirun.passwordRecoveryOk');
         }
         catch (FailResponseException $e)
         {
@@ -64,12 +65,12 @@ class PasswordController extends VendirunBaseController {
     {
         try
         {
-            VendirunApi::makeRequest('customer/passwordReset', ['email' => Input::get('email'), 'token' => Input::get('token'), 'password' => Input::get('password')]);
-            return Redirect::route(LocaleHelper::getLanguagePrefixForLocale(App::getLocale()) . 'vendirun.passwordResetOk');
+            VendirunApi::makeRequest('customer/passwordReset', ['email' => Request::get('email'), 'token' => Request::get('token'), 'password' => Request::get('password')]);
+            return Redirect::route(LocaleHelper::localePrefix() . 'vendirun.passwordResetOk');
         }
         catch (FailResponseException $e)
         {
-            return View::make('vendirun::customer.password.reset-form')->with('alertMessage', $e->getMessage())->with('token', Input::get('token'));
+            return View::make('vendirun::customer.password.reset-form')->with('alertMessage', $e->getMessage())->with('token', Request::get('token'));
         }
     }
 

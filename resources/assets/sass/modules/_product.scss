@@ -1,0 +1,16 @@
+@import "../components/product/product-search";
+@import "../components/product/product-categories";
+@import "../components/product/refine-list";
+@import "../components/product/product-recommend";
+@import "../components/product/product-images";
+@import "../components/product/product-view";
+@import "../components/product/product-result";
+@import "../components/product/related-products";
+@import "../components/product/cart";
+
+.product-simple-search-form {
+    margin-bottom: 30px;
+    input {
+        @extend .form-control;
+    }
+}

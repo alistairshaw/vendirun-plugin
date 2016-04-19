@@ -14,26 +14,34 @@
         }
         &.facebook {
             background: url('../images/social/facebook-gray.jpg') no-repeat 1px 1px;
+            background-size: cover;
             &:hover {
                 background: url('../images/social/facebook.jpg') no-repeat 1px 1px;
+                background-size: cover;
             }
         }
         &.twitter {
             background: url('../images/social/twitter-gray.jpg') no-repeat 1px 1px;
+            background-size: cover;
             &:hover {
                 background: url('../images/social/twitter.jpg') no-repeat 1px 1px;
+                background-size: cover;
             }
         }
         &.googleplus {
-            background: url('../images/social/googleplus-gray.jpg') no-repeat 1px 1px;
+            background: url('../images/social/plus-gray.jpg') no-repeat 1px 1px;
+            background-size: cover;
             &:hover {
-                background: url('../images/social/googleplus.jpg') no-repeat 1px 1px;
+                background: url('../images/social/plus.jpg') no-repeat 1px 1px;
+                background-size: cover;
             }
         }
         &.rss {
             background: url('../images/social/rss-gray.jpg') no-repeat 1px 1px;
+            background-size: cover;
             &:hover {
                 background: url('../images/social/rss.jpg') no-repeat 1px 1px;
+                background-size: cover;
             }
         }
     }
@@ -41,26 +49,34 @@
         a {
             &.facebook {
                 background: url('../images/social/facebook-dark.jpg') no-repeat 1px 1px;
+                background-size: cover;
                 &:hover {
                     background: url('../images/social/facebook.jpg') no-repeat 1px 1px;
+                    background-size: cover;
                 }
             }
             &.twitter {
                 background: url('../images/social/twitter-dark.jpg') no-repeat 1px 1px;
+                background-size: cover;
                 &:hover {
                     background: url('../images/social/twitter.jpg') no-repeat 1px 1px;
+                    background-size: cover;
                 }
             }
             &.googleplus {
-                background: url('../images/social/googleplus-dark.jpg') no-repeat 1px 1px;
+                background: url('../images/social/plus-dark.jpg') no-repeat 1px 1px;
+                background-size: cover;
                 &:hover {
-                    background: url('../images/social/googleplus.jpg') no-repeat 1px 1px;
+                    background: url('../images/social/plus.jpg') no-repeat 1px 1px;
+                    background-size: cover;
                 }
             }
             &.rss {
                 background: url('../images/social/rss-dark.jpg') no-repeat 1px 1px;
+                background-size: cover;
                 &:hover {
                     background: url('../images/social/rss.jpg') no-repeat 1px 1px;
+                    background-size: cover;
                 }
             }
         }
@@ -69,26 +85,34 @@
         a {
             &.facebook {
                 background: url('../images/social/facebook.jpg') no-repeat 1px 1px;
+                background-size: cover;
                 &:hover {
                     background: url('../images/social/facebook.jpg') no-repeat 1px 1px;
+                    background-size: cover;
                 }
             }
             &.twitter {
                 background: url('../images/social/twitter.jpg') no-repeat 1px 1px;
+                background-size: cover;
                 &:hover {
                     background: url('../images/social/twitter.jpg') no-repeat 1px 1px;
+                    background-size: cover;
                 }
             }
             &.googleplus {
-                background: url('../images/social/googleplus.jpg') no-repeat 1px 1px;
+                background: url('../images/social/plus.jpg') no-repeat 1px 1px;
+                background-size: cover;
                 &:hover {
-                    background: url('../images/social/googleplus.jpg') no-repeat 1px 1px;
+                    background: url('../images/social/plus.jpg') no-repeat 1px 1px;
+                    background-size: cover;
                 }
             }
             &.rss {
                 background: url('../images/social/rss.jpg') no-repeat 1px 1px;
+                background-size: cover;
                 &:hover {
                     background: url('../images/social/rss.jpg') no-repeat 1px 1px;
+                    background-size: cover;
                 }
             }
         }

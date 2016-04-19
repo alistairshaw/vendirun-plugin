@@ -7,6 +7,8 @@ use View;
 
 class CategoryController extends VendirunBaseController {
 
+    protected $primaryPages = true;
+
 	/**
 	 * @param string $categoryName
 	 * @return View

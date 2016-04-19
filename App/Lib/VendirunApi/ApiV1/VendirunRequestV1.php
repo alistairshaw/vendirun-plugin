@@ -39,8 +39,20 @@ class VendirunRequestV1 extends AbstractVendirunRequest implements VendirunReque
             case 'property':
                 $this->api = new PropertyApi(Config::get('vendirun.apiKey'), Config::get('vendirun.clientId'), Config::get('vendirun.apiEndPoint'));
                 break;
+            case 'product':
+                $this->api = new ProductApi(Config::get('vendirun.apiKey'), Config::get('vendirun.clientId'), Config::get('vendirun.apiEndPoint'));
+                break;
             case 'blog':
                 $this->api = new BlogApi(Config::get('vendirun.apiKey'), Config::get('vendirun.clientId'), Config::get('vendirun.apiEndPoint'));
+                break;
+            case 'cart':
+                $this->api = new CartApi(Config::get('vendirun.apiKey'), Config::get('vendirun.clientId'), Config::get('vendirun.apiEndPoint'));
+                break;
+            case 'util':
+                $this->api = new UtilApi(Config::get('vendirun.apiKey'), Config::get('vendirun.clientId'), Config::get('vendirun.apiEndPoint'));
+                break;
+            case 'order':
+                $this->api = new OrderApi(Config::get('vendirun.apiKey'), Config::get('vendirun.clientId'), Config::get('vendirun.apiEndPoint'));
                 break;
             default:
                 throw new InvalidApiRequestException($request);

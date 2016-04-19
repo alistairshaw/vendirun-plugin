@@ -1,4 +1,3 @@
-
 @import "base/variables";
 @import "../../bower_components/bootstrap-sass/assets/stylesheets/_bootstrap";
 @import "../../bower_components/world-flags-sprite/stylesheets/flags16";
@@ -10,9 +9,14 @@
 @import "components/header";
 @import "components/footer";
 @import "components/social-media-icons";
+@import "components/social-share";
 @import "components/image-slideshow";
 @import "components/flags";
 @import "components/staff";
+@import "components/buttons";
 
+@import "modules/customer";
 @import "modules/property";
+@import "modules/product";
 @import "modules/blog";
+@import "modules/checkout";

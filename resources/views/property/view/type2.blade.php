@@ -8,7 +8,7 @@
     <div class="container property-view type2 js-single-property">
         <div class="image-container">
             <ul class="property-single-image">
-                <a class="image-link" href="{{ route(\AlistairShaw\Vendirun\App\Lib\LocaleHelper::getLanguagePrefixForLocale(App::getLocale()) . 'vendirun.propertyView',[$property->id, urlencode($property->title)]) }}"><img src="{{ $property->images[0]->largerect }}" class="img-responsive"></a>
+                <a class="image-link" href="{{ route(LocaleHelper::localePrefix() . 'vendirun.propertyView',[$property->id, urlencode($property->title)]) }}"><img src="{{ $property->images[0]->largerect }}" class="img-responsive"></a>
             </ul>
             @if ($property->sold_at)
                 <div class="property-badge {{ $property->property_type == 'For Sale' ? 'sold' : 'rented' }}"></div>

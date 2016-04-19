@@ -9,7 +9,7 @@
             <div class="row">
                 <div class="col-md-6 col-md-offset-3">
                     <h1>{{ trans('vendirun::forms.passwordRecoverySent') }}</h1>
-                    <p>{{ trans('vendirun::property.passwordRecoveryMessage') }}</p>
+                    <p>{{ trans('vendirun::forms.passwordRecoveryMessage') }}</p>
                 </div>
             </div>
         </div>

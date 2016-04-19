@@ -1,0 +1,39 @@
+.product-search {
+    .search-form {
+        h3 {
+            background: $well-bg;
+            padding: 8px 12px;
+            border: 1px solid $gray-lighter;
+            border-bottom: 0;
+            margin: 20px 0 20px 0;
+        }
+        .form-inputs {
+            border: 1px solid $gray-lighter;
+            padding: 12px;
+        }
+    }
+    .heading {
+        @extend .clearfix;
+        padding: 6px 12px;
+        background: $well-bg;
+        margin-bottom: 30px;
+        font-size: 0.8em;
+        label {
+            margin-right: 10px;
+        }
+        select {
+            border-radius: 0;
+        }
+        .order-by {
+            @extend .pull-left;
+        }
+        .per-page {
+            @extend .pull-right;
+        }
+    }
+    .multiple {
+        .product-result {
+            @extend .col-sm-4;
+        }
+    }
+}

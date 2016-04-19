@@ -1,0 +1,41 @@
+.related-products {
+    padding: 0;
+    li {
+        @extend .clearfix;
+        list-style: none;
+        margin: 6px 0;
+        .product-result {
+            .wrapper {
+                margin: 0;
+            }
+            .part-one {
+                width: 110px;
+                float: left;
+                margin-right: 10px;
+                .image-container {
+                    padding: 10px;
+                }
+            }
+            h2 {
+                text-align: left;
+                padding: 0;
+                height: auto;
+                margin-top: 0;
+            }
+            .price {
+                background: none;
+                padding: 0;
+                text-align: left;
+            }
+            .buttons {
+                display: none;//x
+            }
+            .categories {
+                display: none;
+            }
+            .short-description {
+                display: block;
+            }
+        }
+    }
+}

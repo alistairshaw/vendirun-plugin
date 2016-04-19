@@ -13,6 +13,17 @@ class ClientApi extends BaseApi {
     }
 
     /**
+     * @return object
+     * @throws \AlistairShaw\Vendirun\App\Lib\VendirunApi\Exceptions\FailResponseException
+     */
+    public function paymentGateways()
+    {
+        $url = 'client/payment_gateways';
+
+        return $this->request($url, []);
+    }
+
+    /**
      * @param array $params
      * @return array
      * @throws \AlistairShaw\Vendirun\App\Lib\VendirunApi\Exceptions\FailResponseException

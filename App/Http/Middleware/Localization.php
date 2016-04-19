@@ -6,6 +6,7 @@ use AlistairShaw\Vendirun\App\Lib\LocaleHelper;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\VendirunApi;
 use App;
 use Closure;
+use Session;
 
 class Localization {
 
@@ -31,7 +32,7 @@ class Localization {
         }
 
         // if it's a CMS page, we need to get rid of the locale part of the URL so we get the actual slug
-        if ($request->route()->getName() == 'cmsPage')
+        if ($request->route()->getName() == 'vendirun.cmsPage')
         {
             $path = $request->route()->parameter('catchall');
             $pathArray = explode('/', $path);

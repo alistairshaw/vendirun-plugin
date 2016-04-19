@@ -2,13 +2,13 @@
 
 namespace AlistairShaw\Vendirun\App\Http\Controllers\Customer;
 
+use AlistairShaw\Vendirun\App\Events\CustomerLoggedIn;
 use AlistairShaw\Vendirun\App\Http\Controllers\VendirunBaseController;
 use AlistairShaw\Vendirun\App\Lib\LocaleHelper;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\Exceptions\FailResponseException;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\VendirunApi;
 use App;
-use Input;
-use Mail;
+use Event;
 use Redirect;
 use Request;
 use Illuminate\Http\Request as IlRequest;
@@ -23,6 +23,28 @@ class CustomerController extends VendirunBaseController {
     }
 
     /**
+     * @return \Illuminate\View\View
+     */
+    public function register()
+    {
+        $data = Session::all();
+        $data['bodyClass'] = 'property-search';
+
+        return View::make('vendirun::customer.register', $data);
+    }
+
+    /**
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function logout()
+    {
+        Session::remove('token');
+        if (Session::has('primaryPagePath')) return Redirect::to(Session::get('primaryPagePath'));
+
+        return Redirect::route(LocaleHelper::localePrefix() . 'vendirun.home');
+    }
+
+    /**
      * Login customer
      * @param IlRequest $request
      * @return \Illuminate\Http\RedirectResponse
@@ -34,7 +56,9 @@ class CustomerController extends VendirunBaseController {
             'password' => 'required'
         ]);
 
-        return $this->login(Input::get('email_login'), Input::get('password'));
+        $r = $this->login(Request::get('email_login'), Request::get('password'));
+
+        return $r;
     }
 
     /**
@@ -53,12 +77,12 @@ class CustomerController extends VendirunBaseController {
 
         try
         {
-            VendirunApi::makeRequest('customer/store', Input::all());
-            return $this->login(Input::get('email'), Input::get('password'));
+            VendirunApi::makeRequest('customer/store', Request::all());
+            return $this->login(Request::get('email'), Request::get('password'));
         }
         catch (FailResponseException $e)
         {
-            return Redirect::route(LocaleHelper::getLanguagePrefixForLocale(App::getLocale()) . 'vendirun.register')->withInput()->withErrors($e->getMessage());
+            return Redirect::route(LocaleHelper::localePrefix() . 'vendirun.register')->withInput()->withErrors($e->getMessage());
         }
     }
 
@@ -73,21 +97,25 @@ class CustomerController extends VendirunBaseController {
         {
             $login = VendirunApi::makeRequest('customer/login', ['email' => $email, 'password' => $password]);
 
+            Event::fire(new CustomerLoggedIn($login->getData()->token));
+
             Session::flash('vendirun-alert-success', 'Login Successful');
             Session::put('token', $login->getData()->token);
+            Session::save();
 
-            if (Session::has('action'))
+            if (Session::has('attemptedAction'))
             {
-                $redirect = Session::get('action');
-
-                return Redirect::to($redirect);
+                $redirect = Session::get('attemptedAction');
+                return redirect($redirect);
             }
 
-            return Redirect::route(LocaleHelper::getLanguagePrefixForLocale(App::getLocale()) . 'vendirun.register');
+            if (Session::has('primaryPagePath')) return Redirect::to(Session::get('primaryPagePath'));
+
+            return Redirect::route(LocaleHelper::localePrefix() . 'vendirun.home');
         }
-        catch (\Exception $e)
+        catch (FailResponseException $e)
         {
-            return Redirect::route(LocaleHelper::getLanguagePrefixForLocale(App::getLocale()) . 'vendirun.register')->withInput()->withErrors($e->getMessage());
+            return Redirect::route(LocaleHelper::localePrefix() . 'vendirun.register')->withInput()->withErrors('Invalid Username or Password');
         }
     }
 
@@ -105,7 +133,7 @@ class CustomerController extends VendirunBaseController {
             'emailAddressFriend' => 'required|email',
         ]);
 
-        $data = Input::all();
+        $data = Request::all();
         $params['property_id'] = isset($data['propertyId']) ? $data['propertyId'] : NULL;
 
         $params['full_name'] = $data['fullName'];
@@ -145,13 +173,13 @@ class CustomerController extends VendirunBaseController {
             'email' => 'required'
         ]);
 
-        $params['full_name'] = Input::get('fullname', '');
-        $params['email'] = Input::get('email', '');
-        $params['telephone'] = Input::get('telephone', '');
-        $params['property_id'] = Input::get('propertyId', '');
-        $params['form_id'] = Input::get('formId', '');
-        $params['note'] = nl2br(Input::get('message', ''));
-        $params['note'] .= Input::get('property') ? "<br><br>Property Name: " . Input::get('property') : '';
+        $params['full_name'] = Request::get('fullname', '');
+        $params['email'] = Request::get('email', '');
+        $params['telephone'] = Request::get('telephone', '');
+        $params['property_id'] = Request::get('propertyId', '');
+        $params['form_id'] = Request::get('formId', '');
+        $params['note'] = nl2br(Request::get('message', ''));
+        $params['note'] .= Request::get('property') ? "<br><br>Property Name: " . Request::get('property') : '';
 
         try
         {
@@ -165,28 +193,6 @@ class CustomerController extends VendirunBaseController {
         Session::flash('vendirun-alert-success', 'Thank you for contacting us we will get back to you shortly!');
 
         return Redirect::back();
-    }
-
-    /**
-     * @return \Illuminate\View\View
-     */
-    public function register()
-    {
-        $data = Session::all();
-
-        $data['bodyClass'] = 'property-search';
-
-        return View::make('vendirun::customer.register', $data);
-    }
-
-    /**
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function logout()
-    {
-        Session::flush();
-
-        return Redirect::route(LocaleHelper::getLanguagePrefixForLocale(App::getLocale()) . 'vendirun.register');
     }
 
 }

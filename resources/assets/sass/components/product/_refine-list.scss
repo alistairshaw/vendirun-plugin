@@ -1,0 +1,43 @@
+ul.refine-list {
+    padding: 0;
+    margin: 20px 0;
+    @extend .clearfix;
+    li {
+        list-style: none;
+        float: left;
+        border: 1px solid #ccc;
+        padding: 2px;
+        margin-right: 6px;
+        margin-bottom: 6px;
+        a {
+            display: block;
+            line-height: 39px;
+            padding: 0 12px;
+            text-align: center;
+            &:hover {
+                text-decoration: none;
+                background: $brand-primary;
+                color: white;
+            }
+        }
+        &.selected {
+            a {
+                text-decoration: none;
+                background: $brand-primary;
+                color: $gray-lighter;
+            }
+        }
+    }
+    &.color-list {
+        a {
+            width: 40px;
+            height: 40px;
+        }
+        li.selected {
+            background: black;
+        }
+        li:hover {
+            background: black;
+        }
+    }
+}

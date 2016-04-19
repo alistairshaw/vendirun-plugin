@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'logout' => 'Log Out',
     'fullName' => 'Full Name',
     'email' => 'Email Address',
     'telephone' => 'Telephone',
@@ -24,8 +25,21 @@ return [
     'message' => 'Message',
     'sendMessage' => 'Send Message',
     'sendToFriend' => 'Send to a Friend',
-    'sentToFriendNote' => 'Fill in some basic information below, and we will send your friend an email with a link! Easy as that!',
+    'sendToFriendNote' => 'Fill in some basic information below, and we will send your friend an email with a link! Easy as that!',
     'privacyAssurance' => 'Don\'t worry, we won\'t ever share this info with anyone else.',
     'yourDetails' => 'Your Details',
     'friendDetails' => 'Your Friend\'s Details',
+    'address1' => 'Address Line 1',
+    'address2' => 'Address Line 2',
+    'address3' => 'Address Line 3',
+    'city' => 'City',
+    'state' => 'County',
+    'postcode' => 'Postcode',
+    'country' => 'Country',
+    'creditCard' => 'Credit Card',
+    'payPal' => 'PayPal',
+    'cardHolderName' => 'Card Holder\'s Name',
+    'cardNumber' => 'Card Number',
+    'cardExpiry' => 'Card Expiry Date',
+    'cvv' => 'CVV/CVV2'
 ];

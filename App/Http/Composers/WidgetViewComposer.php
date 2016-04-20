@@ -1,5 +1,6 @@
 <?php namespace AlistairShaw\Vendirun\App\Http\Composers;
 
+use AlistairShaw\Vendirun\App\Lib\CountryHelper;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\VendirunApi;
 use App;
 use Config;
@@ -59,7 +60,7 @@ class WidgetViewComposer {
      */
     public function regions($view)
     {
-        $regions = VendirunApi::makeRequest('util/countries')->getData();
+        $regions = CountryHelper::getRegions();
         $view->with('regions', $regions);
     }
 }

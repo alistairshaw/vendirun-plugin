@@ -16,7 +16,6 @@ class OrderRequest extends Request {
         $validation = [
             'emailAddress' => 'required|email',
             'fullName' => 'required',
-            'cardHolderName' => 'required',
             'shippingaddressId' => 'required_without_all:shippingaddress1,shippingcity,shippingcountry',
             'shippingaddress1' => 'required_without:shippingaddressId',
             'shippingcity' => 'required_without:shippingaddressId',

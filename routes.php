@@ -42,7 +42,9 @@ Route::group(['middleware' => ['web']], function ()
                 {
                     Route::get('/', ['as' => $localePrefix . 'vendirun.checkout', 'uses' => 'Checkout\CheckoutController@index']);
                     Route::post('/', ['as' => $localePrefix . 'vendirun.checkoutProcess', 'uses' => 'Checkout\CheckoutController@process']);
+                    Route::get('paypal/{orderId}', ['as' => $localePrefix . 'vendirun.checkoutPaypalSuccess', 'uses' => 'Checkout\CheckoutController@paypalSuccess']);
                     Route::get('thanks/{orderId}', ['as' => $localePrefix . 'vendirun.checkoutSuccess', 'uses' => 'Checkout\CheckoutController@success']);
+                    Route::get('sorry/{orderId}', ['as' => $localePrefix . 'vendirun.checkoutFailure', 'uses' => 'Checkout\CheckoutController@failure']);
                 });
 
                 Route::any('view/{id}/{productName}/{productVariationId?}', ['as' => $localePrefix . 'vendirun.productView', 'uses' => 'Product\ProductController@view']);

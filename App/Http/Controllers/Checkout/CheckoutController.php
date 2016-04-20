@@ -1,6 +1,5 @@
 <?php namespace AlistairShaw\Vendirun\App\Http\Controllers\Checkout;
 
-use AlistairShaw\Vendirun\App\Entities\Cart\Cart;
 use AlistairShaw\Vendirun\App\Entities\Cart\CartFactory;
 use AlistairShaw\Vendirun\App\Entities\Cart\CartRepository;
 use AlistairShaw\Vendirun\App\Entities\Customer\CustomerFactory;
@@ -9,19 +8,20 @@ use AlistairShaw\Vendirun\App\Entities\Customer\Helpers\CustomerHelper;
 use AlistairShaw\Vendirun\App\Entities\Order\Order;
 use AlistairShaw\Vendirun\App\Entities\Order\OrderFactory;
 use AlistairShaw\Vendirun\App\Entities\Order\OrderRepository;
+use AlistairShaw\Vendirun\App\Entities\Order\Payment\PaymentRepository;
 use AlistairShaw\Vendirun\App\Http\Controllers\VendirunBaseController;
 use AlistairShaw\Vendirun\App\Http\Requests\OrderRequest;
+use AlistairShaw\Vendirun\App\Lib\ClientHelper;
 use AlistairShaw\Vendirun\App\Lib\LocaleHelper;
+use AlistairShaw\Vendirun\App\Lib\PaymentGateway\PaymentGateway;
+use AlistairShaw\Vendirun\App\Lib\PaymentGateway\PaypalPaymentGateway;
+use AlistairShaw\Vendirun\App\Lib\PaymentGateway\StripePaymentGateway;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\Exceptions\FailResponseException;
-use AlistairShaw\Vendirun\App\Lib\VendirunApi\VendirunApi;
 use AlistairShaw\Vendirun\App\ValueObjects\Name;
-use Config;
 use Redirect;
 use Request;
+use Route;
 use Session;
-use Stripe\Charge;
-use Stripe\Error\Card;
-use Stripe\Stripe;
 use View;
 
 class CheckoutController extends VendirunBaseController {
@@ -45,7 +45,7 @@ class CheckoutController extends VendirunBaseController {
 
         $cartFactory = new CartFactory($cartRepository);
         $data['cart'] = $cartFactory->make($countryId, Request::get('shippingType', NULL));
-        $data['paymentGateways'] = $this->getPaymentGateways();
+        $data['paymentGateways'] = ClientHelper::getPaymentGatewayInfo();
 
         if (count($data['cart']->getItems()) == 0) return Redirect::route(LocaleHelper::localePrefix() . 'vendirun.productCart');
 
@@ -77,45 +77,67 @@ class CheckoutController extends VendirunBaseController {
      * @param CartRepository     $cartRepository
      * @param OrderRepository    $orderRepository
      * @param CustomerRepository $customerRepository
+     * @param PaymentRepository  $paymentRepository
      * @return $this|CheckoutController|\Illuminate\Http\RedirectResponse
      */
-    public function process(OrderRequest $request, CartRepository $cartRepository, OrderRepository $orderRepository, CustomerRepository $customerRepository)
+    public function process(OrderRequest $request, CartRepository $cartRepository, OrderRepository $orderRepository, CustomerRepository $customerRepository, PaymentRepository $paymentRepository)
     {
         if (Request::has('recalculateShipping')) return $this->recalculateShipping($customerRepository);
 
-        $name = new Name(Request::get('fullName'));
-        $email = Request::get('email');
-        if ($customer = $customerRepository->find())
-        {
-            $customer->setName($name);
-            $customer->setPrimaryEmail($email);
-            $customerRepository->save($customer);
-            $shippingAddress = $customer->getAddressFromAddressId($request->get('shippingaddressId'));
-            $countryId = $shippingAddress->getCountryId();
-        }
-        else
-        {
-            $customerFactory = new CustomerFactory($customerRepository);
-            $customer = $customerFactory->make(NULL, Request::get('fullName'), Request::get('emailAddress'));
-            $countryId = $request->get('shippingcountryId', NULL);
-        }
+        // construct the customer
+        $customerFactory = new CustomerFactory($customerRepository);
+        $customer = $customerFactory->makeFromCheckoutForm(Request::all());
 
+        // get country ID from the shipping address
+        $shippingAddressId = $request->get('shippingaddressId');
+        $shippingAddress = $customer->getAddressFromAddressId($shippingAddressId);
+        $countryId = $shippingAddress ? $shippingAddress->getCountryId() : $request->get('shippingcountryId');
+
+        // construct the cart
         $cartFactory = new CartFactory($cartRepository);
         $cart = $cartFactory->make($countryId, Request::input('shippingType', NULL));
 
+        // if cart is empty go back to main checkout page
+        if ($cart->count() == 0) return Redirect::back()->with('paymentError', 'No items in your cart')->withInput();
+
+        // convert cart to order
         $orderFactory = new OrderFactory($orderRepository);
         $order = $orderFactory->fromCart($cart, $customer, Request::all());
 
-        if (!$order = $orderRepository->save($order))
-        {
-            return Redirect::back()->with('paymentError', 'Payment Has NOT Been Taken - unable to create order, please try again');
-        }
-
+        // persist the order
+        if (!$order = $orderRepository->save($order)) return Redirect::back()->with('paymentError', 'Payment Has NOT Been Taken - unable to create order, please try again');
         Session::set('orderOneTimeToken', $order->getOneTimeToken());
 
-        $cartRepository->clear();
+        // instantiate correct payment gateway implementation
+        $paymentGateway = NULL;
+        if (Request::input('paymentOption') == 'stripe')
+        {
+            $paymentGateway = new StripePaymentGateway($order, $cart, $cartRepository, $paymentRepository);
+            $paymentGateway->setStripeToken(Request::get('stripeToken'));
+        }
+        if (Request::input('paymentOption') == 'paypal')
+        {
+            $paymentGateway = new PaypalPaymentGateway($order, $cart, $cartRepository, $paymentRepository);
+            $paymentGateway->setUrls(
+                route(LocaleHelper::localePrefix() . 'vendirun.checkoutPaypalSuccess', ['orderId' => $order->getId()]),
+                route(LocaleHelper::localePrefix() . 'vendirun.checkoutFailure', ['orderId' => $order->getId()])
+            );
+        }
+        if (!$paymentGateway) return Redirect::back()->with('paymentError', 'No valid payment gateway selected')->withInput();
 
-        return $this->processPayment($order);
+        // take the payment
+        try
+        {
+            $redirectTo = $paymentGateway->takePayment();
+            $cartRepository->clear();
+            if ($redirectTo) return Redirect::to($redirectTo);
+        }
+        catch (\Exception $e)
+        {
+            return Redirect::back()->with('paymentError', $e->getMessage())->withInput();
+        }
+
+        return Redirect::route('vendirun.checkoutSuccess', ['orderId' => $order->getId()]);
     }
 
     /**
@@ -125,7 +147,6 @@ class CheckoutController extends VendirunBaseController {
      */
     public function success(OrderRepository $orderRepository, $orderId)
     {
-        // if NULL, we'll get the most recent order from session
         try
         {
             $data['order'] = $orderRepository->find($orderId, Session::get('orderOneTimeToken', NULL));
@@ -142,108 +163,42 @@ class CheckoutController extends VendirunBaseController {
     }
 
     /**
-     * @return object
+     * @param OrderRepository   $orderRepository
+     * @param PaymentRepository $paymentRepository
+     * @param int               $orderId
+     * @return \Illuminate\Http\RedirectResponse
      */
-    private function getPaymentGateways()
+    public function paypalSuccess(OrderRepository $orderRepository, PaymentRepository $paymentRepository, $orderId)
     {
-        $paymentGateways = VendirunApi::makeRequest('client/paymentGateways')->getData();
-        $data['stripe'] = false;
-        $data['paypal'] = false;
-        foreach ($paymentGateways as $key => $gateway)
-        {
-            $data[$key] = true;
-            $data[$key . 'Settings'] = $gateway;
-        }
+        $order = $orderRepository->find($orderId, Session::get('orderOneTimeToken', NULL));
 
-        return (object)$data;
+        $paymentGateway = new PaypalPaymentGateway($order, null, null, $paymentRepository);
+        $paymentGateway->confirmPayment(Request::all());
+        
+        return Redirect::route(LocaleHelper::localePrefix() . 'vendirun.checkoutSuccess', ['orderId' => $order->getId()]);
     }
 
     /**
-     * @param $order
-     * @return $this|\Illuminate\Http\RedirectResponse
+     * @param OrderRepository $orderRepository
+     * @param int             $orderId
+     * @return \Illuminate\Contracts\View\View
      */
-    private function processPayment($order)
+    public function failure(OrderRepository $orderRepository, $orderId)
     {
-        $gateways = $this->getPaymentGateways();
-
-        $paymentError = 'No valid payment gateway available';
-
-        if (Request::input('paymentOption') == 'stripe') $paymentError = $this->processStripe($gateways->stripeSettings, $order);
-        if (Request::input('paymentOption') == 'paypal') $paymentError = $this->processPaypal($gateways->paypalSettings, $order);
-
-        if ($paymentError !== '') return Redirect::back()->with('paymentError', $paymentError)->withInput();
-
-        return Redirect::route('vendirun.checkoutSuccess', ['orderId' => $order->getId()]);
-    }
-
-    /**
-     * @param $settings
-     * @param $order
-     * @return string
-     */
-    private function processStripe($settings, Order $order)
-    {
-        Stripe::setApiKey($settings->sandbox_mode ? $settings->test_secret : $settings->secret);
-
-        // Create the charge on Stripe's servers - this will charge the user's card
+        // if NULL, we'll get the most recent order from session
         try
         {
-            $clientInfo = Config::get('clientInfo');
-            $token = Request::get('stripeToken');
-
-            $charge = Charge::create(array(
-                "amount" => $order->getTotalPrice(),
-                "currency" => $clientInfo->currency->currency_iso,
-                "source" => $token,
-                "description" => $clientInfo->name,
-                "metadata" => [
-                    "order_id" => $order->getId()
-                ]
-            ));
-
-            $chargeObject = json_decode($charge->getLastResponse()->body);
-
-            $this->addPayment($order, $chargeObject->amount, 'Stripe', $chargeObject);
+            $data['order'] = $orderRepository->find($orderId, Session::get('orderOneTimeToken', NULL));
+            Session::remove('orderOneTimeToken');
         }
-        catch (Card $e)
+        catch (FailResponseException $e)
         {
-            return trans('vendirun::checkout.cardDeclined');
-        }
-        catch (\Exception $e)
-        {
-            return 'Payment Has Been Taken - ORDER not saved correctly, please call Customer Services.';
+            // if we can't find a valid order, might just be that the session has expired,
+            //    in which case we just won't show the order details
+            $data['order'] = NULL;
         }
 
-        return '';
-    }
-
-    /**
-     * @param $settings
-     * @return mixed
-     */
-    private function processPaypal($settings, Order $order)
-    {
-        return 'Paypal gateway not enabled';
-        // return dd("Process with Paypal");
-    }
-
-    /**
-     * @param Order $order
-     * @param       $paymentAmount
-     * @param       $paymentType
-     * @param       $transactionData
-     */
-    private function addPayment(Order $order, $paymentAmount, $paymentType, $transactionData)
-    {
-        $params = [
-            'order_id' => $order->getId(),
-            'payment_amount' => $paymentAmount,
-            'payment_date' => date("Y-m-d"),
-            'payment_type' => $paymentType,
-            'transaction_data' => $transactionData
-        ];
-
-        VendirunApi::makeRequest('order/payment', $params);
+        return View::make('vendirun::checkout.failure', $data);
     }
 
 }

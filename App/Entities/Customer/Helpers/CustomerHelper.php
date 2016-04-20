@@ -1,5 +1,6 @@
 <?php namespace AlistairShaw\Vendirun\App\Entities\Customer\Helpers;
 
+use AlistairShaw\Vendirun\App\Entities\Customer\Customer;
 use App;
 use Config;
 use Request;
@@ -27,10 +28,10 @@ class CustomerHelper {
         if ($customer = $customerRepository->find())
         {
             // get top address
+            /* @var $customer Customer */
             $addresses = $customer->getAddresses();
             if (count($addresses) > 0)
             {
-                /* @var $addresses[0] Address */
                 return $addresses[0]->getCountryId();
             }
         }

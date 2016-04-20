@@ -2,17 +2,17 @@
     @if ($paymentGateways->stripe && $paymentGateways->paypal)
         <div class="options form-group form-inline">
             <label>
-                <input type="radio" name="paymentOption" value="stripe" checked>
-                {{ trans('vendirun::forms.creditCard') }}
+                <input type="radio" name="paymentOption" value="paypal" checked>
+                {{ trans('vendirun::forms.payPal') }}
             </label>
             <label>
-                <input type="radio" name="paymentOption" value="paypal">
-                {{ trans('vendirun::forms.payPal') }}
+                <input type="radio" name="paymentOption" value="stripe">
+                {{ trans('vendirun::forms.creditCard') }}
             </label>
         </div>
     @endif
     @if ($paymentGateways->stripe)
-        <div class="stripe-form">
+        <div class="stripe-form hidden">
             <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
             <script type="text/javascript">
                 Stripe.setPublishableKey('{{ $paymentGateways->stripeSettings->sandbox_mode ? $paymentGateways->stripeSettings->test_publishable : $paymentGateways->stripeSettings->publishable }}');

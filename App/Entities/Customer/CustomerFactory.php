@@ -31,4 +31,25 @@ class CustomerFactory {
         return new Customer($id, $name, $primaryEmail);
     }
 
+    /**
+     * @param $data
+     * @return Customer
+     */
+    public function makeFromCheckoutForm($data)
+    {
+        $name = new Name($data['fullName']);
+        $email = $data['emailAddress'];
+        if ($customer = $this->customerRepository->find())
+        {
+            $customer->setName($name);
+            $customer->setPrimaryEmail($email);
+            $this->customerRepository->save($customer);
+            return $customer;
+        }
+        else
+        {
+            return $this->make(NULL, $data['fullName'], $data['emailAddress']);
+        }
+    }
+
 }

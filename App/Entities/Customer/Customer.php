@@ -182,6 +182,8 @@ class Customer {
      */
     public function getAddressFromAddressId($addressId = NULL)
     {
+        if (count($this->addresses) == 0) return NULL;
+
         foreach ($this->addresses as $address) if ($address->getId() == $addressId) return $address;
 
         return $this->getPrimaryAddress();

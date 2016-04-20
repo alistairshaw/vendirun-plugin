@@ -2,7 +2,7 @@
 @section('title', $post->title)
 @section('description', $post->meta_description)
 @section('keywords', $post->meta_keywords)
-@section('body-class', 'blog-post ' . str_replace('/', '-', $post->slug ? 'blog-post-' . $post->slug : ''))
+@section('body-class', 'vendirun-app blog-post ' . str_replace('/', '-', $post->slug ? 'blog-post-' . $post->slug : ''))
 @section('content')
     <div class="container">
         <h1>{{ $post->title }}</h1>

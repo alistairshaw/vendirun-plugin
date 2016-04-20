@@ -1,9 +1,12 @@
 <?php namespace AlistairShaw\Vendirun\App\Http\Controllers\Blog;
 
+use AlistairShaw\Vendirun\App\Entities\Customer\Helpers\CustomerHelper;
 use AlistairShaw\Vendirun\App\Http\Controllers\VendirunBaseController;
+use AlistairShaw\Vendirun\App\Lib\LocaleHelper;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\Exceptions\FailResponseException;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\VendirunApi;
 use App;
+use Redirect;
 use View;
 
 class PostController extends VendirunBaseController {
@@ -27,11 +30,18 @@ class PostController extends VendirunBaseController {
         $data = [];
         try
         {
-            $post = VendirunApi::makeRequest('blog/post', ['slug' => $slug]);
+            $post = VendirunApi::makeRequest('blog/post', ['slug' => $slug, 'token' => CustomerHelper::checkLoggedinCustomer()]);
             $data['post'] = $post->getData();
         }
         catch (FailResponseException $e)
         {
+            $errors = json_decode($e->getMessage());
+            if (isset($errors->try_with_login))
+            {
+                if (CustomerHelper::checkLoggedinCustomer()) return Redirect::route(LocaleHelper::localePrefix() . 'vendirun.noPermissions');
+
+                return Redirect::route(LocaleHelper::localePrefix() . 'vendirun.register')->withErrors('Please login to view this content');
+            }
             abort('404');
         }
         return View::make('vendirun::blog.post', $data);
@@ -47,6 +57,7 @@ class PostController extends VendirunBaseController {
         {
             $searchVars = $_GET;
             $searchVars['language'] = App::getLocale();
+            $searchVars['token'] = CustomerHelper::checkLoggedinCustomer();
             $posts = VendirunApi::makeRequest('blog/search', $searchVars);
             $data['posts'] = $posts->getData();
         }

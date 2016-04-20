@@ -15,7 +15,6 @@ class ApiCartRepository implements CartRepository {
     {
         $items = $this->getCart();
         $items[] = (int)$id;
-        var_dump($items);
         return $this->saveCart($items);
     }
 

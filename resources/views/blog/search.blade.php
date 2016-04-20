@@ -1,6 +1,6 @@
 @extends('vendirun::layouts.standard')
 @section('title', 'Blog')
-@section('body-class', 'blog-posts')
+@section('body-class', 'vendirun-app blog-posts')
 @section('content')
     <div class="container">
         <h1>Blog</h1>

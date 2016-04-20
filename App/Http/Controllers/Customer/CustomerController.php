@@ -8,7 +8,9 @@ use AlistairShaw\Vendirun\App\Lib\LocaleHelper;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\Exceptions\FailResponseException;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\VendirunApi;
 use App;
+use Config;
 use Event;
+use League\Flysystem\Adapter\Local;
 use Redirect;
 use Request;
 use Illuminate\Http\Request as IlRequest;
@@ -74,6 +76,10 @@ class CustomerController extends VendirunBaseController {
             'password' => 'required|min:5|confirmed',
             'password_confirmation' => 'required|min:5'
         ]);
+
+        // check if we need to verify the email address first
+        $clientInfo = Config::get('clientInfo');
+        if ($clientInfo->signup_email_verification) return $this->doEmailVerification(Request::all());
 
         try
         {
@@ -193,6 +199,63 @@ class CustomerController extends VendirunBaseController {
         Session::flash('vendirun-alert-success', 'Thank you for contacting us we will get back to you shortly!');
 
         return Redirect::back();
+    }
+
+    /**
+     * @return \Illuminate\Contracts\View\View
+     */
+    public function emailConfirm()
+    {
+        return View::make('vendirun::customer.email-confirm');
+    }
+
+    /**
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function emailConfirmAction()
+    {
+        try
+        {
+            $params = VendirunApi::makeRequest('customer/verifyEmailData', ['id' => Request::get('confirmId')])->getData();
+
+            VendirunApi::makeRequest('customer/store', $params);
+            return $this->login($params->email, $params->password);
+        }
+        catch (FailResponseException $e)
+        {
+            return Redirect::route(LocaleHelper::localePrefix() . 'vendirun.register')->withErrors($e->getMessage());
+        }
+    }
+
+    /**
+     * @return \Illuminate\Contracts\View\View
+     */
+    public function noPermissions()
+    {
+        return View::make('vendirun::customer.no-permissions');
+    }
+
+    /**
+     * @param $callbackData
+     * @return $this|\Illuminate\Http\RedirectResponse
+     */
+    private function doEmailVerification($callbackData)
+    {
+        try
+        {
+            $params = [
+                'email' => $callbackData['email'],
+                'callback_url' => route(LocaleHelper::localePrefix() . 'vendirun.emailConfirmAction'),
+                'callback_data' => json_encode($callbackData)
+            ];
+
+            VendirunApi::makeRequest('customer/verifyEmail', $params);
+            return Redirect::route(LocaleHelper::localePrefix() . 'vendirun.emailConfirm');
+        }
+        catch (FailResponseException $e)
+        {
+            return Redirect::route(LocaleHelper::localePrefix() . 'vendirun.register')->withInput()->withErrors($e->getMessage());
+        }
     }
 
 }

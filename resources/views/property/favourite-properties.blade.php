@@ -2,7 +2,7 @@
 @section('title', 'My Favourite Properties')
 @section('description', '')
 @section('keywords', '')
-@section('body-class', 'property-search favourite-properties')
+@section('body-class', 'vendirun-app property-search favourite-properties')
 @section('content')
     <div class="container property-search type1 clearfix">
         <div class="property-results">

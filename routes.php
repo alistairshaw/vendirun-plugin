@@ -65,6 +65,7 @@ Route::group(['middleware' => ['web']], function ()
                 Route::any('register', ['as' => $localePrefix . 'vendirun.register', 'uses' => 'Customer\CustomerController@register']);
                 Route::get('email-confirm', ['as' => $localePrefix . 'vendirun.emailConfirm', 'uses' => 'Customer\CustomerController@emailConfirm']);
                 Route::get('email-confirm/action', ['as' => $localePrefix . 'vendirun.emailConfirmAction', 'uses' => 'Customer\CustomerController@emailConfirmAction']);
+                Route::get('no-permissions', ['as' => $localePrefix . 'vendirun.noPermissions', 'uses' => 'Customer\CustomerController@noPermissions']);
 
                 Route::group(['prefix' => 'password'], function () use ($localePrefix)
                 {

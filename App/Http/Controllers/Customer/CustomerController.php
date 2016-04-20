@@ -228,6 +228,14 @@ class CustomerController extends VendirunBaseController {
     }
 
     /**
+     * @return \Illuminate\Contracts\View\View
+     */
+    public function noPermissions()
+    {
+        return View::make('vendirun::customer.no-permissions');
+    }
+
+    /**
      * @param $callbackData
      * @return $this|\Illuminate\Http\RedirectResponse
      */

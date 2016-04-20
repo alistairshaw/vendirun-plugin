@@ -1,5 +1,6 @@
 <?php namespace AlistairShaw\Vendirun\App\Http\Composers;
 
+use AlistairShaw\Vendirun\App\Entities\Customer\Helpers\CustomerHelper;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\Exceptions\FailResponseException;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\VendirunApi;
 use App;
@@ -26,6 +27,7 @@ class BlogViewComposer {
 
             try
             {
+                $params['token'] = CustomerHelper::checkLoggedinCustomer();
                 $request = VendirunApi::makeRequest('blog/search', $params);
                 $posts = $request->getData();
             }

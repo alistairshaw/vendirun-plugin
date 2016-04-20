@@ -68,6 +68,14 @@ class Cart {
     }
 
     /**
+     * @return int
+     */
+    public function count()
+    {
+        return $this->items ? count($this->items) : 0;
+    }
+
+    /**
      * @return array
      */
     public function getItems()

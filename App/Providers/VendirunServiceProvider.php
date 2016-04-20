@@ -74,11 +74,13 @@ class VendirunServiceProvider extends ServiceProvider {
         $this->app->bind('AlistairShaw\Vendirun\App\Entities\Cart\CartRepository', 'AlistairShaw\Vendirun\App\Entities\Cart\ApiCartRepository');
         $this->app->bind('AlistairShaw\Vendirun\App\Entities\Order\OrderRepository', 'AlistairShaw\Vendirun\App\Entities\Order\ApiOrderRepository');
         $this->app->bind('AlistairShaw\Vendirun\App\Entities\Customer\CustomerRepository', 'AlistairShaw\Vendirun\App\Entities\Customer\ApiCustomerRepository');
+        $this->app->bind('AlistairShaw\Vendirun\App\Entities\Order\Payment\PaymentRepository', 'AlistairShaw\Vendirun\App\Entities\Order\Payment\ApiPaymentRepository');
 
 		// aliases
 		$loader = AliasLoader::getInstance();
 		$loader->alias('LocaleHelper', 'AlistairShaw\Vendirun\App\Lib\LocaleHelper');
 		$loader->alias('CurrencyHelper', 'AlistairShaw\Vendirun\App\Lib\CurrencyHelper');
+		$loader->alias('CountryHelper', 'AlistairShaw\Vendirun\App\Lib\CountryHelper');
 		$loader->alias('TaxCalculator', 'AlistairShaw\Vendirun\App\Entities\Cart\Helpers\TaxCalculator');
 		$loader->alias('CustomerHelper', 'AlistairShaw\Vendirun\App\Entities\Customer\Helpers\CustomerHelper');
 	}

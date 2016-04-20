@@ -18,5 +18,8 @@ return [
     'cardDeclined' => 'Sorry, but your card has been declined. Please try again.',
     'orderComplete' => 'Your order has been completed',
     'thanksForOrder' => 'Thanks for placing an order with us, your order details are below',
-    'billingAddressSameAsShipping' => 'Billing address is the same as the shipping address'
+    'orderFailed' => 'Your payment was not taken successfully',
+    'orderFailedText' => 'Unfortunately your payment did not go through. Please try again.',
+    'billingAddressSameAsShipping' => 'Billing address is the same as the shipping address',
+    'paymentTakenOtherError' => 'Payment Has Been Taken - ORDER not saved correctly, please contact Customer Services'
 ];

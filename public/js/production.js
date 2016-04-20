@@ -18327,20 +18327,23 @@ $(document).ready(function () {
     fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));
 jQuery(function($) {
-    $('#stripePaymentForm').submit(function(event) {
-        var $form = $(this);
-        var $btn = $(document.activeElement);
+    if ($('.stripe-form').is(':visible')) {
+        console.log('yes');
+        $('#stripePaymentForm').submit(function(event) {
+            var $form = $(this);
+            var $btn = $(document.activeElement);
 
-        if ($btn.hasClass('js-recalculate-shipping-button')) return true;
+            if ($btn.hasClass('js-recalculate-shipping-button')) return true;
 
-        // Disable the submit button to prevent repeated clicks
-        $form.find('button[type="submit"]').prop('disabled', true);
+            // Disable the submit button to prevent repeated clicks
+            $form.find('button[type="submit"]').prop('disabled', true);
 
-        Stripe.card.createToken($form, stripeResponseHandler);
+            Stripe.card.createToken($form, stripeResponseHandler);
 
-        // Prevent the form from submitting with the default action
-        return false;
-    });
+            // Prevent the form from submitting with the default action
+            return false;
+        });
+    }
 });
 
 function stripeResponseHandler(status, response) {

@@ -1,7 +1,7 @@
 {
     "name": "alistairshaw/vendirun",
     "description": "Vendirun plugin for front-end Laravel website",
-    "version": "1.0.7.1",
+    "version": "1.0.7.2",
     "authors": [
         {
             "name": "Alistair Shaw",

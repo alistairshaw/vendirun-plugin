@@ -1,18 +1,18 @@
 <div class="payment clearfix">
     @if ($paymentGateways->stripe && $paymentGateways->paypal)
         <div class="options form-group form-inline">
-            <label>
-                <input type="radio" name="paymentOption" value="paypal" checked>
-                {{ trans('vendirun::forms.payPal') }}
-            </label>
-            <label>
-                <input type="radio" name="paymentOption" value="stripe">
+            <label class="hidden stripe-option js-stripe-option">
+                <input type="radio" name="paymentOption" id="paymentOptionStripe" value="stripe">
                 {{ trans('vendirun::forms.creditCard') }}
+            </label>
+            <label class="paypal-option js-paypal-option">
+                <input type="radio" name="paymentOption" id="paymentOptionPaypal" value="paypal" checked>
+                {{ trans('vendirun::forms.payPal') }}
             </label>
         </div>
     @endif
     @if ($paymentGateways->stripe)
-        <div class="stripe-form hidden">
+        <div class="stripe-form js-stripe-form hidden">
             <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
             <script type="text/javascript">
                 Stripe.setPublishableKey('{{ $paymentGateways->stripeSettings->sandbox_mode ? $paymentGateways->stripeSettings->test_publishable : $paymentGateways->stripeSettings->publishable }}');
@@ -21,12 +21,12 @@
 
             <div class="form-group">
                 <label for="textinput">{{ trans('vendirun::forms.cardHolderName') }}</label>
-                <input type="text" name="cardHolderName" maxlength="70" placeholder="{{ trans('vendirun::forms.cardHolderName') }}" class="form-control" value="{{ old('cardHolderName', '') }}">
+                <input type="text" name="cardHolderName" maxlength="70" placeholder="{{ trans('vendirun::forms.cardHolderName') }}" class="form-control" value="{{ old('cardHolderName', '') }}" required>
             </div>
 
             <div class="form-group">
                 <label for="textinput">{{ trans('vendirun::forms.cardNumber') }}</label>
-                <input type="text" maxlength="19" placeholder="{{ trans('vendirun::forms.cardNumber') }}" class="form-control" data-stripe="number" value="">
+                <input type="text" maxlength="19" placeholder="{{ trans('vendirun::forms.cardNumber') }}" class="form-control" data-stripe="number" value="" required>
             </div>
 
             <div class="expiry-cvv">
@@ -60,7 +60,7 @@
                 <div class="cvv">
                     <div class="form-group">
                         <label for="textinput">{{ trans('vendirun::forms.cvv') }}</label>
-                        <input type="text" id="cvv" placeholder="{{ trans('vendirun::forms.cvv') }}" maxlength="4" class="form-control" data-stripe="cvc" value="">
+                        <input type="text" id="cvv" placeholder="{{ trans('vendirun::forms.cvv') }}" maxlength="4" class="form-control" data-stripe="cvc" value="" required>
                     </div>
                 </div>
             </div>

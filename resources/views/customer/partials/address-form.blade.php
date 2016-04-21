@@ -1,7 +1,7 @@
-<div class="address-form">
+<div class="address-form {{ $prefix }}-address-form js-{{ $prefix }}-address-form">
     <div class="form-group">
         <label for="{{ $prefix }}address1">{{ trans('vendirun::forms.address1') }}</label>
-        <input type="text" class="form-control" name="{{ $prefix }}address1" id="{{ $prefix }}address1" value="{{ old($prefix . 'address1', $address['address1']) }}">
+        <input type="text" class="form-control" name="{{ $prefix }}address1" id="{{ $prefix }}address1" value="{{ old($prefix . 'address1', $address['address1']) }}" required>
     </div>
     <div class="form-group">
         <label for="{{ $prefix }}address2">{{ trans('vendirun::forms.address2') }}</label>
@@ -13,7 +13,7 @@
     </div>
     <div class="form-group">
         <label for="{{ $prefix }}city">{{ trans('vendirun::forms.city') }}</label>
-        <input type="text" class="form-control" name="{{ $prefix }}city" id="{{ $prefix }}city" value="{{ old($prefix . 'city', $address['city']) }}">
+        <input type="text" class="form-control" name="{{ $prefix }}city" id="{{ $prefix }}city" value="{{ old($prefix . 'city', $address['city']) }}" required>
     </div>
     <div class="form-group">
         <label for="{{ $prefix }}state">{{ trans('vendirun::forms.state') }}</label>
@@ -21,7 +21,7 @@
     </div>
     <div class="form-group">
         <label for="{{ $prefix }}postcode">{{ trans('vendirun::forms.postcode') }}</label>
-        <input type="text" class="form-control" name="{{ $prefix }}postcode" id="{{ $prefix }}postcode" value="{{ old($prefix . 'postcode', $address['postcode']) }}">
+        <input type="text" class="form-control" name="{{ $prefix }}postcode" id="{{ $prefix }}postcode" value="{{ old($prefix . 'postcode', $address['postcode']) }}" required>
     </div>
     <div class="form-group">
         <label for="{{ $prefix }}countryId">{{ trans('vendirun::forms.country') }}</label>

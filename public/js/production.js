@@ -18051,6 +18051,23 @@ $.extend($.fn, {
 });
 
 }));
+var apiManager = {
+
+    makeCall: function(entity, action) {
+        this.getEndpoints(function(response) {
+            $.each(response, function(val) {
+                console.log(val);
+            });
+        });
+    },
+
+    getEndpoints: function(callback) {
+        $.get('/api', function(response) {
+            callback(response);
+        }, 'json');
+    }
+
+};
 $(window).load(function () {
 	$('.property-slide-show').nivoSlider({
 		manualAdvance: true,
@@ -18326,44 +18343,146 @@ $(document).ready(function () {
     js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
     fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));
-jQuery(function($) {
-    if ($('.stripe-form').is(':visible')) {
-        console.log('yes');
-        $('#stripePaymentForm').submit(function(event) {
-            var $form = $(this);
-            var $btn = $(document.activeElement);
+var stripeManager = function($form) {
+    return {
+        init: function() {
+            Stripe.card.createToken($form, this.stripeResponseHandler);
+        },
 
-            if ($btn.hasClass('js-recalculate-shipping-button')) return true;
+        stripeResponseHandler: function(status, response) {
+            var $form = $('#stripePaymentForm');
+            var $errorDiv = $form.find('.js-payment-errors');
+            $errorDiv.addClass('hidden');
 
-            // Disable the submit button to prevent repeated clicks
-            $form.find('button[type="submit"]').prop('disabled', true);
+            if (response.error) {
+                $errorDiv.removeClass('hidden').html(response.error.message);
+                $(document).scrollTop($errorDiv.position().top);
+                $form.find('button').prop('disabled', false);
+            } else {
+                // response contains id and card, which contains additional card details
+                var token = response.id;
+                // Insert the token into the form so it gets submitted to the server
+                $form.append($('<input type="hidden" name="stripeToken" />').val(token));
+                // and submit
+                $form.get(0).submit();
+            }
+        }
+    }.init($form);
+};
+var shippingCalculator = function() {
+    return {
 
-            Stripe.card.createToken($form, stripeResponseHandler);
+        shipping: null,
 
-            // Prevent the form from submitting with the default action
-            return false;
-        });
-    }
+        init: function() {
+            this.getShipping();
+            return this;
+        },
+
+        getShipping: function() {
+            var _this = this;
+            _this.shipping = $('.js-current-shipping').html();
+            console.log("Making Call");
+            apiManager.makeCall('shipping', 'calculate');
+        }
+    }.init();
+};
+var checkoutManager = function () {
+    return {
+
+        stripeFormAction: null,
+
+        paymentType: 'stripe',
+
+        init: function () {
+            this.initializeStripe();
+            this.enableFormValidation();
+            this.setupRecalculateShipping();
+            this.setupChoosePaymentType();
+            this.setupBillingAddress();
+            this.setupCompany();
+
+            return this;
+        },
+
+        initializeStripe: function () {
+            var paymentForm = $('#stripePaymentForm');
+            if (paymentForm.length) {
+                $('.js-stripe-form').removeClass('hidden');
+                $('.js-stripe-option').removeClass('hidden');
+                $('#paymentOptionStripe').prop('checked', true);
+                $('#paymentOptionPaypal').prop('checked', false);
+            }
+        },
+
+        enableFormValidation: function () {
+            var _this = this;
+            var $form = $('.js-checkout-payment-form');
+            $form.validate();
+            $form.on('submit', function (e) {
+                e.preventDefault();
+                var $form = $(this);
+                $form.find('button[type="submit"]').prop('disabled', true);
+                if (_this.paymentType == 'stripe') {
+                    _this.validate($form, _this.validateStripe);
+                }
+                else {
+                    _this.validate($form, function ($form) {
+                        $form.get(0).submit();
+                    });
+                }
+            });
+        },
+
+        validateStripe: function ($form) {
+            stripeManager($form);
+        },
+
+        validate: function ($form, callback) {
+            if ($form.valid()) {
+                callback($form);
+            }
+            else {
+                $form.find('button').prop('disabled', false);
+            }
+        },
+
+        setupRecalculateShipping: function () {
+            $('.js-recalculate-shipping-button').on('click', function (e) {
+                e.preventDefault();
+                shippingCalculator();
+            });
+        },
+
+        setupChoosePaymentType: function () {
+            var _this = this;
+            var $form = $('.js-stripe-form');
+            $('input[type=radio][name=paymentOption]').on('change', function () {
+                _this.paymentType = $(this).val();
+                $form.removeClass('hidden');
+                if (_this.paymentType !== 'stripe') $form.addClass('hidden');
+            });
+        },
+
+        setupBillingAddress: function () {
+            $('.js-billing-address-form').toggle();
+            $('#billingAddressSameAsShipping').on('change', function () {
+                $('.js-billing-address-form').toggle();
+            });
+        },
+
+        setupCompany: function () {
+            $('.js-company-name-field').toggle();
+            $('#company').on('change', function () {
+                $('.js-company-name-field').toggle();
+            });
+        }
+    }.init();
+};
+
+$(document).ready(function () {
+    if ($('.js-checkout-payment-form').length) checkoutManager();
 });
-
-function stripeResponseHandler(status, response) {
-    var $form = $('#stripePaymentForm');
-    var $errorDiv = $form.find('.js-payment-errors');
-    $errorDiv.addClass('hidden');
-
-    if (response.error) {
-        $errorDiv.removeClass('hidden').html(response.error.message);
-        $(document).scrollTop($errorDiv.position().top);
-        $form.find('button').prop('disabled', false);
-    } else {
-        // response contains id and card, which contains additional card details
-        var token = response.id;
-        // Insert the token into the form so it gets submitted to the server
-        $form.append($('<input type="hidden" name="stripeToken" />').val(token));
-        // and submit
-        $form.get(0).submit();
-    }
-}
 $(document).ready(function () {
 
 	$('.js-fade-out').each(function () {

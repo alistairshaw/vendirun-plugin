@@ -13,7 +13,7 @@
         </div>
     </div>
     <div class="shipping-price">
-        <div class="price">
+        <div class="price js-current-shipping">
             {{ CurrencyHelper::formatWithCurrency($cart->displayShipping()) }}
         </div>
     </div>

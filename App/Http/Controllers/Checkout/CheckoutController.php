@@ -84,6 +84,8 @@ class CheckoutController extends VendirunBaseController {
     {
         if (Request::has('recalculateShipping')) return $this->recalculateShipping($customerRepository);
 
+        // dd("Submitted " . Request::input('paymentOption'));
+
         // construct the customer
         $customerFactory = new CustomerFactory($customerRepository);
         $customer = $customerFactory->makeFromCheckoutForm(Request::all());

@@ -1,8 +1,17 @@
 <?php
 
+Route::group(['middleware' => ['api', 'localization'], 'prefix' => 'api', 'namespace' => 'AlistairShaw\Vendirun\App\Http\Controllers\Api'], function ()
+{
+    foreach (array_merge([''], LocaleHelper::validLocales()) as $locale)
+    {
+        $localePrefix = $locale ? $locale . '.' : '';
+        Route::get('/', ['as' => $localePrefix . 'vendirun.api.base', 'uses' => 'HomeController@index']);
+        Route::get('/shipping/calculate', ['as' => $localePrefix . 'vendirun.apiShippingCalculate', 'uses' => 'ShippingController@calculate']);
+    }
+});
+
 Route::group(['middleware' => ['web']], function ()
 {
-
     foreach (array_merge([''], LocaleHelper::validLocales()) as $locale)
     {
         Route::group(['middleware' => ['localization'], 'prefix' => $locale, 'namespace' => 'AlistairShaw\Vendirun\App\Http\Controllers'], function () use ($locale)
@@ -108,5 +117,4 @@ Route::group(['middleware' => ['web']], function ()
 
     // capture any undefined routes and pass to the CMS controller
     Route::any('{catchall}', ['middleware' => ['localization'], 'as' => 'vendirun.cmsPage', 'uses' => 'AlistairShaw\Vendirun\App\Http\Controllers\Cms\PageController@page'])->where('catchall', '(.*)');
-
 });

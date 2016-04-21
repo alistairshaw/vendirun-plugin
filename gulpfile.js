@@ -37,6 +37,7 @@ elixir(function (mix) {
             '../../bower_components/select2/select2.js',
             '../../bower_components/nivoslider/jquery.nivo.slider.js',
             '../../bower_components/jquery-validate/dist/jquery.validate.js',
+            'apiManager.js',
             'sliders.js',
             'validation.js',
             'google-map.js',
@@ -46,7 +47,9 @@ elixir(function (mix) {
             'property/property-view.js',
             'property/property-results.js',
             'social.js',
-            'stripe.js',
+            'checkout/stripeManager.js',
+            'checkout/shippingCalculator.js',
+            'checkout/checkoutManager.js',
             'main.js'
         ], 'public/js/production.js')
 

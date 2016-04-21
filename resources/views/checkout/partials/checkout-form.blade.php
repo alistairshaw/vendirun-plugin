@@ -1,4 +1,4 @@
-<form method="post" id="{{ $paymentGateways->stripe ? 'stripePaymentForm' : 'paymentForm' }}">
+<form method="post" id="{{ $paymentGateways->stripe ? 'stripePaymentForm' : 'paymentForm' }}" class="js-checkout-payment-form">
     @if (count($errors) > 0)
         <div class="alert alert-danger">
             <ul>

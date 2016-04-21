@@ -114,20 +114,10 @@ class ProductController extends VendirunBaseController {
         {
             if ($category) $productSearchParams['category'] = $category;
 
-            if (isset($_GET['page']))
-            {
-                $productSearchParams['offset'] = $_GET['page'] - 1;
-            }
+            $productSearchParams['offset'] = (Request::get('page', 1) - 1) * Request::get('limit', 12);
 
-            if (Request::get('searchString'))
-            {
-                $productSearchParams['search_string'] = Request::get('searchString');
-            }
-
-            if (Request::get('sku'))
-            {
-                $productSearchParams['sku'] = Request::get('sku');
-            }
+            if (Request::has('searchString')) $productSearchParams['search_string'] = Request::get('searchString');
+            if (Request::has('sku')) $productSearchParams['sku'] = Request::get('sku');
 
             $productSearchParams['limit'] = Request::get('limit', 12);
             $productSearchParams['order_by'] = Config::get('vendirun.productDefaultSortBy', 'price');

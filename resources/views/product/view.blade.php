@@ -1,7 +1,7 @@
 @extends('vendirun::layouts.standard')
-@section('title', $product->product_name)
-@section('description', $product->short_description)
-@section('keywords', $product->keywords)
+@section('title', strip_tags($product->product_name))
+@section('description', strip_tags($product->short_description))
+@section('keywords', strip_tags($product->keywords))
 @section('body-class', 'vendirun-app product product-view')
 @section('content')
     <div class="container">

@@ -159,6 +159,7 @@ class CartItem {
      */
     public function shipping()
     {
+        if ($this->shippingPrice === null) return null;
         return $this->shippingBeforeTax() + $this->shippingTax();
     }
 
@@ -168,6 +169,7 @@ class CartItem {
      */
     public function shippingBeforeTax()
     {
+        if ($this->shippingPrice === null) return null;
         return $this->priceIncludesTax ? ($this->shippingPrice * $this->quantity) - $this->shippingTax() : $this->shippingPrice * $this->quantity;
     }
 
@@ -176,6 +178,7 @@ class CartItem {
      */
     public function shippingTax()
     {
+        if ($this->shippingPrice === null) return null;
         return $this->priceIncludesTax ? TaxCalculator::taxFromTotal($this->shippingPrice, $this->taxRate, $this->quantity) : (int)($this->shippingPrice / 100 * $this->taxRate) * $this->quantity;
     }
 
@@ -185,6 +188,7 @@ class CartItem {
      */
     public function displayShipping()
     {
+        if ($this->shippingPrice === null) return null;
         return $this->shippingPrice * $this->quantity;
     }
 

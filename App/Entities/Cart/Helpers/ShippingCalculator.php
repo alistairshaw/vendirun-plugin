@@ -87,7 +87,7 @@ class ShippingCalculator {
      */
     public static function orderShippingCharge($products, $countryId = NULL, $shippingType = '')
     {
-        $shippingCharge = 0;
+        $shippingCharge = null;
 
         foreach ($products as $product)
         {

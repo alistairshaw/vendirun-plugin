@@ -1,19 +1,18 @@
 <?php namespace AlistairShaw\Vendirun\App\Http\Controllers\Api;
 
-use AlistairShaw\Vendirun\App\Http\Controllers\VendirunBaseController;
 use AlistairShaw\Vendirun\App\Lib\LocaleHelper;
 
-class HomeController extends VendirunBaseController {
+class HomeController extends ApiBaseController {
 
     /**
      * Returns full list of available actions with the relevant URI listed
      */
     public function index()
     {
-        return [
+        return $this->respond(true, [
             'shipping' => [
                 'calculate' => [
-                    'endpoint' => route('en.vendirun.apiShippingCalculate'),
+                    'endpoint' => route(LocaleHelper::localePrefix() . 'vendirun.apiShippingCalculate'),
                     'requiredParameters' => [
                         'shippingCountryId' => 'int'
                     ],
@@ -22,7 +21,7 @@ class HomeController extends VendirunBaseController {
                     ]
                 ]
             ]
-        ];
+        ]);
     }
 
 }

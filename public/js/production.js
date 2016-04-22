@@ -18053,16 +18053,55 @@ $.extend($.fn, {
 }));
 var apiManager = {
 
-    makeCall: function(entity, action) {
-        this.getEndpoints(function(response) {
-            $.each(response, function(val) {
-                console.log(val);
-            });
+    makeCall: function (entity, action, params, callback, errorHandler) {
+        this.resolveEndpoint(entity, action, params, function (final) {
+            callback(final);
+        }, function(error) {
+            if (errorHandler != undefined) errorHandler(error);
         });
     },
 
-    getEndpoints: function(callback) {
-        $.get('/api', function(response) {
+    callEndPoint: function (endpoint, params, callback) {
+        $.post(endpoint.endpoint, params, function(response) {
+            callback(response);
+        }, 'json');
+    },
+
+    resolveEndpoint: function (entity, action, params, callback, error) {
+        var _this = this;
+        this.getEndpoints(function (response) {
+            var ok = false;
+            $.each(response.data, function (index, val) {
+                if (index == entity) {
+                    $.each(val, function (index, endpoint) {
+                        if (index == action) {
+                            _this.callEndPoint(endpoint, params, callback);
+                            ok = true;
+                        }
+                    });
+                }
+            });
+            if (!ok) {
+                error('No valid endpoint found for ' + entity + '/' + action);
+                sessionStorage.apiEndPoints = null; // in case the reason no endpoint found is because of cached values
+            }
+        });
+    },
+
+    getEndpoints: function (callback) {
+        if (sessionStorage.apiEndPoints) {
+            var sessionObject = JSON.parse(sessionStorage.apiEndPoints);
+            if (sessionObject && sessionObject.when && parseInt(new Date(sessionObject.when).getTime()) + 3000 > parseInt(new Date().getTime())) {
+                callback(sessionObject.data);
+                return true;
+            }
+        }
+
+        $.get('/api', function (response) {
+            sessionStorage.apiEndPoints = JSON.stringify({
+                when: new Date(),
+                data: response
+            });
             callback(response);
         }, 'json');
     }
@@ -18369,23 +18408,71 @@ var stripeManager = function($form) {
         }
     }.init($form);
 };
-var shippingCalculator = function() {
+var shippingCalculator = function(button) {
     return {
 
         shipping: null,
 
-        init: function() {
-            this.getShipping();
+        $button: null,
+
+        buttonSettings: {},
+
+        init: function($button) {
+            this.$button = $button;
+            this.startProcess();
+            this.updateShipping();
             return this;
         },
 
-        getShipping: function() {
+        startProcess: function() {
+            this.buttonSettings = {
+                'html': this.$button.html(),
+                'val': this.$button.val(),
+                'width': this.$button.width()
+            };
+            this.$button.attr('disabled', true).addClass('disabled').html('<i class="fa fa-spinner"></i>').val('...').width(this.buttonSettings.width + 'px');
+            $('.js-display-shipping').html('<i class="fa fa-spinner fa-spin"></i>');
+            $('.js-one-shipping-type').addClass('hidden');
+            $('.js-multiple-shipping-types').addClass('hidden');
+        },
+
+        endProcess: function() {
+            this.$button.attr('disabled', false).removeClass('disabled').html(this.buttonSettings.html).val(this.buttonSettings.val);
+        },
+
+        updateShipping: function() {
             var _this = this;
             _this.shipping = $('.js-current-shipping').html();
-            console.log("Making Call");
-            apiManager.makeCall('shipping', 'calculate');
+            var params = {
+                countryId: $('#shippingcountryId').val(),
+                shippingTypeId: $('#shippingTypeId').val()
+            };
+            apiManager.makeCall('shipping', 'calculate', params, function(response) {
+                _this.endProcess();
+                $('.js-display-total').html(response.data.totals.displayTotal);
+                $('.js-tax').html(response.data.totals.tax);
+                $('.js-display-shipping').html(response.data.totals.displayShipping);
+                $('.js-total').html(response.data.totals.total);
+                $('.js-total-before-tax').html(response.data.totals.totalBeforeTax);
+                $('.js-shipping-before-tax').html(response.data.totals.shippingBeforeTax);
+
+                var $one = $('.js-one-shipping-type');
+                var $multiple = $('.js-multiple-shipping-types');
+                if (response.data.availableShippingTypes.length <= 1) {
+                    $one.removeClass('hidden').html(response.data.shippingTypeId);
+                }
+                else {
+                    var options = '';
+                    $.each(response.data.availableShippingTypes, function(index, val) {
+                        options += '<option value="' + val + '"';
+                        if (val == response.data.shippingTypeId) options += ' selected';
+                        options += '>' + val + '</option>';
+                    });
+                    $multiple.removeClass('hidden').html(options);
+                }
+            });
         }
-    }.init();
+    }.init(button);
 };
 var checkoutManager = function () {
     return {
@@ -18450,7 +18537,13 @@ var checkoutManager = function () {
         setupRecalculateShipping: function () {
             $('.js-recalculate-shipping-button').on('click', function (e) {
                 e.preventDefault();
-                shippingCalculator();
+                shippingCalculator($(this));
+            }).addClass('hidden');
+            $('#shippingcountryId').on('change', function() {
+                shippingCalculator($('.js-recalculate-shipping-button'));
+            });
+            $('.js-multiple-shipping-types').on('change', function() {
+                shippingCalculator($('.js-recalculate-shipping-button'));
             });
         },
 

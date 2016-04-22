@@ -7,11 +7,11 @@
 <meta name="author" content="Vendirun">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<meta property="og:url"           content="{{ Request::fullUrl() }}">
-<meta property="og:type"          content="website">
-<meta property="og:title"         content="{{ $clientData->name }}">
-<meta property="og:description"   content="@yield('description')">
-<meta property="og:image"         content="@yield('image', $clientData->company_logo)">
+<meta property="og:url" content="{{ Request::fullUrl() }}">
+<meta property="og:type" content="website">
+<meta property="og:title" content="{{ $clientData->name }}">
+<meta property="og:description" content="@yield('description')">
+<meta property="og:image" content="@yield('image', $clientData->company_logo)">
 
 <link rel="canonical" href="{{ URL::full() }}">
 

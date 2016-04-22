@@ -61,7 +61,13 @@ var checkoutManager = function () {
         setupRecalculateShipping: function () {
             $('.js-recalculate-shipping-button').on('click', function (e) {
                 e.preventDefault();
-                shippingCalculator();
+                shippingCalculator($(this));
+            }).addClass('hidden');
+            $('#shippingcountryId').on('change', function() {
+                shippingCalculator($('.js-recalculate-shipping-button'));
+            });
+            $('.js-multiple-shipping-types').on('change', function() {
+                shippingCalculator($('.js-recalculate-shipping-button'));
             });
         },
 

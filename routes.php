@@ -1,12 +1,15 @@
 <?php
 
-Route::group(['middleware' => ['api', 'localization'], 'prefix' => 'api', 'namespace' => 'AlistairShaw\Vendirun\App\Http\Controllers\Api'], function ()
+Route::group(['middleware' => ['api', 'web']], function ()
 {
-    foreach (array_merge([''], LocaleHelper::validLocales()) as $locale)
+    foreach (array_merge([''], ClientHelper::getValidLocales()) as $locale)
     {
-        $localePrefix = $locale ? $locale . '.' : '';
-        Route::get('/', ['as' => $localePrefix . 'vendirun.api.base', 'uses' => 'HomeController@index']);
-        Route::get('/shipping/calculate', ['as' => $localePrefix . 'vendirun.apiShippingCalculate', 'uses' => 'ShippingController@calculate']);
+        Route::group(['middleware' => ['localization'], 'prefix' => $locale . '/api', 'namespace' => 'AlistairShaw\Vendirun\App\Http\Controllers\Api'], function () use ($locale)
+        {
+            $localePrefix = $locale ? $locale . '.' : '';
+            Route::get('/', ['as' => $localePrefix . 'vendirun.api.base', 'uses' => 'HomeController@index']);
+            Route::any('shipping/calculate', ['as' => $localePrefix . 'vendirun.apiShippingCalculate', 'uses' => 'ShippingController@calculate']);
+        });
     }
 });
 

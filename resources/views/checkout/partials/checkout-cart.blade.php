@@ -4,21 +4,21 @@
         <table class="table">
             <tr>
                 <td>SubTotal</td>
-                <td>{{ CurrencyHelper::formatWithCurrency($cart->displayTotal(), false, '') }}</td>
+                <td class="js-display-total">{{ $displayTotals->displayTotal }}</td>
             </tr>
             @if (!$cart->getPriceIncludesTax())
             <tr>
                 <td>Tax</td>
-                <td>{{ CurrencyHelper::formatWithCurrency($cart->tax(), false, '') }}</td>
+                <td class="js-tax">{{ $displayTotals->tax }}</td>
             </tr>
             @endif
             <tr>
                 <td>Shipping</td>
-                <td>{{ CurrencyHelper::formatWithCurrency($cart->displayShipping(), false, '') }}</td>
+                <td class="js-display-shipping">{{ $displayTotals->displayShipping }}</td>
             </tr>
             <tr>
                 <td>Total</td>
-                <td>{{ CurrencyHelper::formatWithCurrency($cart->total(), false, '') }}</td>
+                <td class="js-total">{{ $displayTotals->total }}</td>
             </tr>
         </table>
     </div>

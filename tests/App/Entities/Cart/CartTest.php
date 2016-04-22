@@ -122,36 +122,65 @@ class CartTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals(1800, $cart->total());
     }
 
-    private function makeCart($priceIncludesTax = true)
+    /**
+     * When shipping is not available, shipping price returns null
+     *    and so should all the other shipping related functions, to
+     *    indicate shipping not available
+     */
+    public function testNullShipping()
     {
-        $cartRepository = $this->getMock('AlistairShaw\Vendirun\App\Entities\Cart\CartRepository');
+        $cart = $this->makeCart(true, true);
+        $this->assertNull($cart->shipping());
+        $this->assertNull($cart->shippingBeforeTax());
+        $this->assertNull($cart->shippingTax());
+        $this->assertNull($cart->displayShipping());
+        $this->assertNull($cart->displayOrderShipping());
+        $this->assertNull($cart->orderShippingTax());
+        $this->assertNull($cart->orderShippingBeforeTax());
+    }
 
+    public function testReturnsCorrectShippingType()
+    {
+        $cart = $this->makeCart(true, false, 'Express Shipping');
+        $this->assertEquals('Express Shipping', $cart->getShippingType());
+    }
+
+    /**
+     * @param bool   $priceIncludesTax
+     * @param bool   $shippingIsNull
+     * @param string $shippingType
+     * @return Cart
+     */
+    private function makeCart($priceIncludesTax = true, $shippingIsNull = false, $shippingType = 'Standard Shipping')
+    {
         $params = [
             'ids' => [1,2,3],
-            'items' => $this->makeMultipleItems(3, $priceIncludesTax),
+            'items' => $this->makeMultipleItems(3, $priceIncludesTax, 100, $shippingIsNull ? null : 50, $shippingType),
             'countryId' => 72,
-            'shippingType' => 'Standard Shipping',
+            'shippingType' => $shippingType,
             'priceIncludesTax' => $priceIncludesTax,
             'chargeTaxOnShipping' => true,
             'defaultTaxRate' => 20.0,
-            'orderShippingPrice' => 150,
+            'orderShippingPrice' => $shippingIsNull ? null : 150,
             'availableShippingTypes' => [
-                'Standard Shipping'
+                'Standard Shipping',
+                'Express Shipping'
             ],
         ];
-        return new Cart($cartRepository, $params);
+        return new Cart($params);
     }
 
     /**
      * @param      $number
      * @param bool $priceIncludesTax
      * @param int  $price
+     * @param int  $shippingPrice
      * @return array
      */
-    private function makeMultipleItems($number, $priceIncludesTax = true, $price = 100)
+    private function makeMultipleItems($number, $priceIncludesTax = true, $price = 100, $shippingPrice = 50)
     {
         $items = [];
-        for ($i = 1; $i <= $number; $i++) $items[] = $this->makeCartItem($price, 3, $priceIncludesTax);
+        for ($i = 1; $i <= $number; $i++) $items[] = $this->makeCartItem($price, 3, $priceIncludesTax, $shippingPrice);
         return $items;
     }
 
@@ -159,9 +188,10 @@ class CartTest extends \PHPUnit_Framework_TestCase {
      * @param int  $price
      * @param int  $quantity
      * @param bool $priceIncludesTax
+     * @param int  $shippingPrice
      * @return CartItem
      */
-    private function makeCartItem($price = 100, $quantity = 3, $priceIncludesTax = true)
+    private function makeCartItem($price = 100, $quantity = 3, $priceIncludesTax = true, $shippingPrice = 50)
     {
         return new CartItem([
             'productVariationId' => 55,
@@ -170,8 +200,8 @@ class CartTest extends \PHPUnit_Framework_TestCase {
             'productVariation' => [],
             'product' => [],
             'basePrice' => $price,
-            'shippingPrice' => 50,
-            'shippingTaxRate' => 20.0,
+            'shippingPrice' => $shippingPrice,
+            'shippingTaxRate' => $shippingPrice === null ? null : 20.0,
             'priceIncludesTax' => $priceIncludesTax
         ]);
     }

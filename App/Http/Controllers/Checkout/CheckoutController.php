@@ -46,8 +46,7 @@ class CheckoutController extends VendirunBaseController {
         $cartFactory = new CartFactory($cartRepository);
         $data['cart'] = $cartFactory->make($countryId, Request::get('shippingType', NULL));
         $data['paymentGateways'] = ClientHelper::getPaymentGatewayInfo();
-
-        if (count($data['cart']->getItems()) == 0) return Redirect::route(LocaleHelper::localePrefix() . 'vendirun.productCart');
+        $data['displayTotals'] = $data['cart']->getFormattedTotals();
 
         return View::make('vendirun::checkout.checkout', $data);
     }

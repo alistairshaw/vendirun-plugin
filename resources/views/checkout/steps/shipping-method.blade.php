@@ -14,7 +14,7 @@
     </div>
     <div class="shipping-price">
         <div class="price js-current-shipping">
-            {{ CurrencyHelper::formatWithCurrency($cart->displayShipping()) }}
+            {{ CurrencyHelper::formatWithCurrency($cart->displayShipping(), false, '') }}
         </div>
     </div>
     <div class="options">

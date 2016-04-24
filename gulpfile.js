@@ -54,10 +54,10 @@ elixir(function (mix) {
             'product/variationPicker.js',
             'product/product-edit.js',
             'main.js'
-        //], 'public/js/production.js')
-        ], '../../../public/vendor/vendirun/js/production.js')
+        ], 'public/js/production.js')
+        //], '../../../public/vendor/vendirun/js/production.js')
 
-        //.task('publish_assets', ['public/**/*.css', 'public/**/*.js'])
+        .task('publish_assets', ['public/**/*.css', 'public/**/*.js'])
     ;
 
     if (elixir.config.production) {

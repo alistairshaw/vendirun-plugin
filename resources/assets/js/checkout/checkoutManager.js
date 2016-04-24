@@ -35,12 +35,14 @@ var checkoutManager = function () {
             // add rules for form fields
             $('#emailAddress').rules('add', { required: true, email: true });
             $('#fullName').rules('add', { required: true });
-            $('#shippingaddress1').rules('add', { required: true });
-            $('#shippingcity').rules('add', { required: true });
-            $('#shippingpostcode').rules('add', { required: true });
-            $('#billingaddress1').rules('add', { required: true });
-            $('#billingcity').rules('add', { required: true });
-            $('#billingpostcode').rules('add', { required: true });
+            if ($('#shippingaddress1').length) {
+                $('#shippingaddress1').rules('add', { required: true });
+                $('#shippingcity').rules('add', { required: true });
+                $('#shippingpostcode').rules('add', { required: true });
+                $('#billingaddress1').rules('add', { required: true });
+                $('#billingcity').rules('add', { required: true });
+                $('#billingpostcode').rules('add', { required: true });
+            }
 
             $form.on('submit', function (e) {
                 e.preventDefault();

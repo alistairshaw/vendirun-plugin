@@ -8553,6 +8553,10 @@ ul.refine-list {
 .checkout .checkout-form .shipping-method .shipping-price {
   font-size: 1.4em; }
 
+.checkout .checkout-form .payment .credit-card-logo {
+  width: 200px;
+  margin-bottom: 20px; }
+
 .checkout .checkout-form .payment .options label {
   margin-right: 40px; }
 

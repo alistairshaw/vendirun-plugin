@@ -8,7 +8,8 @@ Route::group(['middleware' => ['api', 'web']], function ()
         {
             $localePrefix = $locale ? $locale . '.' : '';
             Route::get('/', ['as' => $localePrefix . 'vendirun.api.base', 'uses' => 'HomeController@index']);
-            Route::any('shipping/calculate', ['as' => $localePrefix . 'vendirun.apiShippingCalculate', 'uses' => 'ShippingController@calculate']);
+            Route::any('shipping/calculate', ['as' => $localePrefix . 'vendirun.api.shippingCalculate', 'uses' => 'ShippingController@calculate']);
+            Route::any('product/variations/{productId}', ['as' => $localePrefix . 'vendirun.api.getVariations', 'uses' => 'ProductController@getVariations']);
         });
     }
 });

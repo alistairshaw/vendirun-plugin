@@ -6,6 +6,8 @@ return [
     'deliveryDetailsDescription' => 'Where shall we send this stuff?',
     'shippingMethod' => 'Shipping Method',
     'shippingMethodDescription' => 'Confirm your shipping method and amount',
+    'payWithPaypal' => 'Payment via Paypal',
+    'payWithPaypalDescription' => 'Pay with 100% confidence using Paypal\'s secure server',
     'paymentOptions' => 'Payment',
     'paymentOptionsDescription' => 'How would you like to pay?',
     'orderConfirm' => 'Confirm Order',

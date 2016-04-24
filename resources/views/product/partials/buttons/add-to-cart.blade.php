@@ -1,6 +1,6 @@
 <a href="{{ $viewProductRoute }}"
-   data-product-name="{{ $product->product_name }}"
-   data-product-id="{{ $product->id }}"
+   data-product-name="{{ $productDisplay['productName'] }}"
+   data-product-id="{{ $productDisplay['id'] }}"
    class="btn btn-default"
    data-toggle="tooltip"
    title="{{ trans('vendirun::product.addToCart') }}">

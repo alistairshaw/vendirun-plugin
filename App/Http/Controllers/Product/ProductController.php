@@ -2,9 +2,9 @@
 
 namespace AlistairShaw\Vendirun\App\Http\Controllers\Product;
 
+use AlistairShaw\Vendirun\App\Entities\Product\ProductRepository;
 use AlistairShaw\Vendirun\App\Http\Controllers\VendirunBaseController;
 use AlistairShaw\Vendirun\App\Lib\LocaleHelper;
-use AlistairShaw\Vendirun\App\Lib\VendirunApi\VendirunApi;
 use App;
 use Config;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -18,37 +18,35 @@ class ProductController extends VendirunBaseController {
     protected $primaryPages = true;
 
     /**
-     * @param string $category
+     * @param ProductRepository $productRepository
+     * @param string            $category
      * @return \Illuminate\View\View
      */
-    public function index($category = '')
+    public function index(ProductRepository $productRepository, $category = '')
     {
         $productSearchParams = $this->productSearchParams($category);
         $data = [];
         try
         {
-            $data['category'] = $category;
-            $data['selectedColor'] = Request::get('color', '');
-            $data['selectedSize'] = Request::get('size', '');
-            $data['selectedType'] = Request::get('type', '');
-            $data['products'] = VendirunApi::makeRequest('product/search', $productSearchParams)->getData();
+            $search = $productRepository->search($productSearchParams);
 
-            $data['productSearchParams'] = (array)$data['products']->search_params;
-
-            $data['pagination'] = ($data['products']) ? $data['pagination'] =
+            $data['pagination'] = ($search->getTotalRows() > 0) ? $data['pagination'] =
                 new LengthAwarePaginator(
-                    $data['products']->result,
-                    $data['products']->total_rows,
-                    $data['products']->limit,
+                    $search->getProducts(),
+                    $search->getTotalRows(),
+                    $search->getLimit(),
                     Request::get('page'),
                     [
                         'path'  => Request::url(),
                         'query' => Request::query()
                     ]
                 ) : false;
+
+            $data['productSearchResult'] = $search;
         }
         catch (\Exception $e)
         {
+            dd($e);
             if (App::environment() == 'production') abort(404);
         }
 
@@ -56,26 +54,20 @@ class ProductController extends VendirunBaseController {
     }
 
     /**
-     * @param        $id
-     * @param string $productName
-     * @param int $productVariationId
+     * @param ProductRepository $productRepository
+     * @param                   $id
+     * @param string            $productName
+     * @param int               $productVariationId
      * @return \Illuminate\View\View
      */
-    public function view($id, $productName = '', $productVariationId = null)
+    public function view(ProductRepository $productRepository, $id, $productName = '', $productVariationId = null)
     {
         $searchParams = $this->productSearchParams();
-        $searchParams['id'] = $id;
         $searchParams['product_variation_id'] = $productVariationId;
-        $data['product'] = VendirunApi::makeRequest('product/product', $searchParams)->getData();
 
-        $data['selectedVariation'] = $data['product']->variations{0};
-        if ($productVariationId)
-        {
-            foreach ($data['product']->variations as $var)
-            {
-                if ($var->id == $productVariationId) $data['selectedVariation'] = $var;
-            }
-        }
+        $data['product'] = $productRepository->find($id, $searchParams);
+        $data['productDisplay'] = $data['product']->getDisplayArray();
+        $data['selectedVariation'] = $data['product']->getVariation($productVariationId );
 
         return View::make('vendirun::product.view', $data);
     }

@@ -78,6 +78,20 @@ class Cart {
     /**
      * @return array
      */
+    public function displayItems()
+    {
+        $final = [];
+        if (!$this->items) return $final;
+        foreach ($this->items as $item)
+        {
+            $final[] = $item->display();
+        }
+        return $final;
+    }
+
+    /**
+     * @return array
+     */
     public function getItems()
     {
         return $this->items;

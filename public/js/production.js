@@ -18062,6 +18062,11 @@ var apiManager = {
     },
 
     callEndPoint: function (endpoint, params, callback) {
+        // replace params in url if necessary
+        $.each(params, function(index, val) {
+            endpoint.endpoint = endpoint.endpoint.replace('*' + index + '*', val);
+        });
+
         $.post(endpoint.endpoint, params, function(response) {
             callback(response);
         }, 'json');
@@ -18107,6 +18112,18 @@ var apiManager = {
     }
 
 };
+$(document).ready(function () {
+
+    var resultsUrlManager = new urlManager();
+
+    $('#limit').on('change', function () {
+        resultsUrlManager.addParameterToUrl('limit', $(this).val());
+    });
+
+    $('#order_by').on('change', function() {
+        resultsUrlManager.addParameterToUrl('order_by', $(this).val());
+    });
+});
 $(window).load(function () {
 	$('.property-slide-show').nivoSlider({
 		manualAdvance: true,
@@ -18363,18 +18380,6 @@ $(document).ready(function() {
 });
 
 
-$(document).ready(function () {
-
-    var propertyResultsUrlManager = new urlManager();
-
-    $('#limit').on('change', function () {
-        propertyResultsUrlManager.addParameterToUrl('limit', $(this).val());
-    });
-
-    $('#order_by').on('change', function() {
-        propertyResultsUrlManager.addParameterToUrl('order_by', $(this).val());
-    });
-});
 (function(d, s, id) {
     var js, fjs = d.getElementsByTagName(s)[0];
     if (d.getElementById(id)) return;
@@ -18506,6 +18511,17 @@ var checkoutManager = function () {
             var _this = this;
             var $form = $('.js-checkout-payment-form');
             $form.validate();
+
+            // add rules for form fields
+            $('#emailAddress').rules('add', { required: true, email: true });
+            $('#fullName').rules('add', { required: true });
+            $('#shippingaddress1').rules('add', { required: true });
+            $('#shippingcity').rules('add', { required: true });
+            $('#shippingpostcode').rules('add', { required: true });
+            $('#billingaddress1').rules('add', { required: true });
+            $('#billingcity').rules('add', { required: true });
+            $('#billingpostcode').rules('add', { required: true });
+
             $form.on('submit', function (e) {
                 e.preventDefault();
                 var $form = $(this);
@@ -18575,6 +18591,57 @@ var checkoutManager = function () {
 
 $(document).ready(function () {
     if ($('.js-checkout-payment-form').length) checkoutManager();
+});
+var variationPicker = function($container) {
+    return {
+
+        $container: null,
+
+        availableSizes: [],
+
+        availableColors: [],
+
+        availableTypes: [],
+
+        selectedVariationId: null,
+
+        /**
+         * @param $container jQuery object
+         */
+        init: function($container) {
+            this.$container = $container;
+            if (this.getInitialSettingsFromForm()) {
+                this.loadProductVariations();
+            }
+        },
+
+        /**
+         * @return boolean false if this product has no variations
+         */
+        getInitialSettingsFromForm: function() {
+            if ($('#noVariations').val() == 1) {
+                this.$container.html('');
+                return false;
+            }
+
+            this.availableSizes = JSON.parse($('#availableSizes').val());
+            this.availableColors = JSON.parse($('#availableColors').val());
+            this.availableTypes = JSON.parse($('#availableTypes').val());
+
+            this.selectedVariationId = $('#productVariationId').val();
+
+            return true;
+        },
+
+        loadProductVariations: function() {
+            apiManager.makeCall('product', 'variations', { productId: $('#productId').val() }, function(response) {
+                console.log(response);
+            });
+        }
+    }.init($container)
+};
+$(document).ready(function() {
+     if ($('.js-variation-choice').length) variationPicker($('.js-variation-choice'));
 });
 $(document).ready(function () {
 

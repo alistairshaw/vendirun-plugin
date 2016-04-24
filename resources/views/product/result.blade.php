@@ -5,12 +5,12 @@
         </div>
         <div class="details">
             <h2>
-                <a href="{{ route(LocaleHelper::localePrefix() . 'vendirun.productView',[$product->id, urlencode($product->product_name)]) }}">{{ $product->product_name }}</a>
+                <a href="{{ $viewProductRoute }}">{{ $productDisplay['productName'] }}</a>
             </h2>
-            <div class="price">{{ $price }}</div>
+            <div class="price">{{ $productDisplay['price'] }}</div>
 
             <div class="short-description">
-                {!! $product->short_description !!}
+                {!! $productDisplay['shortDescription'] !!}
             </div>
             <div class="buttons">
                 @include('vendirun::product.partials.product-buttons', ['abbreviatedButtons' => true, 'productButtons' => ['details', 'enquire', 'favourite', 'recommend', 'add-to-cart']])

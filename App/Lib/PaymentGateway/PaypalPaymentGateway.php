@@ -1,8 +1,5 @@
 <?php namespace AlistairShaw\Vendirun\App\Lib\PaymentGateway;
 
-use AlistairShaw\Vendirun\App\Entities\Cart\Cart;
-use AlistairShaw\Vendirun\App\Entities\Cart\CartItem\CartItem;
-use AlistairShaw\Vendirun\App\Entities\Cart\CartRepository;
 use AlistairShaw\Vendirun\App\Entities\Order\Order;
 use AlistairShaw\Vendirun\App\Entities\Order\Payment\PaymentRepository;
 use AlistairShaw\Vendirun\App\Lib\ClientHelper;
@@ -38,16 +35,9 @@ class PaypalPaymentGateway extends AbstractPaymentGateway implements PaymentGate
      */
     private $cancelUrl;
 
-    /**
-     * PaypalPaymentGateway constructor.
-     * @param Order             $order
-     * @param Cart              $cart
-     * @param CartRepository    $cartRepository
-     * @param PaymentRepository $paymentRepository
-     */
-    public function __construct(Order $order, Cart $cart = null, CartRepository $cartRepository = null, PaymentRepository $paymentRepository = null)
+    public function __construct(Order $order, PaymentRepository $paymentRepository)
     {
-        parent::__construct($order, $cart, $cartRepository, $paymentRepository);
+        parent::__construct($order, $paymentRepository);
         $this->setApiContext();
     }
 
@@ -59,26 +49,86 @@ class PaypalPaymentGateway extends AbstractPaymentGateway implements PaymentGate
         $payer = new Payer();
         $payer->setPaymentMethod("paypal");
 
+        $transaction = $this->buildTransaction();
+
+        $redirectUrls = new RedirectUrls();
+        $redirectUrls->setReturnUrl($this->returnUrl)
+            ->setCancelUrl($this->cancelUrl);
+
+        $payment = new Payment();
+        $payment->setIntent("sale")
+            ->setPayer($payer)
+            ->setRedirectUrls($redirectUrls)
+            ->setTransactions(array($transaction));
+
+        $payment->create($this->apiContext);
+        
+        $link = $payment->getApprovalLink();
+        return $link;
+        /*try
+        {
+
+        }
+        catch (\Exception $e)
+        {
+            return dd($e);
+        }*/
+    }
+
+    /**
+     * @param array $params
+     * @return bool
+     */
+    public function confirmPayment($params = [])
+    {
+        $payment = Payment::get($params['paymentId'], $this->apiContext);
+
+        $execution = new PaymentExecution();
+        $execution->setPayerId($params['PayerID']);
+
+        $transaction = $this->buildTransaction();
+        $execution->addTransaction($transaction);
+
+        $payment->execute($execution, $this->apiContext);
+
+        $payment = Payment::get($params['paymentId'], $this->apiContext);
+
+        $vendirunPayment = new VendirunPayment($this->order, $this->order->getTotalPrice(), date("Y-m-d"), 'paypal', json_encode($payment));
+
+        return $this->paymentRepository->save($vendirunPayment);
+    }
+
+    /**
+     * @return Transaction
+     */
+    private function buildTransaction()
+    {
         $clientInfo = ClientHelper::getClientInfo();
 
         $paypalItems = [];
-        foreach ($this->cart->getItems() as $item)
+        $subTotal = 0;
+        foreach ($this->order->getUniqueItems() as $item)
         {
-            /* @var $item CartItem */
-            $itemTotalBeforeTax = $item->totalBeforeTax() / 100;
+            $subTotal += $item->price;
 
             $newItem = new Item();
-            $newItem->setName($item->getProduct()->product_name)
+            $newItem->setName($item->productName)
                 ->setCurrency($clientInfo->currency->currency_iso)
-                ->setQuantity($item->getQuantity())
-                ->setSku($item->getProduct()->product_sku . $item->getProductVariation()->variation_sku)
-                ->setPrice($itemTotalBeforeTax);
+                ->setQuantity($item->quantity)
+                ->setSku($item->sku)
+                ->setPrice($item->unitPrice / 100);
+
+            // var_dump($item->price / 100);
+
+            $paypalItems[] = $newItem;
         }
 
-        $shippingBeforeTax = $this->cart->shippingBeforeTax() / 100;
-        $tax = $this->cart->tax() / 100;
-        $subTotal = $this->cart->totalBeforeTax() / 100;
+        $shippingBeforeTax = $this->order->getShipping() / 100;
+        $tax = $this->order->getTax() / 100;
+        $subTotal = $subTotal / 100;
         $total = $this->order->getTotalPrice() / 100;
+
+        // dd($shippingBeforeTax, $tax, $subTotal, $total);
 
         $orderShippingAddress = $this->order->getShippingAddress()->getArray();
         $shippingAddress = new ShippingAddress();
@@ -89,7 +139,7 @@ class PaypalPaymentGateway extends AbstractPaymentGateway implements PaymentGate
         $shippingAddress->setLine1($orderShippingAddress['address1']);
         $shippingAddress->setState($orderShippingAddress['state']);
         $shippingAddress->setRecipientName($this->order->getCustomer()->fullName());
-        
+
         $itemList = new ItemList();
         $itemList->setItems($paypalItems);
         $itemList->setShippingAddress($shippingAddress);
@@ -110,53 +160,7 @@ class PaypalPaymentGateway extends AbstractPaymentGateway implements PaymentGate
             ->setDescription("Order from " . $clientInfo->name)
             ->setInvoiceNumber($this->order->getId());
 
-        $redirectUrls = new RedirectUrls();
-        $redirectUrls->setReturnUrl($this->returnUrl)
-            ->setCancelUrl($this->cancelUrl);
-
-        $payment = new Payment();
-        $payment->setIntent("sale")
-            ->setPayer($payer)
-            ->setRedirectUrls($redirectUrls)
-            ->setTransactions(array($transaction));
-
-        $payment->create($this->apiContext);
-
-        return $payment->getApprovalLink();
-    }
-
-    /**
-     * @param array $params
-     * @return bool
-     */
-    public function confirmPayment($params = [])
-    {
-        $clientInfo = ClientHelper::getClientInfo();
-
-        $total = $this->order->getTotalPrice() / 100;
-
-        $payment = Payment::get($params['paymentId'], $this->apiContext);
-
-        $execution = new PaymentExecution();
-        $execution->setPayerId($params['PayerID']);
-
-        $transaction = new Transaction();
-        $amount = new Amount();
-        $details = new Details();
-
-        $amount->setCurrency($clientInfo->currency->currency_iso);
-        $amount->setTotal($total);
-        $amount->setDetails($details);
-        $transaction->setAmount($amount);
-
-        $execution->addTransaction($transaction);
-
-        $payment->execute($execution, $this->apiContext);
-
-        $payment = Payment::get($params['paymentId'], $this->apiContext);
-
-        $vendirunPayment = new VendirunPayment($this->order, $this->order->getTotalPrice(), date("Y-m-d"), 'paypal', json_encode($payment));
-        return $this->paymentRepository->save($vendirunPayment);
+        return $transaction;
     }
 
     /**

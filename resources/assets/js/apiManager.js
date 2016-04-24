@@ -9,6 +9,11 @@ var apiManager = {
     },
 
     callEndPoint: function (endpoint, params, callback) {
+        // replace params in url if necessary
+        $.each(params, function(index, val) {
+            endpoint.endpoint = endpoint.endpoint.replace('*' + index + '*', val);
+        });
+
         $.post(endpoint.endpoint, params, function(response) {
             callback(response);
         }, 'json');

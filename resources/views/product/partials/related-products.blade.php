@@ -1,5 +1,5 @@
 <ul class="related-products">
-    @foreach ($product->related_products as $product)
+    @foreach ($product->getRelatedProducts() as $product)
         <li>
             @include('vendirun::product.result')
         </li>

@@ -27,14 +27,26 @@
         @include('vendirun::checkout.steps.shipping-method')
     </div>
 
-    <div class="step-header">
-        <span>3</span>
-        <div class="title">{{ trans('vendirun::checkout.paymentOptions') }}</div>
-        <div class="description">{{ trans('vendirun::checkout.paymentOptionsDescription') }}</div>
-    </div>
-    <div class="step">
-        @include('vendirun::checkout.steps.payment-options')
-    </div>
+    @if ($paymentGateways->paypal && !$paymentGateways->stripe)
+        <div class="step-header">
+            <span>3</span>
+            <div class="title">{{ trans('vendirun::checkout.payWithPaypal') }}</div>
+            <div class="description">{{ trans('vendirun::checkout.payWithPaypalDescription') }}</div>
+        </div>
+        <div class="step">
+            @include('vendirun::checkout.partials.paypal-logo')
+            <input type="hidden" name="paymentOption" value="paypal">
+        </div>
+    @else
+        <div class="step-header">
+            <span>3</span>
+            <div class="title">{{ trans('vendirun::checkout.paymentOptions') }}</div>
+            <div class="description">{{ trans('vendirun::checkout.paymentOptionsDescription') }}</div>
+        </div>
+        <div class="step">
+            @include('vendirun::checkout.steps.payment-options')
+        </div>
+    @endif
 
     <div class="step-header">
         <span>4</span>

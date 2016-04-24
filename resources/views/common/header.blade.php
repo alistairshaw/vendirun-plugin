@@ -17,7 +17,7 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ trans('vendirun::standard.customer') }} <span class="caret"></span></a>
+                    <a href="{{ route(LocaleHelper::localePrefix() . 'vendirun.register') }}" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ trans('vendirun::standard.customer') }} <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
                         <li><a href="{{ route(LocaleHelper::localePrefix() . 'vendirun.register') }}">{{ trans('vendirun::standard.loginOrRegister') }}</a></li>
                         <li class="divider"></li>
@@ -26,7 +26,7 @@
                 </li>
 
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ trans('vendirun::property.property') }} <span class="caret"></span></a>
+                    <a href="{{ route(LocaleHelper::localePrefix() . 'vendirun.propertySearch') }}" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ trans('vendirun::property.property') }} <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
                         <li><a href="{{ route(LocaleHelper::localePrefix() . 'vendirun.propertySearch') }}">{{ trans('vendirun::property.listings') }}</a></li>
                         <li><a href="{{ route(LocaleHelper::localePrefix() . 'vendirun.searchProperties') }}">{{ trans('vendirun::property.search') }}</a></li>
@@ -40,7 +40,7 @@
                 </li>
 
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ trans('vendirun::product.products') }} <span class="caret"></span></a>
+                    <a href="{{ route(LocaleHelper::localePrefix() . 'vendirun.productSearch') }}" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ trans('vendirun::product.products') }} <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
                         <li><a href="{{ route(LocaleHelper::localePrefix() . 'vendirun.productSearch') }}">{{ trans('vendirun::product.browse') }}</a></li>
                         <li><a href="{{ route(LocaleHelper::localePrefix() . 'vendirun.productFavourites') }}">{{ trans('vendirun::product.favourites') }}</a></li>

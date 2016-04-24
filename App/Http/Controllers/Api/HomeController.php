@@ -12,13 +12,20 @@ class HomeController extends ApiBaseController {
         return $this->respond(true, [
             'shipping' => [
                 'calculate' => [
-                    'endpoint' => route(LocaleHelper::localePrefix() . 'vendirun.apiShippingCalculate'),
+                    'endpoint' => route(LocaleHelper::localePrefix() . 'vendirun.api.shippingCalculate'),
                     'requiredParameters' => [
                         'shippingCountryId' => 'int'
                     ],
                     'optionalParameters' => [
                         'shippingType' => 'string'
                     ]
+                ]
+            ],
+            'product' => [
+                'variations' => [
+                    'endpoint' => route(LocaleHelper::localePrefix() . 'vendirun.api.getVariations', ['productVariationId' => '*productId*']),
+                    'requiredParameters' => [],
+                    'optionalParameters' => []
                 ]
             ]
         ]);

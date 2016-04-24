@@ -132,7 +132,7 @@ class BaseApi {
         // if the API returns a valid failure response, try to get from cache or FailResponseException
         if (!$response->success && !$noCache)
         {
-            // if (App::environment() == 'local') dd($response);
+            //if (App::environment() == 'local') dd($response);
             $msg = 'API returned a failure';
             if ($response->data) $msg = json_encode($response->data);
             $response = $this->getFromPermanentCache($noCache, $key, $msg);

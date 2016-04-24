@@ -1,7 +1,7 @@
 <?php namespace AlistairShaw\Vendirun\App\Http\Composers;
 
 use AlistairShaw\Vendirun\App\Entities\Cart\CartFactory;
-use AlistairShaw\Vendirun\App\Lib\CurrencyHelper;
+use AlistairShaw\Vendirun\App\Entities\Product\Product;
 use AlistairShaw\Vendirun\App\Lib\LocaleHelper;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\VendirunApi;
 use App;
@@ -15,24 +15,13 @@ class ProductViewComposer {
     /**
      * @param View $view
      */
-    public function productView(View $view)
-    {
-        $viewData = $view->getData();
-        $product = $viewData['product'];
-
-        $view->with('price', CurrencyHelper::formatWithCurrency($product->price));
-    }
-
-    /**
-     * @param View $view
-     */
     public function categories(View $view)
     {
         $viewData = $view->getData();
 
-        $parent = (isset($viewData['category'])) ? $viewData['category'] : '';
-        $category = VendirunApi::makeRequest('product/category', ['locale' => App::getLocale(), 'category' => $parent])->getData();
-        $view->with('currentCategory', $category);
+        $parent = (isset($viewData['productSearchResult'])) ? $viewData['productSearchResult']->getSearchParam('category') : '';
+        $productCategoryRepository = App::make('AlistairShaw\Vendirun\App\Entities\Product\ProductCategory\ProductCategoryRepository');
+        $view->with('currentCategory', $productCategoryRepository->find($parent)->display());
     }
 
     /**
@@ -57,30 +46,38 @@ class ProductViewComposer {
         }
 
         // route to view product
-        $viewProductRoute = $this->getProductRoute($viewData['product']);
+        $viewProductRoute = $this->getProductRoute($viewData['productDisplay']['id'], $viewData['productDisplay']['productName']);
 
         $view->with('productButtons', $productButtons)->with('viewProductRoute', $viewProductRoute);
         if (!isset($viewData['abbreviatedButtons'])) $view->with('abbreviatedButtons', false);
     }
 
-    public function productImages(View $view)
+    public function productView(View $view)
     {
         $viewData = $view->getData();
+        if (!isset($viewData['productDisplay']))
+        {
+            $product = $viewData['product'];
+            /* @var $product Product */
+            $viewData['productDisplay'] = $product->getDisplayArray();
+            $view->with('productDisplay', $viewData['productDisplay']);
+        }
 
-        $view->with('viewProductRoute', $this->getProductRoute($viewData['product']));
+        $view->with('viewProductRoute', $this->getProductRoute($viewData['productDisplay']['id'], $viewData['productDisplay']['productName']));
     }
 
     /**
-     * @param      $product
+     * @param      $productId
+     * @param      $productName
      * @param int  $variationId
      * @param bool $addToCart
      * @return
      */
-    private function getProductRoute($product, $variationId = 0, $addToCart = false)
+    private function getProductRoute($productId, $productName, $variationId = 0, $addToCart = false)
     {
         return route(LocaleHelper::localePrefix() . $addToCart ? 'vendirun.productAddToCart' : 'vendirun.productView'
             , array_merge(
-                ['productId' => $product->id, 'productName' => urlencode(strtolower($product->product_name)), 'variationId' => $variationId]
+                ['productId' => $productId, 'productName' => urlencode(strtolower($productName)), 'variationId' => $variationId]
                 , Request::query())
         );
     }

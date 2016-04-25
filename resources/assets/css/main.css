@@ -222,8 +222,11 @@ th {
     page-break-after: avoid; }
   .navbar {
     display: none; }
-  .btn > .caret,
-  .dropup > .btn > .caret {
+  .btn > .caret, .product-variation-choice .type-picker li a > .caret, .product-variation-choice .size-picker li a > .caret, .product-variation-choice .color-picker li a > .caret,
+  .dropup > .btn > .caret, .product-variation-choice .type-picker li
+  .dropup > a > .caret, .product-variation-choice .size-picker li
+  .dropup > a > .caret, .product-variation-choice .color-picker li
+  .dropup > a > .caret {
     border-top-color: #000 !important; }
   .label {
     border: 1px solid #000; }
@@ -2495,15 +2498,24 @@ fieldset[disabled]
   min-height: 34px; }
   .form-control-static.input-lg, .input-group-lg > .form-control-static.form-control, .product.product-view .add-to-cart .input-group-lg > input.form-control-static, .product-simple-search-form .input-group-lg > input.form-control-static,
   .input-group-lg > .form-control-static.input-group-addon,
-  .input-group-lg > .input-group-btn > .form-control-static.btn, .form-control-static.input-sm, .input-group-sm > .form-control-static.form-control, .product.product-view .add-to-cart .input-group-sm > input.form-control-static, .product-simple-search-form .input-group-sm > input.form-control-static,
+  .input-group-lg > .input-group-btn > .form-control-static.btn, .product-variation-choice .type-picker li
+  .input-group-lg > .input-group-btn > a.form-control-static, .product-variation-choice .size-picker li
+  .input-group-lg > .input-group-btn > a.form-control-static, .product-variation-choice .color-picker li
+  .input-group-lg > .input-group-btn > a.form-control-static, .form-control-static.input-sm, .input-group-sm > .form-control-static.form-control, .product.product-view .add-to-cart .input-group-sm > input.form-control-static, .product-simple-search-form .input-group-sm > input.form-control-static,
   .input-group-sm > .form-control-static.input-group-addon,
-  .input-group-sm > .input-group-btn > .form-control-static.btn {
+  .input-group-sm > .input-group-btn > .form-control-static.btn, .product-variation-choice .type-picker li
+  .input-group-sm > .input-group-btn > a.form-control-static, .product-variation-choice .size-picker li
+  .input-group-sm > .input-group-btn > a.form-control-static, .product-variation-choice .color-picker li
+  .input-group-sm > .input-group-btn > a.form-control-static {
     padding-left: 0;
     padding-right: 0; }
 
 .input-sm, .input-group-sm > .form-control, .product.product-view .add-to-cart .input-group-sm > input, .product-simple-search-form .input-group-sm > input,
 .input-group-sm > .input-group-addon,
-.input-group-sm > .input-group-btn > .btn {
+.input-group-sm > .input-group-btn > .btn, .product-variation-choice .type-picker li
+.input-group-sm > .input-group-btn > a, .product-variation-choice .size-picker li
+.input-group-sm > .input-group-btn > a, .product-variation-choice .color-picker li
+.input-group-sm > .input-group-btn > a {
   height: 30px;
   padding: 5px 10px;
   font-size: 12px;
@@ -2549,7 +2561,10 @@ select[multiple].input-sm,
 
 .input-lg, .input-group-lg > .form-control, .product.product-view .add-to-cart .input-group-lg > input, .product-simple-search-form .input-group-lg > input,
 .input-group-lg > .input-group-addon,
-.input-group-lg > .input-group-btn > .btn {
+.input-group-lg > .input-group-btn > .btn, .product-variation-choice .type-picker li
+.input-group-lg > .input-group-btn > a, .product-variation-choice .size-picker li
+.input-group-lg > .input-group-btn > a, .product-variation-choice .color-picker li
+.input-group-lg > .input-group-btn > a {
   height: 46px;
   padding: 10px 16px;
   font-size: 18px;
@@ -2612,7 +2627,10 @@ select[multiple].input-lg,
 
 .input-lg + .form-control-feedback, .input-group-lg > .form-control + .form-control-feedback, .product.product-view .add-to-cart .input-group-lg > input + .form-control-feedback, .product-simple-search-form .input-group-lg > input + .form-control-feedback,
 .input-group-lg > .input-group-addon + .form-control-feedback,
-.input-group-lg > .input-group-btn > .btn + .form-control-feedback,
+.input-group-lg > .input-group-btn > .btn + .form-control-feedback, .product-variation-choice .type-picker li
+.input-group-lg > .input-group-btn > a + .form-control-feedback, .product-variation-choice .size-picker li
+.input-group-lg > .input-group-btn > a + .form-control-feedback, .product-variation-choice .color-picker li
+.input-group-lg > .input-group-btn > a + .form-control-feedback,
 .input-group-lg + .form-control-feedback,
 .form-group-lg .form-control + .form-control-feedback,
 .form-group-lg .product.product-view .add-to-cart input + .form-control-feedback, .product.product-view .add-to-cart
@@ -2625,7 +2643,10 @@ select[multiple].input-lg,
 
 .input-sm + .form-control-feedback, .input-group-sm > .form-control + .form-control-feedback, .product.product-view .add-to-cart .input-group-sm > input + .form-control-feedback, .product-simple-search-form .input-group-sm > input + .form-control-feedback,
 .input-group-sm > .input-group-addon + .form-control-feedback,
-.input-group-sm > .input-group-btn > .btn + .form-control-feedback,
+.input-group-sm > .input-group-btn > .btn + .form-control-feedback, .product-variation-choice .type-picker li
+.input-group-sm > .input-group-btn > a + .form-control-feedback, .product-variation-choice .size-picker li
+.input-group-sm > .input-group-btn > a + .form-control-feedback, .product-variation-choice .color-picker li
+.input-group-sm > .input-group-btn > a + .form-control-feedback,
 .input-group-sm + .form-control-feedback,
 .form-group-sm .form-control + .form-control-feedback,
 .form-group-sm .product.product-view .add-to-cart input + .form-control-feedback, .product.product-view .add-to-cart
@@ -2811,7 +2832,7 @@ select[multiple].input-lg,
     padding-top: 6px;
     font-size: 12px; } }
 
-.btn {
+.btn, .product-variation-choice .type-picker li a, .product-variation-choice .size-picker li a, .product-variation-choice .color-picker li a {
   display: inline-block;
   margin-bottom: 0;
   font-weight: normal;
@@ -2830,62 +2851,107 @@ select[multiple].input-lg,
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none; }
-  .btn:focus, .btn.focus, .btn:active:focus, .btn:active.focus, .btn.active:focus, .btn.active.focus {
+  .btn:focus, .product-variation-choice .type-picker li a:focus, .product-variation-choice .size-picker li a:focus, .product-variation-choice .color-picker li a:focus, .btn.focus, .product-variation-choice .type-picker li a.focus, .product-variation-choice .size-picker li a.focus, .product-variation-choice .color-picker li a.focus, .btn:active:focus, .product-variation-choice .type-picker li a:active:focus, .product-variation-choice .size-picker li a:active:focus, .product-variation-choice .color-picker li a:active:focus, .btn:active.focus, .product-variation-choice .type-picker li a:active.focus, .product-variation-choice .size-picker li a:active.focus, .product-variation-choice .color-picker li a:active.focus, .btn.active:focus, .product-variation-choice .type-picker li a.active:focus, .product-variation-choice .size-picker li a.active:focus, .product-variation-choice .color-picker li a.active:focus, .btn.active.focus, .product-variation-choice .type-picker li a.active.focus, .product-variation-choice .size-picker li a.active.focus, .product-variation-choice .color-picker li a.active.focus {
     outline: thin dotted;
     outline: 5px auto -webkit-focus-ring-color;
     outline-offset: -2px; }
-  .btn:hover, .btn:focus, .btn.focus {
+  .btn:hover, .product-variation-choice .type-picker li a:hover, .product-variation-choice .size-picker li a:hover, .product-variation-choice .color-picker li a:hover, .btn:focus, .product-variation-choice .type-picker li a:focus, .product-variation-choice .size-picker li a:focus, .product-variation-choice .color-picker li a:focus, .btn.focus, .product-variation-choice .type-picker li a.focus, .product-variation-choice .size-picker li a.focus, .product-variation-choice .color-picker li a.focus {
     color: #333;
     text-decoration: none; }
-  .btn:active, .btn.active {
+  .btn:active, .product-variation-choice .type-picker li a:active, .product-variation-choice .size-picker li a:active, .product-variation-choice .color-picker li a:active, .btn.active, .product-variation-choice .type-picker li a.active, .product-variation-choice .size-picker li a.active, .product-variation-choice .color-picker li a.active {
     outline: 0;
     background-image: none;
     box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125); }
-  .btn.disabled, .btn[disabled],
-  fieldset[disabled] .btn {
+  .btn.disabled, .product-variation-choice .type-picker li a.disabled, .product-variation-choice .size-picker li a.disabled, .product-variation-choice .color-picker li a.disabled, .btn[disabled], .product-variation-choice .type-picker li a[disabled], .product-variation-choice .size-picker li a[disabled], .product-variation-choice .color-picker li a[disabled],
+  fieldset[disabled] .btn,
+  fieldset[disabled] .product-variation-choice .type-picker li a, .product-variation-choice .type-picker li
+  fieldset[disabled] a,
+  fieldset[disabled] .product-variation-choice .size-picker li a, .product-variation-choice .size-picker li
+  fieldset[disabled] a,
+  fieldset[disabled] .product-variation-choice .color-picker li a, .product-variation-choice .color-picker li
+  fieldset[disabled] a {
     cursor: not-allowed;
     opacity: 0.65;
     filter: alpha(opacity=65);
     box-shadow: none; }
 
-a.btn.disabled,
-fieldset[disabled] a.btn {
+a.btn.disabled, .product-variation-choice .type-picker li a.disabled, .product-variation-choice .size-picker li a.disabled, .product-variation-choice .color-picker li a.disabled,
+fieldset[disabled] a.btn,
+fieldset[disabled] .product-variation-choice .type-picker li a, .product-variation-choice .type-picker li
+fieldset[disabled] a,
+fieldset[disabled] .product-variation-choice .size-picker li a, .product-variation-choice .size-picker li
+fieldset[disabled] a,
+fieldset[disabled] .product-variation-choice .color-picker li a, .product-variation-choice .color-picker li
+fieldset[disabled] a {
   pointer-events: none; }
 
-.btn-default {
+.btn-default, .product-variation-choice .type-picker li a, .product-variation-choice .size-picker li a, .product-variation-choice .color-picker li a {
   color: #333;
   background-color: #fff;
   border-color: #ccc; }
-  .btn-default:focus, .btn-default.focus {
+  .btn-default:focus, .product-variation-choice .type-picker li a:focus, .product-variation-choice .size-picker li a:focus, .product-variation-choice .color-picker li a:focus, .btn-default.focus, .product-variation-choice .type-picker li a.focus, .product-variation-choice .size-picker li a.focus, .product-variation-choice .color-picker li a.focus {
     color: #333;
     background-color: #e6e6e6;
     border-color: #8c8c8c; }
-  .btn-default:hover {
+  .btn-default:hover, .product-variation-choice .type-picker li a:hover, .product-variation-choice .size-picker li a:hover, .product-variation-choice .color-picker li a:hover {
     color: #333;
     background-color: #e6e6e6;
     border-color: #adadad; }
-  .btn-default:active, .btn-default.active,
-  .open > .btn-default.dropdown-toggle {
+  .btn-default:active, .product-variation-choice .type-picker li a:active, .product-variation-choice .size-picker li a:active, .product-variation-choice .color-picker li a:active, .btn-default.active, .product-variation-choice .type-picker li a.active, .product-variation-choice .size-picker li a.active, .product-variation-choice .color-picker li a.active,
+  .open > .btn-default.dropdown-toggle, .product-variation-choice .type-picker li
+  .open > a.dropdown-toggle, .product-variation-choice .size-picker li
+  .open > a.dropdown-toggle, .product-variation-choice .color-picker li
+  .open > a.dropdown-toggle {
     color: #333;
     background-color: #e6e6e6;
     border-color: #adadad; }
-    .btn-default:active:hover, .btn-default:active:focus, .btn-default:active.focus, .btn-default.active:hover, .btn-default.active:focus, .btn-default.active.focus,
-    .open > .btn-default.dropdown-toggle:hover,
-    .open > .btn-default.dropdown-toggle:focus,
-    .open > .btn-default.dropdown-toggle.focus {
+    .btn-default:active:hover, .product-variation-choice .type-picker li a:active:hover, .product-variation-choice .size-picker li a:active:hover, .product-variation-choice .color-picker li a:active:hover, .btn-default:active:focus, .product-variation-choice .type-picker li a:active:focus, .product-variation-choice .size-picker li a:active:focus, .product-variation-choice .color-picker li a:active:focus, .btn-default:active.focus, .product-variation-choice .type-picker li a:active.focus, .product-variation-choice .size-picker li a:active.focus, .product-variation-choice .color-picker li a:active.focus, .btn-default.active:hover, .product-variation-choice .type-picker li a.active:hover, .product-variation-choice .size-picker li a.active:hover, .product-variation-choice .color-picker li a.active:hover, .btn-default.active:focus, .product-variation-choice .type-picker li a.active:focus, .product-variation-choice .size-picker li a.active:focus, .product-variation-choice .color-picker li a.active:focus, .btn-default.active.focus, .product-variation-choice .type-picker li a.active.focus, .product-variation-choice .size-picker li a.active.focus, .product-variation-choice .color-picker li a.active.focus,
+    .open > .btn-default.dropdown-toggle:hover, .product-variation-choice .type-picker li
+    .open > a.dropdown-toggle:hover, .product-variation-choice .size-picker li
+    .open > a.dropdown-toggle:hover, .product-variation-choice .color-picker li
+    .open > a.dropdown-toggle:hover,
+    .open > .btn-default.dropdown-toggle:focus, .product-variation-choice .type-picker li
+    .open > a.dropdown-toggle:focus, .product-variation-choice .size-picker li
+    .open > a.dropdown-toggle:focus, .product-variation-choice .color-picker li
+    .open > a.dropdown-toggle:focus,
+    .open > .btn-default.dropdown-toggle.focus, .product-variation-choice .type-picker li
+    .open > a.dropdown-toggle.focus, .product-variation-choice .size-picker li
+    .open > a.dropdown-toggle.focus, .product-variation-choice .color-picker li
+    .open > a.dropdown-toggle.focus {
       color: #333;
       background-color: #d4d4d4;
       border-color: #8c8c8c; }
-  .btn-default:active, .btn-default.active,
-  .open > .btn-default.dropdown-toggle {
+  .btn-default:active, .product-variation-choice .type-picker li a:active, .product-variation-choice .size-picker li a:active, .product-variation-choice .color-picker li a:active, .btn-default.active, .product-variation-choice .type-picker li a.active, .product-variation-choice .size-picker li a.active, .product-variation-choice .color-picker li a.active,
+  .open > .btn-default.dropdown-toggle, .product-variation-choice .type-picker li
+  .open > a.dropdown-toggle, .product-variation-choice .size-picker li
+  .open > a.dropdown-toggle, .product-variation-choice .color-picker li
+  .open > a.dropdown-toggle {
     background-image: none; }
-  .btn-default.disabled:hover, .btn-default.disabled:focus, .btn-default.disabled.focus, .btn-default[disabled]:hover, .btn-default[disabled]:focus, .btn-default[disabled].focus,
+  .btn-default.disabled:hover, .product-variation-choice .type-picker li a.disabled:hover, .product-variation-choice .size-picker li a.disabled:hover, .product-variation-choice .color-picker li a.disabled:hover, .btn-default.disabled:focus, .product-variation-choice .type-picker li a.disabled:focus, .product-variation-choice .size-picker li a.disabled:focus, .product-variation-choice .color-picker li a.disabled:focus, .btn-default.disabled.focus, .product-variation-choice .type-picker li a.disabled.focus, .product-variation-choice .size-picker li a.disabled.focus, .product-variation-choice .color-picker li a.disabled.focus, .btn-default[disabled]:hover, .product-variation-choice .type-picker li a[disabled]:hover, .product-variation-choice .size-picker li a[disabled]:hover, .product-variation-choice .color-picker li a[disabled]:hover, .btn-default[disabled]:focus, .product-variation-choice .type-picker li a[disabled]:focus, .product-variation-choice .size-picker li a[disabled]:focus, .product-variation-choice .color-picker li a[disabled]:focus, .btn-default[disabled].focus, .product-variation-choice .type-picker li a[disabled].focus, .product-variation-choice .size-picker li a[disabled].focus, .product-variation-choice .color-picker li a[disabled].focus,
   fieldset[disabled] .btn-default:hover,
+  fieldset[disabled] .product-variation-choice .type-picker li a:hover, .product-variation-choice .type-picker li
+  fieldset[disabled] a:hover,
+  fieldset[disabled] .product-variation-choice .size-picker li a:hover, .product-variation-choice .size-picker li
+  fieldset[disabled] a:hover,
+  fieldset[disabled] .product-variation-choice .color-picker li a:hover, .product-variation-choice .color-picker li
+  fieldset[disabled] a:hover,
   fieldset[disabled] .btn-default:focus,
-  fieldset[disabled] .btn-default.focus {
+  fieldset[disabled] .product-variation-choice .type-picker li a:focus, .product-variation-choice .type-picker li
+  fieldset[disabled] a:focus,
+  fieldset[disabled] .product-variation-choice .size-picker li a:focus, .product-variation-choice .size-picker li
+  fieldset[disabled] a:focus,
+  fieldset[disabled] .product-variation-choice .color-picker li a:focus, .product-variation-choice .color-picker li
+  fieldset[disabled] a:focus,
+  fieldset[disabled] .btn-default.focus,
+  fieldset[disabled] .product-variation-choice .type-picker li a.focus, .product-variation-choice .type-picker li
+  fieldset[disabled] a.focus,
+  fieldset[disabled] .product-variation-choice .size-picker li a.focus, .product-variation-choice .size-picker li
+  fieldset[disabled] a.focus,
+  fieldset[disabled] .product-variation-choice .color-picker li a.focus, .product-variation-choice .color-picker li
+  fieldset[disabled] a.focus {
     background-color: #fff;
     border-color: #ccc; }
-  .btn-default .badge {
+  .btn-default .badge, .product-variation-choice .type-picker li a .badge, .product-variation-choice .size-picker li a .badge, .product-variation-choice .color-picker li a .badge {
     color: #fff;
     background-color: #333; }
 
@@ -3094,19 +3160,19 @@ fieldset[disabled] a.btn {
     color: #777777;
     text-decoration: none; }
 
-.btn-lg, .btn-group-lg > .btn {
+.btn-lg, .btn-group-lg > .btn, .product-variation-choice .type-picker li .btn-group-lg > a, .product-variation-choice .size-picker li .btn-group-lg > a, .product-variation-choice .color-picker li .btn-group-lg > a {
   padding: 10px 16px;
   font-size: 18px;
   line-height: 1.3333333;
   border-radius: 6px; }
 
-.btn-sm, .btn-group-sm > .btn {
+.btn-sm, .btn-group-sm > .btn, .product-variation-choice .type-picker li .btn-group-sm > a, .product-variation-choice .size-picker li .btn-group-sm > a, .product-variation-choice .color-picker li .btn-group-sm > a {
   padding: 5px 10px;
   font-size: 12px;
   line-height: 1.5;
   border-radius: 3px; }
 
-.btn-xs, .btn-group-xs > .btn {
+.btn-xs, .btn-group-xs > .btn, .product-variation-choice .type-picker li .btn-group-xs > a, .product-variation-choice .size-picker li .btn-group-xs > a, .product-variation-choice .color-picker li .btn-group-xs > a {
   padding: 1px 5px;
   font-size: 12px;
   line-height: 1.5;
@@ -3288,20 +3354,47 @@ tbody.collapse.in {
   position: relative;
   display: inline-block;
   vertical-align: middle; }
-  .btn-group > .btn,
-  .btn-group-vertical > .btn {
+  .btn-group > .btn, .product-variation-choice .type-picker li .btn-group > a, .product-variation-choice .size-picker li .btn-group > a, .product-variation-choice .color-picker li .btn-group > a,
+  .btn-group-vertical > .btn, .product-variation-choice .type-picker li
+  .btn-group-vertical > a, .product-variation-choice .size-picker li
+  .btn-group-vertical > a, .product-variation-choice .color-picker li
+  .btn-group-vertical > a {
     position: relative;
     float: left; }
-    .btn-group > .btn:hover, .btn-group > .btn:focus, .btn-group > .btn:active, .btn-group > .btn.active,
-    .btn-group-vertical > .btn:hover,
-    .btn-group-vertical > .btn:focus,
-    .btn-group-vertical > .btn:active,
-    .btn-group-vertical > .btn.active {
+    .btn-group > .btn:hover, .product-variation-choice .type-picker li .btn-group > a:hover, .product-variation-choice .size-picker li .btn-group > a:hover, .product-variation-choice .color-picker li .btn-group > a:hover, .btn-group > .btn:focus, .product-variation-choice .type-picker li .btn-group > a:focus, .product-variation-choice .size-picker li .btn-group > a:focus, .product-variation-choice .color-picker li .btn-group > a:focus, .btn-group > .btn:active, .product-variation-choice .type-picker li .btn-group > a:active, .product-variation-choice .size-picker li .btn-group > a:active, .product-variation-choice .color-picker li .btn-group > a:active, .btn-group > .btn.active, .product-variation-choice .type-picker li .btn-group > a.active, .product-variation-choice .size-picker li .btn-group > a.active, .product-variation-choice .color-picker li .btn-group > a.active,
+    .btn-group-vertical > .btn:hover, .product-variation-choice .type-picker li
+    .btn-group-vertical > a:hover, .product-variation-choice .size-picker li
+    .btn-group-vertical > a:hover, .product-variation-choice .color-picker li
+    .btn-group-vertical > a:hover,
+    .btn-group-vertical > .btn:focus, .product-variation-choice .type-picker li
+    .btn-group-vertical > a:focus, .product-variation-choice .size-picker li
+    .btn-group-vertical > a:focus, .product-variation-choice .color-picker li
+    .btn-group-vertical > a:focus,
+    .btn-group-vertical > .btn:active, .product-variation-choice .type-picker li
+    .btn-group-vertical > a:active, .product-variation-choice .size-picker li
+    .btn-group-vertical > a:active, .product-variation-choice .color-picker li
+    .btn-group-vertical > a:active,
+    .btn-group-vertical > .btn.active, .product-variation-choice .type-picker li
+    .btn-group-vertical > a.active, .product-variation-choice .size-picker li
+    .btn-group-vertical > a.active, .product-variation-choice .color-picker li
+    .btn-group-vertical > a.active {
       z-index: 2; }
 
-.btn-group .btn + .btn,
+.btn-group .btn + .btn, .btn-group .product-variation-choice .type-picker li a + .btn, .product-variation-choice .type-picker li .btn-group a + .btn, .btn-group .product-variation-choice .size-picker li a + .btn, .product-variation-choice .size-picker li .btn-group a + .btn, .btn-group .product-variation-choice .color-picker li a + .btn, .product-variation-choice .color-picker li .btn-group a + .btn, .btn-group .product-variation-choice .type-picker li .btn + a, .product-variation-choice .type-picker li .btn-group .btn + a, .btn-group .product-variation-choice .type-picker li a + a, .product-variation-choice .type-picker li .btn-group a + a, .btn-group .product-variation-choice .size-picker li .btn + a, .product-variation-choice .size-picker li .btn-group .btn + a, .btn-group .product-variation-choice .size-picker li a + a, .product-variation-choice .size-picker li .btn-group a + a, .btn-group .product-variation-choice .color-picker li .btn + a, .product-variation-choice .color-picker li .btn-group .btn + a, .btn-group .product-variation-choice .color-picker li a + a, .product-variation-choice .color-picker li .btn-group a + a,
 .btn-group .btn + .btn-group,
+.btn-group .product-variation-choice .type-picker li a + .btn-group, .product-variation-choice .type-picker li
+.btn-group a + .btn-group,
+.btn-group .product-variation-choice .size-picker li a + .btn-group, .product-variation-choice .size-picker li
+.btn-group a + .btn-group,
+.btn-group .product-variation-choice .color-picker li a + .btn-group, .product-variation-choice .color-picker li
+.btn-group a + .btn-group,
 .btn-group .btn-group + .btn,
+.btn-group .product-variation-choice .type-picker li .btn-group + a, .product-variation-choice .type-picker li
+.btn-group .btn-group + a,
+.btn-group .product-variation-choice .size-picker li .btn-group + a, .product-variation-choice .size-picker li
+.btn-group .btn-group + a,
+.btn-group .product-variation-choice .color-picker li .btn-group + a, .product-variation-choice .color-picker li
+.btn-group .btn-group + a,
 .btn-group .btn-group + .btn-group {
   margin-left: -1px; }
 
@@ -3312,25 +3405,25 @@ tbody.collapse.in {
     display: table; }
   .btn-toolbar:after {
     clear: both; }
-  .btn-toolbar .btn,
+  .btn-toolbar .btn, .btn-toolbar .product-variation-choice .type-picker li a, .product-variation-choice .type-picker li .btn-toolbar a, .btn-toolbar .product-variation-choice .size-picker li a, .product-variation-choice .size-picker li .btn-toolbar a, .btn-toolbar .product-variation-choice .color-picker li a, .product-variation-choice .color-picker li .btn-toolbar a,
   .btn-toolbar .btn-group,
   .btn-toolbar .input-group {
     float: left; }
-  .btn-toolbar > .btn,
+  .btn-toolbar > .btn, .product-variation-choice .type-picker li .btn-toolbar > a, .product-variation-choice .size-picker li .btn-toolbar > a, .product-variation-choice .color-picker li .btn-toolbar > a,
   .btn-toolbar > .btn-group,
   .btn-toolbar > .input-group {
     margin-left: 5px; }
 
-.btn-group > .btn:not(:first-child):not(:last-child):not(.dropdown-toggle) {
+.btn-group > .btn:not(:first-child):not(:last-child):not(.dropdown-toggle), .product-variation-choice .type-picker li .btn-group > a:not(:first-child):not(:last-child):not(.dropdown-toggle), .product-variation-choice .size-picker li .btn-group > a:not(:first-child):not(:last-child):not(.dropdown-toggle), .product-variation-choice .color-picker li .btn-group > a:not(:first-child):not(:last-child):not(.dropdown-toggle) {
   border-radius: 0; }
 
-.btn-group > .btn:first-child {
+.btn-group > .btn:first-child, .product-variation-choice .type-picker li .btn-group > a:first-child, .product-variation-choice .size-picker li .btn-group > a:first-child, .product-variation-choice .color-picker li .btn-group > a:first-child {
   margin-left: 0; }
-  .btn-group > .btn:first-child:not(:last-child):not(.dropdown-toggle) {
+  .btn-group > .btn:first-child:not(:last-child):not(.dropdown-toggle), .product-variation-choice .type-picker li .btn-group > a:first-child:not(:last-child):not(.dropdown-toggle), .product-variation-choice .size-picker li .btn-group > a:first-child:not(:last-child):not(.dropdown-toggle), .product-variation-choice .color-picker li .btn-group > a:first-child:not(:last-child):not(.dropdown-toggle) {
     border-bottom-right-radius: 0;
     border-top-right-radius: 0; }
 
-.btn-group > .btn:last-child:not(:first-child),
+.btn-group > .btn:last-child:not(:first-child), .product-variation-choice .type-picker li .btn-group > a:last-child:not(:first-child), .product-variation-choice .size-picker li .btn-group > a:last-child:not(:first-child), .product-variation-choice .color-picker li .btn-group > a:last-child:not(:first-child),
 .btn-group > .dropdown-toggle:not(:first-child) {
   border-bottom-left-radius: 0;
   border-top-left-radius: 0; }
@@ -3338,15 +3431,15 @@ tbody.collapse.in {
 .btn-group > .btn-group {
   float: left; }
 
-.btn-group > .btn-group:not(:first-child):not(:last-child) > .btn {
+.btn-group > .btn-group:not(:first-child):not(:last-child) > .btn, .product-variation-choice .type-picker li .btn-group > .btn-group:not(:first-child):not(:last-child) > a, .product-variation-choice .size-picker li .btn-group > .btn-group:not(:first-child):not(:last-child) > a, .product-variation-choice .color-picker li .btn-group > .btn-group:not(:first-child):not(:last-child) > a {
   border-radius: 0; }
 
-.btn-group > .btn-group:first-child:not(:last-child) > .btn:last-child,
+.btn-group > .btn-group:first-child:not(:last-child) > .btn:last-child, .product-variation-choice .type-picker li .btn-group > .btn-group:first-child:not(:last-child) > a:last-child, .product-variation-choice .size-picker li .btn-group > .btn-group:first-child:not(:last-child) > a:last-child, .product-variation-choice .color-picker li .btn-group > .btn-group:first-child:not(:last-child) > a:last-child,
 .btn-group > .btn-group:first-child:not(:last-child) > .dropdown-toggle {
   border-bottom-right-radius: 0;
   border-top-right-radius: 0; }
 
-.btn-group > .btn-group:last-child:not(:first-child) > .btn:first-child {
+.btn-group > .btn-group:last-child:not(:first-child) > .btn:first-child, .product-variation-choice .type-picker li .btn-group > .btn-group:last-child:not(:first-child) > a:first-child, .product-variation-choice .size-picker li .btn-group > .btn-group:last-child:not(:first-child) > a:first-child, .product-variation-choice .color-picker li .btn-group > .btn-group:last-child:not(:first-child) > a:first-child {
   border-bottom-left-radius: 0;
   border-top-left-radius: 0; }
 
@@ -3354,11 +3447,11 @@ tbody.collapse.in {
 .btn-group.open .dropdown-toggle {
   outline: 0; }
 
-.btn-group > .btn + .dropdown-toggle {
+.btn-group > .btn + .dropdown-toggle, .product-variation-choice .type-picker li .btn-group > a + .dropdown-toggle, .product-variation-choice .size-picker li .btn-group > a + .dropdown-toggle, .product-variation-choice .color-picker li .btn-group > a + .dropdown-toggle {
   padding-left: 8px;
   padding-right: 8px; }
 
-.btn-group > .btn-lg + .dropdown-toggle, .btn-group-lg.btn-group > .btn + .dropdown-toggle {
+.btn-group > .btn-lg + .dropdown-toggle, .btn-group-lg.btn-group > .btn + .dropdown-toggle, .product-variation-choice .type-picker li .btn-group-lg.btn-group > a + .dropdown-toggle, .product-variation-choice .size-picker li .btn-group-lg.btn-group > a + .dropdown-toggle, .product-variation-choice .color-picker li .btn-group-lg.btn-group > a + .dropdown-toggle {
   padding-left: 12px;
   padding-right: 12px; }
 
@@ -3367,19 +3460,22 @@ tbody.collapse.in {
   .btn-group.open .dropdown-toggle.btn-link {
     box-shadow: none; }
 
-.btn .caret {
+.btn .caret, .product-variation-choice .type-picker li a .caret, .product-variation-choice .size-picker li a .caret, .product-variation-choice .color-picker li a .caret {
   margin-left: 0; }
 
-.btn-lg .caret, .btn-group-lg > .btn .caret {
+.btn-lg .caret, .btn-group-lg > .btn .caret, .product-variation-choice .type-picker li .btn-group-lg > a .caret, .product-variation-choice .size-picker li .btn-group-lg > a .caret, .product-variation-choice .color-picker li .btn-group-lg > a .caret {
   border-width: 5px 5px 0;
   border-bottom-width: 0; }
 
-.dropup .btn-lg .caret, .dropup .btn-group-lg > .btn .caret {
+.dropup .btn-lg .caret, .dropup .btn-group-lg > .btn .caret, .dropup .product-variation-choice .type-picker li .btn-group-lg > a .caret, .product-variation-choice .type-picker li .dropup .btn-group-lg > a .caret, .dropup .product-variation-choice .size-picker li .btn-group-lg > a .caret, .product-variation-choice .size-picker li .dropup .btn-group-lg > a .caret, .dropup .product-variation-choice .color-picker li .btn-group-lg > a .caret, .product-variation-choice .color-picker li .dropup .btn-group-lg > a .caret {
   border-width: 0 5px 5px; }
 
-.btn-group-vertical > .btn,
+.btn-group-vertical > .btn, .product-variation-choice .type-picker li .btn-group-vertical > a, .product-variation-choice .size-picker li .btn-group-vertical > a, .product-variation-choice .color-picker li .btn-group-vertical > a,
 .btn-group-vertical > .btn-group,
-.btn-group-vertical > .btn-group > .btn {
+.btn-group-vertical > .btn-group > .btn, .product-variation-choice .type-picker li
+.btn-group-vertical > .btn-group > a, .product-variation-choice .size-picker li
+.btn-group-vertical > .btn-group > a, .product-variation-choice .color-picker li
+.btn-group-vertical > .btn-group > a {
   display: block;
   float: none;
   width: 100%;
@@ -3392,40 +3488,46 @@ tbody.collapse.in {
 .btn-group-vertical > .btn-group:after {
   clear: both; }
 
-.btn-group-vertical > .btn-group > .btn {
+.btn-group-vertical > .btn-group > .btn, .product-variation-choice .type-picker li .btn-group-vertical > .btn-group > a, .product-variation-choice .size-picker li .btn-group-vertical > .btn-group > a, .product-variation-choice .color-picker li .btn-group-vertical > .btn-group > a {
   float: none; }
 
-.btn-group-vertical > .btn + .btn,
-.btn-group-vertical > .btn + .btn-group,
-.btn-group-vertical > .btn-group + .btn,
+.btn-group-vertical > .btn + .btn, .product-variation-choice .type-picker li .btn-group-vertical > a + .btn, .product-variation-choice .size-picker li .btn-group-vertical > a + .btn, .product-variation-choice .color-picker li .btn-group-vertical > a + .btn, .product-variation-choice .type-picker li .btn-group-vertical > .btn + a, .product-variation-choice .type-picker li .btn-group-vertical > a + a, .product-variation-choice .size-picker li .btn-group-vertical > .btn + a, .product-variation-choice .size-picker li .btn-group-vertical > a + a, .product-variation-choice .color-picker li .btn-group-vertical > .btn + a, .product-variation-choice .color-picker li .btn-group-vertical > a + a,
+.btn-group-vertical > .btn + .btn-group, .product-variation-choice .type-picker li
+.btn-group-vertical > a + .btn-group, .product-variation-choice .size-picker li
+.btn-group-vertical > a + .btn-group, .product-variation-choice .color-picker li
+.btn-group-vertical > a + .btn-group,
+.btn-group-vertical > .btn-group + .btn, .product-variation-choice .type-picker li
+.btn-group-vertical > .btn-group + a, .product-variation-choice .size-picker li
+.btn-group-vertical > .btn-group + a, .product-variation-choice .color-picker li
+.btn-group-vertical > .btn-group + a,
 .btn-group-vertical > .btn-group + .btn-group {
   margin-top: -1px;
   margin-left: 0; }
 
-.btn-group-vertical > .btn:not(:first-child):not(:last-child) {
+.btn-group-vertical > .btn:not(:first-child):not(:last-child), .product-variation-choice .type-picker li .btn-group-vertical > a:not(:first-child):not(:last-child), .product-variation-choice .size-picker li .btn-group-vertical > a:not(:first-child):not(:last-child), .product-variation-choice .color-picker li .btn-group-vertical > a:not(:first-child):not(:last-child) {
   border-radius: 0; }
 
-.btn-group-vertical > .btn:first-child:not(:last-child) {
+.btn-group-vertical > .btn:first-child:not(:last-child), .product-variation-choice .type-picker li .btn-group-vertical > a:first-child:not(:last-child), .product-variation-choice .size-picker li .btn-group-vertical > a:first-child:not(:last-child), .product-variation-choice .color-picker li .btn-group-vertical > a:first-child:not(:last-child) {
   border-top-right-radius: 0;
   border-top-left-radius: 0;
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0; }
 
-.btn-group-vertical > .btn:last-child:not(:first-child) {
+.btn-group-vertical > .btn:last-child:not(:first-child), .product-variation-choice .type-picker li .btn-group-vertical > a:last-child:not(:first-child), .product-variation-choice .size-picker li .btn-group-vertical > a:last-child:not(:first-child), .product-variation-choice .color-picker li .btn-group-vertical > a:last-child:not(:first-child) {
   border-top-right-radius: 0;
   border-top-left-radius: 0;
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0; }
 
-.btn-group-vertical > .btn-group:not(:first-child):not(:last-child) > .btn {
+.btn-group-vertical > .btn-group:not(:first-child):not(:last-child) > .btn, .product-variation-choice .type-picker li .btn-group-vertical > .btn-group:not(:first-child):not(:last-child) > a, .product-variation-choice .size-picker li .btn-group-vertical > .btn-group:not(:first-child):not(:last-child) > a, .product-variation-choice .color-picker li .btn-group-vertical > .btn-group:not(:first-child):not(:last-child) > a {
   border-radius: 0; }
 
-.btn-group-vertical > .btn-group:first-child:not(:last-child) > .btn:last-child,
+.btn-group-vertical > .btn-group:first-child:not(:last-child) > .btn:last-child, .product-variation-choice .type-picker li .btn-group-vertical > .btn-group:first-child:not(:last-child) > a:last-child, .product-variation-choice .size-picker li .btn-group-vertical > .btn-group:first-child:not(:last-child) > a:last-child, .product-variation-choice .color-picker li .btn-group-vertical > .btn-group:first-child:not(:last-child) > a:last-child,
 .btn-group-vertical > .btn-group:first-child:not(:last-child) > .dropdown-toggle {
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0; }
 
-.btn-group-vertical > .btn-group:last-child:not(:first-child) > .btn:first-child {
+.btn-group-vertical > .btn-group:last-child:not(:first-child) > .btn:first-child, .product-variation-choice .type-picker li .btn-group-vertical > .btn-group:last-child:not(:first-child) > a:first-child, .product-variation-choice .size-picker li .btn-group-vertical > .btn-group:last-child:not(:first-child) > a:first-child, .product-variation-choice .color-picker li .btn-group-vertical > .btn-group:last-child:not(:first-child) > a:first-child {
   border-top-right-radius: 0;
   border-top-left-radius: 0; }
 
@@ -3434,20 +3536,29 @@ tbody.collapse.in {
   width: 100%;
   table-layout: fixed;
   border-collapse: separate; }
-  .btn-group-justified > .btn,
+  .btn-group-justified > .btn, .product-variation-choice .type-picker li .btn-group-justified > a, .product-variation-choice .size-picker li .btn-group-justified > a, .product-variation-choice .color-picker li .btn-group-justified > a,
   .btn-group-justified > .btn-group {
     float: none;
     display: table-cell;
     width: 1%; }
-  .btn-group-justified > .btn-group .btn {
+  .btn-group-justified > .btn-group .btn, .btn-group-justified > .btn-group .product-variation-choice .type-picker li a, .product-variation-choice .type-picker li .btn-group-justified > .btn-group a, .btn-group-justified > .btn-group .product-variation-choice .size-picker li a, .product-variation-choice .size-picker li .btn-group-justified > .btn-group a, .btn-group-justified > .btn-group .product-variation-choice .color-picker li a, .product-variation-choice .color-picker li .btn-group-justified > .btn-group a {
     width: 100%; }
   .btn-group-justified > .btn-group .dropdown-menu {
     left: auto; }
 
-[data-toggle="buttons"] > .btn input[type="radio"],
-[data-toggle="buttons"] > .btn input[type="checkbox"],
-[data-toggle="buttons"] > .btn-group > .btn input[type="radio"],
-[data-toggle="buttons"] > .btn-group > .btn input[type="checkbox"] {
+[data-toggle="buttons"] > .btn input[type="radio"], .product-variation-choice .type-picker li [data-toggle="buttons"] > a input[type="radio"], .product-variation-choice .size-picker li [data-toggle="buttons"] > a input[type="radio"], .product-variation-choice .color-picker li [data-toggle="buttons"] > a input[type="radio"],
+[data-toggle="buttons"] > .btn input[type="checkbox"], .product-variation-choice .type-picker li
+[data-toggle="buttons"] > a input[type="checkbox"], .product-variation-choice .size-picker li
+[data-toggle="buttons"] > a input[type="checkbox"], .product-variation-choice .color-picker li
+[data-toggle="buttons"] > a input[type="checkbox"],
+[data-toggle="buttons"] > .btn-group > .btn input[type="radio"], .product-variation-choice .type-picker li
+[data-toggle="buttons"] > .btn-group > a input[type="radio"], .product-variation-choice .size-picker li
+[data-toggle="buttons"] > .btn-group > a input[type="radio"], .product-variation-choice .color-picker li
+[data-toggle="buttons"] > .btn-group > a input[type="radio"],
+[data-toggle="buttons"] > .btn-group > .btn input[type="checkbox"], .product-variation-choice .type-picker li
+[data-toggle="buttons"] > .btn-group > a input[type="checkbox"], .product-variation-choice .size-picker li
+[data-toggle="buttons"] > .btn-group > a input[type="checkbox"], .product-variation-choice .color-picker li
+[data-toggle="buttons"] > .btn-group > a input[type="checkbox"] {
   position: absolute;
   clip: rect(0, 0, 0, 0);
   pointer-events: none; }
@@ -3504,13 +3615,19 @@ tbody.collapse.in {
   border-radius: 0; }
   .input-group-addon.input-sm, .product.product-view .add-to-cart .input-group-sm > input.input-group-addon, .product-simple-search-form .input-group-sm > input.input-group-addon,
   .input-group-sm > .input-group-addon,
-  .input-group-sm > .input-group-btn > .input-group-addon.btn {
+  .input-group-sm > .input-group-btn > .input-group-addon.btn, .product-variation-choice .type-picker li
+  .input-group-sm > .input-group-btn > a.input-group-addon, .product-variation-choice .size-picker li
+  .input-group-sm > .input-group-btn > a.input-group-addon, .product-variation-choice .color-picker li
+  .input-group-sm > .input-group-btn > a.input-group-addon {
     padding: 5px 10px;
     font-size: 12px;
     border-radius: 3px; }
   .input-group-addon.input-lg, .product.product-view .add-to-cart .input-group-lg > input.input-group-addon, .product-simple-search-form .input-group-lg > input.input-group-addon,
   .input-group-lg > .input-group-addon,
-  .input-group-lg > .input-group-btn > .input-group-addon.btn {
+  .input-group-lg > .input-group-btn > .input-group-addon.btn, .product-variation-choice .type-picker li
+  .input-group-lg > .input-group-btn > a.input-group-addon, .product-variation-choice .size-picker li
+  .input-group-lg > .input-group-btn > a.input-group-addon, .product-variation-choice .color-picker li
+  .input-group-lg > .input-group-btn > a.input-group-addon {
     padding: 10px 16px;
     font-size: 18px;
     border-radius: 6px; }
@@ -3520,11 +3637,23 @@ tbody.collapse.in {
 
 .input-group .form-control:first-child, .input-group .product.product-view .add-to-cart input:first-child, .product.product-view .add-to-cart .input-group input:first-child, .input-group .product-simple-search-form input:first-child, .product-simple-search-form .input-group input:first-child,
 .input-group-addon:first-child,
-.input-group-btn:first-child > .btn,
-.input-group-btn:first-child > .btn-group > .btn,
+.input-group-btn:first-child > .btn, .product-variation-choice .type-picker li
+.input-group-btn:first-child > a, .product-variation-choice .size-picker li
+.input-group-btn:first-child > a, .product-variation-choice .color-picker li
+.input-group-btn:first-child > a,
+.input-group-btn:first-child > .btn-group > .btn, .product-variation-choice .type-picker li
+.input-group-btn:first-child > .btn-group > a, .product-variation-choice .size-picker li
+.input-group-btn:first-child > .btn-group > a, .product-variation-choice .color-picker li
+.input-group-btn:first-child > .btn-group > a,
 .input-group-btn:first-child > .dropdown-toggle,
-.input-group-btn:last-child > .btn:not(:last-child):not(.dropdown-toggle),
-.input-group-btn:last-child > .btn-group:not(:last-child) > .btn {
+.input-group-btn:last-child > .btn:not(:last-child):not(.dropdown-toggle), .product-variation-choice .type-picker li
+.input-group-btn:last-child > a:not(:last-child):not(.dropdown-toggle), .product-variation-choice .size-picker li
+.input-group-btn:last-child > a:not(:last-child):not(.dropdown-toggle), .product-variation-choice .color-picker li
+.input-group-btn:last-child > a:not(:last-child):not(.dropdown-toggle),
+.input-group-btn:last-child > .btn-group:not(:last-child) > .btn, .product-variation-choice .type-picker li
+.input-group-btn:last-child > .btn-group:not(:last-child) > a, .product-variation-choice .size-picker li
+.input-group-btn:last-child > .btn-group:not(:last-child) > a, .product-variation-choice .color-picker li
+.input-group-btn:last-child > .btn-group:not(:last-child) > a {
   border-bottom-right-radius: 0;
   border-top-right-radius: 0; }
 
@@ -3533,11 +3662,23 @@ tbody.collapse.in {
 
 .input-group .form-control:last-child, .input-group .product.product-view .add-to-cart input:last-child, .product.product-view .add-to-cart .input-group input:last-child, .input-group .product-simple-search-form input:last-child, .product-simple-search-form .input-group input:last-child,
 .input-group-addon:last-child,
-.input-group-btn:last-child > .btn,
-.input-group-btn:last-child > .btn-group > .btn,
+.input-group-btn:last-child > .btn, .product-variation-choice .type-picker li
+.input-group-btn:last-child > a, .product-variation-choice .size-picker li
+.input-group-btn:last-child > a, .product-variation-choice .color-picker li
+.input-group-btn:last-child > a,
+.input-group-btn:last-child > .btn-group > .btn, .product-variation-choice .type-picker li
+.input-group-btn:last-child > .btn-group > a, .product-variation-choice .size-picker li
+.input-group-btn:last-child > .btn-group > a, .product-variation-choice .color-picker li
+.input-group-btn:last-child > .btn-group > a,
 .input-group-btn:last-child > .dropdown-toggle,
-.input-group-btn:first-child > .btn:not(:first-child),
-.input-group-btn:first-child > .btn-group:not(:first-child) > .btn {
+.input-group-btn:first-child > .btn:not(:first-child), .product-variation-choice .type-picker li
+.input-group-btn:first-child > a:not(:first-child), .product-variation-choice .size-picker li
+.input-group-btn:first-child > a:not(:first-child), .product-variation-choice .color-picker li
+.input-group-btn:first-child > a:not(:first-child),
+.input-group-btn:first-child > .btn-group:not(:first-child) > .btn, .product-variation-choice .type-picker li
+.input-group-btn:first-child > .btn-group:not(:first-child) > a, .product-variation-choice .size-picker li
+.input-group-btn:first-child > .btn-group:not(:first-child) > a, .product-variation-choice .color-picker li
+.input-group-btn:first-child > .btn-group:not(:first-child) > a {
   border-bottom-left-radius: 0;
   border-top-left-radius: 0; }
 
@@ -3548,16 +3689,16 @@ tbody.collapse.in {
   position: relative;
   font-size: 0;
   white-space: nowrap; }
-  .input-group-btn > .btn {
+  .input-group-btn > .btn, .product-variation-choice .type-picker li .input-group-btn > a, .product-variation-choice .size-picker li .input-group-btn > a, .product-variation-choice .color-picker li .input-group-btn > a {
     position: relative; }
-    .input-group-btn > .btn + .btn {
+    .input-group-btn > .btn + .btn, .product-variation-choice .type-picker li .input-group-btn > a + .btn, .product-variation-choice .size-picker li .input-group-btn > a + .btn, .product-variation-choice .color-picker li .input-group-btn > a + .btn, .product-variation-choice .type-picker li .input-group-btn > .btn + a, .product-variation-choice .type-picker li .input-group-btn > a + a, .product-variation-choice .size-picker li .input-group-btn > .btn + a, .product-variation-choice .size-picker li .input-group-btn > a + a, .product-variation-choice .color-picker li .input-group-btn > .btn + a, .product-variation-choice .color-picker li .input-group-btn > a + a {
       margin-left: -1px; }
-    .input-group-btn > .btn:hover, .input-group-btn > .btn:focus, .input-group-btn > .btn:active {
+    .input-group-btn > .btn:hover, .product-variation-choice .type-picker li .input-group-btn > a:hover, .product-variation-choice .size-picker li .input-group-btn > a:hover, .product-variation-choice .color-picker li .input-group-btn > a:hover, .input-group-btn > .btn:focus, .product-variation-choice .type-picker li .input-group-btn > a:focus, .product-variation-choice .size-picker li .input-group-btn > a:focus, .product-variation-choice .color-picker li .input-group-btn > a:focus, .input-group-btn > .btn:active, .product-variation-choice .type-picker li .input-group-btn > a:active, .product-variation-choice .size-picker li .input-group-btn > a:active, .product-variation-choice .color-picker li .input-group-btn > a:active {
       z-index: 2; }
-  .input-group-btn:first-child > .btn,
+  .input-group-btn:first-child > .btn, .product-variation-choice .type-picker li .input-group-btn:first-child > a, .product-variation-choice .size-picker li .input-group-btn:first-child > a, .product-variation-choice .color-picker li .input-group-btn:first-child > a,
   .input-group-btn:first-child > .btn-group {
     margin-right: -1px; }
-  .input-group-btn:last-child > .btn,
+  .input-group-btn:last-child > .btn, .product-variation-choice .type-picker li .input-group-btn:last-child > a, .product-variation-choice .size-picker li .input-group-btn:last-child > a, .product-variation-choice .color-picker li .input-group-btn:last-child > a,
   .input-group-btn:last-child > .btn-group {
     z-index: 2;
     margin-left: -1px; }
@@ -3938,10 +4079,10 @@ tbody.collapse.in {
 .navbar-btn {
   margin-top: 8px;
   margin-bottom: 8px; }
-  .navbar-btn.btn-sm, .btn-group-sm > .navbar-btn.btn {
+  .navbar-btn.btn-sm, .btn-group-sm > .navbar-btn.btn, .product-variation-choice .type-picker li .btn-group-sm > a.navbar-btn, .product-variation-choice .size-picker li .btn-group-sm > a.navbar-btn, .product-variation-choice .color-picker li .btn-group-sm > a.navbar-btn {
     margin-top: 10px;
     margin-bottom: 10px; }
-  .navbar-btn.btn-xs, .btn-group-xs > .navbar-btn.btn {
+  .navbar-btn.btn-xs, .btn-group-xs > .navbar-btn.btn, .product-variation-choice .type-picker li .btn-group-xs > a.navbar-btn, .product-variation-choice .size-picker li .btn-group-xs > a.navbar-btn, .product-variation-choice .color-picker li .btn-group-xs > a.navbar-btn {
     margin-top: 14px;
     margin-bottom: 14px; }
 
@@ -4234,7 +4375,7 @@ tbody.collapse.in {
   border-radius: .25em; }
   .label:empty {
     display: none; }
-  .btn .label {
+  .btn .label, .product-variation-choice .type-picker li a .label, .product-variation-choice .size-picker li a .label, .product-variation-choice .color-picker li a .label {
     position: relative;
     top: -1px; }
 
@@ -4288,11 +4429,14 @@ a.label:hover, a.label:focus {
   border-radius: 10px; }
   .badge:empty {
     display: none; }
-  .btn .badge {
+  .btn .badge, .product-variation-choice .type-picker li a .badge, .product-variation-choice .size-picker li a .badge, .product-variation-choice .color-picker li a .badge {
     position: relative;
     top: -1px; }
-  .btn-xs .badge, .btn-group-xs > .btn .badge,
-  .btn-group-xs > .btn .badge {
+  .btn-xs .badge, .btn-group-xs > .btn .badge, .product-variation-choice .type-picker li .btn-group-xs > a .badge, .product-variation-choice .size-picker li .btn-group-xs > a .badge, .product-variation-choice .color-picker li .btn-group-xs > a .badge,
+  .btn-group-xs > .btn .badge, .product-variation-choice .type-picker li
+  .btn-group-xs > a .badge, .product-variation-choice .size-picker li
+  .btn-group-xs > a .badge, .product-variation-choice .color-picker li
+  .btn-group-xs > a .badge {
     top: 0;
     padding: 1px 5px; }
   .list-group-item.active > .badge,
@@ -5168,10 +5312,10 @@ button.close {
     display: table; }
   .modal-footer:after {
     clear: both; }
-  .modal-footer .btn + .btn {
+  .modal-footer .btn + .btn, .modal-footer .product-variation-choice .type-picker li a + .btn, .product-variation-choice .type-picker li .modal-footer a + .btn, .modal-footer .product-variation-choice .size-picker li a + .btn, .product-variation-choice .size-picker li .modal-footer a + .btn, .modal-footer .product-variation-choice .color-picker li a + .btn, .product-variation-choice .color-picker li .modal-footer a + .btn, .modal-footer .product-variation-choice .type-picker li .btn + a, .product-variation-choice .type-picker li .modal-footer .btn + a, .modal-footer .product-variation-choice .type-picker li a + a, .product-variation-choice .type-picker li .modal-footer a + a, .modal-footer .product-variation-choice .size-picker li .btn + a, .product-variation-choice .size-picker li .modal-footer .btn + a, .modal-footer .product-variation-choice .size-picker li a + a, .product-variation-choice .size-picker li .modal-footer a + a, .modal-footer .product-variation-choice .color-picker li .btn + a, .product-variation-choice .color-picker li .modal-footer .btn + a, .modal-footer .product-variation-choice .color-picker li a + a, .product-variation-choice .color-picker li .modal-footer a + a {
     margin-left: 5px;
     margin-bottom: 0; }
-  .modal-footer .btn-group .btn + .btn {
+  .modal-footer .btn-group .btn + .btn, .modal-footer .btn-group .product-variation-choice .type-picker li a + .btn, .product-variation-choice .type-picker li .modal-footer .btn-group a + .btn, .modal-footer .btn-group .product-variation-choice .size-picker li a + .btn, .product-variation-choice .size-picker li .modal-footer .btn-group a + .btn, .modal-footer .btn-group .product-variation-choice .color-picker li a + .btn, .product-variation-choice .color-picker li .modal-footer .btn-group a + .btn, .modal-footer .btn-group .product-variation-choice .type-picker li .btn + a, .product-variation-choice .type-picker li .modal-footer .btn-group .btn + a, .modal-footer .btn-group .product-variation-choice .type-picker li a + a, .product-variation-choice .type-picker li .modal-footer .btn-group a + a, .modal-footer .btn-group .product-variation-choice .size-picker li .btn + a, .product-variation-choice .size-picker li .modal-footer .btn-group .btn + a, .modal-footer .btn-group .product-variation-choice .size-picker li a + a, .product-variation-choice .size-picker li .modal-footer .btn-group a + a, .modal-footer .btn-group .product-variation-choice .color-picker li .btn + a, .product-variation-choice .color-picker li .modal-footer .btn-group .btn + a, .modal-footer .btn-group .product-variation-choice .color-picker li a + a, .product-variation-choice .color-picker li .modal-footer .btn-group a + a {
     margin-left: -1px; }
   .modal-footer .btn-block + .btn-block {
     margin-left: 0; }
@@ -5584,7 +5728,7 @@ button.close {
   color: #fff;
   text-align: center;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6); }
-  .carousel-caption .btn {
+  .carousel-caption .btn, .carousel-caption .product-variation-choice .type-picker li a, .product-variation-choice .type-picker li .carousel-caption a, .carousel-caption .product-variation-choice .size-picker li a, .product-variation-choice .size-picker li .carousel-caption a, .carousel-caption .product-variation-choice .color-picker li a, .product-variation-choice .color-picker li .carousel-caption a {
     text-shadow: none; }
 
 @media screen and (min-width: 768px) {
@@ -5609,11 +5753,11 @@ button.close {
   .carousel-indicators {
     bottom: 20px; } }
 
-.clearfix:before, .social-share:before, .image-container .nivo-directionNav:before, .property-search.type1 .heading:before, .property-search.type2 .property-results .property-result .details:before, .property-view.type1 .social-share:before, .property-categories .category-search-item:before, .property-categories .property-category-list-item .details:before, .product-search .heading:before, ul.refine-list:before, .product.product-view .variations:before, .product.product-view .product-share .social-share:before, .product-result .wrapper:before, .related-products li:before, .blog-post .tags:before, .checkout .checkout-form .step-header:before, .clearfix:after, .social-share:after, .image-container .nivo-directionNav:after, .property-search.type1 .heading:after, .property-search.type2 .property-results .property-result .details:after, .property-view.type1 .social-share:after, .property-categories .category-search-item:after, .property-categories .property-category-list-item .details:after, .product-search .heading:after, ul.refine-list:after, .product.product-view .variations:after, .product.product-view .product-share .social-share:after, .product-result .wrapper:after, .related-products li:after, .blog-post .tags:after, .checkout .checkout-form .step-header:after {
+.clearfix:before, .social-share:before, .image-container .nivo-directionNav:before, .property-search.type1 .heading:before, .property-search.type2 .property-results .property-result .details:before, .property-view.type1 .social-share:before, .property-categories .category-search-item:before, .property-categories .property-category-list-item .details:before, .product-search .heading:before, ul.refine-list:before, .product.product-view .variations:before, .product.product-view .product-share .social-share:before, .product-variation-choice .type-picker:before, .product-variation-choice .size-picker:before, .product-variation-choice .color-picker:before, .product-result .wrapper:before, .related-products li:before, .blog-post .tags:before, .checkout .checkout-form .step-header:before, .clearfix:after, .social-share:after, .image-container .nivo-directionNav:after, .property-search.type1 .heading:after, .property-search.type2 .property-results .property-result .details:after, .property-view.type1 .social-share:after, .property-categories .category-search-item:after, .property-categories .property-category-list-item .details:after, .product-search .heading:after, ul.refine-list:after, .product.product-view .variations:after, .product.product-view .product-share .social-share:after, .product-variation-choice .type-picker:after, .product-variation-choice .size-picker:after, .product-variation-choice .color-picker:after, .product-result .wrapper:after, .related-products li:after, .blog-post .tags:after, .checkout .checkout-form .step-header:after {
   content: " ";
   display: table; }
 
-.clearfix:after, .social-share:after, .image-container .nivo-directionNav:after, .property-search.type1 .heading:after, .property-search.type2 .property-results .property-result .details:after, .property-view.type1 .social-share:after, .property-categories .category-search-item:after, .property-categories .property-category-list-item .details:after, .product-search .heading:after, ul.refine-list:after, .product.product-view .variations:after, .product.product-view .product-share .social-share:after, .product-result .wrapper:after, .related-products li:after, .blog-post .tags:after, .checkout .checkout-form .step-header:after {
+.clearfix:after, .social-share:after, .image-container .nivo-directionNav:after, .property-search.type1 .heading:after, .property-search.type2 .property-results .property-result .details:after, .property-view.type1 .social-share:after, .property-categories .category-search-item:after, .property-categories .property-category-list-item .details:after, .product-search .heading:after, ul.refine-list:after, .product.product-view .variations:after, .product.product-view .product-share .social-share:after, .product-variation-choice .type-picker:after, .product-variation-choice .size-picker:after, .product-variation-choice .color-picker:after, .product-result .wrapper:after, .related-products li:after, .blog-post .tags:after, .checkout .checkout-form .step-header:after {
   clear: both; }
 
 .center-block {
@@ -7688,7 +7832,7 @@ footer {
 .btn-add-to-favourites {
   color: #8a6d3b; }
 
-.btn-lg, .btn-group-lg > .btn {
+.btn-lg, .btn-group-lg > .btn, .product-variation-choice .type-picker li .btn-group-lg > a, .product-variation-choice .size-picker li .btn-group-lg > a, .product-variation-choice .color-picker li .btn-group-lg > a {
   border-radius: 0; }
 
 .address-select label ul.address {
@@ -7790,7 +7934,7 @@ footer {
   text-align: center;
   background: #f0f0f0;
   margin-bottom: 22px; }
-  .property-search.type1 .property-result .buttons .btn {
+  .property-search.type1 .property-result .buttons .btn, .property-search.type1 .property-result .buttons .product-variation-choice .type-picker li a, .product-variation-choice .type-picker li .property-search.type1 .property-result .buttons a, .property-search.type1 .property-result .buttons .product-variation-choice .size-picker li a, .product-variation-choice .size-picker li .property-search.type1 .property-result .buttons a, .property-search.type1 .property-result .buttons .product-variation-choice .color-picker li a, .product-variation-choice .color-picker li .property-search.type1 .property-result .buttons a {
     width: 37px; }
 
 .property-search.type2 .search-height {
@@ -7964,7 +8108,7 @@ footer {
   background: #f0f0f0;
   margin: 0 0 20px 0;
   padding: 20px; }
-  .property-view.type1 .sidebar .buttons .btn {
+  .property-view.type1 .sidebar .buttons .btn, .property-view.type1 .sidebar .buttons .product-variation-choice .type-picker li a, .product-variation-choice .type-picker li .property-view.type1 .sidebar .buttons a, .property-view.type1 .sidebar .buttons .product-variation-choice .size-picker li a, .product-variation-choice .size-picker li .property-view.type1 .sidebar .buttons a, .property-view.type1 .sidebar .buttons .product-variation-choice .color-picker li a, .product-variation-choice .color-picker li .property-view.type1 .sidebar .buttons a {
     width: 100%;
     margin-bottom: 6px;
     text-align: left; }
@@ -8330,6 +8474,38 @@ ul.refine-list {
 .product.product-view .main-short-description p:last-child {
   margin-bottom: 0; }
 
+.product-variation-choice .type-picker, .product-variation-choice .size-picker, .product-variation-choice .color-picker {
+  padding: 0;
+  margin: 0 0 12px 0; }
+  .product-variation-choice .type-picker li, .product-variation-choice .size-picker li, .product-variation-choice .color-picker li {
+    list-style: none;
+    float: left;
+    font-size: 0.9em;
+    margin: 0 5px 5px 0; }
+    .product-variation-choice .type-picker li a, .product-variation-choice .size-picker li a, .product-variation-choice .color-picker li a {
+      display: block;
+      white-space: normal;
+      padding: 6px 12px; }
+    .product-variation-choice .type-picker li.active a, .product-variation-choice .size-picker li.active a, .product-variation-choice .color-picker li.active a {
+      background: #337ab7;
+      color: white; }
+    .product-variation-choice .type-picker li.unavailable, .product-variation-choice .size-picker li.unavailable, .product-variation-choice .color-picker li.unavailable {
+      opacity: 0.5;
+      background: #ccc; }
+
+.product-variation-choice .type-picker li {
+  width: 100px; }
+
+.product-variation-choice .color-picker li {
+  padding: 4px;
+  border: 1px solid #ccc;
+  background: white; }
+  .product-variation-choice .color-picker li a {
+    width: 35px;
+    height: 35px; }
+  .product-variation-choice .color-picker li.active {
+    background: #337ab7; }
+
 .product-result .wrapper {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   margin-bottom: 30px;
@@ -8390,7 +8566,7 @@ ul.refine-list {
 .product-result .buttons {
   text-align: center;
   margin-bottom: 12px; }
-  .product-result .buttons .btn {
+  .product-result .buttons .btn, .product-result .buttons .product-variation-choice .type-picker li a, .product-variation-choice .type-picker li .product-result .buttons a, .product-result .buttons .product-variation-choice .size-picker li a, .product-variation-choice .size-picker li .product-result .buttons a, .product-result .buttons .product-variation-choice .color-picker li a, .product-variation-choice .color-picker li .product-result .buttons a {
     width: 37px; }
 
 .related-products {

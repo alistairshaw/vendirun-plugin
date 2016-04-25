@@ -1,4 +1,4 @@
-<div class="js-variation-choice">
+<div class="product-variation-choice js-variation-choice">
     <h2>{{ $selectedVariation->getName() }}</h2>
 
     @if (count($product->getVariations()) > 1)
@@ -16,4 +16,4 @@
         </ul>
     @endif
 </div>
-<input type="hidden" id="productVariationId" name="productVariationId" value="{{ $selectedVariation->getId() }}">
+<input type="text" id="productVariationId" name="productVariationId" value="{{ $selectedVariation->getId() }}">

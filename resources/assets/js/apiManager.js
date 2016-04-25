@@ -9,14 +9,34 @@ var apiManager = {
     },
 
     callEndPoint: function (endpoint, params, callback) {
-        // replace params in url if necessary
+        // replace params in the url if necessary
+        var finalParams = [];
         $.each(params, function(index, val) {
-            endpoint.endpoint = endpoint.endpoint.replace('*' + index + '*', val);
+            if (endpoint.endpoint.indexOf('*' + index + '*') !== -1) {
+                endpoint.endpoint = endpoint.endpoint.replace('*' + index + '*', val);
+            }
+            else {
+                finalParams['index'] = val;
+            }
         });
 
-        $.post(endpoint.endpoint, params, function(response) {
-            callback(response);
-        }, 'json');
+        $.ajax({
+            url: endpoint.endpoint,
+            data: finalParams,
+            dataType: 'json',
+            method: endpoint.method,
+            success: function(response) {
+                callback(response);
+            },
+            error: function(response) {
+                console.log('Error with API Endpoint', endpoint, response);
+            },
+            statusCode: {
+                404: function() {
+                    console.log('API 404: ' + endpoint.endpoint)
+                }
+            }
+        });
     },
 
     resolveEndpoint: function (entity, action, params, callback, error) {
@@ -34,7 +54,7 @@ var apiManager = {
                 }
             });
             if (!ok) {
-                error('No valid endpoint found for ' + entity + '/' + action);
+                console.log('No valid endpoint found for ' + entity + '/' + action);
                 sessionStorage.apiEndPoints = null; // in case the reason no endpoint found is because of cached values
             }
         });
@@ -43,7 +63,7 @@ var apiManager = {
     getEndpoints: function (callback) {
         if (sessionStorage.apiEndPoints) {
             var sessionObject = JSON.parse(sessionStorage.apiEndPoints);
-            if (sessionObject && sessionObject.when && parseInt(new Date(sessionObject.when).getTime()) + 3000 > parseInt(new Date().getTime())) {
+            if (sessionObject && sessionObject.when && parseInt(new Date(sessionObject.when).getTime()) + 30000 > parseInt(new Date().getTime())) {
                 callback(sessionObject.data);
                 return true;
             }

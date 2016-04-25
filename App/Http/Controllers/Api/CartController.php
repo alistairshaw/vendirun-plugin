@@ -5,7 +5,7 @@ use AlistairShaw\Vendirun\App\Entities\Cart\CartRepository;
 use AlistairShaw\Vendirun\App\Lib\CurrencyHelper;
 use Request;
 
-class ShippingController extends ApiBaseController {
+class CartController extends ApiBaseController {
 
     /**
      * Returns full list of available actions with the relevant URI listed

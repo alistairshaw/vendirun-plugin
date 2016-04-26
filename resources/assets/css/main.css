@@ -7691,6 +7691,11 @@ footer {
 .btn-lg, .btn-group-lg > .btn {
   border-radius: 0; }
 
+.cms-page .vendirun-cms-block .vr-cms-content .vr-image-element {
+  text-align: center; }
+  .cms-page .vendirun-cms-block .vr-cms-content .vr-image-element img {
+    margin: auto; }
+
 .address-select label ul.address {
   padding: 20px;
   margin: 0 0 10px 0;

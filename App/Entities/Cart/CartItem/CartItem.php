@@ -1,6 +1,7 @@
 <?php namespace AlistairShaw\Vendirun\App\Entities\Cart\CartItem;
 
 use AlistairShaw\Vendirun\App\Entities\Cart\Helpers\TaxCalculator;
+use AlistairShaw\Vendirun\App\Entities\Product\Product;
 
 class CartItem {
 
@@ -20,12 +21,7 @@ class CartItem {
     private $taxRate;
 
     /**
-     * @var object
-     */
-    private $productVariation;
-
-    /**
-     * @var object
+     * @var Product
      */
     private $product;
 
@@ -58,7 +54,6 @@ class CartItem {
         $this->productVariationId = $params['productVariationId'];
         $this->quantity = $params['quantity'];
         $this->taxRate = $params['taxRate'];
-        $this->productVariation = $params['productVariation'];
         $this->product = $params['product'];
         $this->basePrice = $params['basePrice'];
         $this->shippingPrice = $params['shippingPrice'];
@@ -67,19 +62,24 @@ class CartItem {
     }
 
     /**
-     * @return object
+     * @return array
      */
-    public function getProduct()
+    public function display()
     {
-        return $this->product;
+        return [
+            'productVariationId' => $this->productVariationId,
+            'quantity' => $this->quantity,
+            'taxRate' => $this->taxRate,
+            'product' => $this->product->getDisplayArray()
+        ];
     }
 
     /**
      * @return object
      */
-    public function getProductVariation()
+    public function getProduct()
     {
-        return $this->productVariation;
+        return $this->product;
     }
 
     /**
@@ -159,6 +159,7 @@ class CartItem {
      */
     public function shipping()
     {
+        if ($this->shippingPrice === null) return null;
         return $this->shippingBeforeTax() + $this->shippingTax();
     }
 
@@ -168,6 +169,7 @@ class CartItem {
      */
     public function shippingBeforeTax()
     {
+        if ($this->shippingPrice === null) return null;
         return $this->priceIncludesTax ? ($this->shippingPrice * $this->quantity) - $this->shippingTax() : $this->shippingPrice * $this->quantity;
     }
 
@@ -176,6 +178,7 @@ class CartItem {
      */
     public function shippingTax()
     {
+        if ($this->shippingPrice === null) return null;
         return $this->priceIncludesTax ? TaxCalculator::taxFromTotal($this->shippingPrice, $this->taxRate, $this->quantity) : (int)($this->shippingPrice / 100 * $this->taxRate) * $this->quantity;
     }
 
@@ -185,6 +188,7 @@ class CartItem {
      */
     public function displayShipping()
     {
+        if ($this->shippingPrice === null) return null;
         return $this->shippingPrice * $this->quantity;
     }
 
@@ -205,5 +209,32 @@ class CartItem {
     public function taxWithoutShipping()
     {
         return $this->tax() - $this->shippingTax();
+    }
+
+    /**
+     * @return string
+     */
+    public function getSku()
+    {
+        $variations = $this->product->getVariations();
+        return $variations[0]->getSku();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getVariationId()
+    {
+        $variations = $this->product->getVariations();
+        return $variations[0]->getId();
+    }
+
+    /**
+     * @return string
+     */
+    public function getProductName()
+    {
+        $variations = $this->product->getVariations();
+        return $this->product->getProductName() . ' ' . $variations[0]->getName();
     }
 }

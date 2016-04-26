@@ -1,6 +1,6 @@
 <h3>{{ trans('vendirun::customer.selectAddress') }}</h3>
 <div class="address-select">
-    @if ($customer)
+    @if ($customer && $customer->getAddresses())
         @foreach ($customer->getAddresses() as $address)
             <label>
                 <ul class="address">

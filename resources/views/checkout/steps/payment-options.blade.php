@@ -1,4 +1,13 @@
 <div class="payment clearfix">
+    @if ($paymentGateways->stripe && !$paymentGateways->paypal)
+        <noscript>
+            <div class="alert alert-danger">
+                <i class="fa fa-exclamation-circle"></i>
+                This site requires javascript to be enabled in your browser in order to securely process payments. For
+                more information on javascript and instructions on how to enable it, <a href="http://enable-javascript.com/" target="_blank">click here</a>.
+            </div>
+        </noscript>
+    @endif
     @if ($paymentGateways->stripe && $paymentGateways->paypal)
         <div class="options form-group form-inline">
             <label class="hidden stripe-option js-stripe-option">
@@ -11,8 +20,12 @@
             </label>
         </div>
     @endif
+    @if ($paymentGateways->paypal)
+        @include('vendirun::checkout.partials.paypal-logo')
+    @endif
     @if ($paymentGateways->stripe)
         <div class="stripe-form js-stripe-form hidden">
+            @include('vendirun::checkout.partials.credit-card-logo')
             <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
             <script type="text/javascript">
                 Stripe.setPublishableKey('{{ $paymentGateways->stripeSettings->sandbox_mode ? $paymentGateways->stripeSettings->test_publishable : $paymentGateways->stripeSettings->publishable }}');
@@ -21,12 +34,12 @@
 
             <div class="form-group">
                 <label for="textinput">{{ trans('vendirun::forms.cardHolderName') }}</label>
-                <input type="text" name="cardHolderName" maxlength="70" placeholder="{{ trans('vendirun::forms.cardHolderName') }}" class="form-control" value="{{ old('cardHolderName', '') }}" required>
+                <input type="text" name="cardHolderName" maxlength="70" placeholder="{{ trans('vendirun::forms.cardHolderName') }}" class="form-control" value="{{ old('cardHolderName', '') }}">
             </div>
 
             <div class="form-group">
                 <label for="textinput">{{ trans('vendirun::forms.cardNumber') }}</label>
-                <input type="text" maxlength="19" placeholder="{{ trans('vendirun::forms.cardNumber') }}" class="form-control" data-stripe="number" value="" required>
+                <input type="text" maxlength="19" placeholder="{{ trans('vendirun::forms.cardNumber') }}" class="form-control" data-stripe="number" value="">
             </div>
 
             <div class="expiry-cvv">
@@ -60,7 +73,7 @@
                 <div class="cvv">
                     <div class="form-group">
                         <label for="textinput">{{ trans('vendirun::forms.cvv') }}</label>
-                        <input type="text" id="cvv" placeholder="{{ trans('vendirun::forms.cvv') }}" maxlength="4" class="form-control" data-stripe="cvc" value="" required>
+                        <input type="text" id="cvv" placeholder="{{ trans('vendirun::forms.cvv') }}" maxlength="4" class="form-control" data-stripe="cvc" value="">
                     </div>
                 </div>
             </div>
@@ -73,7 +86,7 @@
             {{ trans('vendirun::checkout.billingAddressSameAsShipping') }}
         </label>
     </div>
-    @if ($customer)
+    @if ($customer && $defaultAddress)
         @include('vendirun::customer.partials.address-select', ['selected' => $defaultAddress, 'prefix' => 'billing'])
     @else
         @include('vendirun::customer.partials.address-form', ['prefix' => 'billing'])

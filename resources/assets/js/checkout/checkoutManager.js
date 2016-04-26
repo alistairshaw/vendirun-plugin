@@ -23,6 +23,7 @@ var checkoutManager = function () {
                 $('.js-stripe-option').removeClass('hidden');
                 $('#paymentOptionStripe').prop('checked', true);
                 $('#paymentOptionPaypal').prop('checked', false);
+                $('.js-paypal-logo').addClass('hidden');
             }
         },
 
@@ -30,6 +31,19 @@ var checkoutManager = function () {
             var _this = this;
             var $form = $('.js-checkout-payment-form');
             $form.validate();
+
+            // add rules for form fields
+            $('#emailAddress').rules('add', { required: true, email: true });
+            $('#fullName').rules('add', { required: true });
+            if ($('#shippingaddress1').length) {
+                $('#shippingaddress1').rules('add', { required: true });
+                $('#shippingcity').rules('add', { required: true });
+                $('#shippingpostcode').rules('add', { required: true });
+                $('#billingaddress1').rules('add', { required: true });
+                $('#billingcity').rules('add', { required: true });
+                $('#billingpostcode').rules('add', { required: true });
+            }
+
             $form.on('submit', function (e) {
                 e.preventDefault();
                 var $form = $(this);
@@ -61,7 +75,13 @@ var checkoutManager = function () {
         setupRecalculateShipping: function () {
             $('.js-recalculate-shipping-button').on('click', function (e) {
                 e.preventDefault();
-                shippingCalculator();
+                shippingCalculator($(this));
+            }).addClass('hidden');
+            $('#shippingcountryId').on('change', function() {
+                shippingCalculator($('.js-recalculate-shipping-button'));
+            });
+            $('.js-multiple-shipping-types').on('change', function() {
+                shippingCalculator($('.js-recalculate-shipping-button'));
             });
         },
 
@@ -70,8 +90,10 @@ var checkoutManager = function () {
             var $form = $('.js-stripe-form');
             $('input[type=radio][name=paymentOption]').on('change', function () {
                 _this.paymentType = $(this).val();
+                $('.js-paypal-logo').removeClass('hidden');
                 $form.removeClass('hidden');
                 if (_this.paymentType !== 'stripe') $form.addClass('hidden');
+                if (_this.paymentType !== 'paypal') $('.js-paypal-logo').addClass('hidden');
             });
         },
 

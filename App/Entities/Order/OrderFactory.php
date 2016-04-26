@@ -80,13 +80,15 @@ class OrderFactory {
         foreach ($cart->getItems() as $item)
         {
             /* @var $item CartItem */
-            $sku = $item->getProduct()->product_sku . $item->getProductVariation()->variation_sku;
+            $sku = $item->getSku();
 
             for ($i = 1; $i <= $item->getQuantity(); $i++)
             {
-                $items[] = new OrderItem(NULL, $item->getProductVariation()->id, $item->getTaxRate(), $item->getSingleItemPrice($i), $item->getProduct()->product_name, $sku, 0, 0);
+                $items[] = new OrderItem(NULL, $item->getVariationId(), $item->getTaxRate(), $item->getSingleItemPrice($i), $item->getProductName(), $sku, 0, 0);
             }
         }
+
+        if ($cart->shipping() > 0) $items[] = new OrderItem(NULL, NULL, $cart->getDefaultTaxRate(), $cart->shippingBeforeTax(), $cart->getShippingType(), 'SHIPPING', 1, 0);
 
         $order = new Order($customer, $billingAddress, $shippingAddress, $items, $cart->getShippingType());
 

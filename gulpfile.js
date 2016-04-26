@@ -27,7 +27,8 @@ elixir(function (mix) {
             '../../bower_components/select2/select2.css',
             '../../bower_components/nivoslider/nivo-slider.css',
             'main.css'
-        ], 'public/css/production.css')
+        //], 'public/css/production.css')
+        ], '../../../public/vendor/vendirun/css/production.css')
 
         .scripts([
             '../../bower_components/jquery/dist/jquery.js',
@@ -38,6 +39,7 @@ elixir(function (mix) {
             '../../bower_components/nivoslider/jquery.nivo.slider.js',
             '../../bower_components/jquery-validate/dist/jquery.validate.js',
             'apiManager.js',
+            'pagination.js',
             'sliders.js',
             'validation.js',
             'google-map.js',
@@ -45,15 +47,18 @@ elixir(function (mix) {
             'thumbnails.js',
             'property/filter.js',
             'property/property-view.js',
-            'property/property-results.js',
             'social.js',
             'checkout/stripeManager.js',
             'checkout/shippingCalculator.js',
             'checkout/checkoutManager.js',
+            'product/variationPicker.js',
+            'product/product-edit.js',
             'main.js'
         ], 'public/js/production.js')
+        //], '../../../public/vendor/vendirun/js/production.js')
 
-        .task('publish_assets', ['public/**/*.css', 'public/**/*.js']);
+        .task('publish_assets', ['public/**/*.css', 'public/**/*.js'])
+    ;
 
     if (elixir.config.production) {
         mix.copy('resources/bower_components/font-awesome/fonts', 'public/fonts');

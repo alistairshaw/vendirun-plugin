@@ -1,6 +1,7 @@
 <?php namespace AlistairShaw\Vendirun\App\Entities\Cart;
 
 use AlistairShaw\Vendirun\App\Entities\Cart\Helpers\TaxCalculator;
+use AlistairShaw\Vendirun\App\Lib\CurrencyHelper;
 
 class Cart {
 
@@ -51,10 +52,9 @@ class Cart {
 
     /**
      * Cart constructor.
-     * @param CartRepository $cartRepository
      * @param array          $params | ids,items,countryId,priceIncludesTax,chargeTaxOnShipping,defaultTaxRate,shipping,shippingType,availableShippingTypes
      */
-    public function __construct(CartRepository $cartRepository, $params)
+    public function __construct($params)
     {
         $this->ids = $params['ids'];
         $this->items = $params['items'];
@@ -73,6 +73,20 @@ class Cart {
     public function count()
     {
         return $this->items ? count($this->items) : 0;
+    }
+
+    /**
+     * @return array
+     */
+    public function displayItems()
+    {
+        $final = [];
+        if (!$this->items) return $final;
+        foreach ($this->items as $item)
+        {
+            $final[] = $item->display();
+        }
+        return $final;
     }
 
     /**
@@ -173,6 +187,7 @@ class Cart {
      */
     public function displayOrderShipping()
     {
+        if ($this->orderShippingPrice === null) return null;
         return $this->orderShippingPrice;
     }
 
@@ -182,6 +197,7 @@ class Cart {
      */
     public function orderShippingBeforeTax()
     {
+        if ($this->orderShippingPrice === null) return null;
         return $this->priceIncludesTax ? $this->orderShippingPrice - TaxCalculator::taxFromTotal($this->orderShippingPrice, $this->defaultTaxRate) : $this->orderShippingPrice;
     }
 
@@ -191,6 +207,7 @@ class Cart {
      */
     public function orderShippingTax()
     {
+        if ($this->orderShippingPrice === null) return null;
         return $this->priceIncludesTax ? TaxCalculator::taxFromTotal($this->orderShippingPrice, $this->defaultTaxRate) : TaxCalculator::totalPlusTax($this->orderShippingPrice, $this->defaultTaxRate);
     }
 
@@ -200,6 +217,7 @@ class Cart {
      */
     public function shipping()
     {
+        if ($this->orderShippingPrice === null) return null;
         return $this->sum('shipping') + $this->orderShippingBeforeTax() + $this->orderShippingTax();
     }
 
@@ -209,6 +227,7 @@ class Cart {
      */
     public function shippingBeforeTax()
     {
+        if ($this->orderShippingPrice === null) return null;
         return $this->sum('shippingBeforeTax') + $this->orderShippingBeforeTax();
     }
 
@@ -217,6 +236,7 @@ class Cart {
      */
     public function shippingTax()
     {
+        if ($this->orderShippingPrice === null) return null;
         return $this->sum('shippingTax') + $this->orderShippingTax();
     }
 
@@ -226,6 +246,7 @@ class Cart {
      */
     public function displayShipping()
     {
+        if ($this->orderShippingPrice === null) return null;
         return $this->sum('displayShipping') + $this->orderShippingPrice;
     }
 
@@ -248,6 +269,21 @@ class Cart {
     }
 
     /**
+     * @return object
+     */
+    public function getFormattedTotals()
+    {
+        return (object)[
+            'displayTotal' => CurrencyHelper::formatWithCurrency($this->displayTotal()),
+            'tax' => CurrencyHelper::formatWithCurrency($this->tax()),
+            'displayShipping' => $this->displayShipping() === null ? 'NOT AVAILABLE' : CurrencyHelper::formatWithCurrency($this->displayShipping()),
+            'total' => CurrencyHelper::formatWithCurrency($this->total()),
+            'totalBeforeTax' => CurrencyHelper::formatWithCurrency($this->totalBeforeTax()),
+            'shippingBeforeTax' => $this->displayShipping() === null ? 'NOT AVAILABLE' : CurrencyHelper::formatWithCurrency($this->shippingBeforeTax())
+        ];
+    }
+
+    /**
      * @param $cartItemFunctionName
      * @return int
      */
@@ -256,7 +292,15 @@ class Cart {
         $total = 0;
         foreach ($this->items as $cartItem)
         {
-            $total += $cartItem->{$cartItemFunctionName}();
+            //var_dump($cartItem->{$cartItemFunctionName}());
+            if ($cartItem->{$cartItemFunctionName}() === null)
+            {
+                $total = null;
+            }
+            else
+            {
+                $total += $cartItem->{$cartItemFunctionName}();
+            }
         }
         return $total;
     }

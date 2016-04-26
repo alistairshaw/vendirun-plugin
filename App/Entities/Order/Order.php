@@ -112,6 +112,104 @@ class Order {
     }
 
     /**
+     * Unique items WITHOUT shipping
+     * @return object
+     */
+    public function getUniqueItems()
+    {
+        $final = [];
+        foreach ($this->getItems() as $item)
+        {
+            /* @var $item OrderItem */
+
+            if ($item->isShipping()) continue;
+
+            // find match in final
+            $matched = false;
+            foreach ($final as $index => $finalItem)
+            {
+                if ($item->getPrice() == $finalItem->price
+                    && $item->getProductName() == $finalItem->productName
+                    && $item->getProductSku() == $finalItem->sku
+                    && $item->getProductVariationId() == $finalItem->productVariationId
+                    && $item->getTaxRate() == $finalItem->taxRate
+                    && $item->getPrice() == $finalItem->unitPrice)
+                {
+                    $matched = true;
+                    $final[$index]->price += $item->getPrice();
+                    $final[$index]->quantity++;
+                }
+            }
+
+            // if no match in final, add new row to final
+            if (!$matched)
+            {
+                $final[] = (object)[
+                    'price' => (int)$item->getPrice(),
+                    'unitPrice' => (int)$item->getPrice(),
+                    'productName' => $item->getProductName(),
+                    'sku' => $item->getProductSku(),
+                    'productVariationId' => $item->getProductVariationId(),
+                    'taxRate' => $item->getTaxRate(),
+                    'quantity' => 1
+                ];
+            }
+        }
+
+        return (object)$final;
+    }
+
+    /**
+     * Totals for shipping
+     * @return int
+     */
+    public function getShipping()
+    {
+        $shipping = 0;
+        foreach ($this->getItems() as $item)
+        {
+            /* @var $item OrderItem */
+            if ($item->isShipping()) $shipping += $item->getPrice();
+        }
+
+        return $shipping;
+    }
+
+    /**
+     * @return int
+     */
+    public function getShippingTax()
+    {
+        $shipping = 0;
+        $taxRate = 0;
+        foreach ($this->getItems() as $item)
+        {
+            /* @var $item OrderItem */
+            if ($item->isShipping())
+            {
+                $taxRate = $item->getTaxRate();
+                $shipping += $item->getPrice();
+            }
+        }
+
+        return TaxCalculator::totalPlusTax($shipping, $taxRate);
+    }
+
+    /**
+     * @return int
+     */
+    public function getTax()
+    {
+        $tax = 0;
+        foreach ($this->getUniqueItems() as $item)
+        {
+            $tax += TaxCalculator::totalPlusTax($item->price, $item->taxRate);
+        }
+
+        return $tax + $this->getShippingTax();
+    }
+
+    /**
      * @return string
      */
     public function getShippingType()

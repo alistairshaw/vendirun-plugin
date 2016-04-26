@@ -18053,21 +18053,77 @@ $.extend($.fn, {
 }));
 var apiManager = {
 
-    makeCall: function(entity, action) {
-        this.getEndpoints(function(response) {
-            $.each(response, function(val) {
-                console.log(val);
-            });
+    makeCall: function (entity, action, params, callback, errorHandler) {
+        this.resolveEndpoint(entity, action, params, function (final) {
+            callback(final);
+        }, function(error) {
+            if (errorHandler != undefined) errorHandler(error);
         });
     },
 
-    getEndpoints: function(callback) {
-        $.get('/api', function(response) {
+    callEndPoint: function (endpoint, params, callback) {
+        // replace params in url if necessary
+        $.each(params, function(index, val) {
+            endpoint.endpoint = endpoint.endpoint.replace('*' + index + '*', val);
+        });
+
+        $.post(endpoint.endpoint, params, function(response) {
+            callback(response);
+        }, 'json');
+    },
+
+    resolveEndpoint: function (entity, action, params, callback, error) {
+        var _this = this;
+        this.getEndpoints(function (response) {
+            var ok = false;
+            $.each(response.data, function (index, val) {
+                if (index == entity) {
+                    $.each(val, function (index, endpoint) {
+                        if (index == action) {
+                            _this.callEndPoint(endpoint, params, callback);
+                            ok = true;
+                        }
+                    });
+                }
+            });
+            if (!ok) {
+                error('No valid endpoint found for ' + entity + '/' + action);
+                sessionStorage.apiEndPoints = null; // in case the reason no endpoint found is because of cached values
+            }
+        });
+    },
+
+    getEndpoints: function (callback) {
+        if (sessionStorage.apiEndPoints) {
+            var sessionObject = JSON.parse(sessionStorage.apiEndPoints);
+            if (sessionObject && sessionObject.when && parseInt(new Date(sessionObject.when).getTime()) + 3000 > parseInt(new Date().getTime())) {
+                callback(sessionObject.data);
+                return true;
+            }
+        }
+
+        $.get('/api', function (response) {
+            sessionStorage.apiEndPoints = JSON.stringify({
+                when: new Date(),
+                data: response
+            });
             callback(response);
         }, 'json');
     }
 
 };
+$(document).ready(function () {
+
+    var resultsUrlManager = new urlManager();
+
+    $('#limit').on('change', function () {
+        resultsUrlManager.addParameterToUrl('limit', $(this).val());
+    });
+
+    $('#order_by').on('change', function() {
+        resultsUrlManager.addParameterToUrl('order_by', $(this).val());
+    });
+});
 $(window).load(function () {
 	$('.property-slide-show').nivoSlider({
 		manualAdvance: true,
@@ -18324,18 +18380,6 @@ $(document).ready(function() {
 });
 
 
-$(document).ready(function () {
-
-    var propertyResultsUrlManager = new urlManager();
-
-    $('#limit').on('change', function () {
-        propertyResultsUrlManager.addParameterToUrl('limit', $(this).val());
-    });
-
-    $('#order_by').on('change', function() {
-        propertyResultsUrlManager.addParameterToUrl('order_by', $(this).val());
-    });
-});
 (function(d, s, id) {
     var js, fjs = d.getElementsByTagName(s)[0];
     if (d.getElementById(id)) return;
@@ -18369,23 +18413,71 @@ var stripeManager = function($form) {
         }
     }.init($form);
 };
-var shippingCalculator = function() {
+var shippingCalculator = function(button) {
     return {
 
         shipping: null,
 
-        init: function() {
-            this.getShipping();
+        $button: null,
+
+        buttonSettings: {},
+
+        init: function($button) {
+            this.$button = $button;
+            this.startProcess();
+            this.updateShipping();
             return this;
         },
 
-        getShipping: function() {
+        startProcess: function() {
+            this.buttonSettings = {
+                'html': this.$button.html(),
+                'val': this.$button.val(),
+                'width': this.$button.width()
+            };
+            this.$button.attr('disabled', true).addClass('disabled').html('<i class="fa fa-spinner"></i>').val('...').width(this.buttonSettings.width + 'px');
+            $('.js-display-shipping').html('<i class="fa fa-spinner fa-spin"></i>');
+            $('.js-one-shipping-type').addClass('hidden');
+            $('.js-multiple-shipping-types').addClass('hidden');
+        },
+
+        endProcess: function() {
+            this.$button.attr('disabled', false).removeClass('disabled').html(this.buttonSettings.html).val(this.buttonSettings.val);
+        },
+
+        updateShipping: function() {
             var _this = this;
             _this.shipping = $('.js-current-shipping').html();
-            console.log("Making Call");
-            apiManager.makeCall('shipping', 'calculate');
+            var params = {
+                countryId: $('#shippingcountryId').val(),
+                shippingTypeId: $('#shippingTypeId').val()
+            };
+            apiManager.makeCall('shipping', 'calculate', params, function(response) {
+                _this.endProcess();
+                $('.js-display-total').html(response.data.totals.displayTotal);
+                $('.js-tax').html(response.data.totals.tax);
+                $('.js-display-shipping').html(response.data.totals.displayShipping);
+                $('.js-total').html(response.data.totals.total);
+                $('.js-total-before-tax').html(response.data.totals.totalBeforeTax);
+                $('.js-shipping-before-tax').html(response.data.totals.shippingBeforeTax);
+
+                var $one = $('.js-one-shipping-type');
+                var $multiple = $('.js-multiple-shipping-types');
+                if (response.data.availableShippingTypes.length <= 1) {
+                    $one.removeClass('hidden').html(response.data.shippingTypeId);
+                }
+                else {
+                    var options = '';
+                    $.each(response.data.availableShippingTypes, function(index, val) {
+                        options += '<option value="' + val + '"';
+                        if (val == response.data.shippingTypeId) options += ' selected';
+                        options += '>' + val + '</option>';
+                    });
+                    $multiple.removeClass('hidden').html(options);
+                }
+            });
         }
-    }.init();
+    }.init(button);
 };
 var checkoutManager = function () {
     return {
@@ -18412,6 +18504,7 @@ var checkoutManager = function () {
                 $('.js-stripe-option').removeClass('hidden');
                 $('#paymentOptionStripe').prop('checked', true);
                 $('#paymentOptionPaypal').prop('checked', false);
+                $('.js-paypal-logo').addClass('hidden');
             }
         },
 
@@ -18419,6 +18512,19 @@ var checkoutManager = function () {
             var _this = this;
             var $form = $('.js-checkout-payment-form');
             $form.validate();
+
+            // add rules for form fields
+            $('#emailAddress').rules('add', { required: true, email: true });
+            $('#fullName').rules('add', { required: true });
+            if ($('#shippingaddress1').length) {
+                $('#shippingaddress1').rules('add', { required: true });
+                $('#shippingcity').rules('add', { required: true });
+                $('#shippingpostcode').rules('add', { required: true });
+                $('#billingaddress1').rules('add', { required: true });
+                $('#billingcity').rules('add', { required: true });
+                $('#billingpostcode').rules('add', { required: true });
+            }
+
             $form.on('submit', function (e) {
                 e.preventDefault();
                 var $form = $(this);
@@ -18450,7 +18556,13 @@ var checkoutManager = function () {
         setupRecalculateShipping: function () {
             $('.js-recalculate-shipping-button').on('click', function (e) {
                 e.preventDefault();
-                shippingCalculator();
+                shippingCalculator($(this));
+            }).addClass('hidden');
+            $('#shippingcountryId').on('change', function() {
+                shippingCalculator($('.js-recalculate-shipping-button'));
+            });
+            $('.js-multiple-shipping-types').on('change', function() {
+                shippingCalculator($('.js-recalculate-shipping-button'));
             });
         },
 
@@ -18459,8 +18571,10 @@ var checkoutManager = function () {
             var $form = $('.js-stripe-form');
             $('input[type=radio][name=paymentOption]').on('change', function () {
                 _this.paymentType = $(this).val();
+                $('.js-paypal-logo').removeClass('hidden');
                 $form.removeClass('hidden');
                 if (_this.paymentType !== 'stripe') $form.addClass('hidden');
+                if (_this.paymentType !== 'paypal') $('.js-paypal-logo').addClass('hidden');
             });
         },
 
@@ -18482,6 +18596,57 @@ var checkoutManager = function () {
 
 $(document).ready(function () {
     if ($('.js-checkout-payment-form').length) checkoutManager();
+});
+var variationPicker = function($container) {
+    return {
+
+        $container: null,
+
+        availableSizes: [],
+
+        availableColors: [],
+
+        availableTypes: [],
+
+        selectedVariationId: null,
+
+        /**
+         * @param $container jQuery object
+         */
+        init: function($container) {
+            this.$container = $container;
+            if (this.getInitialSettingsFromForm()) {
+                this.loadProductVariations();
+            }
+        },
+
+        /**
+         * @return boolean false if this product has no variations
+         */
+        getInitialSettingsFromForm: function() {
+            if ($('#noVariations').val() == 1) {
+                this.$container.html('');
+                return false;
+            }
+
+            this.availableSizes = JSON.parse($('#availableSizes').val());
+            this.availableColors = JSON.parse($('#availableColors').val());
+            this.availableTypes = JSON.parse($('#availableTypes').val());
+
+            this.selectedVariationId = $('#productVariationId').val();
+
+            return true;
+        },
+
+        loadProductVariations: function() {
+            apiManager.makeCall('product', 'variations', { productId: $('#productId').val() }, function(response) {
+                console.log(response);
+            });
+        }
+    }.init($container)
+};
+$(document).ready(function() {
+     if ($('.js-variation-choice').length) variationPicker($('.js-variation-choice'));
 });
 $(document).ready(function () {
 

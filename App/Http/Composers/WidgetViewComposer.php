@@ -40,10 +40,10 @@ class WidgetViewComposer {
         // get page title, description and image
         switch (true)
         {
-            case (isset($viewData['product'])):
-                $pageTitle = $viewData['product']->product_name;
-                $pageText = $viewData['product']->short_description;
-                $pageImage = $viewData['product']->images{0}->mediumsq;
+            case (isset($viewData['productDisplay'])):
+                $pageTitle = $viewData['productDisplay']['productName'];
+                $pageText = $viewData['productDisplay']['shortDescription'];
+                $pageImage = $viewData['productDisplay']['images'][0]->mediumsq;
                 break;
             default:
                 $pageTitle = '';

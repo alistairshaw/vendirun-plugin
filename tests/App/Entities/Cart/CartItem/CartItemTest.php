@@ -131,7 +131,21 @@ class CartItemTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals(36540, $cartItem->total());
     }
 
-    private function makeCartItem($price = 100, $quantity = 3, $priceIncludesTax = true)
+    /**
+     * When shipping is not available, shipping price returns null
+     *    and so should all the other shipping related functions, to
+     *    indicate shipping not available
+     */
+    public function testNullShipping()
+    {
+        $cartItem = $this->makeCartItem(10100, 3, true, null, null);
+        $this->assertNull($cartItem->shipping());
+        $this->assertNull($cartItem->shippingBeforeTax());
+        $this->assertNull($cartItem->shippingTax());
+        $this->assertNull($cartItem->displayShipping());
+    }
+
+    private function makeCartItem($price = 100, $quantity = 3, $priceIncludesTax = true, $shippingPrice = 50, $shippingTaxRate = 20.0)
     {
         return new CartItem([
             'productVariationId' => 55,
@@ -140,8 +154,8 @@ class CartItemTest extends \PHPUnit_Framework_TestCase {
             'productVariation' => [],
             'product' => [],
             'basePrice' => $price,
-            'shippingPrice' => 50,
-            'shippingTaxRate' => 20.0,
+            'shippingPrice' => $shippingPrice,
+            'shippingTaxRate' => $shippingTaxRate,
             'priceIncludesTax' => $priceIncludesTax
         ]);
     }

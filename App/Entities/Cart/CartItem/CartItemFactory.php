@@ -3,6 +3,7 @@
 use AlistairShaw\Vendirun\App\Entities\Cart\CartRepository;
 use AlistairShaw\Vendirun\App\Entities\Cart\Helpers\ShippingCalculator;
 use AlistairShaw\Vendirun\App\Entities\Cart\Helpers\TaxCalculator;
+use AlistairShaw\Vendirun\App\Entities\Product\ProductFactory;
 use Config;
 
 class CartItemFactory {
@@ -49,12 +50,13 @@ class CartItemFactory {
 
         $shippingPrice = ShippingCalculator::shippingForItem($product->shipping, 1, $this->countryId, $this->shippingType);
 
+        $productFactory = new ProductFactory();
+
         $params = [
             'productVariationId' => $productVariation->id,
             'quantity' => $quantity,
             'taxRate' => $taxRate,
-            'productVariation' => $productVariation,
-            'product' => $product,
+            'product' => $productFactory->fromApi($product),
             'basePrice' => $productVariation->price,
             'shippingPrice' => $shippingPrice,
             'shippingTaxRate' => $taxRate,

@@ -38,4 +38,15 @@ class ClientHelper {
         return (object)$data;
     }
 
+    public static function getValidLocales()
+    {
+        $clientInfo = static::getClientInfo();
+        $final = [];
+        foreach ($clientInfo->additional_languages as $language)
+        {
+            $final[] = $language->language_code;
+        }
+        return $final;
+    }
+
 }

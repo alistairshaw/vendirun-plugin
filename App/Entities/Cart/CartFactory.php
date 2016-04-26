@@ -64,7 +64,7 @@ class CartFactory {
             'availableShippingTypes' => $availableShippingTypes,
         ];
 
-        return new Cart($this->cartRepository, $params);
+        return new Cart($params);
     }
 
 }

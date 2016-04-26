@@ -75,12 +75,15 @@ class VendirunServiceProvider extends ServiceProvider {
         $this->app->bind('AlistairShaw\Vendirun\App\Entities\Order\OrderRepository', 'AlistairShaw\Vendirun\App\Entities\Order\ApiOrderRepository');
         $this->app->bind('AlistairShaw\Vendirun\App\Entities\Customer\CustomerRepository', 'AlistairShaw\Vendirun\App\Entities\Customer\ApiCustomerRepository');
         $this->app->bind('AlistairShaw\Vendirun\App\Entities\Order\Payment\PaymentRepository', 'AlistairShaw\Vendirun\App\Entities\Order\Payment\ApiPaymentRepository');
+        $this->app->bind('AlistairShaw\Vendirun\App\Entities\Product\ProductRepository', 'AlistairShaw\Vendirun\App\Entities\Product\ApiProductRepository');
+        $this->app->bind('AlistairShaw\Vendirun\App\Entities\Product\ProductCategory\ProductCategoryRepository', 'AlistairShaw\Vendirun\App\Entities\Product\ProductCategory\ApiProductCategoryRepository');
 
 		// aliases
 		$loader = AliasLoader::getInstance();
 		$loader->alias('LocaleHelper', 'AlistairShaw\Vendirun\App\Lib\LocaleHelper');
 		$loader->alias('CurrencyHelper', 'AlistairShaw\Vendirun\App\Lib\CurrencyHelper');
 		$loader->alias('CountryHelper', 'AlistairShaw\Vendirun\App\Lib\CountryHelper');
+		$loader->alias('ClientHelper', 'AlistairShaw\Vendirun\App\Lib\ClientHelper');
 		$loader->alias('TaxCalculator', 'AlistairShaw\Vendirun\App\Entities\Cart\Helpers\TaxCalculator');
 		$loader->alias('CustomerHelper', 'AlistairShaw\Vendirun\App\Entities\Customer\Helpers\CustomerHelper');
 	}

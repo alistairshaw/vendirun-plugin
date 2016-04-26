@@ -18,28 +18,14 @@ abstract class AbstractPaymentGateway implements PaymentGateway {
     protected $paymentRepository;
 
     /**
-     * @var Cart
-     */
-    protected $cart;
-
-    /**
-     * @var CartRepository
-     */
-    protected $cartRepository;
-
-    /**
      * AbstractPaymentGateway constructor.
      * @param Order             $order
-     * @param Cart              $cart
-     * @param CartRepository    $cartRepository
      * @param PaymentRepository $paymentRepository
      */
-    public function __construct(Order $order, Cart $cart = null, CartRepository $cartRepository = null, PaymentRepository $paymentRepository = null)
+    public function __construct(Order $order, PaymentRepository $paymentRepository = null)
     {
         $this->order = $order;
         $this->paymentRepository = $paymentRepository;
-        $this->cart = $cart;
-        $this->cartRepository = $cartRepository;
     }
 
     /**

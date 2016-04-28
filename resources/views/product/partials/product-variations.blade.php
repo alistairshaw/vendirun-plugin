@@ -16,4 +16,4 @@
         </ul>
     @endif
 </div>
-<input type="text" id="productVariationId" name="productVariationId" value="{{ $selectedVariation->getId() }}">
+<input type="hidden" id="productVariationId" name="productVariationId" value="{{ $selectedVariation->getId() }}">

@@ -1,21 +1,17 @@
 <?php namespace AlistairShaw\Vendirun\App\Http\Controllers\Api;
 
-use AlistairShaw\Vendirun\App\Lib\VendirunApi\VendirunApi;
+use AlistairShaw\Vendirun\App\Entities\Product\ProductRepository;
 
 class ProductController extends ApiBaseController {
 
     /**
-     * @param $productId
+     * @param ProductRepository $productRepository
+     * @param                   $productId
      * @return array
      */
-    public function getVariations($productId)
+    public function find(ProductRepository $productRepository, $productId)
     {
-        $searchParams = [
-            'id' => $productId
-        ];
-        $product = VendirunApi::makeRequest('product/product', $searchParams)->getData();
-
-        return $this->respond(true, $product);
+        return $this->respond(true, $productRepository->find($productId)->getDisplayArray());
     }
 
 }

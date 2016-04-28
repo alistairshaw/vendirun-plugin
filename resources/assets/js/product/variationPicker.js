@@ -25,7 +25,9 @@ var typePicker = function (variations) {
                 if (variationTypes.indexOf(variation.type) == -1) variationTypes.push(variation.type);
             });
             $.each(variationTypes, function (index, type) {
-                html += _this.typeTemplate(type);
+                if (type !== '') {
+                    html += _this.typeTemplate(type);
+                }
             });
             html += '</ul>';
             _this.html = html;
@@ -105,7 +107,9 @@ var sizePicker = function (variations) {
                 if (variationTypes.indexOf(variation.size) == -1) variationTypes.push(variation.size);
             });
             $.each(variationTypes, function (index, size) {
-                html += _this.sizeTemplate(size);
+                if (size !== '') {
+                    html += _this.sizeTemplate(size);
+                }
             });
             html += '</ul>';
             _this.html = html;
@@ -192,7 +196,9 @@ var colorPicker = function (variations) {
                 }
             });
             $.each(variationColors, function (index, color) {
-                html += _this.colorTemplate(color);
+                if (color.color !== '') {
+                    html += _this.colorTemplate(color);
+                }
             });
             html += '</ul>';
             _this.html = html;
@@ -300,7 +306,6 @@ var variationPicker = function ($container) {
         loadProduct: function () {
             var _this = this;
             apiManager.makeCall('product', 'find', {productId: $('#productId').val()}, function (response) {
-                console.log(response.data);
                 _this.product = response.data;
                 _this.buildVariationPicker();
             });
@@ -324,7 +329,7 @@ var variationPicker = function ($container) {
 
             // select the initial variation based on form
             var initialFound = false;
-            $.each(_this.product.variations, function(index, variation) {
+            $.each(_this.product.variations, function (index, variation) {
                 if (variation.id == $('#productVariationId').val()) {
                     initialFound = true;
                     _this.variationBuild(variation);
@@ -379,13 +384,60 @@ var variationPicker = function ($container) {
             _this.typePicker.activateType(variation.type);
             _this.sizePicker.activateSize(variation.size);
 
+            _this.manipulateImages();
             _this.markUnavailable();
+        },
+
+        /**
+         * Move the images in the slider so only the selected variation
+         *      images are shown
+         */
+        manipulateImages: function () {
+            var _this = this;
+            $('.js-product-slide-show').replaceWith('<ul class="product-slide-show js-product-slide-show"></ul>');
+            $('.nivo-controlNav').remove();
+
+            $.each(this.product.images, function (index, image) {
+                if (!image.variations) {
+                    $('.js-product-slide-show').append(_this.imageSlide(image.mediumsq, image.thumbnailsq, '#', image.hdsq));
+                }
+                else {
+                    var variationArray = image.variations.split(',');
+                    $.each(variationArray, function (index, variationId) {
+                        if (variationId == _this.selectedVariationId) $('.js-product-slide-show').append(_this.imageSlide(image.mediumsq, image.thumbnailsq, '#', image.hdsq));
+                    });
+                }
+            });
+
+            $('.js-product-slide-show').nivoSlider({
+                manualAdvance: true,
+                prevText: '',
+                nextText: '',
+                controlNav: true,
+                controlNavThumbs: true,
+                effect: 'slideInRight',
+                animSpeed: 200
+            }).magnifier();
+        },
+
+        /**
+         * Image slide template
+         * @param src
+         * @param thumb
+         * @param url
+         * @param original
+         * @returns {string}
+         */
+        imageSlide: function (src, thumb, url, original) {
+            return '<a href="' + url + '">' +
+                '<img src="' + src + '" class="img-responsive" data-thumb="' + thumb + '" data-original="' + original + '">' +
+                '</a>';
         },
 
         /**
          * Go through each setting and mark the unavailable combinations
          */
-        markUnavailable: function() {
+        markUnavailable: function () {
             this.typesMarkUnavailable();
             this.colorsMarkUnavailable();
             this.sizesMarkUnavailable();
@@ -408,14 +460,14 @@ var variationPicker = function ($container) {
                 ) {
                     // it's a match, remove from typesToRemove if it's there
                     var newArray = [];
-                    $.each(typesToRemove, function(index, val) {
+                    $.each(typesToRemove, function (index, val) {
                         if (val !== variation.type) newArray.push(val);
                     });
                     typesToRemove = newArray;
                 }
             });
 
-            $.each(typesToRemove, function(index, val) {
+            $.each(typesToRemove, function (index, val) {
                 _this.typePicker.deactivate(val);
             });
         },
@@ -437,14 +489,14 @@ var variationPicker = function ($container) {
                 ) {
                     // it's a match, remove from colorsToRemove if it's there
                     var newArray = [];
-                    $.each(colorsToRemove, function(index, val) {
+                    $.each(colorsToRemove, function (index, val) {
                         if (val !== variation.color) newArray.push(val);
                     });
                     colorsToRemove = newArray;
                 }
             });
 
-            $.each(colorsToRemove, function(index, val) {
+            $.each(colorsToRemove, function (index, val) {
                 _this.colorPicker.deactivate(val);
             });
         },
@@ -466,14 +518,14 @@ var variationPicker = function ($container) {
                 ) {
                     // it's a match, remove from sizesToRemove if it's there
                     var newArray = [];
-                    $.each(sizesToRemove, function(index, val) {
+                    $.each(sizesToRemove, function (index, val) {
                         if (val !== variation.size) newArray.push(val);
                     });
                     sizesToRemove = newArray;
                 }
             });
 
-            $.each(sizesToRemove, function(index, val) {
+            $.each(sizesToRemove, function (index, val) {
                 _this.sizePicker.deactivate(val);
             });
         },

@@ -3,36 +3,20 @@
 interface CartRepository {
 
     /**
-     * @param $id
-     * @return mixed
+     * @param Cart $cart
+     * @return Cart
      */
-    public function add($id);
+    public function save($cart);
 
     /**
-     * @param $id
-     * @return mixed
+     * @return Cart
      */
-    public function remove($id);
+    public function find();
 
     /**
-     * @param $items
-     * @return bool
-     */
-    public function saveCart($items);
-
-    /**
+     * @param array $items
      * @return array
      */
-    public function getCart();
-
-    /**
-     * @return object
-     */
-    public function getProducts();
-
-    /**
-     * @return bool
-     */
-    public function clear();
+    public function getProducts($items);
 
 }

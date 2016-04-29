@@ -27,4 +27,15 @@ class ApiProductRepository implements ProductRepository {
         $productSearchResultFactory = new ProductSearchResultFactory();
         return $productSearchResultFactory->fromApi(VendirunApi::makeRequest('product/search', $searchParams)->getData());
     }
+
+    /**
+     * @param $productVariationId
+     * @return mixed
+     */
+    public function findByVariationId($productVariationId)
+    {
+        $searchParams['product_variation_id'] = $productVariationId;
+        $productFactory = new ProductFactory();
+        return $productFactory->fromApi(VendirunApi::makeRequest('product/product', $searchParams)->getData());
+    }
 }

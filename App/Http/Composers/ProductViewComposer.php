@@ -117,8 +117,8 @@ class ProductViewComposer {
         $viewData = $view->getData();
         if (!isset($viewData['cart']))
         {
-            $cartFactory = new CartFactory(App::make('AlistairShaw\Vendirun\App\Entities\Cart\CartRepository'));
-            $view->with('cart', $cartFactory->make());
+            $cartRepository = App::make('AlistairShaw\Vendirun\App\Entities\Cart\CartRepository');
+            $view->with('cart', $cartRepository->find());
         }
     }
 }

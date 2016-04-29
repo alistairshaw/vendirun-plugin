@@ -8,15 +8,15 @@ var apiManager = {
         });
     },
 
-    callEndPoint: function (endpoint, params, callback) {
+    callEndPoint: function (endpoint, params, callback, error) {
         // replace params in the url if necessary
-        var finalParams = [];
+        var finalParams = {};
         $.each(params, function(index, val) {
             if (endpoint.endpoint.indexOf('*' + index + '*') !== -1) {
                 endpoint.endpoint = endpoint.endpoint.replace('*' + index + '*', val);
             }
             else {
-                finalParams['index'] = val;
+                finalParams[index] = val;
             }
         });
 
@@ -29,11 +29,11 @@ var apiManager = {
                 callback(response);
             },
             error: function(response) {
-                console.log('Error with API Endpoint', endpoint, response);
+                error('Error with API Endpoint', endpoint, response);
             },
             statusCode: {
                 404: function() {
-                    console.log('API 404: ' + endpoint.endpoint)
+                    error('API 404: ' + endpoint.endpoint)
                 }
             }
         });
@@ -47,14 +47,14 @@ var apiManager = {
                 if (index == entity) {
                     $.each(val, function (index, endpoint) {
                         if (index == action) {
-                            _this.callEndPoint(endpoint, params, callback);
+                            _this.callEndPoint(endpoint, params, callback, error);
                             ok = true;
                         }
                     });
                 }
             });
             if (!ok) {
-                console.log('No valid endpoint found for ' + entity + '/' + action);
+                error('No valid endpoint found for ' + entity + '/' + action);
                 sessionStorage.apiEndPoints = null; // in case the reason no endpoint found is because of cached values
             }
         });

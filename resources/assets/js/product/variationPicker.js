@@ -253,13 +253,18 @@ var colorPicker = function (variations) {
     }.init(variations);
 };
 
-var variationPicker = function ($container) {
+var variationPicker = function ($container, productId, renderCallback) {
     return {
 
         /**
          * jQuery container object
          */
         $container: null,
+
+        /**
+         * product ID
+         */
+        productId: 0,
 
         /**
          * Currently selected variation ID
@@ -270,6 +275,11 @@ var variationPicker = function ($container) {
          * @property variations
          */
         product: null,
+
+        /**
+         * Function to call once variation picker has rendered
+         */
+        renderCallback: null,
 
         /**
          * HTML to show while picker is loading
@@ -293,10 +303,13 @@ var variationPicker = function ($container) {
 
         /**
          * @param $container jQuery object
+         * @param productId
          */
-        init: function ($container) {
+        init: function ($container, productId, renderCallback) {
             this.$container = $container.html(this.loadingSpinner);
             this.selectedVariationId = $('#productVariationId').val();
+            this.productId = productId ? productId : $('#productId').val();
+            this.renderCallback = renderCallback;
             this.loadProduct();
         },
 
@@ -305,7 +318,7 @@ var variationPicker = function ($container) {
          */
         loadProduct: function () {
             var _this = this;
-            apiManager.makeCall('product', 'find', {productId: $('#productId').val()}, function (response) {
+            apiManager.makeCall('product', 'find', {productId: _this.productId}, function (response) {
                 _this.product = response.data;
                 _this.buildVariationPicker();
             });
@@ -337,6 +350,8 @@ var variationPicker = function ($container) {
             });
 
             if (!initialFound) _this.variationBuild(_this.product.variations[0]);
+
+            _this.renderCallback();
         },
 
         /**
@@ -530,5 +545,5 @@ var variationPicker = function ($container) {
             });
         },
 
-    }.init($container)
+    }.init($container, productId, renderCallback)
 };

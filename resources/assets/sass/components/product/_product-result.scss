@@ -75,5 +75,11 @@
         .btn {
             width: 37px;
         }
+        .item-in-cart {
+            border-color: $alert-info-text;
+            border-width: 2px;
+            color: $alert-info-text;
+            font-weight: 600;
+        }
     }
 }

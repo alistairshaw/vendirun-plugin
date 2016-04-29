@@ -1,6 +1,5 @@
 <?php namespace AlistairShaw\Vendirun\App\Http\Controllers\Checkout;
 
-use AlistairShaw\Vendirun\App\Entities\Cart\CartFactory;
 use AlistairShaw\Vendirun\App\Entities\Cart\CartRepository;
 use AlistairShaw\Vendirun\App\Entities\Customer\CustomerFactory;
 use AlistairShaw\Vendirun\App\Entities\Customer\CustomerRepository;
@@ -39,10 +38,13 @@ class CheckoutController extends VendirunBaseController {
         if ($data['defaultAddress']) $countryId = $data['defaultAddress']->getCountryId();
         if (Request::old('shippingaddressId')) $countryId = $data['customer']->getAddressFromAddressId(Request::old('shippingaddressId'))->getCountryId();
 
-        $cartFactory = new CartFactory($cartRepository);
-        $data['cart'] = $cartFactory->make($countryId, Request::get('shippingType', NULL));
+        $cart = $cartRepository->find();
+        $cart->setCountryId($countryId);
+        if (Request::get('shippingTypeId')) $cart->setShippingType(Request::get('shippingTypeId'));
+
+        $data['cart'] = $cart;
         $data['paymentGateways'] = ClientHelper::getPaymentGatewayInfo();
-        $data['displayTotals'] = $data['cart']->getFormattedTotals();
+        $data['displayTotals'] = $cart->getFormattedTotals();
 
         return View::make('vendirun::checkout.checkout', $data);
     }
@@ -89,8 +91,9 @@ class CheckoutController extends VendirunBaseController {
         $countryId = $shippingAddress ? $shippingAddress->getCountryId() : $request->get('shippingcountryId');
 
         // construct the cart
-        $cartFactory = new CartFactory($cartRepository);
-        $cart = $cartFactory->make($countryId, Request::input('shippingType', NULL));
+        $cart = $cartRepository->find();
+        $cart->setCountryId($countryId);
+        if (Request::get('shippingType')) $cart->setShippingType(Request::get('shippingType'));
 
         // if cart is empty go back to main checkout page
         if ($cart->count() == 0) return Redirect::back()->with('paymentError', 'No items in your cart')->withInput();
@@ -124,12 +127,12 @@ class CheckoutController extends VendirunBaseController {
         try
         {
             $redirectTo = $paymentGateway->takePayment();
-            $cartRepository->clear();
+            $cart->clear();
+            $cartRepository->save($cart);
             if ($redirectTo) return Redirect::to($redirectTo);
         }
         catch (\Exception $e)
         {
-            //dd($e);
             return Redirect::back()->with('paymentError', $e->getMessage())->withInput();
         }
 

@@ -20,6 +20,26 @@ class HomeController extends ApiBaseController {
                     'optionalParameters' => [
                         'shippingType' => 'string'
                     ]
+                ],
+                'add' => [
+                    'method' => 'POST',
+                    'endpoint' => route(LocaleHelper::localePrefix() . 'vendirun.api.cart.add'),
+                    'requiredParameters' => [
+                        'productVariationId' => 'int'
+                    ],
+                    'optionalParameters' => [
+                        'quantity' => 'int'
+                    ]
+                ],
+                'remove' => [
+                    'method' => 'POST',
+                    'endpoint' => route(LocaleHelper::localePrefix() . 'vendirun.api.cart.remove'),
+                    'requiredParameters' => [
+                        'productVariationId' => 'int'
+                    ],
+                    'optionalParameters' => [
+                        'quantity' => 'int'
+                    ]
                 ]
             ],
             'product' => [

@@ -22,6 +22,7 @@ return [
     'favourites' => 'My Wishlist',
     'sendProductToFriend' => 'Share with a Friend',
     'addToCart' => 'Add to Cart',
+    'viewCart' => 'View Cart',
     'cart' => 'Shopping Cart',
     'checkout' => 'Check Out',
     'totalCartAmount' => 'Cart Total',

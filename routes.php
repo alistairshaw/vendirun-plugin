@@ -1,6 +1,6 @@
 <?php
 
-Route::group(['middleware' => ['api', 'web']], function ()
+Route::group(['middleware' => ['web']], function ()
 {
     foreach (array_merge([''], ClientHelper::getValidLocales()) as $locale)
     {
@@ -9,6 +9,8 @@ Route::group(['middleware' => ['api', 'web']], function ()
             $localePrefix = $locale ? $locale . '.' : '';
             Route::get('/', ['as' => $localePrefix . 'vendirun.api.base', 'uses' => 'HomeController@index']);
             Route::get('cart/calculate', ['as' => $localePrefix . 'vendirun.api.cart.calculate', 'uses' => 'CartController@calculate']);
+            Route::post('cart/add', ['as' => $localePrefix . 'vendirun.api.cart.add', 'uses' => 'CartController@add']);
+            Route::post('cart/remove', ['as' => $localePrefix . 'vendirun.api.cart.remove', 'uses' => 'CartController@remove']);
             Route::get('product/{productId}', ['as' => $localePrefix . 'vendirun.api.product.find', 'uses' => 'ProductController@find']);
         });
     }

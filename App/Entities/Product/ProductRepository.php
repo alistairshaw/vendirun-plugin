@@ -17,4 +17,10 @@ interface ProductRepository {
      */
     public function search($searchParams);
 
+    /**
+     * @param $productVariationId
+     * @return mixed
+     */
+    public function findByVariationId($productVariationId);
+
 }

@@ -3,8 +3,9 @@
 use AlistairShaw\Vendirun\App\Entities\Cart\CartRepository;
 use AlistairShaw\Vendirun\App\Entities\Cart\Helpers\ShippingCalculator;
 use AlistairShaw\Vendirun\App\Entities\Cart\Helpers\TaxCalculator;
+use AlistairShaw\Vendirun\App\Entities\Product\Product;
 use AlistairShaw\Vendirun\App\Entities\Product\ProductFactory;
-use Config;
+use AlistairShaw\Vendirun\App\Entities\Product\ProductVariation\ProductVariation;
 
 class CartItemFactory {
 
@@ -37,27 +38,26 @@ class CartItemFactory {
     }
 
     /**
-     * @param     $product
-     * @param     $priceIncludesTax
-     * @param int $quantity
+     * @param Product $product
+     * @param         $priceIncludesTax
+     * @param int     $quantity
      * @return CartItem
      */
-    public function make($product, $priceIncludesTax, $quantity = 1)
+    public function make(Product $product, $priceIncludesTax, $quantity = 1)
     {
-        $productVariation = $product->variations{0};
+        $variations = $product->getVariations();
+        $productVariation = $variations[0];
 
-        $taxRate = TaxCalculator::calculateProductTaxRate($product->tax, $this->countryId);
+        $taxRate = TaxCalculator::calculateProductTaxRate($product->getTax(), $this->countryId);
+        $shippingPrice = ShippingCalculator::shippingForItem($product->getShipping(), 1, $this->countryId, $this->shippingType);
 
-        $shippingPrice = ShippingCalculator::shippingForItem($product->shipping, 1, $this->countryId, $this->shippingType);
-
-        $productFactory = new ProductFactory();
-
+        /* @var $productVariation ProductVariation */
         $params = [
-            'productVariationId' => $productVariation->id,
+            'productVariationId' => $productVariation->getId(),
             'quantity' => $quantity,
             'taxRate' => $taxRate,
-            'product' => $productFactory->fromApi($product),
-            'basePrice' => $productVariation->price,
+            'product' => $product,
+            'basePrice' => $productVariation->getPrice(),
             'shippingPrice' => $shippingPrice,
             'shippingTaxRate' => $taxRate,
             'priceIncludesTax' => $priceIncludesTax
@@ -67,19 +67,23 @@ class CartItemFactory {
     }
 
     /**
-     * @param bool  $priceIncludesTax
+     * @param      $items
+     * @param bool $priceIncludesTax
      * @return array
      */
-    public function makeFromIds($priceIncludesTax)
+    public function makeFromIds($items, $priceIncludesTax)
     {
-        $products = $this->cartRepository->getProducts();
+        $products = $this->cartRepository->getProducts($items);
+        $productFactory = new ProductFactory();
 
         $final = [];
-        foreach ($this->getUniqueList($this->cartRepository->getCart()) as $productVariationId => $quantity)
+        foreach ($this->getUniqueList($items) as $productVariationId => $quantity)
         {
+            /** @noinspection PhpUndefinedFieldInspection */
             foreach ($products->result as $product)
             {
-                if ($product->variations{0}->id == $productVariationId) $final[] = $this->make($product, $priceIncludesTax, $quantity);
+                $vrProduct = $productFactory->fromApi($product);
+                if ($product->variations{0}->id == $productVariationId) $final[] = $this->make($vrProduct, $priceIncludesTax, $quantity);
             }
         }
 

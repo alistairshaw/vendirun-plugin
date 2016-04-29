@@ -54,4 +54,21 @@ class ProductShippingOption {
         return (in_array($countryId, $this->countryIds) && $shippingType == $this->shippingType) ? $this->orderPrice : false;
     }
 
+    /**
+     * @param $countryId
+     * @return bool|int
+     */
+    public function matchShippingType($countryId)
+    {
+        return (in_array($countryId, $this->countryIds)) ? $this->shippingType : false;
+    }
+
+    /**
+     * @return int
+     */
+    public function getOrderPrice()
+    {
+        return $this->orderPrice;
+    }
+
 }

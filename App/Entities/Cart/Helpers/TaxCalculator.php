@@ -1,62 +1,29 @@
 <?php namespace AlistairShaw\Vendirun\App\Entities\Cart\Helpers;
 
+use AlistairShaw\Vendirun\App\Entities\Product\ProductTaxOption\ProductTaxOption;
+
 class TaxCalculator {
 
     /**
-     * @param     $tax
-     * @param     $countryId
-     * @param int $default
+     * @param array            $tax
+     * @param                  $countryId
+     * @param int              $default
      * @return int
      */
     public static function calculateProductTaxRate($tax, $countryId = NULL, $default = 0)
     {
-        foreach ($tax as $row)
+        $percentage = NULL;
+        foreach ($tax as $taxOption)
         {
-            if (!$countryId && !$row->id) return (float)$row->percentage;
-            if (in_array($countryId, (array)$row->countries)) return (float)$row->percentage;
-            if ($row->id === NULL) $default = (float)$row->percentage;
+            /* @var $taxOption ProductTaxOption */
+            if (!$countryId && $taxOption->isDefault()) $percentage = $taxOption->getPercentage();
+            if ($taxOption->getMatch($countryId)) $percentage = $taxOption->getPercentage();
+            if ($taxOption->isDefault() && $percentage === NULL) $percentage = $taxOption->getPercentage();
         }
 
-        return $default;
-    }
+        if ($percentage === NULL && $default) $percentage = $default;
 
-    /**
-     * @param $tax
-     * @param $countryId
-     * @param $price
-     * @param $quantity
-     * @return int
-     */
-    public static function calculateItemTax($tax, $countryId, $price, $quantity)
-    {
-        $taxRate = self::calculateProductTaxRate($tax, $countryId);
-
-        if (self::pricesIncludeTax($tax, $countryId))
-        {
-            return self::taxFromTotal($price, $taxRate, $quantity);
-        }
-        else
-        {
-            return self::totalPlusTax($price, $taxRate, $quantity);
-        }
-    }
-
-    /**
-     * @param      $tax
-     * @param int  $countryId
-     * @return bool
-     */
-    private static function pricesIncludeTax($tax, $countryId = NULL)
-    {
-        $default = true;
-        foreach ($tax as $row)
-        {
-            if (!$countryId && !$row->id) return (bool)$row->price_includes_tax;
-            if (in_array($countryId, (array)$row->countries)) return (bool)$row->price_includes_tax;
-            if ($row->id === NULL) $default = (float)$row->price_includes_tax;
-        }
-
-        return $default;
+        return $percentage;
     }
 
     /**

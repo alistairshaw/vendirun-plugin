@@ -52,7 +52,10 @@ elixir(function (mix) {
         'checkout/shippingCalculator.js',
         'checkout/checkoutManager.js',
         'product/variationPicker.js',
+        'product/CartManager.js',
         'product/product-view.js',
+        'product/product-result.js',
+        'product/quantity-buttons.js',
         'main.js'
     ];
 

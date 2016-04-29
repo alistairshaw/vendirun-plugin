@@ -1,9 +1,14 @@
-<?php namespace AlistairShaw\Vendirun\App\Entities\Cart\Helpers;
+<?php
+
+namespace AlistairShaw\Vendirun\App\Entities\Cart\Helpers;
+
+use AlistairShaw\Vendirun\App\Entities\Product\Product;
+use AlistairShaw\Vendirun\App\Entities\Product\ProductShippingOption\ProductShippingOption;
 
 class ShippingCalculator {
 
     /**
-     * @param object $shipping
+     * @param array $shipping
      * @param int    $quantity
      * @param int    $countryId
      * @param string $shippingType
@@ -11,31 +16,22 @@ class ShippingCalculator {
      */
     public static function shippingForItem($shipping, $quantity = 1, $countryId = NULL, $shippingType = '')
     {
-        $hasPrices = false;
         $price = NULL;
 
         foreach ($shipping as $sh)
         {
-            if (in_array($countryId, $sh->countries))
-            {
-                $hasPrices = true;
-                if (!$shippingType) $shippingType = $sh->shipping_type;
-
-                if ($shippingType && $shippingType == $sh->shipping_type)
-                {
-                    $price = $sh->product_price;
-                }
-            }
+            /* @var $sh ProductShippingOption */
+            $price = $sh->getMatch($countryId, $shippingType);
         }
 
-        if ($hasPrices && $price === NULL && $shippingType)
+        if (!$price && $shippingType)
         {
             return self::shippingForItem($shipping, $quantity, $countryId, '');
         }
 
-        if ($price !== NULL) $price *= $quantity;
+        if ($price === false) return 0;
 
-        return $price;
+        return $price * $quantity;
     }
 
     /**
@@ -51,12 +47,11 @@ class ShippingCalculator {
         foreach ($products as $product)
         {
             $productShippingTypes = [];
-            foreach ($product->shipping as $sh)
+            /* @var $product Product */
+            foreach ($product->getShipping() as $sh)
             {
-                if (in_array($countryId, $sh->countries))
-                {
-                    $productShippingTypes[] = $sh->shipping_type;
-                }
+                /* @var $sh ProductShippingOption */
+                if ($shippingType = $sh->matchShippingType($countryId)) $productShippingTypes[] = $shippingType;
             }
 
             if (!$first)
@@ -91,15 +86,11 @@ class ShippingCalculator {
 
         foreach ($products as $product)
         {
-            foreach ($product->shipping as $sh)
+            /* @var $product Product */
+            foreach ($product->getShipping() as $sh)
             {
-                if (in_array($countryId, $sh->countries))
-                {
-                    if ($shippingType && $shippingType == $sh->shipping_type)
-                    {
-                        if ($sh->order_price > $shippingCharge) $shippingCharge = $sh->order_price;
-                    }
-                }
+                /* @var $sh ProductShippingOption */
+                if ($shippingCharge = $sh->getMatch($countryId, $shippingType)) return $shippingCharge;
             }
         }
 

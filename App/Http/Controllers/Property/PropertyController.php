@@ -10,7 +10,9 @@ use App;
 use Config;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Redirect;
+use Response;
 use Session;
+use SimpleXMLElement;
 use View;
 use Request;
 
@@ -38,6 +40,56 @@ class PropertyController extends VendirunBaseController {
         }
 
         return View::make('vendirun::property.listings.' . Config::get('vendirun.propertyListingsView'), $data);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function xml()
+    {
+        $searchParams = $this->searchParams();
+        try
+        {
+            $properties = VendirunApi::makeRequest('property/search', $searchParams)->getData();
+
+            function array_to_xml($data, &$xml_data)
+            {
+                foreach ($data as $key => $value)
+                {
+                    if (is_object($value)) $value = (array)$value;
+
+                    if (is_array($value))
+                    {
+                        if (is_numeric($key))
+                        {
+                            $key = 'item' . $key; //dealing with <0/>..<n/> issues
+                        }
+                        $subnode = $xml_data->addChild($key);
+                        array_to_xml($value, $subnode);
+                    }
+                    else
+                    {
+                        $xml_data->addChild("$key", htmlspecialchars("$value"));
+                    }
+                }
+            }
+
+            // initializing or creating array
+            $data = (array)$properties;
+
+            // creating object of SimpleXMLElement
+            $xml_data = new SimpleXMLElement('<?xml version="1.0"?><data></data>');
+
+            // function call to convert array to xml
+            array_to_xml($data, $xml_data);
+
+            return Response::make($xml_data->asXML(), '200')->header('Content-Type', 'text/xml');
+        }
+        catch (\Exception $e)
+        {
+            if (App::environment() == 'production') abort(404);
+            dd($e);
+        }
     }
 
     /**

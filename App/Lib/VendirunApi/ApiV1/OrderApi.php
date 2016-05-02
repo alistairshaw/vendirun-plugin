@@ -1,5 +1,7 @@
 <?php namespace AlistairShaw\Vendirun\App\Lib\VendirunApi\ApiV1;
 
+use AlistairShaw\Vendirun\App\Lib\VendirunApi\Exceptions\InvalidApiRequestException;
+
 class OrderApi extends BaseApi {
 
     /**
@@ -16,11 +18,29 @@ class OrderApi extends BaseApi {
     /**
      * @param array $params
      * @return array
+     * @throws InvalidApiRequestException
+     * @throws \AlistairShaw\Vendirun\App\Lib\VendirunApi\Exceptions\FailResponseException
      */
     public function store($params)
     {
+        if (isset($params['id'])) throw new InvalidApiRequestException('Only use store to save a new order, use update to update it');
+
         $url = 'order/store';
 
+        return $this->request($url, $params);
+    }
+
+    /**
+     * @param $params
+     * @return object
+     * @throws InvalidApiRequestException
+     * @throws \AlistairShaw\Vendirun\App\Lib\VendirunApi\Exceptions\FailResponseException
+     */
+    public function update($params)
+    {
+        if (!isset($params['id'])) throw new InvalidApiRequestException('Update must have an ID');
+
+        $url = 'order/update/' . $params['id'];
         return $this->request($url, $params);
     }
 

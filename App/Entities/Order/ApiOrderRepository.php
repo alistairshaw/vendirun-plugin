@@ -74,9 +74,10 @@ class ApiOrderRepository implements OrderRepository {
      */
     public function save(Order $order)
     {
+        if ($order->getId()) return $this->update($order);
+
         $products = [];
         $items = [];
-        $payments = [];
         foreach ($order->getItems() as $item)
         {
             /* @var $item OrderItem */
@@ -91,21 +92,7 @@ class ApiOrderRepository implements OrderRepository {
             ];
         }
 
-        foreach ($order->getPayments() as $payment)
-        {
-            /* @var $payment Payment */
-            $pd = $payment->getArray();
-            $payments[] = [
-                'id' => $payment->getId(),
-                'payment_amount' => $pd['amount'],
-                'payment_date' => $pd['paymentDate'],
-                'transaction_data' => $pd['transactionData'],
-                'payment_type' => $pd['paymentType']
-            ];
-        }
-
         $params = [
-            'id' => $order->getId(),
             'customer_id' => $order->getCustomer()->getId(),
             'full_name' => $order->getCustomer()->fullName(),
             'company_name' => $order->getCustomer()->getCompanyName(),
@@ -132,12 +119,53 @@ class ApiOrderRepository implements OrderRepository {
             'products' => $products,
             'shipping_type' => $order->getShippingType(),
             'items' => $items,
-            'payments' => $payments
+            'payments' => $this->compose_payments($order)
         ];
 
         $result = VendirunApi::makeRequest('order/store', $params)->getData();
 
         return $this->find($result->order_id, $result->one_time_token, false);
+    }
+
+    /**
+     * Update only sends payment details as you cannot edit anything else on an
+     *   order from the front-end
+     * @param Order $order
+     * @return Order
+     */
+    private function update(Order $order)
+    {
+        $params = [
+            'id' => $order->getId(),
+            'payments' => $this->compose_payments($order)
+        ];
+
+        $result = VendirunApi::makeRequest('order/update', $params)->getData();
+
+        return $this->find($result->order_id, false);
+    }
+
+    /**
+     * @param Order $order
+     * @return array
+     */
+    private function compose_payments(Order $order)
+    {
+        $payments = [];
+        foreach ($order->getPayments() as $payment)
+        {
+            /* @var $payment Payment */
+            $pd = $payment->getArray();
+            $payments[] = [
+                'id' => $payment->getId(),
+                'payment_amount' => $pd['amount'],
+                'payment_date' => $pd['paymentDate'],
+                'transaction_data' => $pd['transactionData'],
+                'payment_type' => $pd['paymentType']
+            ];
+        }
+
+        return $payments;
     }
 
 }

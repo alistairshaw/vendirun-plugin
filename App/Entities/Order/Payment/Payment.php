@@ -76,7 +76,7 @@ class Payment {
             case 'paypal':
                 return 'PayPal';
             default:
-                return 'Received';
+                return ucwords($this->paymentType);
         }
     }
 

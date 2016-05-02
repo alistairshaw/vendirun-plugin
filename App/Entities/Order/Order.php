@@ -1,10 +1,13 @@
 <?php namespace AlistairShaw\Vendirun\App\Entities\Order;
 
+use AlistairShaw\NameExploder\Exceptions\OrderItemNotFoundException;
 use AlistairShaw\Vendirun\App\Entities\Cart\Helpers\TaxCalculator;
 use AlistairShaw\Vendirun\App\Entities\Customer\Customer;
 use AlistairShaw\Vendirun\App\Entities\Order\OrderItem\OrderItem;
 use AlistairShaw\Vendirun\App\Entities\Order\Payment\Payment;
+use AlistairShaw\Vendirun\App\Entities\Order\Shipment\Shipment;
 use AlistairShaw\Vendirun\App\ValueObjects\Address;
+use Mockery\CountValidator\Exception;
 
 class Order {
 
@@ -37,6 +40,11 @@ class Order {
      * @var array
      */
     private $payments;
+
+    /**
+     * @var array
+     */
+    private $shipments;
 
     /**
      * @var string
@@ -75,6 +83,7 @@ class Order {
         $this->id = $id;
         $this->createdAt = $createdAt ? $createdAt : date("Y-m-d H:i:s");
         $this->payments = [];
+        $this->shipments = [];
     }
 
     /**
@@ -91,6 +100,22 @@ class Order {
     public function getPayments()
     {
         return $this->payments;
+    }
+
+    /**
+     * @param Shipment $shipment
+     */
+    public function addShipment(Shipment $shipment)
+    {
+        $this->shipments[] = $shipment;
+    }
+
+    /**
+     * @return array
+     */
+    public function getShipments()
+    {
+        return $this->shipments;
     }
 
     /**
@@ -349,6 +374,21 @@ class Order {
     public function getCreatedDate()
     {
         return $this->createdAt;
+    }
+
+    /**
+     * @param $orderItemId
+     * @return OrderItem
+     * @throws OrderItemNotFoundException
+     */
+    public function getItemById($orderItemId)
+    {
+        foreach ($this->items as $item)
+        {
+            if ($item->getId() == $orderItemId) return $item;
+        }
+
+        throw new OrderItemNotFoundException('No item found for ID ' . $orderItemId);
     }
 
 }

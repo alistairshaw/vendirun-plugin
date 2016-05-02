@@ -133,3 +133,27 @@
         }
     }
 }
+
+.shipment-details {
+    @include card-box-shadow();
+    margin-bottom: 20px;
+    .wrapper {
+        @extend .clearfix;
+        padding: 20px;
+        h3 {
+            margin-top: 0;
+        }
+        > div {
+            float: left;
+            text-transform: uppercase;
+            font-size: 0.9em;
+            color: $gray-light;
+            margin-right: 20px;
+            span {
+                text-transform: none;
+                color: $brand-primary;
+                font-size: 1.1em;
+            }
+        }
+    }
+}

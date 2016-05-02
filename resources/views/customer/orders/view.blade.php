@@ -38,7 +38,7 @@
             </div>
         </div>
 
-        <h2>Order Details</h2>
+        <h2>{{ trans('vendirun::orders.orderDetails') }}</h2>
         <div class="order-details">
             <div class="wrapper">
                 <div class="shipping">
@@ -53,11 +53,18 @@
             </div>
         </div>
 
-        <h2>Payment Details</h2>
+        <h2>{{ trans('vendirun::orders.paymentDetails') }}</h2>
         @if (count($order->getPayments()) == 0)
             @include ('vendirun::customer.orders.partials.payment-pending')
         @else
             @include ('vendirun::customer.orders.partials.payments', ['payments' => $order->getPayments()])
         @endif
+
+        <h2>{{ trans('vendirun::orders.shipmentDetails') }}</h2>
+            @if (count($order->getShipments()) == 0)
+                @include ('vendirun::customer.orders.partials.shipment-pending')
+            @else
+                @include ('vendirun::customer.orders.partials.shipments', ['shipments' => $order->getShipments()])
+            @endif
     </div>
 @stop

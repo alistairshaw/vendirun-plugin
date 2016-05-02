@@ -1,4 +1,4 @@
-<div class="order-review">
+<div class="table-responsive order-review">
     <table class="table">
         <tr>
             <th>{{ trans('vendirun::product.sku') }}</th>

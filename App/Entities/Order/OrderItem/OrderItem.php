@@ -68,6 +68,14 @@ class OrderItem {
     /**
      * @return string
      */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return string
+     */
     public function getProductVariationId()
     {
         return $this->productVariationId;

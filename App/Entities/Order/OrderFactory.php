@@ -5,12 +5,9 @@ use AlistairShaw\Vendirun\App\Entities\Cart\CartItem\CartItem;
 use AlistairShaw\Vendirun\App\Entities\Customer\Customer;
 use AlistairShaw\Vendirun\App\Entities\Order\OrderItem\OrderItem;
 use AlistairShaw\Vendirun\App\Entities\Order\Payment\Payment;
-use AlistairShaw\Vendirun\App\Entities\Order\Shipment\Shipment;
 use AlistairShaw\Vendirun\App\Entities\Order\Shipment\ShipmentFactory;
 use AlistairShaw\Vendirun\App\ValueObjects\Address;
-use AlistairShaw\Vendirun\App\ValueObjects\DateWindow;
 use AlistairShaw\Vendirun\App\ValueObjects\Name;
-use AlistairShaw\Vendirun\App\ValueObjects\TimeWindow;
 
 class OrderFactory {
 
@@ -115,7 +112,7 @@ class OrderFactory {
         ]);
 
         // customer
-        $customer = new Customer($order->customer_id, new Name($order->customer_id ? $order->customer->fullname : $order->guest_full_name));
+        $customer = new Customer($order->customer_id, Name::fromFullName($order->customer_id ? $order->customer->fullname : $order->guest_full_name));
         $customer->setJobRole($order->customer_id ? $order->customer->jobrole : $order->guest_jobrole);
         $customer->setPrimaryEmail($order->customer_id ? $order->customer->primary_email : $order->guest_email);
         $customer->setCompanyName($order->customer_id ? $order->customer->organisation_name : $order->guest_company_name);

@@ -1,18 +1,20 @@
 <?php namespace AlistairShaw\Vendirun\App\Http\Controllers\Checkout;
 
-use AlistairShaw\Vendirun\App\Entities\Cart\Cart;
 use AlistairShaw\Vendirun\App\Entities\Cart\CartRepository;
 use AlistairShaw\Vendirun\App\Entities\Customer\CustomerFactory;
 use AlistairShaw\Vendirun\App\Entities\Customer\CustomerRepository;
 use AlistairShaw\Vendirun\App\Entities\Customer\Helpers\CustomerHelper;
+use AlistairShaw\Vendirun\App\Entities\Order\Order;
 use AlistairShaw\Vendirun\App\Entities\Order\OrderFactory;
 use AlistairShaw\Vendirun\App\Entities\Order\OrderRepository;
+use AlistairShaw\Vendirun\App\Exceptions\CustomerNotFoundException;
 use AlistairShaw\Vendirun\App\Http\Controllers\VendirunBaseController;
 use AlistairShaw\Vendirun\App\Http\Requests\OrderRequest;
 use AlistairShaw\Vendirun\App\Lib\LocaleHelper;
 use AlistairShaw\Vendirun\App\Lib\PaymentGateway\PaypalPaymentGateway;
 use AlistairShaw\Vendirun\App\Lib\PaymentGateway\StripePaymentGateway;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\Exceptions\FailResponseException;
+use AlistairShaw\Vendirun\App\ValueObjects\Name;
 use Redirect;
 use Request;
 use Session;
@@ -28,9 +30,17 @@ class CheckoutController extends VendirunBaseController {
     public function index(CartRepository $cartRepository, CustomerRepository $customerRepository)
     {
         $this->setPrimaryPath();
-
-        $data['customer'] = $customerRepository->find();
-        $data['defaultAddress'] = $data['customer'] ? $data['customer']->getPrimaryAddress() : NULL;
+        
+        try
+        {
+            $data['customer'] = $customerRepository->find();
+            $data['defaultAddress'] = $data['customer'] ? $data['customer']->getPrimaryAddress() : NULL;
+        }
+        catch (CustomerNotFoundException $e)
+        {
+            $data['customer'] = null;
+            $data['defaultAddress'] = null;
+        }
 
         $countryId = NULL;
         $countryId = CustomerHelper::getDefaultCountry();
@@ -40,6 +50,8 @@ class CheckoutController extends VendirunBaseController {
         $cart = $cartRepository->find();
         $cart->setCountryId($countryId);
         if (Request::get('shippingTypeId')) $cart->setShippingType(Request::get('shippingTypeId'));
+
+        if ($cart->count() == 0) return Redirect::route(LocaleHelper::localePrefix() . 'vendirun.productCart');
 
         $data['cart'] = $cart;
         $data['displayTotals'] = $cart->getFormattedTotals();
@@ -80,8 +92,18 @@ class CheckoutController extends VendirunBaseController {
         if (Request::has('orderId')) return $this->processExistingOrder($orderRepository, Request::get('orderId'));
 
         // construct the customer
-        $customerFactory = new CustomerFactory($customerRepository);
-        $customer = $customerFactory->makeFromCheckoutForm(Request::all());
+        $customerFactory = new CustomerFactory();
+        try
+        {
+            $customer = $customerRepository->find();
+            $customer->setName(Name::fromFullName(Request::get('fullName')));
+            $customer->setPrimaryEmail(Request::get('emailAddress'));
+            
+        }
+        catch (CustomerNotFoundException $e)
+        {
+            $customer = $customerFactory->make(null, Request::get('emailAddress'), Request::get('fullName'));
+        }
 
         // get country ID from the shipping address
         $shippingAddressId = $request->get('shippingaddressId');
@@ -121,10 +143,10 @@ class CheckoutController extends VendirunBaseController {
 
     /**
      * @param OrderRepository $orderRepository
-     * @param $order
+     * @param Order $order
      * @return \Illuminate\Http\RedirectResponse
      */
-    private function takePayment(OrderRepository $orderRepository, $order)
+    private function takePayment(OrderRepository $orderRepository, Order $order)
     {
         // instantiate correct payment gateway implementation
         $paymentGateway = NULL;

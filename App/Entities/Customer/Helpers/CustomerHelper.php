@@ -1,6 +1,7 @@
 <?php namespace AlistairShaw\Vendirun\App\Entities\Customer\Helpers;
 
 use AlistairShaw\Vendirun\App\Entities\Customer\Customer;
+use AlistairShaw\Vendirun\App\Exceptions\CustomerNotFoundException;
 use App;
 use Config;
 use Request;
@@ -25,8 +26,11 @@ class CustomerHelper {
         if (Request::has('countryId')) return Request::get('countryId');
 
         $customerRepository = App::make('AlistairShaw\Vendirun\App\Entities\Customer\CustomerRepository');
-        if ($customer = $customerRepository->find())
+
+        try
         {
+            $customer = $customerRepository->find();
+
             // get top address
             /* @var $customer Customer */
             $addresses = $customer->getAddresses();
@@ -35,12 +39,14 @@ class CustomerHelper {
                 return $addresses[0]->getCountryId();
             }
         }
+        catch (CustomerNotFoundException $e)
+        {
+            // get company default country
+            $clientInfo = Config::get('clientInfo');
+            if ($clientInfo->country_id) return $clientInfo->country_id;
 
-        // get company default country
-        $clientInfo = Config::get('clientInfo');
-        if ($clientInfo->country_id) return $clientInfo->country_id;
-
-        // use UK as super-default if company default not set
-        return 79;
+            // use UK as super-default if company default not set
+            return 79;
+        }
     }
 }

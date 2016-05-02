@@ -46,8 +46,9 @@ class ComposerServiceProvider extends ServiceProvider {
     {
         $this->app->view->composer('vendirun::product.result', 'AlistairShaw\Vendirun\App\Http\Composers\ProductViewComposer@productView');
         $this->app->view->composer('vendirun::product.partials.product-images', 'AlistairShaw\Vendirun\App\Http\Composers\ProductViewComposer@productView');
-        $this->app->view->composer('vendirun::product.refine.category-list', 'AlistairShaw\Vendirun\App\Http\Composers\ProductViewComposer@categories');
+        $this->app->view->composer('vendirun::product.recommend', 'AlistairShaw\Vendirun\App\Http\Composers\ProductViewComposer@productView');
 
+        $this->app->view->composer('vendirun::product.refine.category-list', 'AlistairShaw\Vendirun\App\Http\Composers\ProductViewComposer@categories');
         $this->app->view->composer('vendirun::product.partials.product-buttons', 'AlistairShaw\Vendirun\App\Http\Composers\ProductViewComposer@productButtons');
         $this->app->view->composer('vendirun::product.partials.cart.cart-widget', 'AlistairShaw\Vendirun\App\Http\Composers\ProductViewComposer@cart');
         $this->app->view->composer('vendirun::product.partials.buttons.add-to-cart', 'AlistairShaw\Vendirun\App\Http\Composers\ProductViewComposer@cart');

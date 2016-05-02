@@ -53,6 +53,9 @@ class ProductViewComposer {
         if (!isset($viewData['abbreviatedButtons'])) $view->with('abbreviatedButtons', false);
     }
 
+    /**
+     * @param View $view
+     */
     public function productView(View $view)
     {
         $viewData = $view->getData();

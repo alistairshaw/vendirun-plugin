@@ -2,18 +2,66 @@
 
 use AlistairShaw\NameExploder\NameExploder;
 
-class Name extends \AlistairShaw\NameExploder\Name\Name{
+class Name {
 
     /**
-     * Name constructor.
-     * @param string $fullName
+     * @var string
      */
-    public function __construct($fullName)
+    private $title;
+
+    /**
+     * @var string
+     */
+    private $firstName;
+
+    /**
+     * @var string
+     */
+    private $middleInitial;
+
+    /**
+     * @var string
+     */
+    private $lastName;
+
+    /**
+     * @param string $title
+     * @param string $firstName
+     * @param string $middleInitial
+     * @param string $lastName
+     */
+    private function __construct($title = '', $firstName = '', $middleInitial = '', $lastName = '')
+    {
+        $this->title = $title;
+        $this->firstName = $firstName;
+        $this->middleInitial = $middleInitial;
+        $this->lastName = $lastName;
+    }
+
+    /**
+     * @param $fullName
+     * @return Name
+     */
+    public static function fromFullName($fullName)
     {
         $nameExploder = new NameExploder();
         $name = $nameExploder->explode($fullName);
 
-        parent::__construct($name->firstName(), $name->middleInitial(), $name->lastName(), $name->title());
+        return new self($name->firstName(), $name->middleInitial(), $name->lastName(), $name->title());
+    }
+
+    /**
+     * @return mixed
+     */
+    public function __toString()
+    {
+        $nameArray = [];
+        if ($this->title) $nameArray[] = $this->title;
+        if ($this->firstName) $nameArray[] = $this->firstName;
+        if ($this->middleInitial) $nameArray[] = $this->middleInitial;
+        if ($this->lastName) $nameArray[] = $this->lastName;
+
+        return implode(" ", $nameArray);
     }
 
 }

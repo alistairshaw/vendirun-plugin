@@ -88,8 +88,9 @@ class PropertyController extends VendirunBaseController {
         catch (\Exception $e)
         {
             if (App::environment() == 'production') abort(404);
-            dd($e);
         }
+
+        return false;
     }
 
     /**

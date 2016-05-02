@@ -2,7 +2,10 @@
 
 namespace AlistairShaw\Vendirun\App\Http\Controllers\Customer;
 
+use AlistairShaw\Vendirun\App\Entities\Customer\CustomerFactory;
+use AlistairShaw\Vendirun\App\Entities\Customer\CustomerRepository;
 use AlistairShaw\Vendirun\App\Events\CustomerLoggedIn;
+use AlistairShaw\Vendirun\App\Exceptions\CustomerNotFoundException;
 use AlistairShaw\Vendirun\App\Http\Controllers\VendirunBaseController;
 use AlistairShaw\Vendirun\App\Lib\LocaleHelper;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\Exceptions\FailResponseException;
@@ -128,9 +131,10 @@ class CustomerController extends VendirunBaseController {
     /**
      * Recommend a Friend
      * @param IlRequest $request
+     * @param CustomerRepository $customerRepository
      * @return mixed
      */
-    public function recommendAFriend(IlRequest $request)
+    public function recommendAFriend(IlRequest $request, CustomerRepository $customerRepository)
     {
         $this->validate($request, [
             'fullName' => 'required',
@@ -139,31 +143,44 @@ class CustomerController extends VendirunBaseController {
             'emailAddressFriend' => 'required|email',
         ]);
 
-        $data = Request::all();
-        $params['property_id'] = isset($data['propertyId']) ? $data['propertyId'] : NULL;
+        $params['property_id'] = Request::get('property_id', null);
+        $params['product_id'] = Request::get('product_id', null);
 
-        $params['full_name'] = $data['fullName'];
-        $params['email'] = $data['emailAddress'];
+        // generate correct link
+        $link = route(LocaleHelper::localePrefix() . 'vendirun.home');
+        if (Request::has('propertyId'))
+        {
+            $link = route(LocaleHelper::localePrefix() . 'vendirun.propertyView', ['id' => Request::get('propertyId'), 'name' => htmlentities(Request::get('property'))]);
+        }
+        if (Request::has('productId'))
+        {
+            $link = route(LocaleHelper::localePrefix() . 'vendirun.productView', ['id' => Request::get('productId'), 'name' => htmlentities(Request::get('product'))]);
+        }
 
-        $params['receiver_full_name'] = $data['fullNameFriend'];
-        $params['receiver_email'] = $data['emailAddressFriend'];
+        $customerFactory = new CustomerFactory();
+        try
+        {
+            $originator = $customerRepository->find();
+        }
+        catch (CustomerNotFoundException $e)
+        {
+            $originator = $customerFactory->make(null, Request::get('fullName'), Request::get('emailAddress'));
+            $customerRepository->save($originator);
+        }
 
-        $params['recommend_a_friend'] = true;
-        $params['recommend_a_friend_link'] = Route('vendirun.propertyView', ['id' => Request::input('propertyId'), 'propertyName' => Request::input('propertyName')]);
-        $params['recommend_a_friend_link'] .= '/' . urlencode(Request::input('property'));
+        $receiver = $customerFactory->make(null, Request::get('fullNameFriend'), Request::get('emailAddressFriend'));
 
-        $params['form_id'] = 'Recommend a Friend Form';
+        $customerRepository->save($receiver);
 
         try
         {
-            VendirunApi::makeRequest('customer/store', $params);
+            $customerRepository->recommendFriend($originator, $receiver, $link);
+            Session::flash('vendirun-alert-success', 'Thank you for recommending this page to your friend! We\'ve sent them an email on your behalf.');
         }
-        catch (\Exception $e)
+        catch (FailResponseException $e)
         {
-            abort(404);
+            Session::flash('vendirun-alert-error', 'Unable to send email to your friend. Please try again.');
         }
-
-        Session::flash('vendirun-alert-success', 'Thank you for recommending this page to your friend! We\'ve sent them an email on your behalf.');
 
         return Redirect::back();
     }

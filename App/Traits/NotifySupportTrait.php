@@ -24,8 +24,8 @@ trait NotifySupportTrait {
 
         Mail::send('vendirun::emails.failures.invalid-api-response', ['key' => $key, 'notice' => $notice, 'clientId' => Config::get('vendirun.clientId')], function (Message $message)
         {
-            $message->from(Config('vendirun.emailsFrom'), Config('vendirun.emailsFromName'));
-            $message->to(Config('vendirun.vendirunSupportEmail'), 'Vendirun Support')->subject('Vendirun API Returning Invalid Response');
+            $message->from(config('vendirun.emailsFrom'), config('vendirun.emailsFromName'));
+            $message->to(config('vendirun.vendirunSupportEmail'), 'Vendirun Support')->subject('Vendirun API Returning Invalid Response');
         });
 
         Cache::put('apiSupportAlert' . $notice, true, $period);

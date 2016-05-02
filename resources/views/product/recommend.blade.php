@@ -1,8 +1,8 @@
 @extends('vendirun::layouts.standard')
-@section('title', $product->product_name)
-@section('description', $product->short_description)
-@section('keywords', $product->keywords)
-@section('body-class', 'vendirun-app cms-product-recommend js-static-raf')
+@section('title', strip_tags($productDisplay['productName']))
+@section('description', strip_tags($productDisplay['shortDescription']))
+@section('keywords', strip_tags($productDisplay['keywords']))
+@section('body-class', 'vendirun-app product product-view')
 @section('content')
 
     <div class="container">
@@ -12,7 +12,7 @@
                 @include('vendirun::forms.recommend-a-friend')
                 <br><br>
             </div>
-            <div class="col-sm-4 product-search type1">
+            <div class="col-sm-4 product-search type1" style="margin-top: 20px;">
                 @include('vendirun::product.result', ['product' => $product, 'limitImages' => 1, 'abbreviatedButtons' => true])
             </div>
         </div>

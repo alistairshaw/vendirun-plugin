@@ -1,15 +1,16 @@
 <?php namespace AlistairShaw\Vendirun\App\Entities\Customer;
 
+use AlistairShaw\Vendirun\App\Exceptions\CustomerNotFoundException;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\Exceptions\FailResponseException;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\VendirunApi;
 use AlistairShaw\Vendirun\App\ValueObjects\Address;
-use AlistairShaw\Vendirun\App\ValueObjects\Name;
 use Session;
 
 class ApiCustomerRepository implements CustomerRepository {
 
     /**
      * @return Customer
+     * @throws CustomerNotFoundException
      */
     public function find()
     {
@@ -20,7 +21,7 @@ class ApiCustomerRepository implements CustomerRepository {
             ];
             $apiCustomer = VendirunApi::makeRequest('customer/find', $data)->getData();
 
-            $customerFactory = new CustomerFactory($this);
+            $customerFactory = new CustomerFactory();
             $customer = $customerFactory->make($apiCustomer->id, $apiCustomer->fullname, $apiCustomer->primary_email);
             $customer->setCompanyName($apiCustomer->organisation_name);
             $customer->setJobRole($apiCustomer->jobrole);
@@ -38,13 +39,13 @@ class ApiCustomerRepository implements CustomerRepository {
                     'countryId' => $address->country_id
                 ]));
             }
-            
+
             return $customer;
         }
         catch (FailResponseException $e)
         {
             Session::remove('token');
-            return false;
+            throw new CustomerNotFoundException('Customer is not logged in');
         }
     }
 
@@ -55,23 +56,44 @@ class ApiCustomerRepository implements CustomerRepository {
     public function save(Customer $customer)
     {
         $data = [
-            'id' => $customer->getId(),
             'full_name' => $customer->fullName(),
             'job_role' => $customer->getJobRole(),
-            'email' => $customer->getPrimaryEmail(),
-            'over_write' => true
+            'email' => $customer->getPrimaryEmail()
         ];
 
-        try
-        {
-            $savedCustomer = VendirunApi::makeRequest('customer/store', $data)->getData();
-            $customer->setId($savedCustomer->id);
-            return $customer;
-        }
-        catch (FailResponseException $e)
-        {
-            return false;
-        }
+        if ($customer->getId()) return $this->update($data, $customer->getId());
+
+        $savedCustomer = VendirunApi::makeRequest('customer/store', $data)->getData();
+        $customer->setId($savedCustomer->id);
+        return $customer;
     }
 
+    /**
+     * @param Customer $originator
+     * @param Customer $receiver
+     * @param string $link
+     * @return \AlistairShaw\Vendirun\App\Lib\VendirunApi\Base\VendirunResponse
+     */
+    public function recommendFriend(Customer $originator, Customer $receiver, $link)
+    {
+        $params = [
+            'originator_id' => $originator->getId(),
+            'receiver_id' => $receiver->getId(),
+            'link' => $link
+        ];
+
+        return VendirunApi::makeRequest('customer/recommendFriend', $params);
+    }
+
+    /**
+     * @param $data
+     * @param $id
+     * @return Customer
+     */
+    private function update($data, $id)
+    {
+        $data['id'] = $id;
+        VendirunApi::makeRequest('customer/update', $data)->getData();
+        return $this->find();
+    }
 }

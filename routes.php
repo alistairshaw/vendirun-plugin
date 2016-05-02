@@ -29,7 +29,6 @@ Route::group(['middleware' => ['web']], function ()
                 Route::any('/', ['as' => $localePrefix . 'vendirun.propertySearch', 'uses' => 'Property\PropertyController@index']);
                 Route::any('/xml', ['as' => $localePrefix . 'vendirun.propertyXml', 'uses' => 'Property\PropertyController@xml']);
                 Route::get('view/{id}/{propertyName?}', ['as' => $localePrefix . 'vendirun.propertyView', 'uses' => 'Property\PropertyController@propertyView']);
-                //Route::get('search', ['as' => $localePrefix . 'vendirun.propertyRecommend', 'uses' => 'Cms\PageController@temp']);
                 Route::get('clear-search', ['as' => $localePrefix . 'vendirun.propertyClearSearch', 'uses' => 'Property\PropertyController@clearSearch']);
 
                 Route::get('search', ['as' => $localePrefix . 'vendirun.searchProperties', 'uses' => 'Property\PropertyController@search']);

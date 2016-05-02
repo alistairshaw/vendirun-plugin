@@ -99,6 +99,14 @@ class Product {
     }
 
     /**
+     * @return string
+     */
+    public function getProductName()
+    {
+        return $this->productName;
+    }
+
+    /**
      * @return array
      */
     public function getVariations()
@@ -172,14 +180,6 @@ class Product {
         foreach ($this->variations as $variation) $final[] = $variation->display();
 
         return $final;
-    }
-
-    /**
-     * @return string
-     */
-    public function getProductName()
-    {
-        return $this->productName;
     }
 
     /**

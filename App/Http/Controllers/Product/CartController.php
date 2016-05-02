@@ -15,13 +15,15 @@ use View;
 
 class CartController extends VendirunBaseController {
 
+    /**
+     * @param CartRepository $cartRepository
+     * @return $this
+     */
     public function index(CartRepository $cartRepository)
     {
         $this->setPrimaryPath();
-
-        $data['cart'] = $cartRepository->find();
-
-        return View::make('vendirun::product.cart', $data);
+        $cart = $cartRepository->find();
+        return View::make('vendirun::product.cart')->with('cart', $cart);
     }
 
     /**

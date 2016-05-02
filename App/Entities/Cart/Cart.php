@@ -387,6 +387,7 @@ class Cart {
     public function clear()
     {
         $this->items = [];
+        return $this;
     }
 
     /**

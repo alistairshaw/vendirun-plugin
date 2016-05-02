@@ -1,5 +1,6 @@
 <?php namespace AlistairShaw\Vendirun\App\Http\Controllers\Checkout;
 
+use AlistairShaw\Vendirun\App\Entities\Cart\Cart;
 use AlistairShaw\Vendirun\App\Entities\Cart\CartRepository;
 use AlistairShaw\Vendirun\App\Entities\Customer\CustomerFactory;
 use AlistairShaw\Vendirun\App\Entities\Customer\CustomerRepository;
@@ -103,9 +104,6 @@ class CheckoutController extends VendirunBaseController {
         if (!$order = $orderRepository->save($order)) return Redirect::back()->with('paymentError', 'Payment Has NOT Been Taken - unable to create order, please try again');
         Session::set('orderOneTimeToken', $order->getOneTimeToken());
 
-        $cart->clear();
-        $cartRepository->save($cart);
-
         return $this->takePayment($orderRepository, $order);
     }
 
@@ -153,6 +151,7 @@ class CheckoutController extends VendirunBaseController {
         }
         catch (\Exception $e)
         {
+            dd($e);
             return Redirect::back()->with('paymentError', $e->getMessage())->withInput();
         }
 
@@ -161,11 +160,15 @@ class CheckoutController extends VendirunBaseController {
 
     /**
      * @param OrderRepository $orderRepository
-     * @param int             $orderId
+     * @param CartRepository $cartRepository
+     * @param int $orderId
      * @return \Illuminate\Contracts\View\View
      */
-    public function success(OrderRepository $orderRepository, $orderId)
+    public function success(OrderRepository $orderRepository, CartRepository $cartRepository, $orderId)
     {
+        // clear the cart when payment succeeds
+        $cartRepository->save($cartRepository->find()->clear());
+
         try
         {
             $data['order'] = $orderRepository->find($orderId, Session::get('orderOneTimeToken', NULL));
@@ -198,11 +201,15 @@ class CheckoutController extends VendirunBaseController {
 
     /**
      * @param OrderRepository $orderRepository
-     * @param int             $orderId
+     * @param CartRepository $cartRepository
+     * @param int $orderId
      * @return \Illuminate\Contracts\View\View
      */
-    public function failure(OrderRepository $orderRepository, $orderId)
+    public function failure(OrderRepository $orderRepository, CartRepository $cartRepository, $orderId)
     {
+        // clear the cart because the order already exists
+        $cartRepository->save($cartRepository->find()->clear());
+
         // if NULL, we'll get the most recent order from session
         try
         {

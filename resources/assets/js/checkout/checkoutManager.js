@@ -31,12 +31,12 @@ var checkoutManager = function () {
             var _this = this;
             var $form = $('.js-checkout-payment-form');
 
-            console.log($form);
-
             if ($form.hasClass('js-do-not-validate')) {
                 $form.on('submit', function(e) {
-                    e.preventDefault();
-                    _this.validateStripe($form);
+                    if (_this.paymentType == 'stripe') {
+                        e.preventDefault();
+                        _this.validateStripe($form);
+                    }
                 });
                 return true;
             }

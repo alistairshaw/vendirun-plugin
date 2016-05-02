@@ -26,10 +26,8 @@
     </div>
     <div class="section2">
         <ul class="product-list">
-            @foreach ($order->getItems() as $orderItem)
-                @if (!$orderItem->isShipping())
-                    <li><span>{{ $orderItem->getProductSku() }}</span> {{ $orderItem->getProductName() }}</li>
-                @endif
+            @foreach ($order->getUniqueItems(true) as $orderItem)
+                <li><span class="sku">{{ $orderItem->sku }}</span> <span class="quantity">{{ $orderItem->quantity }}</span> <span class="product">{{ $orderItem->productName }}</span></li>
             @endforeach
         </ul>
     </div>

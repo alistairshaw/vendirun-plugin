@@ -135,9 +135,10 @@ class Order {
 
     /**
      * Unique items WITHOUT shipping
+     * @param bool $ignorePriceDifferences
      * @return object
      */
-    public function getUniqueItems()
+    public function getUniqueItems($ignorePriceDifferences = false)
     {
         $final = [];
         foreach ($this->getItems() as $item)
@@ -150,12 +151,12 @@ class Order {
             $matched = false;
             foreach ($final as $index => $finalItem)
             {
-                if ($item->getPrice() == $finalItem->price
-                    && $item->getProductName() == $finalItem->productName
+                if ($item->getProductName() == $finalItem->productName
                     && $item->getProductSku() == $finalItem->sku
                     && $item->getProductVariationId() == $finalItem->productVariationId
                     && $item->getTaxRate() == $finalItem->taxRate
-                    && $item->getPrice() == $finalItem->unitPrice)
+                    && ($item->getPrice() == $finalItem->unitPrice || $ignorePriceDifferences)
+                    )
                 {
                     $matched = true;
                     $final[$index]->price += $item->getPrice();
@@ -173,7 +174,8 @@ class Order {
                     'sku' => $item->getProductSku(),
                     'productVariationId' => $item->getProductVariationId(),
                     'taxRate' => $item->getTaxRate(),
-                    'quantity' => 1
+                    'quantity' => 1,
+                    'priceWithTax' => TaxCalculator::totalPlusTax($item->getPrice(), $item->getTaxRate())
                 ];
             }
         }

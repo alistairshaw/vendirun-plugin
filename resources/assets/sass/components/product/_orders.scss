@@ -40,12 +40,17 @@
             border-top: 1px solid darken($gray-lighter, 5%);
             padding: 20px;
             .product-list {
+                padding: 0;
                 li {
                     list-style: none;
-                    span {
+                    .sku {
                         color: $gray-light;
                         display: inline-block;
                         width: 130px;
+                    }
+                    .quantity {
+                        display: inline-block;
+                        width: 50px;
                     }
                 }
             }
@@ -104,6 +109,7 @@
             text-transform: uppercase;
             font-size: 0.9em;
             color: $gray-light;
+            margin-right: 20px;
             span {
                 text-transform: none;
                 color: $brand-primary;

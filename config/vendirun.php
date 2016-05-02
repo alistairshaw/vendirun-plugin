@@ -68,6 +68,11 @@ return [
      * By default, how to sort product search results
      */
     'productDefaultSortBy' => 'price',
-    'productDefaultSortOrder' => 'ASC'
+    'productDefaultSortOrder' => 'ASC',
+
+    /**
+     * Date formatting
+     */
+    'dateFormat' => 'jS, M Y'
 
 ];

@@ -2,10 +2,40 @@
 
 use AlistairShaw\Vendirun\App\Entities\Customer\Helpers\CustomerHelper;
 use AlistairShaw\Vendirun\App\Entities\Order\OrderItem\OrderItem;
+use AlistairShaw\Vendirun\App\Entities\Order\OrderSearchResult\OrderSearchResult;
+use AlistairShaw\Vendirun\App\Entities\Order\OrderSearchResult\OrderSearchResultFactory;
+use AlistairShaw\Vendirun\App\Entities\Order\Payment\Payment;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\Exceptions\FailResponseException;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\VendirunApi;
 
 class ApiOrderRepository implements OrderRepository {
+
+    /**
+     * @param $customerToken
+     * @param string $search
+     * @param int $limit
+     * @param int $offset
+     * @return OrderSearchResult
+     */
+    public function search($customerToken, $search = '', $limit = 0, $offset = 10)
+    {
+        $orderSearchResultFactory = new OrderSearchResultFactory();
+        try
+        {
+            $searchOptions = [
+                'token' => $customerToken,
+                'search' => $search,
+                'limit' => $limit,
+                'offset' => $offset
+            ];
+
+            return $orderSearchResultFactory->fromApi(VendirunApi::makeRequest('order/search', $searchOptions)->getData());
+        }
+        catch (FailResponseException $e)
+        {
+            return $orderSearchResultFactory->emptyResult();
+        }
+    }
 
     /**
      * @param      $id
@@ -23,7 +53,7 @@ class ApiOrderRepository implements OrderRepository {
 
         try
         {
-            $orderFactory = new OrderFactory($this);
+            $orderFactory = new OrderFactory();
             $apiResult = VendirunApi::makeRequest('order/find', $params)->getData();
 
             $order = $orderFactory->fromApi($apiResult);
@@ -46,6 +76,7 @@ class ApiOrderRepository implements OrderRepository {
     {
         $products = [];
         $items = [];
+        $payments = [];
         foreach ($order->getItems() as $item)
         {
             /* @var $item OrderItem */
@@ -57,6 +88,19 @@ class ApiOrderRepository implements OrderRepository {
                 'price' => $item->getPrice(),
                 'tax_rate' => $item->getTaxRate(),
                 'is_shipping' => $item->isShipping()
+            ];
+        }
+
+        foreach ($order->getPayments() as $payment)
+        {
+            /* @var $payment Payment */
+            $pd = $payment->getArray();
+            $payments[] = [
+                'id' => $payment->getId(),
+                'payment_amount' => $pd['amount'],
+                'payment_date' => $pd['paymentDate'],
+                'transaction_data' => $pd['transactionData'],
+                'payment_type' => $pd['paymentType']
             ];
         }
 
@@ -87,7 +131,8 @@ class ApiOrderRepository implements OrderRepository {
             'billing_address_same_as_shipping' => $order->getBillingAddress()->isEqualTo($order->getShippingAddress()),
             'products' => $products,
             'shipping_type' => $order->getShippingType(),
-            'items' => $items
+            'items' => $items,
+            'payments' => $payments
         ];
 
         $result = VendirunApi::makeRequest('order/store', $params)->getData();

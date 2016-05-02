@@ -3,6 +3,17 @@
 class OrderApi extends BaseApi {
 
     /**
+     * @param $params
+     * @return array
+     */
+    public function search($params)
+    {
+        $url = 'order/search';
+
+        return $this->request($url, $params);
+    }
+
+    /**
      * @param array $params
      * @return array
      */

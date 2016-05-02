@@ -36,4 +36,22 @@ class ProductSearchResultFactory {
         ]);
     }
 
+    /**
+     * Create an empty search result
+     * @return ProductSearchResult
+     */
+    public function emptyResult()
+    {
+        return new ProductSearchResult([
+            'products' => [],
+            'totalRows' => 0,
+            'limit' => 0,
+            'offset' => 0,
+            'searchParams' => [],
+            'availableColors' => [],
+            'availableTypes' => [],
+            'availableSizes' => []
+        ]);
+    }
+
 }

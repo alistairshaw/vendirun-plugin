@@ -26,7 +26,6 @@ class ApiCartRepository implements CartRepository {
             }
         }
         Session::put('shoppingCart', $itemIds);
-        Session::save();
 
         if ($token = CustomerHelper::checkLoggedinCustomer())
         {
@@ -63,7 +62,8 @@ class ApiCartRepository implements CartRepository {
             $data = [
                 'token' => Session::get('token')
             ];
-            $items = $this->getItemListFromApiReturn(VendirunApi::makeRequest('cart/fetch', $data)->getData());
+            $result = VendirunApi::makeRequest('cart/fetch', $data)->getData();
+            $items = $this->getItemListFromApiReturn($result->items);
         }
         catch (FailResponseException $e)
         {

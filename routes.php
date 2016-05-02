@@ -97,6 +97,12 @@ Route::group(['middleware' => ['web']], function ()
 
                 Route::post('do-register', ['as' => $localePrefix . 'vendirun.doRegister', 'uses' => 'Customer\CustomerController@doRegister']);
                 Route::post('do-login', ['as' => $localePrefix . 'vendirun.doLogin', 'uses' => 'Customer\CustomerController@doLogin']);
+
+                Route::group(['prefix' => 'account'], function () use ($localePrefix)
+                {
+                    Route::get('orders', ['as' => $localePrefix . 'vendirun.customer.account.orders', 'uses' => 'Customer\Account\OrderController@index']);
+                    Route::get('orders/view/{orderId}', ['as' => $localePrefix . 'vendirun.customer.account.orderView', 'uses' => 'Customer\Account\OrderController@view']);
+                });
             });
 
             // blog

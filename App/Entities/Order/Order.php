@@ -3,6 +3,7 @@
 use AlistairShaw\Vendirun\App\Entities\Cart\Helpers\TaxCalculator;
 use AlistairShaw\Vendirun\App\Entities\Customer\Customer;
 use AlistairShaw\Vendirun\App\Entities\Order\OrderItem\OrderItem;
+use AlistairShaw\Vendirun\App\Entities\Order\Payment\Payment;
 use AlistairShaw\Vendirun\App\ValueObjects\Address;
 
 class Order {
@@ -33,6 +34,11 @@ class Order {
     private $items;
 
     /**
+     * @var array
+     */
+    private $payments;
+
+    /**
      * @var string
      */
     private $shippingType;
@@ -45,15 +51,21 @@ class Order {
     private $oneTimeToken;
 
     /**
+     * @var string
+     */
+    private $createdAt;
+
+    /**
      * Order constructor.
      * @param Customer $customer
-     * @param Address  $billingAddress
-     * @param Address  $shippingAddress
+     * @param Address $billingAddress
+     * @param Address $shippingAddress
      * @param          $items
-     * @param string   $shippingType
-     * @param null     $id
+     * @param string $shippingType
+     * @param null $id
+     * @param null $createdAt
      */
-    public function __construct(Customer $customer, Address $billingAddress, Address $shippingAddress, $items, $shippingType = '', $id = null)
+    public function __construct(Customer $customer, Address $billingAddress, Address $shippingAddress, $items, $shippingType = '', $id = null, $createdAt = null)
     {
         $this->customer = $customer;
         $this->billingAddress = $billingAddress;
@@ -61,14 +73,24 @@ class Order {
         $this->items = $items;
         $this->shippingType = $shippingType;
         $this->id = $id;
+        $this->createdAt = $createdAt ? $createdAt : date("Y-m-d H:i:s");
+        $this->payments = [];
     }
 
     /**
-     * @param $id
+     * @param Payment $payment
      */
-    public function setId($id)
+    public function addPayment(Payment $payment)
     {
-        $this->id = $id;
+        $this->payments[] = $payment;
+    }
+
+    /**
+     * @return array
+     */
+    public function getPayments()
+    {
+        return $this->payments;
     }
 
     /**
@@ -233,6 +255,21 @@ class Order {
     }
 
     /**
+     * @return int
+     */
+    public function getPriceBeforeTax()
+    {
+        if (!$this->items) return 0;
+        $total = 0;
+        foreach ($this->concatItems() as $item)
+        {
+            $total += $item['price'];
+        }
+
+        return $total;
+    }
+
+    /**
      * @return string
      */
     public function getOneTimeToken()
@@ -246,6 +283,32 @@ class Order {
     public function setOneTimeToken($oneTimeToken)
     {
         $this->oneTimeToken = $oneTimeToken;
+    }
+
+    /**
+     * Returns the current overall status of the order
+     * @return string
+     */
+    public function getStatus()
+    {
+        $status = 'Pending Payment';
+        if ($this->getTotalPrice() <= $this->getTotalPaid()) $status = 'Order Processing';
+
+        return $status;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTotalPaid()
+    {
+        $totalPaid = 0;
+        foreach ($this->payments as $payment)
+        {
+            /* @var $payment Payment */
+            $totalPaid += $payment->getAmount();
+        }
+        return $totalPaid;
     }
 
     /**
@@ -276,6 +339,14 @@ class Order {
         }
 
         return $final;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCreatedDate()
+    {
+        return $this->createdAt;
     }
 
 }

@@ -30,18 +30,27 @@ var checkoutManager = function () {
         enableFormValidation: function () {
             var _this = this;
             var $form = $('.js-checkout-payment-form');
-            $form.validate();
 
-            // add rules for form fields
-            $('#emailAddress').rules('add', { required: true, email: true });
-            $('#fullName').rules('add', { required: true });
+            console.log($form);
+
+            if ($form.hasClass('js-do-not-validate')) {
+                $form.on('submit', function(e) {
+                    e.preventDefault();
+                    _this.validateStripe($form);
+                });
+                return true;
+            }
+
+            $form.validate();
+            $('#emailAddress').rules('add', {required: true, email: true});
+            $('#fullName').rules('add', {required: true});
             if ($('#shippingaddress1').length) {
-                $('#shippingaddress1').rules('add', { required: true });
-                $('#shippingcity').rules('add', { required: true });
-                $('#shippingpostcode').rules('add', { required: true });
-                $('#billingaddress1').rules('add', { required: true });
-                $('#billingcity').rules('add', { required: true });
-                $('#billingpostcode').rules('add', { required: true });
+                $('#shippingaddress1').rules('add', {required: true});
+                $('#shippingcity').rules('add', {required: true});
+                $('#shippingpostcode').rules('add', {required: true});
+                $('#billingaddress1').rules('add', {required: true});
+                $('#billingcity').rules('add', {required: true});
+                $('#billingpostcode').rules('add', {required: true});
             }
 
             $form.on('submit', function (e) {
@@ -77,10 +86,10 @@ var checkoutManager = function () {
                 e.preventDefault();
                 shippingCalculator($(this));
             }).addClass('hidden');
-            $('#shippingcountryId').on('change', function() {
+            $('#shippingcountryId').on('change', function () {
                 shippingCalculator($('.js-recalculate-shipping-button'));
             });
-            $('.js-multiple-shipping-types').on('change', function() {
+            $('.js-multiple-shipping-types').on('change', function () {
                 shippingCalculator($('.js-recalculate-shipping-button'));
             });
         },

@@ -8,7 +8,7 @@
         <h1>{{ trans('vendirun::checkout.orderFailed') }}</h1>
         <p>{{ trans('vendirun::checkout.orderFailedText') }}</p>
         @if ($order)
-            @include ('vendirun::order.order-review')
+            @include ('vendirun::customer.orders.partials.order-review')
         @endif
     </div>
 @stop

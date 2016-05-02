@@ -46,8 +46,8 @@ class ProductController extends VendirunBaseController {
         }
         catch (\Exception $e)
         {
-            dd($e);
-            if (App::environment() == 'production') abort(404);
+            if (App::environment() == 'local') dd($e);
+            abort(404);
         }
 
         return View::make('vendirun::product.results', $data);

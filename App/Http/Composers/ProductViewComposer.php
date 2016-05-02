@@ -2,6 +2,7 @@
 
 use AlistairShaw\Vendirun\App\Entities\Cart\CartFactory;
 use AlistairShaw\Vendirun\App\Entities\Product\Product;
+use AlistairShaw\Vendirun\App\Lib\ClientHelper;
 use AlistairShaw\Vendirun\App\Lib\LocaleHelper;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\VendirunApi;
 use App;
@@ -120,5 +121,11 @@ class ProductViewComposer {
             $cartRepository = App::make('AlistairShaw\Vendirun\App\Entities\Cart\CartRepository');
             $view->with('cart', $cartRepository->find());
         }
+    }
+
+    public function checkout(View $view)
+    {
+        $paymentGateways = ClientHelper::getPaymentGatewayInfo();
+        $view->with('paymentGateways', $paymentGateways);
     }
 }

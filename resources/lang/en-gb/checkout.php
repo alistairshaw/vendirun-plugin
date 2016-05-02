@@ -6,6 +6,7 @@ return [
     'deliveryDetailsDescription' => 'Where shall we send this stuff?',
     'shippingMethod' => 'Shipping Method',
     'shippingMethodDescription' => 'Confirm your shipping method and amount',
+    'shippingAddress' => 'Shipping Address',
     'payWithPaypal' => 'Payment via Paypal',
     'payWithPaypalDescription' => 'Pay with 100% confidence using Paypal\'s secure server',
     'paymentOptions' => 'Payment',
@@ -23,5 +24,7 @@ return [
     'orderFailed' => 'Your payment was not taken successfully',
     'orderFailedText' => 'Unfortunately your payment did not go through. Please try again.',
     'billingAddressSameAsShipping' => 'Billing address is the same as the shipping address',
-    'paymentTakenOtherError' => 'Payment Has Been Taken - ORDER not saved correctly, please contact Customer Services'
+    'paymentTakenOtherError' => 'Payment Has Been Taken - ORDER not saved correctly, please contact Customer Services',
+    'paymentMethod' => 'Payment Method',
+    'paymentDate' => 'Payment Date'
 ];

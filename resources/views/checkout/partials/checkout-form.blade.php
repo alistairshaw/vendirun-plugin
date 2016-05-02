@@ -45,6 +45,7 @@
         </div>
         <div class="step">
             @include('vendirun::checkout.steps.payment-options')
+            @include('vendirun::checkout.steps.billing-address')
         </div>
     @endif
 

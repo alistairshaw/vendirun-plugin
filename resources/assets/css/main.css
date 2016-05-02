@@ -1532,22 +1532,22 @@ pre {
   .container-fluid:after {
     clear: both; }
 
-.row, .address-select, .property-advanced-search-widget .form-inputs, .product-cart .wrapper, .product-cart .cart-items .cart-table, .blog-list .blog-entry .blog-entry-container, .cms-blog-posts-widget, .checkout .wrapper, .checkout .checkout-form .shipping-method, .checkout .checkout-form .payment .expiry-cvv {
+.row, .address-select, .property-advanced-search-widget .form-inputs, .product-cart .wrapper, .product-cart .cart-items .cart-table, .product-orders.view-order .order-details .wrapper, .blog-list .blog-entry .blog-entry-container, .cms-blog-posts-widget, .checkout .wrapper, .checkout .checkout-form .shipping-method, .payment .expiry-cvv {
   margin-left: -15px;
   margin-right: -15px; }
-  .row:before, .address-select:before, .property-advanced-search-widget .form-inputs:before, .product-cart .wrapper:before, .product-cart .cart-items .cart-table:before, .blog-list .blog-entry .blog-entry-container:before, .cms-blog-posts-widget:before, .checkout .wrapper:before, .checkout .checkout-form .shipping-method:before, .checkout .checkout-form .payment .expiry-cvv:before, .row:after, .address-select:after, .property-advanced-search-widget .form-inputs:after, .product-cart .wrapper:after, .product-cart .cart-items .cart-table:after, .blog-list .blog-entry .blog-entry-container:after, .cms-blog-posts-widget:after, .checkout .wrapper:after, .checkout .checkout-form .shipping-method:after, .checkout .checkout-form .payment .expiry-cvv:after {
+  .row:before, .address-select:before, .property-advanced-search-widget .form-inputs:before, .product-cart .wrapper:before, .product-cart .cart-items .cart-table:before, .product-orders.view-order .order-details .wrapper:before, .blog-list .blog-entry .blog-entry-container:before, .cms-blog-posts-widget:before, .checkout .wrapper:before, .checkout .checkout-form .shipping-method:before, .payment .expiry-cvv:before, .row:after, .address-select:after, .property-advanced-search-widget .form-inputs:after, .product-cart .wrapper:after, .product-cart .cart-items .cart-table:after, .product-orders.view-order .order-details .wrapper:after, .blog-list .blog-entry .blog-entry-container:after, .cms-blog-posts-widget:after, .checkout .wrapper:after, .checkout .checkout-form .shipping-method:after, .payment .expiry-cvv:after {
     content: " ";
     display: table; }
-  .row:after, .address-select:after, .property-advanced-search-widget .form-inputs:after, .product-cart .wrapper:after, .product-cart .cart-items .cart-table:after, .blog-list .blog-entry .blog-entry-container:after, .cms-blog-posts-widget:after, .checkout .wrapper:after, .checkout .checkout-form .shipping-method:after, .checkout .checkout-form .payment .expiry-cvv:after {
+  .row:after, .address-select:after, .property-advanced-search-widget .form-inputs:after, .product-cart .wrapper:after, .product-cart .cart-items .cart-table:after, .product-orders.view-order .order-details .wrapper:after, .blog-list .blog-entry .blog-entry-container:after, .cms-blog-posts-widget:after, .checkout .wrapper:after, .checkout .checkout-form .shipping-method:after, .payment .expiry-cvv:after {
     clear: both; }
 
-.col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .product-cart .wrapper .cart-sidebar, .blog-list .blog-entry .blog-entry-container .image-container, .checkout .checkout-form .shipping-method .shipping-price, .checkout .checkout-form .shipping-method .options, .col-md-3, .col-lg-3, .col-xs-4, .checkout .checkout-form .payment .expiry-cvv .cvv, .col-sm-4, .address-select label, .property-search.type1 .multiple .property-result, .property-view.type1 .property-attributes .item, .product-search .multiple .product-result, .cms-blog-posts-widget .blog-entry, .checkout .checkout-sidebar, .col-md-4, .property-advanced-search-widget .form-inputs .form-group, .product-cart .cart-items .cart-table .cart-column, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .property-view.type1 .property-attributes .item, .col-sm-6, .property-search.type2 .property-results .property-result .property-attributes .item, .property-view.type2 .property-attributes .item, .property-advanced-search-widget .form-inputs .form-group, .product-cart .cart-items .cart-table .cart-column, .checkout .checkout-form .shipping-method .method-select, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .checkout .checkout-form .payment .expiry-cvv .expiry, .col-sm-8, .checkout .checkout-form, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .product-cart .wrapper .cart-items, .blog-list .blog-entry .blog-entry-container .blog-item-container, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .cms-blog-posts-widget .blog-entry .blog-entry-container .image-container, .cms-blog-posts-widget .blog-entry .blog-entry-container .blog-item-container, .col-md-12, .col-lg-12 {
+.col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .product-cart .wrapper .cart-sidebar, .product-orders.view-order .order-details .wrapper .shipping, .blog-list .blog-entry .blog-entry-container .image-container, .checkout .checkout-form .shipping-method .shipping-price, .checkout .checkout-form .shipping-method .options, .col-md-3, .col-lg-3, .col-xs-4, .payment .expiry-cvv .cvv, .col-sm-4, .address-select label, .property-search.type1 .multiple .property-result, .property-view.type1 .property-attributes .item, .product-search .multiple .product-result, .cms-blog-posts-widget .blog-entry, .checkout .checkout-sidebar, .col-md-4, .property-advanced-search-widget .form-inputs .form-group, .product-cart .cart-items .cart-table .cart-column, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .property-view.type1 .property-attributes .item, .col-sm-6, .property-search.type2 .property-results .property-result .property-attributes .item, .property-view.type2 .property-attributes .item, .property-advanced-search-widget .form-inputs .form-group, .product-cart .cart-items .cart-table .cart-column, .checkout .checkout-form .shipping-method .method-select, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .payment .expiry-cvv .expiry, .col-sm-8, .checkout .checkout-form, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .product-cart .wrapper .cart-items, .product-orders.view-order .order-details .wrapper .list, .blog-list .blog-entry .blog-entry-container .blog-item-container, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .cms-blog-posts-widget .blog-entry .blog-entry-container .image-container, .cms-blog-posts-widget .blog-entry .blog-entry-container .blog-item-container, .col-md-12, .col-lg-12 {
   position: relative;
   min-height: 1px;
   padding-left: 15px;
   padding-right: 15px; }
 
-.col-xs-1, .col-xs-2, .col-xs-3, .col-xs-4, .checkout .checkout-form .payment .expiry-cvv .cvv, .col-xs-5, .col-xs-6, .property-view.type1 .property-attributes .item, .col-xs-7, .col-xs-8, .checkout .checkout-form .payment .expiry-cvv .expiry, .col-xs-9, .col-xs-10, .col-xs-11, .col-xs-12 {
+.col-xs-1, .col-xs-2, .col-xs-3, .col-xs-4, .payment .expiry-cvv .cvv, .col-xs-5, .col-xs-6, .property-view.type1 .property-attributes .item, .col-xs-7, .col-xs-8, .payment .expiry-cvv .expiry, .col-xs-9, .col-xs-10, .col-xs-11, .col-xs-12 {
   float: left; }
 
 .col-xs-1 {
@@ -1559,7 +1559,7 @@ pre {
 .col-xs-3 {
   width: 25%; }
 
-.col-xs-4, .checkout .checkout-form .payment .expiry-cvv .cvv {
+.col-xs-4, .payment .expiry-cvv .cvv {
   width: 33.3333333333%; }
 
 .col-xs-5 {
@@ -1571,7 +1571,7 @@ pre {
 .col-xs-7 {
   width: 58.3333333333%; }
 
-.col-xs-8, .checkout .checkout-form .payment .expiry-cvv .expiry {
+.col-xs-8, .payment .expiry-cvv .expiry {
   width: 66.6666666667%; }
 
 .col-xs-9 {
@@ -1704,13 +1704,13 @@ pre {
   margin-left: 100%; }
 
 @media (min-width: 768px) {
-  .col-sm-1, .col-sm-2, .col-sm-3, .product-cart .wrapper .cart-sidebar, .blog-list .blog-entry .blog-entry-container .image-container, .checkout .checkout-form .shipping-method .shipping-price, .checkout .checkout-form .shipping-method .options, .col-sm-4, .address-select label, .property-search.type1 .multiple .property-result, .property-view.type1 .property-attributes .item, .product-search .multiple .product-result, .cms-blog-posts-widget .blog-entry, .checkout .checkout-sidebar, .col-sm-5, .col-sm-6, .property-search.type2 .property-results .property-result .property-attributes .item, .property-view.type2 .property-attributes .item, .property-advanced-search-widget .form-inputs .form-group, .product-cart .cart-items .cart-table .cart-column, .checkout .checkout-form .shipping-method .method-select, .col-sm-7, .col-sm-8, .checkout .checkout-form, .col-sm-9, .product-cart .wrapper .cart-items, .blog-list .blog-entry .blog-entry-container .blog-item-container, .col-sm-10, .col-sm-11, .col-sm-12, .cms-blog-posts-widget .blog-entry .blog-entry-container .image-container, .cms-blog-posts-widget .blog-entry .blog-entry-container .blog-item-container {
+  .col-sm-1, .col-sm-2, .col-sm-3, .product-cart .wrapper .cart-sidebar, .product-orders.view-order .order-details .wrapper .shipping, .blog-list .blog-entry .blog-entry-container .image-container, .checkout .checkout-form .shipping-method .shipping-price, .checkout .checkout-form .shipping-method .options, .col-sm-4, .address-select label, .property-search.type1 .multiple .property-result, .property-view.type1 .property-attributes .item, .product-search .multiple .product-result, .cms-blog-posts-widget .blog-entry, .checkout .checkout-sidebar, .col-sm-5, .col-sm-6, .property-search.type2 .property-results .property-result .property-attributes .item, .property-view.type2 .property-attributes .item, .property-advanced-search-widget .form-inputs .form-group, .product-cart .cart-items .cart-table .cart-column, .checkout .checkout-form .shipping-method .method-select, .col-sm-7, .col-sm-8, .checkout .checkout-form, .col-sm-9, .product-cart .wrapper .cart-items, .product-orders.view-order .order-details .wrapper .list, .blog-list .blog-entry .blog-entry-container .blog-item-container, .col-sm-10, .col-sm-11, .col-sm-12, .cms-blog-posts-widget .blog-entry .blog-entry-container .image-container, .cms-blog-posts-widget .blog-entry .blog-entry-container .blog-item-container {
     float: left; }
   .col-sm-1 {
     width: 8.3333333333%; }
   .col-sm-2 {
     width: 16.6666666667%; }
-  .col-sm-3, .product-cart .wrapper .cart-sidebar, .blog-list .blog-entry .blog-entry-container .image-container, .checkout .checkout-form .shipping-method .shipping-price, .checkout .checkout-form .shipping-method .options {
+  .col-sm-3, .product-cart .wrapper .cart-sidebar, .product-orders.view-order .order-details .wrapper .shipping, .blog-list .blog-entry .blog-entry-container .image-container, .checkout .checkout-form .shipping-method .shipping-price, .checkout .checkout-form .shipping-method .options {
     width: 25%; }
   .col-sm-4, .address-select label, .property-search.type1 .multiple .property-result, .property-view.type1 .property-attributes .item, .product-search .multiple .product-result, .cms-blog-posts-widget .blog-entry, .checkout .checkout-sidebar {
     width: 33.3333333333%; }
@@ -1722,7 +1722,7 @@ pre {
     width: 58.3333333333%; }
   .col-sm-8, .checkout .checkout-form {
     width: 66.6666666667%; }
-  .col-sm-9, .product-cart .wrapper .cart-items, .blog-list .blog-entry .blog-entry-container .blog-item-container {
+  .col-sm-9, .product-cart .wrapper .cart-items, .product-orders.view-order .order-details .wrapper .list, .blog-list .blog-entry .blog-entry-container .blog-item-container {
     width: 75%; }
   .col-sm-10 {
     width: 83.3333333333%; }
@@ -5754,11 +5754,11 @@ button.close {
   .carousel-indicators {
     bottom: 20px; } }
 
-.clearfix:before, .social-share:before, .image-container .nivo-directionNav:before, .property-search.type1 .heading:before, .property-search.type2 .property-results .property-result .details:before, .property-view.type1 .social-share:before, .property-categories .category-search-item:before, .property-categories .property-category-list-item .details:before, .product-search .heading:before, ul.refine-list:before, .product.product-view .variations:before, .product.product-view .product-share .social-share:before, .product-variation-choice .type-picker:before, .product-variation-choice .size-picker:before, .product-variation-choice .color-picker:before, .product-result .wrapper:before, .related-products li:before, .blog-post .tags:before, .checkout .checkout-form .step-header:before, .clearfix:after, .social-share:after, .image-container .nivo-directionNav:after, .property-search.type1 .heading:after, .property-search.type2 .property-results .property-result .details:after, .property-view.type1 .social-share:after, .property-categories .category-search-item:after, .property-categories .property-category-list-item .details:after, .product-search .heading:after, ul.refine-list:after, .product.product-view .variations:after, .product.product-view .product-share .social-share:after, .product-variation-choice .type-picker:after, .product-variation-choice .size-picker:after, .product-variation-choice .color-picker:after, .product-result .wrapper:after, .related-products li:after, .blog-post .tags:after, .checkout .checkout-form .step-header:after {
+.clearfix:before, .social-share:before, .image-container .nivo-directionNav:before, .property-search.type1 .heading:before, .property-search.type2 .property-results .property-result .details:before, .property-view.type1 .social-share:before, .property-categories .category-search-item:before, .property-categories .property-category-list-item .details:before, .product-search .heading:before, ul.refine-list:before, .product.product-view .variations:before, .product.product-view .product-share .social-share:before, .product-variation-choice .type-picker:before, .product-variation-choice .size-picker:before, .product-variation-choice .color-picker:before, .product-result .wrapper:before, .related-products li:before, .product-orders .order-item .section1:before, .product-orders.view-order .order-details .wrapper:before, .payment-details .wrapper:before, .payment-pending-form .wrapper:before, .blog-post .tags:before, .checkout .checkout-form .step-header:before, .clearfix:after, .social-share:after, .image-container .nivo-directionNav:after, .property-search.type1 .heading:after, .property-search.type2 .property-results .property-result .details:after, .property-view.type1 .social-share:after, .property-categories .category-search-item:after, .property-categories .property-category-list-item .details:after, .product-search .heading:after, ul.refine-list:after, .product.product-view .variations:after, .product.product-view .product-share .social-share:after, .product-variation-choice .type-picker:after, .product-variation-choice .size-picker:after, .product-variation-choice .color-picker:after, .product-result .wrapper:after, .related-products li:after, .product-orders .order-item .section1:after, .product-orders.view-order .order-details .wrapper:after, .payment-details .wrapper:after, .payment-pending-form .wrapper:after, .blog-post .tags:after, .checkout .checkout-form .step-header:after {
   content: " ";
   display: table; }
 
-.clearfix:after, .social-share:after, .image-container .nivo-directionNav:after, .property-search.type1 .heading:after, .property-search.type2 .property-results .property-result .details:after, .property-view.type1 .social-share:after, .property-categories .category-search-item:after, .property-categories .property-category-list-item .details:after, .product-search .heading:after, ul.refine-list:after, .product.product-view .variations:after, .product.product-view .product-share .social-share:after, .product-variation-choice .type-picker:after, .product-variation-choice .size-picker:after, .product-variation-choice .color-picker:after, .product-result .wrapper:after, .related-products li:after, .blog-post .tags:after, .checkout .checkout-form .step-header:after {
+.clearfix:after, .social-share:after, .image-container .nivo-directionNav:after, .property-search.type1 .heading:after, .property-search.type2 .property-results .property-result .details:after, .property-view.type1 .social-share:after, .property-categories .category-search-item:after, .property-categories .property-category-list-item .details:after, .product-search .heading:after, ul.refine-list:after, .product.product-view .variations:after, .product.product-view .product-share .social-share:after, .product-variation-choice .type-picker:after, .product-variation-choice .size-picker:after, .product-variation-choice .color-picker:after, .product-result .wrapper:after, .related-products li:after, .product-orders .order-item .section1:after, .product-orders.view-order .order-details .wrapper:after, .payment-details .wrapper:after, .payment-pending-form .wrapper:after, .blog-post .tags:after, .checkout .checkout-form .step-header:after {
   clear: both; }
 
 .center-block {
@@ -8212,7 +8212,7 @@ footer {
     font-weight: bold;
     width: 110px; }
 
-.property-categories .row, .property-categories .address-select, .property-categories .property-advanced-search-widget .form-inputs, .property-advanced-search-widget .property-categories .form-inputs, .property-categories .product-cart .wrapper, .product-cart .property-categories .wrapper, .property-categories .product-cart .cart-items .cart-table, .product-cart .cart-items .property-categories .cart-table, .property-categories .blog-list .blog-entry .blog-entry-container, .blog-list .blog-entry .property-categories .blog-entry-container, .property-categories .cms-blog-posts-widget, .property-categories .checkout .wrapper, .checkout .property-categories .wrapper, .property-categories .checkout .checkout-form .shipping-method, .checkout .checkout-form .property-categories .shipping-method, .property-categories .checkout .checkout-form .payment .expiry-cvv, .checkout .checkout-form .payment .property-categories .expiry-cvv {
+.property-categories .row, .property-categories .address-select, .property-categories .property-advanced-search-widget .form-inputs, .property-advanced-search-widget .property-categories .form-inputs, .property-categories .product-cart .wrapper, .product-cart .property-categories .wrapper, .property-categories .product-cart .cart-items .cart-table, .product-cart .cart-items .property-categories .cart-table, .property-categories .product-orders.view-order .order-details .wrapper, .product-orders.view-order .order-details .property-categories .wrapper, .property-categories .blog-list .blog-entry .blog-entry-container, .blog-list .blog-entry .property-categories .blog-entry-container, .property-categories .cms-blog-posts-widget, .property-categories .checkout .wrapper, .checkout .property-categories .wrapper, .property-categories .checkout .checkout-form .shipping-method, .checkout .checkout-form .property-categories .shipping-method, .property-categories .payment .expiry-cvv, .payment .property-categories .expiry-cvv {
   margin: 0; }
 
 .property-categories .col-sm-6, .property-categories .property-search.type2 .property-results .property-result .property-attributes .item, .property-search.type2 .property-results .property-result .property-attributes .property-categories .item, .property-categories .property-view.type2 .property-attributes .item, .property-view.type2 .property-attributes .property-categories .item, .property-categories .property-advanced-search-widget .form-inputs .form-group, .property-advanced-search-widget .form-inputs .property-categories .form-group, .property-categories .product-cart .cart-items .cart-table .cart-column, .product-cart .cart-items .cart-table .property-categories .cart-column, .property-categories .checkout .checkout-form .shipping-method .method-select, .checkout .checkout-form .shipping-method .property-categories .method-select {
@@ -8575,8 +8575,7 @@ ul.refine-list {
   .product-result .buttons .btn, .product-result .buttons .product-variation-choice .type-picker li a, .product-variation-choice .type-picker li .product-result .buttons a, .product-result .buttons .product-variation-choice .size-picker li a, .product-variation-choice .size-picker li .product-result .buttons a, .product-result .buttons .product-variation-choice .color-picker li a, .product-variation-choice .color-picker li .product-result .buttons a {
     width: 37px; }
   .product-result .buttons .item-in-cart {
-    border-color: #31708f;
-    border-width: 2px;
+    box-shadow: inset 0 0 2px 2px #31708f;
     color: #31708f;
     font-weight: 600; }
 
@@ -8672,6 +8671,89 @@ ul.refine-list {
   .product-cart .cart-options a {
     display: block; }
 
+.product-orders .order-item {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  margin-bottom: 20px;
+  background: #eeeeee; }
+  .product-orders .order-item .section1 {
+    border-bottom: 1px solid #c8c8c8; }
+    .product-orders .order-item .section1 > div {
+      float: left;
+      padding: 20px;
+      text-transform: uppercase;
+      font-size: 0.9em;
+      color: #777777; }
+      .product-orders .order-item .section1 > div span {
+        text-transform: none;
+        color: #337ab7;
+        font-size: 1.1em; }
+    .product-orders .order-item .section1 .options {
+      float: right;
+      text-align: right; }
+      .product-orders .order-item .section1 .options span {
+        font-size: 1em;
+        color: #777777;
+        text-transform: uppercase; }
+      .product-orders .order-item .section1 .options .links {
+        padding: 0;
+        font-size: 1.1em; }
+        .product-orders .order-item .section1 .options .links li {
+          list-style: none;
+          text-transform: none; }
+  .product-orders .order-item .section2 {
+    border-top: 1px solid #e2e2e2;
+    padding: 20px; }
+    .product-orders .order-item .section2 .product-list li {
+      list-style: none; }
+      .product-orders .order-item .section2 .product-list li span {
+        color: #777777;
+        display: inline-block;
+        width: 130px; }
+
+.product-orders.view-order .order-details {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  margin-bottom: 20px;
+  padding: 20px 20px 20px 40px;
+  background: #eeeeee; }
+  .product-orders.view-order .order-details .wrapper .shipping {
+    line-height: 1.8;
+    background: white;
+    padding: 20px; }
+    .product-orders.view-order .order-details .wrapper .shipping h3 {
+      margin-top: 0; }
+  .product-orders.view-order .order-details .wrapper .list .table tr td, .product-orders.view-order .order-details .wrapper .list .table tr th {
+    border: none; }
+
+.order-review .table tr > td:last-child, .order-review .table tr > th:last-child {
+  text-align: right; }
+
+.payment-details {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  margin-bottom: 20px; }
+  .payment-details .wrapper {
+    padding: 20px; }
+    .payment-details .wrapper h3 {
+      margin-top: 0; }
+    .payment-details .wrapper > div {
+      float: left;
+      text-transform: uppercase;
+      font-size: 0.9em;
+      color: #777777; }
+      .payment-details .wrapper > div span {
+        text-transform: none;
+        color: #337ab7;
+        font-size: 1.1em; }
+
+.payment-pending-form {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  margin-bottom: 20px; }
+  .payment-pending-form .wrapper {
+    padding: 20px; }
+    .payment-pending-form .wrapper h3 {
+      margin-top: 0; }
+    .payment-pending-form .wrapper .checkbox {
+      margin-left: 20px; }
+
 .product-simple-search-form {
   margin-bottom: 30px; }
 
@@ -8740,16 +8822,6 @@ ul.refine-list {
 .checkout .checkout-form .shipping-method .shipping-price {
   font-size: 1.4em; }
 
-.checkout .checkout-form .payment .credit-card-logo {
-  width: 200px;
-  margin-bottom: 20px; }
-
-.checkout .checkout-form .payment .options label {
-  margin-right: 40px; }
-
-.checkout .checkout-form .order-review .table tr > td:last-child, .checkout .checkout-form .order-review .table tr > th:last-child {
-  text-align: right; }
-
 .checkout .checkout-sidebar .cart-table .cart-column .cart-item {
   padding: 20px;
   border: 1px solid #ccc; }
@@ -8769,5 +8841,12 @@ ul.refine-list {
     text-align: right; }
   .checkout .checkout-sidebar .checkout-summary .table tr:last-child {
     font-weight: bold; }
+
+.payment .credit-card-logo {
+  width: 200px;
+  margin-bottom: 20px; }
+
+.payment .options label {
+  margin-right: 40px; }
 
 /*# sourceMappingURL=main.css.map */

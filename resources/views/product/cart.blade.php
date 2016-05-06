@@ -5,7 +5,7 @@
 @section('body-class', 'vendirun-app product-cart')
 @section('content')
     <div class="container">
-        <h1>Shopping Cart</h1>
+        <h1>{{ trans('vendirun::product.cart') }}</h1>
         <div class="wrapper">
             <div class="cart-items">
                 @include('vendirun::product.partials.cart.cart-list')

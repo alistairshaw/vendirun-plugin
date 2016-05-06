@@ -22,10 +22,22 @@ return [
     'favourites' => 'My Wishlist',
     'sendProductToFriend' => 'Share with a Friend',
     'addToCart' => 'Add to Cart',
+    'viewCart' => 'View Cart',
     'cart' => 'Shopping Cart',
     'checkout' => 'Check Out',
     'totalCartAmount' => 'Cart Total',
     'emptyCart' => 'Empty Cart',
     'noItemsInCart' => 'No Items in Cart',
-    'relatedProducts' => 'Related Products'
+    'relatedProducts' => 'Related Products',
+    'orderHistory' => 'My Orders',
+    'orderPlaced' => 'Order Placed',
+    'total' => 'Total',
+    'orderId' => 'Order Reference',
+    'viewOrder' => 'View Order',
+    'orderStatus' => 'Order Status',
+    'productName' => 'Product',
+    'quantity' => 'Quantity',
+    'discount' => 'Discount',
+    'paymentDate' => 'Payment Date',
+    'paymentMethod' => 'Payment Method'
 ];

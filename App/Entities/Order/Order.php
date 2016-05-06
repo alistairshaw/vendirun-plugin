@@ -1,9 +1,13 @@
 <?php namespace AlistairShaw\Vendirun\App\Entities\Order;
 
+use AlistairShaw\NameExploder\Exceptions\OrderItemNotFoundException;
 use AlistairShaw\Vendirun\App\Entities\Cart\Helpers\TaxCalculator;
 use AlistairShaw\Vendirun\App\Entities\Customer\Customer;
 use AlistairShaw\Vendirun\App\Entities\Order\OrderItem\OrderItem;
+use AlistairShaw\Vendirun\App\Entities\Order\Payment\Payment;
+use AlistairShaw\Vendirun\App\Entities\Order\Shipment\Shipment;
 use AlistairShaw\Vendirun\App\ValueObjects\Address;
+use Mockery\CountValidator\Exception;
 
 class Order {
 
@@ -33,6 +37,16 @@ class Order {
     private $items;
 
     /**
+     * @var array
+     */
+    private $payments;
+
+    /**
+     * @var array
+     */
+    private $shipments;
+
+    /**
      * @var string
      */
     private $shippingType;
@@ -45,15 +59,21 @@ class Order {
     private $oneTimeToken;
 
     /**
+     * @var string
+     */
+    private $createdAt;
+
+    /**
      * Order constructor.
      * @param Customer $customer
-     * @param Address  $billingAddress
-     * @param Address  $shippingAddress
+     * @param Address $billingAddress
+     * @param Address $shippingAddress
      * @param          $items
-     * @param string   $shippingType
-     * @param null     $id
+     * @param string $shippingType
+     * @param null $id
+     * @param null $createdAt
      */
-    public function __construct(Customer $customer, Address $billingAddress, Address $shippingAddress, $items, $shippingType = '', $id = null)
+    public function __construct(Customer $customer, Address $billingAddress, Address $shippingAddress, $items, $shippingType = '', $id = null, $createdAt = null)
     {
         $this->customer = $customer;
         $this->billingAddress = $billingAddress;
@@ -61,14 +81,41 @@ class Order {
         $this->items = $items;
         $this->shippingType = $shippingType;
         $this->id = $id;
+        $this->createdAt = $createdAt ? $createdAt : date("Y-m-d H:i:s");
+        $this->payments = [];
+        $this->shipments = [];
     }
 
     /**
-     * @param $id
+     * @param Payment $payment
      */
-    public function setId($id)
+    public function addPayment(Payment $payment)
     {
-        $this->id = $id;
+        $this->payments[] = $payment;
+    }
+
+    /**
+     * @return array
+     */
+    public function getPayments()
+    {
+        return $this->payments;
+    }
+
+    /**
+     * @param Shipment $shipment
+     */
+    public function addShipment(Shipment $shipment)
+    {
+        $this->shipments[] = $shipment;
+    }
+
+    /**
+     * @return array
+     */
+    public function getShipments()
+    {
+        return $this->shipments;
     }
 
     /**
@@ -113,9 +160,10 @@ class Order {
 
     /**
      * Unique items WITHOUT shipping
+     * @param bool $ignorePriceDifferences
      * @return object
      */
-    public function getUniqueItems()
+    public function getUniqueItems($ignorePriceDifferences = false)
     {
         $final = [];
         foreach ($this->getItems() as $item)
@@ -128,12 +176,12 @@ class Order {
             $matched = false;
             foreach ($final as $index => $finalItem)
             {
-                if ($item->getPrice() == $finalItem->price
-                    && $item->getProductName() == $finalItem->productName
+                if ($item->getProductName() == $finalItem->productName
                     && $item->getProductSku() == $finalItem->sku
                     && $item->getProductVariationId() == $finalItem->productVariationId
                     && $item->getTaxRate() == $finalItem->taxRate
-                    && $item->getPrice() == $finalItem->unitPrice)
+                    && ($item->getPrice() == $finalItem->unitPrice || $ignorePriceDifferences)
+                    )
                 {
                     $matched = true;
                     $final[$index]->price += $item->getPrice();
@@ -151,7 +199,8 @@ class Order {
                     'sku' => $item->getProductSku(),
                     'productVariationId' => $item->getProductVariationId(),
                     'taxRate' => $item->getTaxRate(),
-                    'quantity' => 1
+                    'quantity' => 1,
+                    'priceWithTax' => TaxCalculator::totalPlusTax($item->getPrice(), $item->getTaxRate())
                 ];
             }
         }
@@ -233,6 +282,21 @@ class Order {
     }
 
     /**
+     * @return int
+     */
+    public function getPriceBeforeTax()
+    {
+        if (!$this->items) return 0;
+        $total = 0;
+        foreach ($this->concatItems() as $item)
+        {
+            $total += $item['price'];
+        }
+
+        return $total;
+    }
+
+    /**
      * @return string
      */
     public function getOneTimeToken()
@@ -246,6 +310,32 @@ class Order {
     public function setOneTimeToken($oneTimeToken)
     {
         $this->oneTimeToken = $oneTimeToken;
+    }
+
+    /**
+     * Returns the current overall status of the order
+     * @return string
+     */
+    public function getStatus()
+    {
+        $status = 'Pending Payment';
+        if ($this->getTotalPrice() <= $this->getTotalPaid()) $status = 'Order Processing';
+
+        return $status;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTotalPaid()
+    {
+        $totalPaid = 0;
+        foreach ($this->payments as $payment)
+        {
+            /* @var $payment Payment */
+            $totalPaid += $payment->getAmount();
+        }
+        return $totalPaid;
     }
 
     /**
@@ -276,6 +366,29 @@ class Order {
         }
 
         return $final;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCreatedDate()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @param $orderItemId
+     * @return OrderItem
+     * @throws OrderItemNotFoundException
+     */
+    public function getItemById($orderItemId)
+    {
+        foreach ($this->items as $item)
+        {
+            if ($item->getId() == $orderItemId) return $item;
+        }
+
+        throw new OrderItemNotFoundException('No item found for ID ' . $orderItemId);
     }
 
 }

@@ -2,10 +2,40 @@
 
 use AlistairShaw\Vendirun\App\Entities\Customer\Helpers\CustomerHelper;
 use AlistairShaw\Vendirun\App\Entities\Order\OrderItem\OrderItem;
+use AlistairShaw\Vendirun\App\Entities\Order\OrderSearchResult\OrderSearchResult;
+use AlistairShaw\Vendirun\App\Entities\Order\OrderSearchResult\OrderSearchResultFactory;
+use AlistairShaw\Vendirun\App\Entities\Order\Payment\Payment;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\Exceptions\FailResponseException;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\VendirunApi;
 
 class ApiOrderRepository implements OrderRepository {
+
+    /**
+     * @param $customerToken
+     * @param string $search
+     * @param int $limit
+     * @param int $offset
+     * @return OrderSearchResult
+     */
+    public function search($customerToken, $search = '', $limit = 0, $offset = 10)
+    {
+        $orderSearchResultFactory = new OrderSearchResultFactory();
+        try
+        {
+            $searchOptions = [
+                'token' => $customerToken,
+                'search' => $search,
+                'limit' => $limit,
+                'offset' => $offset
+            ];
+
+            return $orderSearchResultFactory->fromApi(VendirunApi::makeRequest('order/search', $searchOptions)->getData());
+        }
+        catch (FailResponseException $e)
+        {
+            return $orderSearchResultFactory->emptyResult();
+        }
+    }
 
     /**
      * @param      $id
@@ -23,7 +53,7 @@ class ApiOrderRepository implements OrderRepository {
 
         try
         {
-            $orderFactory = new OrderFactory($this);
+            $orderFactory = new OrderFactory();
             $apiResult = VendirunApi::makeRequest('order/find', $params)->getData();
 
             $order = $orderFactory->fromApi($apiResult);
@@ -44,6 +74,8 @@ class ApiOrderRepository implements OrderRepository {
      */
     public function save(Order $order)
     {
+        if ($order->getId()) return $this->update($order);
+
         $products = [];
         $items = [];
         foreach ($order->getItems() as $item)
@@ -61,7 +93,6 @@ class ApiOrderRepository implements OrderRepository {
         }
 
         $params = [
-            'id' => $order->getId(),
             'customer_id' => $order->getCustomer()->getId(),
             'full_name' => $order->getCustomer()->fullName(),
             'company_name' => $order->getCustomer()->getCompanyName(),
@@ -87,12 +118,54 @@ class ApiOrderRepository implements OrderRepository {
             'billing_address_same_as_shipping' => $order->getBillingAddress()->isEqualTo($order->getShippingAddress()),
             'products' => $products,
             'shipping_type' => $order->getShippingType(),
-            'items' => $items
+            'items' => $items,
+            'payments' => $this->compose_payments($order)
         ];
 
         $result = VendirunApi::makeRequest('order/store', $params)->getData();
 
         return $this->find($result->order_id, $result->one_time_token, false);
+    }
+
+    /**
+     * Update only sends payment details as you cannot edit anything else on an
+     *   order from the front-end
+     * @param Order $order
+     * @return Order
+     */
+    private function update(Order $order)
+    {
+        $params = [
+            'id' => $order->getId(),
+            'payments' => $this->compose_payments($order)
+        ];
+
+        $result = VendirunApi::makeRequest('order/update', $params)->getData();
+
+        return $this->find($result->order_id, false);
+    }
+
+    /**
+     * @param Order $order
+     * @return array
+     */
+    private function compose_payments(Order $order)
+    {
+        $payments = [];
+        foreach ($order->getPayments() as $payment)
+        {
+            /* @var $payment Payment */
+            $pd = $payment->getArray();
+            $payments[] = [
+                'id' => $payment->getId(),
+                'payment_amount' => $pd['amount'],
+                'payment_date' => $pd['paymentDate'],
+                'transaction_data' => $pd['transactionData'],
+                'payment_type' => $pd['paymentType']
+            ];
+        }
+
+        return $payments;
     }
 
 }

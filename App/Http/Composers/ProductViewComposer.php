@@ -2,6 +2,7 @@
 
 use AlistairShaw\Vendirun\App\Entities\Cart\CartFactory;
 use AlistairShaw\Vendirun\App\Entities\Product\Product;
+use AlistairShaw\Vendirun\App\Lib\ClientHelper;
 use AlistairShaw\Vendirun\App\Lib\LocaleHelper;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\VendirunApi;
 use App;
@@ -52,6 +53,9 @@ class ProductViewComposer {
         if (!isset($viewData['abbreviatedButtons'])) $view->with('abbreviatedButtons', false);
     }
 
+    /**
+     * @param View $view
+     */
     public function productView(View $view)
     {
         $viewData = $view->getData();
@@ -117,8 +121,14 @@ class ProductViewComposer {
         $viewData = $view->getData();
         if (!isset($viewData['cart']))
         {
-            $cartFactory = new CartFactory(App::make('AlistairShaw\Vendirun\App\Entities\Cart\CartRepository'));
-            $view->with('cart', $cartFactory->make());
+            $cartRepository = App::make('AlistairShaw\Vendirun\App\Entities\Cart\CartRepository');
+            $view->with('cart', $cartRepository->find());
         }
+    }
+
+    public function checkout(View $view)
+    {
+        $paymentGateways = ClientHelper::getPaymentGatewayInfo();
+        $view->with('paymentGateways', $paymentGateways);
     }
 }

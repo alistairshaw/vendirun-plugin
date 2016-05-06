@@ -52,10 +52,16 @@ class Product {
     private $relatedProducts;
 
     /**
-     * Collection of Shipping objects
+     * Collection of ProductShippingOption objects
      * @var array
      */
     private $shipping;
+
+    /**
+     * Collection of ProductTaxOption objects
+     * @var array
+     */
+    private $tax;
 
     /**
      * Collection of ProductVariation objects
@@ -80,7 +86,24 @@ class Product {
         if (isset($params['video'])) $this->video = $params['video'];
         if (isset($params['relatedProducts'])) $this->relatedProducts = $params['relatedProducts'];
         if (isset($params['shipping'])) $this->shipping = $params['shipping'];
+        if (isset($params['tax'])) $this->tax = $params['tax'];
         if (isset($params['variations'])) $this->variations = $params['variations'];
+    }
+
+    /**
+     * @return string
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getProductName()
+    {
+        return $this->productName;
     }
 
     /**
@@ -160,11 +183,19 @@ class Product {
     }
 
     /**
-     * @return string
+     * @return array
      */
-    public function getProductName()
+    public function getShipping()
     {
-        return $this->productName;
+        return $this->shipping;
+    }
+
+    /**
+     * @return array
+     */
+    public function getTax()
+    {
+        return $this->tax;
     }
 
 }

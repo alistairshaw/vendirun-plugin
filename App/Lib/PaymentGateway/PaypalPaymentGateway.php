@@ -1,10 +1,11 @@
 <?php namespace AlistairShaw\Vendirun\App\Lib\PaymentGateway;
 
 use AlistairShaw\Vendirun\App\Entities\Order\Order;
-use AlistairShaw\Vendirun\App\Entities\Order\Payment\PaymentRepository;
+use AlistairShaw\Vendirun\App\Entities\Order\OrderRepository;
 use AlistairShaw\Vendirun\App\Lib\ClientHelper;
 use AlistairShaw\Vendirun\App\Entities\Order\Payment\Payment as VendirunPayment;
 use AlistairShaw\Vendirun\App\Lib\CountryHelper;
+use Mockery\CountValidator\Exception;
 use PayPal\Api\Amount;
 use PayPal\Api\Details;
 use PayPal\Api\Item;
@@ -35,9 +36,9 @@ class PaypalPaymentGateway extends AbstractPaymentGateway implements PaymentGate
      */
     private $cancelUrl;
 
-    public function __construct(Order $order, PaymentRepository $paymentRepository)
+    public function __construct(Order $order, OrderRepository $orderRepository)
     {
-        parent::__construct($order, $paymentRepository);
+        parent::__construct($order, $orderRepository);
         $this->setApiContext();
     }
 
@@ -62,17 +63,9 @@ class PaypalPaymentGateway extends AbstractPaymentGateway implements PaymentGate
             ->setTransactions(array($transaction));
 
         $payment->create($this->apiContext);
-        
+
         $link = $payment->getApprovalLink();
         return $link;
-        /*try
-        {
-
-        }
-        catch (\Exception $e)
-        {
-            return dd($e);
-        }*/
     }
 
     /**
@@ -87,15 +80,22 @@ class PaypalPaymentGateway extends AbstractPaymentGateway implements PaymentGate
         $execution->setPayerId($params['PayerID']);
 
         $transaction = $this->buildTransaction();
-        $execution->addTransaction($transaction);
 
-        $payment->execute($execution, $this->apiContext);
+        try
+        {
+            $execution->addTransaction($transaction);
+            $payment->execute($execution, $this->apiContext);
+            $payment = Payment::get($params['paymentId'], $this->apiContext);
+        }
+        catch (\Exception $e)
+        {
+            dd($e);
+        }
 
-        $payment = Payment::get($params['paymentId'], $this->apiContext);
+        $vendirunPayment = new VendirunPayment($this->order->getTotalPrice(), date("Y-m-d"), 'paypal', json_encode($payment));
+        $this->order->addPayment($vendirunPayment);
 
-        $vendirunPayment = new VendirunPayment($this->order, $this->order->getTotalPrice(), date("Y-m-d"), 'paypal', json_encode($payment));
-
-        return $this->paymentRepository->save($vendirunPayment);
+        return $this->orderRepository->save($this->order);
     }
 
     /**
@@ -104,31 +104,33 @@ class PaypalPaymentGateway extends AbstractPaymentGateway implements PaymentGate
     private function buildTransaction()
     {
         $clientInfo = ClientHelper::getClientInfo();
+        $priceIncludesTax = $clientInfo->business_settings->tax->price_includes_tax;
 
         $paypalItems = [];
         $subTotal = 0;
+
         foreach ($this->order->getUniqueItems() as $item)
         {
             $subTotal += $item->price;
 
-            $newItem = new Item();
-            $newItem->setName($item->productName)
-                ->setCurrency($clientInfo->currency->currency_iso)
-                ->setQuantity($item->quantity)
-                ->setSku($item->sku)
-                ->setPrice($item->unitPrice / 100);
+            // This doesn't work when price includes tax, because you can't split the price properly
+            if (!$priceIncludesTax)
+            {
+                $newItem = new Item();
+                $newItem->setName($item->productName)
+                    ->setCurrency($clientInfo->currency->currency_iso)
+                    ->setQuantity($item->quantity)
+                    ->setSku($item->sku)
+                    ->setPrice($item->unitPrice / 100);
 
-            // var_dump($item->price / 100);
-
-            $paypalItems[] = $newItem;
+                $paypalItems[] = $newItem;
+            }
         }
 
         $shippingBeforeTax = $this->order->getShipping() / 100;
         $tax = $this->order->getTax() / 100;
         $subTotal = $subTotal / 100;
         $total = $this->order->getTotalPrice() / 100;
-
-        // dd($shippingBeforeTax, $tax, $subTotal, $total);
 
         $orderShippingAddress = $this->order->getShippingAddress()->getArray();
         $shippingAddress = new ShippingAddress();
@@ -141,7 +143,7 @@ class PaypalPaymentGateway extends AbstractPaymentGateway implements PaymentGate
         $shippingAddress->setRecipientName($this->order->getCustomer()->fullName());
 
         $itemList = new ItemList();
-        $itemList->setItems($paypalItems);
+        if (!$priceIncludesTax) $itemList->setItems($paypalItems);
         $itemList->setShippingAddress($shippingAddress);
 
         $details = new Details();

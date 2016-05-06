@@ -2,6 +2,7 @@
 
 use AlistairShaw\Vendirun\App\Entities\Product\ProductSearchResult\ProductSearchResult;
 use AlistairShaw\Vendirun\App\Entities\Product\ProductSearchResult\ProductSearchResultFactory;
+use AlistairShaw\Vendirun\App\Lib\VendirunApi\Exceptions\FailResponseException;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\VendirunApi;
 
 class ApiProductRepository implements ProductRepository {
@@ -25,6 +26,24 @@ class ApiProductRepository implements ProductRepository {
     public function search($searchParams)
     {
         $productSearchResultFactory = new ProductSearchResultFactory();
-        return $productSearchResultFactory->fromApi(VendirunApi::makeRequest('product/search', $searchParams)->getData());
+        try
+        {
+            return $productSearchResultFactory->fromApi(VendirunApi::makeRequest('product/search', $searchParams)->getData());
+        }
+        catch (FailResponseException $e)
+        {
+            return $productSearchResultFactory->emptyResult();
+        }
+    }
+
+    /**
+     * @param $productVariationId
+     * @return mixed
+     */
+    public function findByVariationId($productVariationId)
+    {
+        $searchParams['product_variation_id'] = $productVariationId;
+        $productFactory = new ProductFactory();
+        return $productFactory->fromApi(VendirunApi::makeRequest('product/product', $searchParams)->getData());
     }
 }

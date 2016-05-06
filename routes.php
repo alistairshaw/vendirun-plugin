@@ -1,6 +1,6 @@
 <?php
 
-Route::group(['middleware' => ['api', 'web']], function ()
+Route::group(['middleware' => ['web']], function ()
 {
     foreach (array_merge([''], ClientHelper::getValidLocales()) as $locale)
     {
@@ -8,8 +8,10 @@ Route::group(['middleware' => ['api', 'web']], function ()
         {
             $localePrefix = $locale ? $locale . '.' : '';
             Route::get('/', ['as' => $localePrefix . 'vendirun.api.base', 'uses' => 'HomeController@index']);
-            Route::any('shipping/calculate', ['as' => $localePrefix . 'vendirun.api.shippingCalculate', 'uses' => 'ShippingController@calculate']);
-            Route::any('product/variations/{productId}', ['as' => $localePrefix . 'vendirun.api.getVariations', 'uses' => 'ProductController@getVariations']);
+            Route::get('cart/calculate', ['as' => $localePrefix . 'vendirun.api.cart.calculate', 'uses' => 'CartController@calculate']);
+            Route::post('cart/add', ['as' => $localePrefix . 'vendirun.api.cart.add', 'uses' => 'CartController@add']);
+            Route::post('cart/remove', ['as' => $localePrefix . 'vendirun.api.cart.remove', 'uses' => 'CartController@remove']);
+            Route::get('product/{productId}', ['as' => $localePrefix . 'vendirun.api.product.find', 'uses' => 'ProductController@find']);
         });
     }
 });
@@ -25,8 +27,8 @@ Route::group(['middleware' => ['web']], function ()
             Route::group(['prefix' => 'property'], function () use ($localePrefix)
             {
                 Route::any('/', ['as' => $localePrefix . 'vendirun.propertySearch', 'uses' => 'Property\PropertyController@index']);
+                Route::any('/xml', ['as' => $localePrefix . 'vendirun.propertyXml', 'uses' => 'Property\PropertyController@xml']);
                 Route::get('view/{id}/{propertyName?}', ['as' => $localePrefix . 'vendirun.propertyView', 'uses' => 'Property\PropertyController@propertyView']);
-                Route::get('search', ['as' => $localePrefix . 'vendirun.propertyRecommend', 'uses' => 'Cms\PageController@temp']);
                 Route::get('clear-search', ['as' => $localePrefix . 'vendirun.propertyClearSearch', 'uses' => 'Property\PropertyController@clearSearch']);
 
                 Route::get('search', ['as' => $localePrefix . 'vendirun.searchProperties', 'uses' => 'Property\PropertyController@search']);
@@ -94,6 +96,12 @@ Route::group(['middleware' => ['web']], function ()
 
                 Route::post('do-register', ['as' => $localePrefix . 'vendirun.doRegister', 'uses' => 'Customer\CustomerController@doRegister']);
                 Route::post('do-login', ['as' => $localePrefix . 'vendirun.doLogin', 'uses' => 'Customer\CustomerController@doLogin']);
+
+                Route::group(['prefix' => 'account'], function () use ($localePrefix)
+                {
+                    Route::get('orders', ['as' => $localePrefix . 'vendirun.customer.account.orders', 'uses' => 'Customer\Account\OrderController@index']);
+                    Route::get('orders/view/{orderId}', ['as' => $localePrefix . 'vendirun.customer.account.orderView', 'uses' => 'Customer\Account\OrderController@view']);
+                });
             });
 
             // blog

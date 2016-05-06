@@ -8,6 +8,11 @@ return [
     'apiEndPoint' => env('VENDIRUN_ENDPOINT', ''),
 
     /**
+     * API Key for Google Maps
+     */
+    'mapsApiKey' => env('MAPS_API_KEY', 'AIzaSyDX0VSYhAPvvV-EomBe1IzeVO4tX2yAH9w'),
+
+    /**
      * You can get the API key and client ID by logging into your
      * Vendirun and going to Business Setup -> Settings -> API
      */
@@ -63,6 +68,11 @@ return [
      * By default, how to sort product search results
      */
     'productDefaultSortBy' => 'price',
-    'productDefaultSortOrder' => 'ASC'
+    'productDefaultSortOrder' => 'ASC',
+
+    /**
+     * Date formatting
+     */
+    'dateFormat' => 'jS, M Y'
 
 ];

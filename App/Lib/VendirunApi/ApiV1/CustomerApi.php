@@ -15,12 +15,10 @@ class CustomerApi extends BaseApi {
      */
 	public function store($params)
 	{
-		$url = 'customer/store';
-        return $this->request($url, $params, true);
-        //todo: put this back so it sends an email when a customer signs up if API access is unavailable
-        /*try
+        try
         {
-
+            $url = 'customer/store';
+            return $this->request($url, $params, true);
         }
         catch (\Exception $e)
         {
@@ -28,7 +26,7 @@ class CustomerApi extends BaseApi {
             unset($params['password']);
             unset($params['password_confirmation']);
             $this->apiSubmissionFailed('contact-form', $params);
-        }*/
+        }
 	}
 
     public function find($params)
@@ -46,6 +44,17 @@ class CustomerApi extends BaseApi {
 		$url = 'customer/login';
 		return $this->request($url, $params, true);
 	}
+
+    /**
+     * @param $params
+     * @return object
+     * @throws FailResponseException
+     */
+    public function recommendFriend($params)
+    {
+        $url = 'customer/recommend_friend';
+        return $this->request($url, $params, true);
+    }
 
     /**
      * @param $params

@@ -11,7 +11,7 @@ class OrderRequest extends Request {
 
     public function rules()
     {
-        if (Request::has('recalculateShipping')) return [];
+        if (Request::has('recalculateShipping') || Request::has('orderId')) return [];
 
         $validation = [
             'emailAddress' => 'required|email',

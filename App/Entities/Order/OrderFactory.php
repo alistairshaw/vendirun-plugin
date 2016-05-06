@@ -4,24 +4,12 @@ use AlistairShaw\Vendirun\App\Entities\Cart\Cart;
 use AlistairShaw\Vendirun\App\Entities\Cart\CartItem\CartItem;
 use AlistairShaw\Vendirun\App\Entities\Customer\Customer;
 use AlistairShaw\Vendirun\App\Entities\Order\OrderItem\OrderItem;
+use AlistairShaw\Vendirun\App\Entities\Order\Payment\Payment;
+use AlistairShaw\Vendirun\App\Entities\Order\Shipment\ShipmentFactory;
 use AlistairShaw\Vendirun\App\ValueObjects\Address;
 use AlistairShaw\Vendirun\App\ValueObjects\Name;
 
 class OrderFactory {
-
-    /**
-     * @var OrderRepository
-     */
-    private $orderRepository;
-
-    /**
-     * OrderFactory constructor.
-     * @param OrderRepository $orderRepository
-     */
-    public function __construct(OrderRepository $orderRepository)
-    {
-        $this->orderRepository = $orderRepository;
-    }
 
     /**
      * @param Cart     $cart
@@ -102,6 +90,7 @@ class OrderFactory {
     public function fromApi($order)
     {
         $billingAddress = new Address([
+            'id' => $order->billing_address->id,
             'address1' => $order->billing_address->address1,
             'address2' => $order->billing_address->address2,
             'address3' => $order->billing_address->address3,
@@ -112,6 +101,7 @@ class OrderFactory {
         ]);
 
         $shippingAddress = new Address([
+            'id' => $order->shipping_address->id,
             'address1' => $order->shipping_address->address1,
             'address2' => $order->shipping_address->address2,
             'address3' => $order->shipping_address->address3,
@@ -121,19 +111,33 @@ class OrderFactory {
             'countryId' => $order->shipping_address->country_id,
         ]);
 
-        $customer = new Customer($order->customer_id, new Name($order->customer_id ? $order->customer->fullname : $order->guest_full_name));
+        // customer
+        $customer = new Customer($order->customer_id, Name::fromFullName($order->customer_id ? $order->customer->fullname : $order->guest_full_name));
         $customer->setJobRole($order->customer_id ? $order->customer->jobrole : $order->guest_jobrole);
         $customer->setPrimaryEmail($order->customer_id ? $order->customer->primary_email : $order->guest_email);
         $customer->setCompanyName($order->customer_id ? $order->customer->organisation_name : $order->guest_company_name);
         $customer->setTaxNumber($order->customer_id ? $order->customer->tax_number : $order->guest_tax_number);
-
+        
+        // order items
         $items = [];
         foreach ($order->items as $item)
         {
             $items[] = new OrderItem($item->id, $item->product_variation_id, $item->tax_rate, $item->price, $item->product_name, $item->product_sku, $item->is_shipping, $item->discount_amount);
         }
 
-        return new Order($customer, $billingAddress, $shippingAddress, $items, null, $order->id);
+        $vrOrder = new Order($customer, $billingAddress, $shippingAddress, $items, null, $order->id, $order->created);
+
+        // add the payments
+        foreach ($order->payments as $payment)
+        {
+            $vrOrder->addPayment(new Payment($payment->payment_amount, $payment->created, $payment->payment_type, $payment->transaction_data, $payment->id));
+        }
+
+        // shipments
+        $shipmentFactory = new ShipmentFactory();
+        foreach ($order->shipments as $shipment) $vrOrder->addShipment($shipmentFactory->fromApi($shipment, $vrOrder));
+
+        return $vrOrder;
     }
 
 }

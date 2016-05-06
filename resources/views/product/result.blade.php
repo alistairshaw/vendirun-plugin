@@ -1,4 +1,4 @@
-<div class="product-result">
+<div class="product-result js-product-result">
     <div class="wrapper">
         <div class="part-one">
             @include('vendirun::product.partials.product-images', ['limitImages' => 1])

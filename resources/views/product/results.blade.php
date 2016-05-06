@@ -4,6 +4,7 @@
 @section('keywords', '')
 @section('body-class', 'vendirun-app product-search')
 @section('content')
+    @include('vendirun::product.partials.variationModal')
     <div class="container product-search">
         <div class="row">
             <div class="col-md-3 col-sm-4 hidden-xs hidden-sm">

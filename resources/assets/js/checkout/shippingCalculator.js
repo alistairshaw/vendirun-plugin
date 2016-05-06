@@ -37,7 +37,7 @@ var shippingCalculator = function(button) {
                 countryId: $('#shippingcountryId').val(),
                 shippingTypeId: $('#shippingTypeId').val()
             };
-            apiManager.makeCall('shipping', 'calculate', params, function(response) {
+            apiManager.makeCall('cart', 'calculate', params, function(response) {
                 _this.endProcess();
                 $('.js-display-total').html(response.data.totals.displayTotal);
                 $('.js-tax').html(response.data.totals.tax);

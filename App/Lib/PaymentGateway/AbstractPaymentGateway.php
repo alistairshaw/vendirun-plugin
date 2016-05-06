@@ -1,9 +1,7 @@
 <?php namespace AlistairShaw\Vendirun\App\Lib\PaymentGateway;
 
-use AlistairShaw\Vendirun\App\Entities\Cart\Cart;
-use AlistairShaw\Vendirun\App\Entities\Cart\CartRepository;
 use AlistairShaw\Vendirun\App\Entities\Order\Order;
-use AlistairShaw\Vendirun\App\Entities\Order\Payment\PaymentRepository;
+use AlistairShaw\Vendirun\App\Entities\Order\OrderRepository;
 
 abstract class AbstractPaymentGateway implements PaymentGateway {
 
@@ -13,19 +11,19 @@ abstract class AbstractPaymentGateway implements PaymentGateway {
     protected $order;
 
     /**
-     * @var PaymentRepository
+     * @var OrderRepository
      */
-    protected $paymentRepository;
+    protected $orderRepository;
 
     /**
      * AbstractPaymentGateway constructor.
      * @param Order             $order
-     * @param PaymentRepository $paymentRepository
+     * @param OrderRepository $orderRepository
      */
-    public function __construct(Order $order, PaymentRepository $paymentRepository = null)
+    public function __construct(Order $order, OrderRepository $orderRepository = null)
     {
         $this->order = $order;
-        $this->paymentRepository = $paymentRepository;
+        $this->orderRepository = $orderRepository;
     }
 
     /**

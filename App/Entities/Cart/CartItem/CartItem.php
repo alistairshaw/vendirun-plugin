@@ -83,11 +83,39 @@ class CartItem {
     }
 
     /**
+     * @return array
+     */
+    public function getShipping()
+    {
+        return $this->product->getShipping();
+    }
+
+    /**
      * @return int
      */
     public function getQuantity()
     {
         return $this->quantity;
+    }
+
+    /**
+     * @param int $quantity
+     */
+    public function setQuantity($quantity)
+    {
+        $this->quantity = $quantity;
+    }
+
+    /**
+     * @param int $quantity
+     * @return bool | TRUE if it's the last item
+     */
+    public function remove($quantity = 1)
+    {
+        $this->quantity = $this->quantity - $quantity;
+        if ($this->quantity <= 0) return true;
+
+        return false;
     }
 
     /**
@@ -236,5 +264,14 @@ class CartItem {
     {
         $variations = $this->product->getVariations();
         return $this->product->getProductName() . ' ' . $variations[0]->getName();
+    }
+
+    /**
+     * @param     $countryId
+     * @param int $default
+     */
+    public function setTaxPrice($countryId, $default = 0)
+    {
+        $this->taxRate = TaxCalculator::calculateProductTaxRate($this->product->getTax(), $countryId, $default);
     }
 }

@@ -39,8 +39,9 @@ class StripePaymentGateway extends AbstractPaymentGateway implements PaymentGate
                 ]
             ));
 
-            $payment = new Payment($this->order, $this->order->getTotalPrice(), date("Y-m-d"), 'stripe', $charge->getLastResponse()->body);
-            $this->paymentRepository->save($payment);
+            $payment = new Payment($this->order->getTotalPrice(), date("Y-m-d"), 'stripe', $charge->getLastResponse()->body);
+            $this->order->addPayment($payment);
+            $this->orderRepository->save($this->order);
         }
         catch (Card $e)
         {

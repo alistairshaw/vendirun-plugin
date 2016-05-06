@@ -1,6 +1,5 @@
 <?php namespace AlistairShaw\Vendirun\App\Entities\Customer;
 
-use AlistairShaw\NameExploder\NameExploder;
 use AlistairShaw\Vendirun\App\ValueObjects\Address;
 use AlistairShaw\Vendirun\App\ValueObjects\Name;
 

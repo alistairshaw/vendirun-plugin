@@ -1,5 +1,6 @@
 <?php namespace AlistairShaw\Vendirun\App\Entities\Cart;
 
+use AlistairShaw\Vendirun\App\Entities\Cart\CartItem\CartItem;
 use AlistairShaw\Vendirun\App\Entities\Customer\Helpers\CustomerHelper;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\Exceptions\FailResponseException;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\VendirunApi;
@@ -8,56 +9,23 @@ use Session;
 class ApiCartRepository implements CartRepository {
 
     /**
-     * @param $id
-     * @return bool
+     * @param Cart $cart
+     * @return Cart
+     * @throws FailResponseException
      */
-    public function add($id)
+    public function save($cart)
     {
-        $items = $this->getCart();
-        $items[] = (int)$id;
-        return $this->saveCart($items);
-    }
-
-    /**
-     * @param $id
-     * @return bool
-     */
-    public function remove($id)
-    {
-        $newItems = [];
-        $removed = false;
-        foreach ($this->getCart() as $item)
+        $items = $cart->getItems();
+        $itemIds = [];
+        foreach ($items as $cartItem)
         {
-            if ($item == $id && !$removed)
+            /* @var $cartItem CartItem */
+            for ($i = 1; $i <= $cartItem->getQuantity(); $i++)
             {
-                $removed = true;
-            }
-            else
-            {
-                $newItems[] = $item;
+                $itemIds[] = $cartItem->getVariationId();
             }
         }
-        return $this->saveCart($newItems);
-    }
-
-    /**
-     * @param $items
-     * @return bool
-     * @throws \Exception
-     */
-    public function saveCart($items)
-    {
-        if (!is_array($items)) throw new \Exception('Invalid cart items passed to repository');
-        if (count($items) == 0)
-        {
-            Session::put('shoppingCart', []);
-        }
-        else
-        {
-            if (!is_int($items[0])) throw new \Exception('Invalid cart item passed to repository');
-            Session::put('shoppingCart', $items);
-        }
-        Session::save();
+        Session::put('shoppingCart', $itemIds);
 
         if ($token = CustomerHelper::checkLoggedinCustomer())
         {
@@ -65,41 +33,54 @@ class ApiCartRepository implements CartRepository {
             {
                 $data = [
                     'token' => $token,
-                    'ids' => $items
+                    'ids' => $itemIds
                 ];
                 VendirunApi::makeRequest('cart/update', $data)->getData();
             }
             catch (FailResponseException $e)
             {
                 // API fail, maybe not logged in properly or token expired
+                //    doesn't matter, we just can't save the cart details to Vendirun
             }
         }
 
-        return true;
+        return $this->find();
     }
 
     /**
-     * @return array
+     * @return Cart
      */
-    public function getCart()
+    public function find()
     {
-        if (Session::has('shoppingCart')) return Session::get('shoppingCart');
-        if (!CustomerHelper::checkLoggedinCustomer()) return [];
+        $cartFactory = new CartFactory($this);
+
+        if (Session::has('shoppingCart')) return $cartFactory->makeFromIds(Session::get('shoppingCart'));
+        if (!CustomerHelper::checkLoggedinCustomer()) return $cartFactory->makeFromIds([]);
 
         try
         {
             $data = [
                 'token' => Session::get('token')
             ];
-            $items = $this->getItemListFromApiReturn(VendirunApi::makeRequest('cart/fetch', $data)->getData());
+            $result = VendirunApi::makeRequest('cart/fetch', $data)->getData();
+            $items = $this->getItemListFromApiReturn($result->items);
         }
         catch (FailResponseException $e)
         {
             // if token is invalid
             $items = [];
         }
-        
-        return $items;
+
+        return $cartFactory->makeFromIds($items);
+    }
+
+    /**
+     * @param array $items
+     * @return object
+     */
+    public function getProducts($items)
+    {
+        return VendirunApi::makeRequest('product/search', ['variation_list_only' => implode(",", $items)])->getData();
     }
 
     /**
@@ -117,21 +98,5 @@ class ApiCartRepository implements CartRepository {
             }
         }
         return $newItems;
-    }
-
-    /**
-     * @return object
-     */
-    public function getProducts()
-    {
-        return VendirunApi::makeRequest('product/search', ['variation_list_only' => implode(",", $this->getCart())])->getData();
-    }
-
-    /**
-     * @return bool
-     */
-    public function clear()
-    {
-        return $this->saveCart([]);
     }
 }

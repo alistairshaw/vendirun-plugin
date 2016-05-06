@@ -10,21 +10,45 @@ class HomeController extends ApiBaseController {
     public function index()
     {
         return $this->respond(true, [
-            'shipping' => [
+            'cart' => [
                 'calculate' => [
-                    'endpoint' => route(LocaleHelper::localePrefix() . 'vendirun.api.shippingCalculate'),
+                    'method' => 'GET',
+                    'endpoint' => route(LocaleHelper::localePrefix() . 'vendirun.api.cart.calculate'),
                     'requiredParameters' => [
                         'shippingCountryId' => 'int'
                     ],
                     'optionalParameters' => [
                         'shippingType' => 'string'
                     ]
+                ],
+                'add' => [
+                    'method' => 'POST',
+                    'endpoint' => route(LocaleHelper::localePrefix() . 'vendirun.api.cart.add'),
+                    'requiredParameters' => [
+                        'productVariationId' => 'int'
+                    ],
+                    'optionalParameters' => [
+                        'quantity' => 'int'
+                    ]
+                ],
+                'remove' => [
+                    'method' => 'POST',
+                    'endpoint' => route(LocaleHelper::localePrefix() . 'vendirun.api.cart.remove'),
+                    'requiredParameters' => [
+                        'productVariationId' => 'int'
+                    ],
+                    'optionalParameters' => [
+                        'quantity' => 'int'
+                    ]
                 ]
             ],
             'product' => [
-                'variations' => [
-                    'endpoint' => route(LocaleHelper::localePrefix() . 'vendirun.api.getVariations', ['productVariationId' => '*productId*']),
-                    'requiredParameters' => [],
+                'find' => [
+                    'method' => 'GET',
+                    'endpoint' => route(LocaleHelper::localePrefix() . 'vendirun.api.product.find', ['productId' => '*productId*']),
+                    'requiredParameters' => [
+                        'productId' => 'int'
+                    ],
                     'optionalParameters' => []
                 ]
             ]

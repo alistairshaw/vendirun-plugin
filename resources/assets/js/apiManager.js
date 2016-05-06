@@ -8,15 +8,35 @@ var apiManager = {
         });
     },
 
-    callEndPoint: function (endpoint, params, callback) {
-        // replace params in url if necessary
+    callEndPoint: function (endpoint, params, callback, error) {
+        // replace params in the url if necessary
+        var finalParams = {};
         $.each(params, function(index, val) {
-            endpoint.endpoint = endpoint.endpoint.replace('*' + index + '*', val);
+            if (endpoint.endpoint.indexOf('*' + index + '*') !== -1) {
+                endpoint.endpoint = endpoint.endpoint.replace('*' + index + '*', val);
+            }
+            else {
+                finalParams[index] = val;
+            }
         });
 
-        $.post(endpoint.endpoint, params, function(response) {
-            callback(response);
-        }, 'json');
+        $.ajax({
+            url: endpoint.endpoint,
+            data: finalParams,
+            dataType: 'json',
+            method: endpoint.method,
+            success: function(response) {
+                callback(response);
+            },
+            error: function(response) {
+                error('Error with API Endpoint', endpoint, response);
+            },
+            statusCode: {
+                404: function() {
+                    error('API 404: ' + endpoint.endpoint)
+                }
+            }
+        });
     },
 
     resolveEndpoint: function (entity, action, params, callback, error) {
@@ -27,7 +47,7 @@ var apiManager = {
                 if (index == entity) {
                     $.each(val, function (index, endpoint) {
                         if (index == action) {
-                            _this.callEndPoint(endpoint, params, callback);
+                            _this.callEndPoint(endpoint, params, callback, error);
                             ok = true;
                         }
                     });
@@ -43,7 +63,7 @@ var apiManager = {
     getEndpoints: function (callback) {
         if (sessionStorage.apiEndPoints) {
             var sessionObject = JSON.parse(sessionStorage.apiEndPoints);
-            if (sessionObject && sessionObject.when && parseInt(new Date(sessionObject.when).getTime()) + 3000 > parseInt(new Date().getTime())) {
+            if (sessionObject && sessionObject.when && parseInt(new Date(sessionObject.when).getTime()) + 30000 > parseInt(new Date().getTime())) {
                 callback(sessionObject.data);
                 return true;
             }

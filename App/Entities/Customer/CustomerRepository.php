@@ -13,4 +13,12 @@ interface CustomerRepository {
      */
     public function save(Customer $customer);
 
+    /**
+     * @param Customer $originator
+     * @param Customer $receiver
+     * @param string $link
+     * @return mixed
+     */
+    public function recommendFriend(Customer $originator, Customer $receiver, $link);
+
 }

@@ -28,12 +28,35 @@ class CartFactory {
     }
 
     /**
+     * @param $items
+     * @return Cart
+     */
+    public function makeFromIds($items)
+    {
+        $clientInfo = Config::get('clientInfo');
+        $priceIncludesTax = $clientInfo->business_settings->tax->price_includes_tax;
+
+        $cartItemFactory = new CartItemFactory($this->cartRepository);
+        $products = $cartItemFactory->makeFromIds($items, $priceIncludesTax);
+
+        $params = [
+            'ids' => $items,
+            'items' => $products,
+            'priceIncludesTax' => $priceIncludesTax,
+            'chargeTaxOnShipping' => $clientInfo->business_settings->tax->charge_tax_on_shipping,
+            'defaultTaxRate' => $clientInfo->business_settings->tax->default_tax_rate,
+        ];
+
+        return new Cart($params);
+    }
+
+    /**
      * CartFactory constructor.
      * @param null  $countryId
      * @param null  $shippingType
      * @return Cart
      */
-    public function make($countryId = null, $shippingType = null)
+    /*public function make($countryId = null, $shippingType = null)
     {
         // if no country select a default
         if (!$countryId) $countryId = CustomerHelper::getDefaultCountry();
@@ -65,6 +88,6 @@ class CartFactory {
         ];
 
         return new Cart($params);
-    }
+    }*/
 
 }

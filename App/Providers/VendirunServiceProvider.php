@@ -74,7 +74,6 @@ class VendirunServiceProvider extends ServiceProvider {
         $this->app->bind('AlistairShaw\Vendirun\App\Entities\Cart\CartRepository', 'AlistairShaw\Vendirun\App\Entities\Cart\ApiCartRepository');
         $this->app->bind('AlistairShaw\Vendirun\App\Entities\Order\OrderRepository', 'AlistairShaw\Vendirun\App\Entities\Order\ApiOrderRepository');
         $this->app->bind('AlistairShaw\Vendirun\App\Entities\Customer\CustomerRepository', 'AlistairShaw\Vendirun\App\Entities\Customer\ApiCustomerRepository');
-        $this->app->bind('AlistairShaw\Vendirun\App\Entities\Order\Payment\PaymentRepository', 'AlistairShaw\Vendirun\App\Entities\Order\Payment\ApiPaymentRepository');
         $this->app->bind('AlistairShaw\Vendirun\App\Entities\Product\ProductRepository', 'AlistairShaw\Vendirun\App\Entities\Product\ApiProductRepository');
         $this->app->bind('AlistairShaw\Vendirun\App\Entities\Product\ProductCategory\ProductCategoryRepository', 'AlistairShaw\Vendirun\App\Entities\Product\ProductCategory\ApiProductCategoryRepository');
 

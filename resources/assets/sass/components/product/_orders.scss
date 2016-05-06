@@ -1,0 +1,159 @@
+.product-orders {
+    .order-item {
+        @include card-box-shadow();
+        margin-bottom: 20px;
+        background: $gray-lighter;
+        .section1 {
+            @extend .clearfix;
+            > div {
+                float: left;
+                padding: 20px;
+                text-transform: uppercase;
+                font-size: 0.9em;
+                color: $gray-light;
+                span {
+                    text-transform: none;
+                    color: $brand-primary;
+                    font-size: 1.1em;
+                }
+            }
+            .options {
+                float: right;
+                text-align: right;
+                span {
+                    font-size: 1em;
+                    color: $gray-light;
+                    text-transform: uppercase;
+                }
+                .links {
+                    padding: 0;
+                    font-size: 1.1em;
+                    li {
+                        list-style: none;
+                        text-transform: none;
+                    }
+                }
+            }
+            border-bottom: 1px solid darken($gray-lighter, 15%);
+        }
+        .section2 {
+            border-top: 1px solid darken($gray-lighter, 5%);
+            padding: 20px;
+            .product-list {
+                padding: 0;
+                li {
+                    list-style: none;
+                    .sku {
+                        color: $gray-light;
+                        display: inline-block;
+                        width: 130px;
+                    }
+                    .quantity {
+                        display: inline-block;
+                        width: 50px;
+                    }
+                }
+            }
+        }
+    }
+    &.view-order {
+        .order-details {
+            @include card-box-shadow();
+            margin-bottom: 20px;
+            padding: 20px 20px 20px 40px;
+            background: $gray-lighter;
+            .wrapper {
+                @extend .clearfix;
+                @extend .row;
+                .shipping {
+                    @extend .col-sm-3;
+                    line-height: 1.8;
+                    background: white;
+                    padding: 20px;
+                    h3 {
+                        margin-top: 0;
+                    }
+                }
+                .list {
+                    @extend .col-sm-9;
+                    .table tr td, .table tr th {
+                        border: none;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.order-review {
+    .table {
+        tr {
+            > td:last-child, > th:last-child {
+                text-align: right;
+            }
+        }
+    }
+}
+
+.payment-details {
+    @include card-box-shadow();
+    margin-bottom: 20px;
+    .wrapper {
+        @extend .clearfix;
+        padding: 20px;
+        h3 {
+            margin-top: 0;
+        }
+        > div {
+            float: left;
+            text-transform: uppercase;
+            font-size: 0.9em;
+            color: $gray-light;
+            margin-right: 20px;
+            span {
+                text-transform: none;
+                color: $brand-primary;
+                font-size: 1.1em;
+            }
+        }
+    }
+}
+
+.payment-pending-form {
+    @include card-box-shadow();
+    margin-bottom: 20px;
+    .wrapper {
+        @extend .clearfix;
+        padding: 20px;
+        h3 {
+            margin-top: 0;
+        }
+        .checkbox {
+            margin-left: 20px;
+        }
+    }
+}
+
+.shipment-details {
+    @include card-box-shadow();
+    margin-bottom: 20px;
+    .wrapper {
+        @extend .clearfix;
+        padding: 20px;
+        h3 {
+            margin-top: 0;
+        }
+        > div {
+            float: left;
+            text-transform: uppercase;
+            font-size: 0.9em;
+            color: $gray-light;
+            margin-right: 20px;
+            span {
+                text-transform: none;
+                color: $brand-primary;
+                font-size: 1.1em;
+            }
+        }
+    }
+}

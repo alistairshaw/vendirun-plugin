@@ -1,6 +1,7 @@
 <?php namespace AlistairShaw\Vendirun\App\Entities\Product;
 
 use AlistairShaw\Vendirun\App\Entities\Product\ProductShippingOption\ProductShippingOption;
+use AlistairShaw\Vendirun\App\Entities\Product\ProductTaxOption\ProductTaxOption;
 use AlistairShaw\Vendirun\App\Entities\Product\ProductVariation\ProductVariationFactory;
 
 class ProductFactory {
@@ -23,12 +24,12 @@ class ProductFactory {
         ];
 
         if (isset($product->shipping)) $params['shipping'] = $this->makeShipping($product->shipping);
+        if (isset($product->tax)) $params['tax'] = $this->makeTax($product->tax);
         if (isset($product->variations)) $params['variations'] = $this->makeVariations($product->variations);
         if (isset($product->relatedProducts)) $params['relatedProducts'] = $this->makeRelatedProducts($product->related_products);
 
         return new Product($params);
     }
-
 
     /**
      * @param $apiShipping
@@ -42,6 +43,20 @@ class ProductFactory {
             $shipping[] = new ProductShippingOption($item->order_price, $item->shipping_type, $item->countries, $item->weight_from, $item->weight_to);
         }
         return $shipping;
+    }
+
+    /**
+     * @param $apiTax
+     * @return array
+     */
+    private function makeTax($apiTax)
+    {
+        $tax = [];
+        foreach ($apiTax as $item)
+        {
+            $tax[] = new ProductTaxOption($item->percentage, $item->countries, !$item->id);
+        }
+        return $tax;
     }
 
     /**

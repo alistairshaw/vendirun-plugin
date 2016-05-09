@@ -1,5 +1,5 @@
 <form method="POST" action="{{ route(LocaleHelper::localePrefix() . 'vendirun.propertySearch') }}">
-    <input type="hidden" name="_token" value="{{{ csrf_token() }}}">
+    <input type="hidden" name="_token" value="{{ csrf_token() }}">
     <div class="form-inputs">
         <div class="form-group">
             <label for="location">{{ trans('vendirun::property.location') }}</label>

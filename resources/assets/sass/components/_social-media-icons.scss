@@ -36,6 +36,30 @@
                 background-size: cover;
             }
         }
+        &.linkedin {
+            background: url('../images/social/linkedin-gray.jpg') no-repeat 1px 1px;
+            background-size: cover;
+            &:hover {
+                background: url('../images/social/linkedin.jpg') no-repeat 1px 1px;
+                background-size: cover;
+            }
+        }
+        &.instagram {
+            background: url('../images/social/instagram-gray.jpg') no-repeat 1px 1px;
+            background-size: cover;
+            &:hover {
+                background: url('../images/social/instagram.jpg') no-repeat 1px 1px;
+                background-size: cover;
+            }
+        }
+        &.stumbleupon {
+            background: url('../images/social/stumbleupon-gray.jpg') no-repeat 1px 1px;
+            background-size: cover;
+            &:hover {
+                background: url('../images/social/stumbleupon.jpg') no-repeat 1px 1px;
+                background-size: cover;
+            }
+        }
         &.rss {
             background: url('../images/social/rss-gray.jpg') no-repeat 1px 1px;
             background-size: cover;
@@ -68,6 +92,30 @@
                 background-size: cover;
                 &:hover {
                     background: url('../images/social/plus.jpg') no-repeat 1px 1px;
+                    background-size: cover;
+                }
+            }
+            &.linkedin {
+                background: url('../images/social/linkedin-dark.jpg') no-repeat 1px 1px;
+                background-size: cover;
+                &:hover {
+                    background: url('../images/social/linkedin.jpg') no-repeat 1px 1px;
+                    background-size: cover;
+                }
+            }
+            &.instagram {
+                background: url('../images/social/instagram-dark.jpg') no-repeat 1px 1px;
+                background-size: cover;
+                &:hover {
+                    background: url('../images/social/instagram.jpg') no-repeat 1px 1px;
+                    background-size: cover;
+                }
+            }
+            &.stumbleupon {
+                background: url('../images/social/stumbleupon-dark.jpg') no-repeat 1px 1px;
+                background-size: cover;
+                &:hover {
+                    background: url('../images/social/stumbleupon.jpg') no-repeat 1px 1px;
                     background-size: cover;
                 }
             }
@@ -104,6 +152,30 @@
                 background-size: cover;
                 &:hover {
                     background: url('../images/social/plus.jpg') no-repeat 1px 1px;
+                    background-size: cover;
+                }
+            }
+            &.linkedin {
+                background: url('../images/social/linkedin.jpg') no-repeat 1px 1px;
+                background-size: cover;
+                &:hover {
+                    background: url('../images/social/linkedin.jpg') no-repeat 1px 1px;
+                    background-size: cover;
+                }
+            }
+            &.instagram {
+                background: url('../images/social/instagram.jpg') no-repeat 1px 1px;
+                background-size: cover;
+                &:hover {
+                    background: url('../images/social/instagram.jpg') no-repeat 1px 1px;
+                    background-size: cover;
+                }
+            }
+            &.stumbleupon {
+                background: url('../images/social/stumbleupon.jpg') no-repeat 1px 1px;
+                background-size: cover;
+                &:hover {
+                    background: url('../images/social/stumbleupon.jpg') no-repeat 1px 1px;
                     background-size: cover;
                 }
             }

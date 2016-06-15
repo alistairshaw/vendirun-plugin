@@ -94,6 +94,7 @@ class ShippingCalculator {
             }
         }
 
-        return $shippingCharge;
+        // return null if no shipping charge applies
+        return $shippingCharge !== false ? $shippingCharge : NULL;
     }
 }

@@ -9,6 +9,9 @@
         @if ($social->google_plus)
             <a href="https://plus.google.com/+{{ $social->google_plus }}" class="googleplus" target="_blank"></a>
         @endif
+        @if ($social->linkedin)
+            <a href="https://linkedin.com/company/{{ $social->linkedin }}" class="linkedin" target="_blank"></a>
+        @endif
         @if ($social->blog)
             <a href="{{ $social->blog }}" class="rss" target="_blank"></a>
         @endif

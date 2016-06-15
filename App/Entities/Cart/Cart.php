@@ -328,10 +328,10 @@ class Cart {
         return (object)[
             'displayTotal' => CurrencyHelper::formatWithCurrency($this->displayTotal()),
             'tax' => CurrencyHelper::formatWithCurrency($this->tax()),
-            'displayShipping' => $this->displayShipping() === NULL ? 'NOT AVAILABLE' : CurrencyHelper::formatWithCurrency($this->displayShipping()),
+            'displayShipping' => $this->displayShipping() === NULL ? 'NOT AVAILABLE' : CurrencyHelper::formatWithCurrency($this->displayShipping(), false, '0.00'),
             'total' => CurrencyHelper::formatWithCurrency($this->total()),
             'totalBeforeTax' => CurrencyHelper::formatWithCurrency($this->totalBeforeTax()),
-            'shippingBeforeTax' => $this->displayShipping() === NULL ? 'NOT AVAILABLE' : CurrencyHelper::formatWithCurrency($this->shippingBeforeTax())
+            'shippingBeforeTax' => $this->displayShipping() === NULL ? 'NOT AVAILABLE' : CurrencyHelper::formatWithCurrency($this->shippingBeforeTax(), false, '0.00')
         ];
     }
 

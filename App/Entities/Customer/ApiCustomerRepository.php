@@ -58,7 +58,8 @@ class ApiCustomerRepository implements CustomerRepository {
         $data = [
             'full_name' => $customer->fullName(),
             'job_role' => $customer->getJobRole(),
-            'email' => $customer->getPrimaryEmail()
+            'email' => $customer->getPrimaryEmail(),
+            'telephone' => $customer->getPrimaryTelephone()
         ];
 
         if ($customer->getId()) return $this->update($data, $customer->getId());

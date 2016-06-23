@@ -33,6 +33,11 @@ class Customer {
     /**
      * @var string
      */
+    private $primaryTelephone;
+
+    /**
+     * @var string
+     */
     private $taxNumber;
 
     /**
@@ -123,6 +128,22 @@ class Customer {
     public function setPrimaryEmail($email)
     {
         $this->primaryEmail = $email;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPrimaryTelephone()
+    {
+        return $this->primaryTelephone;
+    }
+
+    /**
+     * @param $telephone
+     */
+    public function setPrimaryTelephone($telephone)
+    {
+        $this->primaryTelephone = $telephone;
     }
 
     /**

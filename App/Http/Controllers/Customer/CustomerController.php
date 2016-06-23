@@ -11,6 +11,7 @@ use AlistairShaw\Vendirun\App\Lib\LocaleHelper;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\Exceptions\FailResponseException;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\VendirunApi;
 use App;
+use Cache;
 use Config;
 use Event;
 use League\Flysystem\Adapter\Local;
@@ -188,30 +189,39 @@ class CustomerController extends VendirunBaseController {
     /**
      * Process Contact form
      * @param IlRequest $request
+     * @param CustomerRepository $customerRepository
      * @return mixed
      */
-    public function processContactForm(IlRequest $request)
+    public function processContactForm(IlRequest $request, CustomerRepository $customerRepository)
     {
         $this->validate($request, [
             'email' => 'required'
         ]);
 
-        $params['full_name'] = Request::get('fullname', '');
-        $params['email'] = Request::get('email', '');
-        $params['telephone'] = Request::get('telephone', '');
-        $params['property_id'] = Request::get('propertyId', '');
-        $params['form_id'] = Request::get('formId', '');
-        $params['note'] = nl2br(Request::get('message', ''));
-        $params['note'] .= Request::get('property') ? "<br><br>Property Name: " . Request::get('property') : '';
+        // we will always make a new customer on contact forms, in case the form values are wildly different from the logged in user's details
+        $customerFactory = new CustomerFactory();
+        $customer = $customerFactory->make(null, Request::get('fullname'), Request::get('email'));
+        $customer->setPrimaryTelephone(Request::get('telephone', null));
+        $customerRepository->save($customer);
 
-        try
+        if (Request::has('propertyId'))
         {
-            VendirunApi::makeRequest('customer/store', $params);
+            VendirunApi::makeRequest('property/addToFavourite', ['customer_id' => $customer->getId(), 'property_id' => Request::get('propertyId')]);
+            Cache::forget('favourites-' . Session::get('token'));
         }
-        catch (\Exception $e)
-        {
-            abort(404);
-        }
+
+        $note = '';
+        if (Request::has('property')) $note .= "<strong>Property Name: " . Request::get('property') . '</strong><br>';
+        if (Request::has('product')) $note .= "<strong>Product Name: " . Request::get('product') . '</strong><br>';
+        $note .= nl2br(Request::get('message', ''));
+
+        VendirunApi::makeRequest('customer/addNote', ['customer_id' => $customer->getId(), 'note' => $note]);
+        VendirunApi::makeRequest('customer/registerFormCompletion', [
+            'customer_id' => $customer->getId(),
+            'new_customer' => 1,
+            'data' => json_encode(Request::all()),
+            'form_id' => Request::get('formId', 'Website Form')
+        ]);
 
         Session::flash('vendirun-alert-success', 'Thank you for contacting us we will get back to you shortly!');
 

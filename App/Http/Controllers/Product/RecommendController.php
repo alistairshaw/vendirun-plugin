@@ -2,9 +2,9 @@
 
 use AlistairShaw\Vendirun\App\Entities\Customer\CustomerRepository;
 use AlistairShaw\Vendirun\App\Entities\Product\ProductRepository;
+use AlistairShaw\Vendirun\App\Exceptions\CustomerNotFoundException;
 use AlistairShaw\Vendirun\App\Http\Controllers\VendirunBaseController;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\Exceptions\FailResponseException;
-use AlistairShaw\Vendirun\App\Lib\VendirunApi\VendirunApi;
 use App;
 use View;
 
@@ -32,9 +32,9 @@ class RecommendController extends VendirunBaseController {
         {
             $data['customer'] = $customerRepository->find();
         }
-        catch (FailResponseException $e)
+        catch (CustomerNotFoundException $e)
         {
-            // if fail response, means we're not logged in. No problem
+            // this exception means we're not logged in. No problem
         }
 
         return View::make('vendirun::product.recommend', $data);

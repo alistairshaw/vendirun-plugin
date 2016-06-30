@@ -58,6 +58,29 @@ class CustomerApi extends BaseApi {
 
     /**
      * @param $params
+     * @return object
+     * @throws FailResponseException
+     */
+    public function addNote($params)
+    {
+        $url = 'customer/add_note';
+        return $this->request($url, $params, true);
+    }
+
+    /**
+     * @param $params
+     * @return object
+     * @throws FailResponseException
+     */
+    public function registerFormCompletion($params)
+    {
+        // params: customer_id, new_customer, data, form_id
+        $url = 'customer/register_form_completion';
+        return $this->request($url, $params, true);
+    }
+
+    /**
+     * @param $params
      * @return array
      */
 	public function tokenAuth($params)

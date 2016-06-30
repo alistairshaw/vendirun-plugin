@@ -6,15 +6,17 @@
 @section('content')
     <div class="container">
         <h1>{{ trans('vendirun::product.orderHistory') }}</h1>
-        @if ($pagination->hasPages())
+        @if ($pagination && $pagination->hasPages())
             <div class="pagination-container">
                 {!! $pagination->render() !!}
             </div>
         @endif
-        @foreach ($orders as $order)
+        @forelse ($orders as $order)
             @include('vendirun::customer.orders.partials.order-item')
-        @endforeach
-        @if ($pagination->hasPages())
+        @empty
+            @include('vendirun::customer.orders.partials.no-orders')
+        @endforelse
+        @if ($pagination && $pagination->hasPages())
             <div class="pagination-container">
                 {!! $pagination->render() !!}
             </div>

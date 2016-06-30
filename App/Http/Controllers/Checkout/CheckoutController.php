@@ -101,7 +101,7 @@ class CheckoutController extends VendirunBaseController {
         }
         catch (CustomerNotFoundException $e)
         {
-            $customer = $customerFactory->make(null, Request::get('emailAddress'), Request::get('fullName'));
+            $customer = $customerFactory->make(null, Request::get('fullName'), Request::get('emailAddress'));
         }
 
         // get country ID from the shipping address

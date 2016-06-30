@@ -31,6 +31,8 @@
                         {!! $productDisplay['longDescription'] !!}
                     </div>
                 </form>
+
+                @include('vendirun::forms.quick-enquiry')
             </div>
         </div>
     </div>

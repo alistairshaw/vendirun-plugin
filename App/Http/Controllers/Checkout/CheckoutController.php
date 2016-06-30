@@ -98,7 +98,6 @@ class CheckoutController extends VendirunBaseController {
             $customer = $customerRepository->find();
             $customer->setName(Name::fromFullName(Request::get('fullName')));
             $customer->setPrimaryEmail(Request::get('emailAddress'));
-            
         }
         catch (CustomerNotFoundException $e)
         {

@@ -1,7 +1,16 @@
 <form method="POST" action="{{ route('vendirun.contactFormSubmit') }}">
     <input type="hidden" name="_token" value="{{ csrf_token() }}">
-    <input type="hidden" name="property" value="{{ $property->title }}">
-    <input type="hidden" name="propertyId" value="{{ $property->id }}">
+
+    @if (isset($property))
+        <input type="hidden" name="property" value="{{ $property->title }}">
+        <input type="hidden" name="propertyId" value="{{ $property->id }}">
+    @endif
+
+    @if (isset($productDisplay))
+        <input type="hidden" name="product" value="{{ $productDisplay['productName'] }}">
+        <input type="hidden" name="productId" value="{{ $productDisplay['id'] }}">
+    @endif
+
     <input type="hidden" name="formId" value="Quick Enquiry">
     <div class="well js-contact-us" id="contact-us">
         <div class="row">
@@ -32,7 +41,7 @@
             <div class="col-sm-6">
                 <div class="form-group">
                     <label for="message">{{ trans('vendirun::forms.message') }}</label>
-                    <textarea class="form-control" name="message" id="message" placeholder="{{ trans('vendirun::forms.message') }}"></textarea>
+                    <textarea class="form-control" name="message" id="message" rows="6" placeholder="{{ trans('vendirun::forms.message') }}"></textarea>
                 </div>
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary">{{ trans('vendirun::forms.sendMessage') }}</button>

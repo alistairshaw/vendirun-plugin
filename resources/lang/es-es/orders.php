@@ -11,5 +11,5 @@ return [
     'expectedDelivery' => 'Expected Delivery',
     'trackingNumber' => 'Tracking Number',
     'itemsInShipment' => 'Items in Shipment',
-    'none' => 'You haven\'t made any orders yet.'
+    'none' => 'No existen orders.'
 ];

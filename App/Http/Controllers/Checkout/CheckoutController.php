@@ -25,7 +25,7 @@ class CheckoutController extends VendirunBaseController {
     /**
      * @param CartRepository     $cartRepository
      * @param CustomerRepository $customerRepository
-     * @return \Illuminate\Contracts\View\View
+     * @return mixed
      */
     public function index(CartRepository $cartRepository, CustomerRepository $customerRepository)
     {
@@ -84,7 +84,7 @@ class CheckoutController extends VendirunBaseController {
      * @param CartRepository     $cartRepository
      * @param OrderRepository    $orderRepository
      * @param CustomerRepository $customerRepository
-     * @return $this|CheckoutController|\Illuminate\Http\RedirectResponse
+     * @return mixed
      */
     public function process(OrderRequest $request, CartRepository $cartRepository, OrderRepository $orderRepository, CustomerRepository $customerRepository)
     {

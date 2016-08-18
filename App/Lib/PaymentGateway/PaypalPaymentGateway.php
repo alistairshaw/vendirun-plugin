@@ -201,7 +201,10 @@ class PaypalPaymentGateway extends AbstractPaymentGateway implements PaymentGate
 
         $this->apiContext->setConfig(
             [
-                'log.LogEnabled' => false
+                'mode' => $settings->sandbox_mode ? 'sandbox' : 'live',
+                'log.FileName' => './storage/logs/paypal.log',
+                'log.LogLevel' => $settings->sandbox_mode ? 'DEBUG' : 'INFO', // PLEASE USE `INFO` LEVEL FOR LOGGING IN LIVE ENVIRONMENTS
+                'cache.enabled' => true
             ]
         );
     }

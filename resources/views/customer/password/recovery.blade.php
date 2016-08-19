@@ -11,6 +11,8 @@
                     <form method="post" action="{{ route('vendirun.doPasswordRecovery') }}">
                         <h2>{{ trans('vendirun::forms.recoverYourPassword') }}</h2>
 
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+
                         @if(isset($alertMessage))
                             <div class="alert alert-danger js-fade-out" data-time="5">
                                 <i class="fa fa-exclamation-triangle"></i> {{ $alertMessage }}

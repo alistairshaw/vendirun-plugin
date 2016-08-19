@@ -7,7 +7,6 @@ use AlistairShaw\Vendirun\App\Http\Controllers\VendirunBaseController;
 use AlistairShaw\Vendirun\App\Lib\LocaleHelper;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\Exceptions\FailResponseException;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\VendirunApi;
-use App;
 use Redirect;
 use Request;
 use Session;
@@ -27,7 +26,7 @@ class PasswordController extends VendirunBaseController {
     }
 
     /**
-     * @return $this|\Illuminate\Http\RedirectResponse
+     * @return mixed
      */
     public function processRecovery()
     {
@@ -51,6 +50,7 @@ class PasswordController extends VendirunBaseController {
     }
 
     /**
+     * @param $token
      * @return \Illuminate\View\View
      */
     public function resetForm($token)
@@ -59,7 +59,7 @@ class PasswordController extends VendirunBaseController {
     }
 
     /**
-     * @return $this|\Illuminate\Http\RedirectResponse
+     * @return mixed
      */
     public function processReset()
     {

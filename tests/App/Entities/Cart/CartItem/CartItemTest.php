@@ -1,8 +1,8 @@
 <?php namespace AlistairShaw\Vendirun\Tests\App\Entities\Cart\CartItem;
 
-use AlistairShaw\Vendirun\Tests\App\CampusTestCase;
+use AlistairShaw\Vendirun\Tests\App\VendirunTestCase;
 
-class CartItemTest extends CampusTestCase {
+class CartItemTest extends VendirunTestCase {
 
     public function testGetSingleItemPrice()
     {

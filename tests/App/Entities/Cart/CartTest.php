@@ -1,9 +1,9 @@
 <?php namespace AlistairShaw\Vendirun\Tests\App\Entities\Cart;
 
 use AlistairShaw\Vendirun\App\Entities\Cart\Cart;
-use AlistairShaw\Vendirun\Tests\App\CampusTestCase;
+use AlistairShaw\Vendirun\Tests\App\VendirunTestCase;
 
-class CartTest extends CampusTestCase {
+class CartTest extends VendirunTestCase {
 
     public function testGetDefaultTaxRate()
     {
@@ -175,41 +175,5 @@ class CartTest extends CampusTestCase {
         $cart = $this->makeCart(true, false, 'Express Shipping');
         $this->assertEquals('Express Shipping', $cart->getShippingType());
     }*/
-
-    /**
-     * @param bool   $priceIncludesTax
-     * @param bool   $shippingIsNull
-     * @param string $shippingType
-     * @return Cart
-     */
-    private function makeCart($priceIncludesTax = true, $shippingIsNull = false, $shippingType = 'Standard Shipping')
-    {
-        $params = [
-            'ids' => [1,2,3],
-            'items' => $this->makeMultipleItems(3, $priceIncludesTax, 100, $shippingIsNull ? null : 50, $shippingType),
-            'priceIncludesTax' => $priceIncludesTax,
-            'chargeTaxOnShipping' => true,
-            'defaultTaxRate' => 20,
-            'orderShippingPrice' => 100
-        ];
-
-        $cart = new Cart($params);
-        return $cart;
-    }
-
-    /**
-     * @param $number
-     * @param bool $priceIncludesTax
-     * @param int $price
-     * @param int $shippingPrice
-     * @param string $shippingType
-     * @return array
-     */
-    private function makeMultipleItems($number, $priceIncludesTax = true, $price = 100, $shippingPrice = 50, $shippingType = 'Standard Shipping')
-    {
-        $items = [];
-        for ($i = 1; $i <= $number; $i++) $items[] = $this->makeCartItem($price, 1, $priceIncludesTax, $shippingPrice, 20, $shippingType);
-        return $items;
-    }
 
 }

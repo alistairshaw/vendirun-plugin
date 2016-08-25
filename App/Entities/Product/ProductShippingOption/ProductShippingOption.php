@@ -8,6 +8,11 @@ class ProductShippingOption {
     private $orderPrice;
 
     /**
+     * @var int
+     */
+    private $itemPrice;
+
+    /**
      * @var string
      */
     private $shippingType;
@@ -28,20 +33,29 @@ class ProductShippingOption {
     private $countryIds;
 
     /**
+     * @var null
+     */
+    private $supplierId;
+
+    /**
      * ProductShippingOption constructor.
      * @param       $orderPrice
+     * @param       $itemPrice
      * @param       $shippingType
+     * @param null $supplierId
      * @param array $countryIds
-     * @param null  $weightFrom
-     * @param null  $weightTo
+     * @param null $weightFrom
+     * @param null $weightTo
      */
-    public function __construct($orderPrice, $shippingType, $countryIds = [], $weightFrom = null, $weightTo = null)
+    public function __construct($orderPrice, $itemPrice, $shippingType, $supplierId = null, $countryIds = [], $weightFrom = null, $weightTo = null)
     {
-        $this->orderPrice = $orderPrice;
+        $this->orderPrice = (int)$orderPrice;
+        $this->itemPrice = (int)$itemPrice;
         $this->shippingType = $shippingType;
+        $this->supplierId = (int)$supplierId;
         $this->countryIds = $countryIds;
-        $this->weightFrom = $weightFrom;
-        $this->weightTo = $weightTo;
+        $this->weightFrom = (int)$weightFrom;
+        $this->weightTo = (int)$weightTo;
     }
 
     /**
@@ -69,6 +83,14 @@ class ProductShippingOption {
     public function getOrderPrice()
     {
         return $this->orderPrice;
+    }
+
+    /**
+     * @return int
+     */
+    public function getSupplierId()
+    {
+        return $this->supplierId;
     }
 
 }

@@ -61,7 +61,6 @@ class Cart {
     public function __construct($params)
     {
         $this->ids = $params['ids'];
-        $this->items = $params['items'];
         $this->priceIncludesTax = $params['priceIncludesTax'];
         $this->chargeTaxOnShipping = $params['chargeTaxOnShipping'];
         $this->defaultTaxRate = $params['defaultTaxRate'];
@@ -69,7 +68,15 @@ class Cart {
         $this->priceIncludesTax = (isset($params['priceIncludesTax'])) ? $params['priceIncludesTax'] : true;
         $this->chargeTaxOnShipping = (isset($params['chargeTaxOnShipping'])) ? $params['chargeTaxOnShipping'] : true;
 
-        if (isset($params['countryId'])) $this->countryId = $params['countryId'];
+        if (isset($params['items']))
+        {
+            $this->items = $params['items'];
+        }
+        else
+        {
+            $this->items = [];
+        }
+        if (isset($params['countryId'])) $this->countryId = (int)$params['countryId'];
         if (isset($params['shippingType'])) $this->shippingType = $params['shippingType'];
 
         $this->setShippingPrice();
@@ -354,8 +361,9 @@ class Cart {
                 $currentItem->setQuantity($currentItem->getQuantity() + $cartItem->getQuantity());
             }
         }
-        
+
         if (!$found) $this->items[] = $cartItem;
+        $this->setShippingPrice();
     }
 
     /**
@@ -460,9 +468,16 @@ class Cart {
     {
         if (!$this->countryId) $this->countryId = CustomerHelper::getDefaultCountry();
 
-        $this->availableShippingTypes = ShippingCalculator::availableShippingTypes($this->items, $this->countryId);
+        $this->availableShippingTypes = ShippingCalculator::availableShippingTypes($this, $this->countryId);
+
         if (!$this->shippingType && count($this->availableShippingTypes) > 0) $this->shippingType = $this->availableShippingTypes[0];
         $this->orderShippingPrice = ShippingCalculator::orderShippingCharge($this->items, $this->countryId, $this->shippingType);
+
+        foreach ($this->items as $item)
+        {
+            $item->setCountryId($this->countryId);
+            $item->setShippingType($this->shippingType);
+        }
     }
 
     /**

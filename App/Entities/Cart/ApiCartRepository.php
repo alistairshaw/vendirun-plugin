@@ -48,14 +48,16 @@ class ApiCartRepository implements CartRepository {
     }
 
     /**
+     * @param null $countryId
+     * @param string $shippingType
      * @return Cart
      */
-    public function find()
+    public function find($countryId = null, $shippingType = '')
     {
         $cartFactory = new CartFactory($this);
 
-        if (Session::has('shoppingCart')) return $cartFactory->makeFromIds(Session::get('shoppingCart'));
-        if (!CustomerHelper::checkLoggedinCustomer()) return $cartFactory->makeFromIds([]);
+        if (Session::has('shoppingCart')) return $cartFactory->makeFromIds(Session::get('shoppingCart'), $countryId, $shippingType);
+        if (!CustomerHelper::checkLoggedinCustomer()) return $cartFactory->makeFromIds([], $countryId, $shippingType);
 
         try
         {
@@ -71,7 +73,7 @@ class ApiCartRepository implements CartRepository {
             $items = [];
         }
 
-        return $cartFactory->makeFromIds($items);
+        return $cartFactory->makeFromIds($items, $countryId, $shippingType);
     }
 
     /**

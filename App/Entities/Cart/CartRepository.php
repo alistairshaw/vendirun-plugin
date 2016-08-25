@@ -9,9 +9,11 @@ interface CartRepository {
     public function save($cart);
 
     /**
+     * @param null $countryId
+     * @param string $shippingType
      * @return Cart
      */
-    public function find();
+    public function find($countryId = null, $shippingType = '');
 
     /**
      * @param array $items

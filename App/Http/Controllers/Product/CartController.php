@@ -3,6 +3,8 @@
 use AlistairShaw\Vendirun\App\Entities\Cart\CartFactory;
 use AlistairShaw\Vendirun\App\Entities\Cart\CartItem\CartItemFactory;
 use AlistairShaw\Vendirun\App\Entities\Cart\CartRepository;
+use AlistairShaw\Vendirun\App\Entities\Customer\CustomerRepository;
+use AlistairShaw\Vendirun\App\Entities\Customer\Helpers\CustomerHelper;
 use AlistairShaw\Vendirun\App\Entities\Product\ProductRepository;
 use AlistairShaw\Vendirun\App\Exceptions\InvalidProductVariationIdException;
 use AlistairShaw\Vendirun\App\Http\Controllers\VendirunBaseController;
@@ -17,12 +19,19 @@ class CartController extends VendirunBaseController {
 
     /**
      * @param CartRepository $cartRepository
-     * @return $this
+     * @return mixed
      */
-    public function index(CartRepository $cartRepository)
+    public function index(CartRepository $cartRepository, CustomerRepository $customerRepository)
     {
         $this->setPrimaryPath();
-        $cart = $cartRepository->find();
+
+        $countryId = Request::get('countryId', null);
+        if (!$countryId) $countryId = CustomerHelper::getDefaultCountry($customerRepository);
+
+        $cart = $cartRepository->find($countryId);
+
+        dd($cart);
+
         return View::make('vendirun::product.cart')->with('cart', $cart);
     }
 
@@ -43,7 +52,7 @@ class CartController extends VendirunBaseController {
 
             $clientInfo = Config::get('clientInfo');
             $priceIncludesTax = $clientInfo->business_settings->tax->price_includes_tax;
-            $cartItemFactory = new CartItemFactory($cartRepository);
+            $cartItemFactory = new CartItemFactory($cartRepository, $cart);
             $cartItem = $cartItemFactory->make($product, $priceIncludesTax, Request::input('quantity', 1));
             $cart->add($cartItem);
             $cartRepository->save($cart);

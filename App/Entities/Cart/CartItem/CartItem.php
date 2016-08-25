@@ -1,5 +1,6 @@
 <?php namespace AlistairShaw\Vendirun\App\Entities\Cart\CartItem;
 
+use AlistairShaw\Vendirun\App\Entities\Cart\Helpers\ShippingCalculator;
 use AlistairShaw\Vendirun\App\Entities\Cart\Helpers\TaxCalculator;
 use AlistairShaw\Vendirun\App\Entities\Product\Product;
 
@@ -46,6 +47,16 @@ class CartItem {
     private $priceIncludesTax;
 
     /**
+     * @var int
+     */
+    private $countryId;
+
+    /**
+     * @var string
+     */
+    private $shippingType;
+
+    /**
      * CartItem constructor.
      * @param $params
      */
@@ -53,12 +64,44 @@ class CartItem {
     {
         $this->productVariationId = $params['productVariationId'];
         $this->quantity = $params['quantity'];
-        $this->taxRate = $params['taxRate'];
         $this->product = $params['product'];
         $this->basePrice = $params['basePrice'];
-        $this->shippingPrice = $params['shippingPrice'];
-        $this->shippingTaxRate = $params['shippingTaxRate'];
-        $this->priceIncludesTax = $params['priceIncludesTax'];
+
+        if (isset($params['taxRate'])) $this->taxRate = $params['taxRate'];
+        if (isset($params['shippingPrice'])) $this->shippingPrice = $params['shippingPrice'];
+        if (isset($params['shippingTaxRate'])) $this->shippingTaxRate = $params['shippingTaxRate'];
+        if (isset($params['countryId'])) $this->countryId = $params['countryId'];
+        if (isset($params['shippingType'])) $this->shippingType = $params['shippingType'];
+        $this->priceIncludesTax = (isset($params['priceIncludesTax'])) ? $params['priceIncludesTax'] : true;
+
+        $this->updateShippingAndTaxes();
+    }
+
+    /**
+     * @param $countryId
+     */
+    public function setCountryId($countryId)
+    {
+        $this->countryId = (int)$countryId;
+        $this->updateShippingAndTaxes();
+    }
+
+    /**
+     * @param $shippingType
+     */
+    public function setShippingType($shippingType)
+    {
+        $this->shippingType = $shippingType ? $shippingType : null;
+        $this->updateShippingAndTaxes();
+    }
+
+    /**
+     *
+     */
+    private function updateShippingAndTaxes()
+    {
+        $this->taxRate = TaxCalculator::calculateProductTaxRate($this->getProduct()->getTax(), $this->countryId);
+        $this->shippingPrice = ShippingCalculator::shippingForItem($this->getProduct()->getShipping(), $this->getQuantity(), $this->countryId, $this->shippingType);
     }
 
     /**

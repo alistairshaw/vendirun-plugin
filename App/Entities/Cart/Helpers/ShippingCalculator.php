@@ -2,15 +2,18 @@
 
 namespace AlistairShaw\Vendirun\App\Entities\Cart\Helpers;
 
+use AlistairShaw\Vendirun\App\Entities\Cart\Cart;
+use AlistairShaw\Vendirun\App\Entities\Cart\CartItem\CartItem;
 use AlistairShaw\Vendirun\App\Entities\Product\Product;
 use AlistairShaw\Vendirun\App\Entities\Product\ProductShippingOption\ProductShippingOption;
 
-class ShippingCalculator {
+class ShippingCalculator
+{
 
     /**
      * @param array $shipping
-     * @param int    $quantity
-     * @param int    $countryId
+     * @param int $quantity
+     * @param int $countryId
      * @param string $shippingType
      * @return int|null
      */
@@ -21,7 +24,7 @@ class ShippingCalculator {
         foreach ($shipping as $sh)
         {
             /* @var $sh ProductShippingOption */
-            $price = $sh->getMatch($countryId, $shippingType);
+            if ($price = $sh->getMatch($countryId, $shippingType)) return $price;
         }
 
         if (!$price && $shippingType)
@@ -29,23 +32,25 @@ class ShippingCalculator {
             return self::shippingForItem($shipping, $quantity, $countryId, '');
         }
 
-        if ($price === false) return 0;
+        if ($price === false) return null;
 
         return $price * $quantity;
     }
 
     /**
-     * @param      $products
-     * @param null $countryId
+     * @param Cart $cart
      * @return array
      */
-    public static function availableShippingTypes($products, $countryId = NULL)
+    public static function availableShippingTypes(Cart $cart)
     {
         $availableShippingTypes = [];
         $first = true;
 
-        foreach ($products as $product)
+        foreach ($cart->getItems() as $cartItem)
         {
+            /* @var $cartItem CartItem */
+            $product = $cartItem->getProduct();
+
             /* @var $product Product */
             $productShippingTypes = [];
             if ($product->getShipping())
@@ -53,7 +58,7 @@ class ShippingCalculator {
                 foreach ($product->getShipping() as $sh)
                 {
                     /* @var $sh ProductShippingOption */
-                    if ($shippingType = $sh->matchShippingType($countryId)) $productShippingTypes[] = $shippingType;
+                    if ($shippingType = $sh->matchShippingType($cart->getCountryId())) $productShippingTypes[] = $shippingType;
                 }
 
                 if (!$first)
@@ -79,7 +84,7 @@ class ShippingCalculator {
 
     /**
      * @param        $products
-     * @param null   $countryId
+     * @param null $countryId
      * @param string $shippingType
      * @return array
      */
@@ -87,6 +92,7 @@ class ShippingCalculator {
     {
         $shippingCharge = null;
 
+        $suppliers = [];
 
         foreach ($products as $product)
         {
@@ -96,9 +102,26 @@ class ShippingCalculator {
                 foreach ($product->getShipping() as $sh)
                 {
                     /* @var $sh ProductShippingOption */
-                    if ($shippingCharge = $sh->getMatch($countryId, $shippingType)) return $shippingCharge;
+                    if ($sh->getMatch($countryId, $shippingType))
+                    {
+                        if ($sh->getSupplierId())
+                        {
+                            $suppliers[$sh->getSupplierId()] = $sh->getOrderPrice();
+                        }
+                        else
+                        {
+                            $suppliers[0] = $sh->getOrderPrice();
+                        }
+                        continue;
+                    }
                 }
             }
+        }
+
+        $shippingCharge = false;
+        foreach ($suppliers as $supplierId => $value)
+        {
+            $shippingCharge += $value;
         }
 
         // return null if no shipping charge applies

@@ -192,6 +192,14 @@ class CartItem {
     }
 
     /**
+     * @return int
+     */
+    public function rawShipping()
+    {
+        return $this->shippingPrice;
+    }
+
+    /**
      * total shipping before tax
      * @return int
      */
@@ -227,6 +235,7 @@ class CartItem {
     public function tax()
     {
         $tax = $this->priceIncludesTax ? TaxCalculator::taxFromTotal($this->basePrice, $this->taxRate, $this->quantity) : ($this->basePrice * $this->quantity / 100 * $this->taxRate);
+
         return $tax + $this->shippingTax();
     }
 

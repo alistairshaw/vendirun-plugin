@@ -214,7 +214,8 @@ class Cart {
      */
     public function totalBeforeTax()
     {
-        return $this->sum('totalBeforeTax');
+        $total = $this->sum('displayTotal');
+        return $this->priceIncludesTax ? $total - $this->taxWithoutShipping() : $total;
     }
 
     /**
@@ -288,7 +289,8 @@ class Cart {
     {
         if ($this->orderShippingPrice === NULL) return NULL;
 
-        return $this->sum('shippingTax') + $this->orderShippingTax();
+        $shippingTotal = $this->sum('rawShipping') + $this->orderShippingPrice;
+        return $this->priceIncludesTax ? TaxCalculator::taxFromTotal($shippingTotal, $this->getDefaultTaxRate()) : (int)($shippingTotal / 100 * $this->getDefaultTaxRate());
     }
 
     /**
@@ -317,7 +319,8 @@ class Cart {
      */
     public function taxWithoutShipping()
     {
-        return $this->sum('taxWithoutShipping');
+        $basePrice = $this->sum('displayTotal');
+        return $this->priceIncludesTax ? TaxCalculator::taxFromTotal($basePrice, $this->getDefaultTaxRate()) : ($basePrice / 100 * $this->getDefaultTaxRate());
     }
 
     /**

@@ -12,6 +12,8 @@ class TaxCalculator {
      */
     public static function calculateProductTaxRate($tax, $countryId = NULL, $default = 0)
     {
+        if (!$tax) return 0;
+
         $percentage = NULL;
         foreach ($tax as $taxOption)
         {

@@ -1,10 +1,10 @@
 <?php namespace AlistairShaw\Vendirun\App\Entities\Customer\Helpers;
 
 use AlistairShaw\Vendirun\App\Entities\Customer\Customer;
+use AlistairShaw\Vendirun\App\Entities\Customer\CustomerRepository;
 use AlistairShaw\Vendirun\App\Exceptions\CustomerNotFoundException;
 use App;
 use Config;
-use Request;
 use Session;
 
 class CustomerHelper {
@@ -18,35 +18,37 @@ class CustomerHelper {
     }
 
     /**
+     * @param $customerRepository
      * @return int
      */
-    public static function getDefaultCountry()
+    public static function getDefaultCountry(CustomerRepository $customerRepository = null)
     {
         // if country ID is in the GET then obviously, that
-        if (Request::has('countryId')) return Request::get('countryId');
+        if (isset($_GET['countryId']) && is_numeric($_GET['countryId'])) return (int)$_GET['countryId'];
 
-        $customerRepository = App::make('AlistairShaw\Vendirun\App\Entities\Customer\CustomerRepository');
-
-        try
+        if ($customerRepository)
         {
-            $customer = $customerRepository->find();
-
-            // get top address
-            /* @var $customer Customer */
-            $addresses = $customer->getAddresses();
-            if (count($addresses) > 0)
+            try
             {
-                return $addresses[0]->getCountryId();
+                $customer = $customerRepository->find();
+
+                // get top address
+                /* @var $customer Customer */
+                $addresses = $customer->getAddresses();
+                if (count($addresses) > 0)
+                {
+                    return $addresses[0]->getCountryId();
+                }
+            }
+            catch (CustomerNotFoundException $e)
+            {
+                // get company default country
+                $clientInfo = Config::get('clientInfo');
+                if ($clientInfo->country_id) return $clientInfo->country_id;
             }
         }
-        catch (CustomerNotFoundException $e)
-        {
-            // get company default country
-            $clientInfo = Config::get('clientInfo');
-            if ($clientInfo->country_id) return $clientInfo->country_id;
 
-            // use UK as super-default if company default not set
-            return 79;
-        }
+        // use UK as super-default if company default not set
+        return 79;
     }
 }

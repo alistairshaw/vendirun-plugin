@@ -46,28 +46,31 @@ class ShippingCalculator {
 
         foreach ($products as $product)
         {
-            $productShippingTypes = [];
             /* @var $product Product */
-            foreach ($product->getShipping() as $sh)
+            $productShippingTypes = [];
+            if ($product->getShipping())
             {
-                /* @var $sh ProductShippingOption */
-                if ($shippingType = $sh->matchShippingType($countryId)) $productShippingTypes[] = $shippingType;
-            }
-
-            if (!$first)
-            {
-                // if there are any available ones that aren't available for this product, remove them
-                $newAvailable = [];
-                foreach ($productShippingTypes as $type)
+                foreach ($product->getShipping() as $sh)
                 {
-                    if (in_array($type, $availableShippingTypes)) $newAvailable[] = $type;
+                    /* @var $sh ProductShippingOption */
+                    if ($shippingType = $sh->matchShippingType($countryId)) $productShippingTypes[] = $shippingType;
                 }
-                $availableShippingTypes = $newAvailable;
-            }
-            else
-            {
-                $first = false;
-                $availableShippingTypes = $productShippingTypes;
+
+                if (!$first)
+                {
+                    // if there are any available ones that aren't available for this product, remove them
+                    $newAvailable = [];
+                    foreach ($productShippingTypes as $type)
+                    {
+                        if (in_array($type, $availableShippingTypes)) $newAvailable[] = $type;
+                    }
+                    $availableShippingTypes = $newAvailable;
+                }
+                else
+                {
+                    $first = false;
+                    $availableShippingTypes = $productShippingTypes;
+                }
             }
         }
 
@@ -84,13 +87,17 @@ class ShippingCalculator {
     {
         $shippingCharge = null;
 
+
         foreach ($products as $product)
         {
             /* @var $product Product */
-            foreach ($product->getShipping() as $sh)
+            if ($product->getShipping())
             {
-                /* @var $sh ProductShippingOption */
-                if ($shippingCharge = $sh->getMatch($countryId, $shippingType)) return $shippingCharge;
+                foreach ($product->getShipping() as $sh)
+                {
+                    /* @var $sh ProductShippingOption */
+                    if ($shippingCharge = $sh->getMatch($countryId, $shippingType)) return $shippingCharge;
+                }
             }
         }
 

@@ -55,6 +55,15 @@ function CartManager () {
     };
 
     /**
+     * Updates anything on the page tagged with the appropriate classes
+     * @param data
+     */
+    var updatePageData = function (data) {
+        $('.js-shopping-cart-total').html(data.totals.displayTotal);
+        $('.js-shopping-cart-shipping-total').html(data.totals.displayShipping);
+    };
+
+    /**
      * Add an item to the cart
      * @param productVariationId
      * @param quantity
@@ -68,6 +77,7 @@ function CartManager () {
             callback(null, response);
             hideAddToCartButtons();
             showProductCountButtons();
+            updatePageData(response.data);
         }, function (error) {
             callback(error);
         });
@@ -86,8 +96,9 @@ function CartManager () {
             callback(null, response);
             hideAddToCartButtons();
             showProductCountButtons();
+            updatePageData(response.data);
         }, function (error) {
             callback(error);
         });
-    }
+    };
 }

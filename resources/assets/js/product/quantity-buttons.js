@@ -18,7 +18,7 @@ var quantityButtons = function() {
                         alert(error);
                     }
                     else {
-                        $button.parents('.js-quantity-buttons').find('span').html(response.data.ammendedItem.quantity);
+                        if (response.data.ammendedItem) $button.parents('.js-quantity-buttons').find('span').html(response.data.ammendedItem.quantity);
                     }
                 });
             });
@@ -36,7 +36,7 @@ var quantityButtons = function() {
                         alert(error);
                     }
                     else {
-                        $button.parents('.js-quantity-buttons').find('span').html(response.data.ammendedItem.quantity);
+                        if (response.data.ammendedItem) $button.parents('.js-quantity-buttons').find('span').html(response.data.ammendedItem.quantity);
                     }
                 });
             });

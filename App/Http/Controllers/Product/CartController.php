@@ -1,12 +1,10 @@
 <?php namespace AlistairShaw\Vendirun\App\Http\Controllers\Product;
 
-use AlistairShaw\Vendirun\App\Entities\Cart\CartFactory;
 use AlistairShaw\Vendirun\App\Entities\Cart\CartItem\CartItemFactory;
 use AlistairShaw\Vendirun\App\Entities\Cart\CartRepository;
 use AlistairShaw\Vendirun\App\Entities\Customer\CustomerRepository;
 use AlistairShaw\Vendirun\App\Entities\Customer\Helpers\CustomerHelper;
 use AlistairShaw\Vendirun\App\Entities\Product\ProductRepository;
-use AlistairShaw\Vendirun\App\Exceptions\InvalidProductVariationIdException;
 use AlistairShaw\Vendirun\App\Http\Controllers\VendirunBaseController;
 use Config;
 use Mockery\CountValidator\Exception;
@@ -19,6 +17,7 @@ class CartController extends VendirunBaseController {
 
     /**
      * @param CartRepository $cartRepository
+     * @param CustomerRepository $customerRepository
      * @return mixed
      */
     public function index(CartRepository $cartRepository, CustomerRepository $customerRepository)

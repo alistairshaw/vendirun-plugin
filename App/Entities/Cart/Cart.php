@@ -84,6 +84,26 @@ class Cart {
     }
 
     /**
+     * @return array
+     */
+    public function shippingBreakdown()
+    {
+        $itemShipping = [];
+        foreach ($this->items as $item)
+        {
+            $itemShipping[] = ShippingCalculator::shippingForItem($item->getShipping(), $item->getQuantity(), $this->countryId, $this->shippingType);
+        }
+
+        // order shipping
+        $shipping = [
+            'order' => $this->orderShippingPrice,
+            'items' => $itemShipping
+        ];
+
+        return $shipping;
+    }
+
+    /**
      * @return int
      */
     public function count()

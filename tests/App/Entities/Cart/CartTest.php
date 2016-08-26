@@ -1,9 +1,22 @@
 <?php namespace AlistairShaw\Vendirun\Tests\App\Entities\Cart;
 
-use AlistairShaw\Vendirun\App\Entities\Cart\Cart;
 use AlistairShaw\Vendirun\Tests\App\VendirunTestCase;
 
-class CartTest extends VendirunTestCase {
+class CartTest extends VendirunTestCase
+{
+
+    public function testShippingBreakdown()
+    {
+        $cart = $this->makeCart(false);
+        $shipping = $cart->shippingBreakdown();
+
+        $this->assertEquals(50, $shipping['order']);
+
+        foreach ($shipping['items'] as $item)
+        {
+            $this->assertEquals(50, $item);
+        }
+    }
 
     public function testGetDefaultTaxRate()
     {

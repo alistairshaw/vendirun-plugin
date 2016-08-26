@@ -70,6 +70,16 @@ class ProductShippingOption {
 
     /**
      * @param $countryId
+     * @param $shippingType
+     * @return bool|int
+     */
+    public function getUnitMatch($countryId, $shippingType)
+    {
+        return (in_array($countryId, $this->countryIds) && $shippingType == $this->shippingType) ? $this->itemPrice : false;
+    }
+
+    /**
+     * @param $countryId
      * @return bool|int
      */
     public function matchShippingType($countryId)

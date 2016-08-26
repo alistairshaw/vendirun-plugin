@@ -24,7 +24,7 @@ class ShippingCalculator
         foreach ($shipping as $sh)
         {
             /* @var $sh ProductShippingOption */
-            if ($price = $sh->getMatch($countryId, $shippingType)) return $price;
+            if ($price = $sh->getUnitMatch($countryId, $shippingType)) return $price;
         }
 
         if (!$price && $shippingType)

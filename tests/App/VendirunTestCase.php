@@ -38,8 +38,8 @@ class VendirunTestCase extends \TestCase {
             'images' => '',
             'video' => '',
             'shipping' => [
-                new ProductShippingOption($shippingPrice, 0, $shippingType, $supplierId, [79]),
-                new ProductShippingOption($shippingPrice + 50, 0, 'Special Delivery', $supplierId, [79])
+                new ProductShippingOption($shippingPrice, $shippingPrice, $shippingType, $supplierId, [79]),
+                new ProductShippingOption($shippingPrice + 50, $shippingPrice, 'Special Delivery', $supplierId, [79])
             ],
             'tax' => [
                 new ProductTaxOption(20, [79], true)
@@ -58,11 +58,10 @@ class VendirunTestCase extends \TestCase {
             'product' => $product,
             'basePrice' => $price,
             'taxRate' => 20,
-            'shippingPrice' => $shippingPrice,
-            'shippingTaxRate' => $shippingTaxRate,
-            'priceIncludesTax' => $priceIncludesTax,
             'shippingType' => $shippingType,
-            'countryId' => 79
+            'countryId' => 79,
+            'priceIncludesTax' => $priceIncludesTax,
+            'shippingTaxRate' => $shippingTaxRate
         ]);
 
         return $cartItem;

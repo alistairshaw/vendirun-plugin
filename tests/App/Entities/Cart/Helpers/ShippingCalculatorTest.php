@@ -9,7 +9,7 @@ class ShippingCalculatorTest extends VendirunTestCase {
     public function testShippingForItem()
     {
         $result = ShippingCalculator::shippingForItem($this->makeShipping(), 1, 79, 'Standard Shipping');
-        $this->assertEquals(100, $result);
+        $this->assertEquals(50, $result);
     }
 
     public function testAvailableShippingTypes()

@@ -144,6 +144,7 @@ class VendirunTestCase extends \TestCase {
 
         $variationParams['name'] = 'Test Two';
         $variationParams['id'] = 56;
+        $variationParams['price'] = 1500;
 
         $product = new Product([
             'id' => 2,
@@ -166,7 +167,7 @@ class VendirunTestCase extends \TestCase {
             'productVariationId' => 56,
             'quantity' => 1,
             'product' => $product,
-            'basePrice' => 2500,
+            'basePrice' => 1500,
             'taxRate' => 20,
             'shippingType' => 'Standard Shipping',
             'countryId' => 79,
@@ -178,6 +179,7 @@ class VendirunTestCase extends \TestCase {
 
         $variationParams['name'] = 'Test One';
         $variationParams['id'] = 57;
+        $variationParams['price'] = 1200;
 
         $product = new Product([
             'id' => 3,
@@ -200,7 +202,7 @@ class VendirunTestCase extends \TestCase {
             'productVariationId' => 57,
             'quantity' => 1,
             'product' => $product,
-            'basePrice' => 2500,
+            'basePrice' => 1200,
             'taxRate' => 20,
             'shippingType' => 'Standard Shipping',
             'countryId' => 79,

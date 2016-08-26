@@ -192,7 +192,8 @@ class CartItem {
      */
     public function total()
     {
-        return $this->totalBeforeTax() + $this->taxWithoutShipping() + $this->shipping();
+        $total = $this->totalBeforeTax() + $this->taxWithoutShipping() + $this->shipping();
+        return $total;
     }
 
     /**

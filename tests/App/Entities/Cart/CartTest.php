@@ -50,6 +50,15 @@ class CartTest extends VendirunTestCase {
         $this->assertEquals(720, $cart->total());
     }
 
+    public function testTotalWithSuppliersAgain()
+    {
+        $cart = $this->makeCart2(true);
+        $this->assertEquals(5890, $cart->total());
+
+        $cart = $this->makeCart2(false);
+        $this->assertEquals(7068, $cart->total());
+    }
+
     public function testShippingTax()
     {
         $cart = $this->makeCart(true);

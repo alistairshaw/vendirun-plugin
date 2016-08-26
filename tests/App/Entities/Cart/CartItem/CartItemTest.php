@@ -50,6 +50,12 @@ class CartItemTest extends VendirunTestCase {
         $this->assertEquals(250, $cartItem->displayShipping());
     }
 
+    public function testDisplayShippingWithSupplier()
+    {
+        $cartItem = $this->makeCartItem(100, 5, true, 50, 20, 'Standard Shipping', 1);
+        $this->assertEquals(250, $cartItem->displayShipping());
+    }
+
     public function testShippingBeforeTax()
     {
         $cartItem = $this->makeCartItem();

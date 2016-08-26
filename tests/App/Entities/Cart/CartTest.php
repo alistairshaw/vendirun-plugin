@@ -77,6 +77,12 @@ class CartTest extends VendirunTestCase {
         $this->assertEquals(200, $cart->displayShipping());
     }
 
+    public function testDisplayShippingWithSuppliers()
+    {
+        $cart = $this->makeCart(true, false, 'Standard Shipping', true);
+        $this->assertEquals(300, $cart->displayShipping());
+    }
+
     public function testDisplayOrderShipping()
     {
         $cart = $this->makeCart(true);
@@ -84,6 +90,12 @@ class CartTest extends VendirunTestCase {
 
         $cart = $this->makeCart(false);
         $this->assertEquals(50, $cart->displayOrderShipping());
+    }
+
+    public function testDisplayOrderShippingWithSuppliers()
+    {
+        $cart = $this->makeCart(true, false, 'Standard Shipping', true);
+        $this->assertEquals(150, $cart->displayOrderShipping());
     }
 
     public function testShippingBeforeTax()
@@ -147,33 +159,11 @@ class CartTest extends VendirunTestCase {
         $this->assertNull($cart->orderShippingTax());
         $this->assertNull($cart->orderShippingBeforeTax());
     }
-    public function testReturnsCorrectShippingType()
-    {
-        $cart = $this->makeCart(true, false, 'Express Shipping');
-        $this->assertEquals('Express Shipping', $cart->getShippingType());
-    }
-
-    /**
-     * When shipping is not available, shipping price returns null
-     *    and so should all the other shipping related functions, to
-     *    indicate shipping not available
-     */
-    /*public function testNullShipping()
-    {
-        $cart = $this->makeCart(true, true);
-        $this->assertNull($cart->shipping());
-        $this->assertNull($cart->shippingBeforeTax());
-        $this->assertNull($cart->shippingTax());
-        $this->assertNull($cart->displayShipping());
-        $this->assertNull($cart->displayOrderShipping());
-        $this->assertNull($cart->orderShippingTax());
-        $this->assertNull($cart->orderShippingBeforeTax());
-    }
 
     public function testReturnsCorrectShippingType()
     {
         $cart = $this->makeCart(true, false, 'Express Shipping');
         $this->assertEquals('Express Shipping', $cart->getShippingType());
-    }*/
+    }
 
 }

@@ -30,8 +30,6 @@ class CartController extends VendirunBaseController {
 
         $cart = $cartRepository->find($countryId);
 
-        dd($cart);
-
         return View::make('vendirun::product.cart')->with('cart', $cart);
     }
 

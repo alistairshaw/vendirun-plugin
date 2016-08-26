@@ -112,7 +112,13 @@ class VendirunTestCase extends \TestCase {
         if ($includeSuppliers)
         {
             $items[] = $this->makeCartItem($price, 1, $priceIncludesTax, $shippingPrice, 20, $shippingType, null);
+
+            if ($number == 1) return $items;
+
             $items[] = $this->makeCartItem($price, 1, $priceIncludesTax, $shippingPrice, 20, $shippingType, 1);
+
+            if ($number == 2) return $items;
+
             $supplierId = 2;
             $startAt = 3;
         }

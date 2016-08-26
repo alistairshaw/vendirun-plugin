@@ -308,7 +308,7 @@ class Cart {
     {
         if ($this->orderShippingPrice === NULL) return NULL;
 
-        return $this->sum('displayShipping') + $this->orderShippingPrice;
+        return $this->sum('rawShipping') + $this->orderShippingPrice;
     }
 
     /**
@@ -468,10 +468,10 @@ class Cart {
     {
         if (!$this->countryId) $this->countryId = CustomerHelper::getDefaultCountry();
 
-        $this->availableShippingTypes = ShippingCalculator::availableShippingTypes($this, $this->countryId);
+        $this->availableShippingTypes = ShippingCalculator::availableShippingTypes($this);
 
         if (!$this->shippingType && count($this->availableShippingTypes) > 0) $this->shippingType = $this->availableShippingTypes[0];
-        $this->orderShippingPrice = ShippingCalculator::orderShippingCharge($this->items, $this->countryId, $this->shippingType);
+        $this->orderShippingPrice = ShippingCalculator::orderShippingCharge($this);
 
         foreach ($this->items as $item)
         {

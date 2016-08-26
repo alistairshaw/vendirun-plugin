@@ -93,6 +93,126 @@ class VendirunTestCase extends \TestCase {
         return $cart;
     }
 
+    protected function makeCart2($priceIncludesTax = true)
+    {
+        $params = [
+            'ids' => [1,2,3],
+            'priceIncludesTax' => $priceIncludesTax,
+            'chargeTaxOnShipping' => true,
+            'defaultTaxRate' => 20
+        ];
+
+        $cart = new Cart($params);
+
+        $variationParams = [
+            'id' => 55,
+            'name' => 'Test Three',
+            'price' => 2500,
+            'sku' => '123x'
+        ];
+
+        $product = new Product([
+            'id' => 1,
+            'productName' => '',
+            'productType' => '',
+            'shortDescription' => '',
+            'longDescription' => '',
+            'shipping' => [
+                new ProductShippingOption(300, 15, 'Standard Shipping', 2, [79])
+            ],
+            'tax' => [
+                new ProductTaxOption(20, [79], true)
+            ],
+            'variations' => [
+                new ProductVariation($variationParams)
+            ]
+        ]);
+
+        $cartItem = new CartItem([
+            'productVariationId' => 55,
+            'quantity' => 1,
+            'product' => $product,
+            'basePrice' => 2500,
+            'taxRate' => 20,
+            'shippingType' => 'Standard Shipping',
+            'countryId' => 79,
+            'priceIncludesTax' => $priceIncludesTax,
+            'shippingTaxRate' => 20
+        ]);
+
+        $cart->add($cartItem);
+
+        $variationParams['name'] = 'Test Two';
+        $variationParams['id'] = 56;
+
+        $product = new Product([
+            'id' => 2,
+            'productName' => '',
+            'productType' => '',
+            'shortDescription' => '',
+            'longDescription' => '',
+            'shipping' => [
+                new ProductShippingOption(200, 25, 'Standard Shipping', 1, [79])
+            ],
+            'tax' => [
+                new ProductTaxOption(20, [79], true)
+            ],
+            'variations' => [
+                new ProductVariation($variationParams)
+            ]
+        ]);
+
+        $cartItem = new CartItem([
+            'productVariationId' => 56,
+            'quantity' => 1,
+            'product' => $product,
+            'basePrice' => 2500,
+            'taxRate' => 20,
+            'shippingType' => 'Standard Shipping',
+            'countryId' => 79,
+            'priceIncludesTax' => $priceIncludesTax,
+            'shippingTaxRate' => 20
+        ]);
+
+        $cart->add($cartItem);
+
+        $variationParams['name'] = 'Test One';
+        $variationParams['id'] = 57;
+
+        $product = new Product([
+            'id' => 3,
+            'productName' => '',
+            'productType' => '',
+            'shortDescription' => '',
+            'longDescription' => '',
+            'shipping' => [
+                new ProductShippingOption(100, 50, 'Standard Shipping', null, [79])
+            ],
+            'tax' => [
+                new ProductTaxOption(20, [79], true)
+            ],
+            'variations' => [
+                new ProductVariation($variationParams)
+            ]
+        ]);
+
+        $cartItem = new CartItem([
+            'productVariationId' => 57,
+            'quantity' => 1,
+            'product' => $product,
+            'basePrice' => 2500,
+            'taxRate' => 20,
+            'shippingType' => 'Standard Shipping',
+            'countryId' => 79,
+            'priceIncludesTax' => $priceIncludesTax,
+            'shippingTaxRate' => 20
+        ]);
+
+        $cart->add($cartItem);
+
+        return $cart;
+    }
+
     /**
      * @param $number
      * @param bool $priceIncludesTax

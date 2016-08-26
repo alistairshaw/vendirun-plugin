@@ -83,26 +83,26 @@ class ShippingCalculator
     }
 
     /**
-     * @param        $products
-     * @param null $countryId
-     * @param string $shippingType
+     * @param Cart $cart
      * @return array
      */
-    public static function orderShippingCharge($products, $countryId = NULL, $shippingType = '')
+    public static function orderShippingCharge(Cart $cart)
     {
         $shippingCharge = null;
 
         $suppliers = [];
 
-        foreach ($products as $product)
+        foreach ($cart->getItems() as $cartItem)
         {
-            /* @var $product Product */
+            /* @var $cartItem CartItem */
+            $product = $cartItem->getProduct();
+
             if ($product->getShipping())
             {
                 foreach ($product->getShipping() as $sh)
                 {
                     /* @var $sh ProductShippingOption */
-                    if ($sh->getMatch($countryId, $shippingType))
+                    if ($sh->getMatch($cart->getCountryId(), $cart->getShippingType()))
                     {
                         if ($sh->getSupplierId())
                         {
@@ -112,7 +112,6 @@ class ShippingCalculator
                         {
                             $suppliers[0] = $sh->getOrderPrice();
                         }
-                        continue;
                     }
                 }
             }

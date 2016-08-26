@@ -20,20 +20,26 @@ class ShippingCalculatorTest extends VendirunTestCase {
 
     public function testOrderShippingCharge()
     {
-        $result = ShippingCalculator::orderShippingCharge($this->makeCart()->getItems(), 79, 'Standard Shipping');
+        $result = ShippingCalculator::orderShippingCharge($this->makeCart());
         $this->assertEquals(50, $result);
     }
 
     public function testSpecialDelivery()
     {
-        $result = ShippingCalculator::orderShippingCharge($this->makeCart()->getItems(), 79, 'Special Delivery');
+        $result = ShippingCalculator::orderShippingCharge($this->makeCart(true, false, 'Special Delivery'));
         $this->assertEquals(100, $result);
     }
 
     public function testWithSuppliers()
     {
-        $result = ShippingCalculator::orderShippingCharge($this->makeCart(true, false, 'Standard Shipping', true)->getItems(), 79, 'Standard Shipping');
+        $result = ShippingCalculator::orderShippingCharge($this->makeCart(true, false, 'Standard Shipping', true));
         $this->assertEquals(150, $result);
+    }
+
+    public function testWithSuppliersAgain()
+    {
+        $result = ShippingCalculator::orderShippingCharge($this->makeCart2(true));
+        $this->assertEquals(600, $result);
     }
 
     private function makeShipping()

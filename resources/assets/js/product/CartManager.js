@@ -59,7 +59,7 @@ function CartManager () {
      * @param data
      */
     var updatePageData = function (data) {
-        $('.js-shopping-cart-total').html(data.totals.displayTotal);
+        $('.js-shopping-cart-total').html(data.totals.total > 0 ? data.totals.displayTotal : data.totals.total);
         $('.js-shopping-cart-shipping-total').html(data.totals.displayShipping);
     };
 

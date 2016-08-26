@@ -117,6 +117,12 @@ class CartTest extends VendirunTestCase
         $this->assertEquals(690, $cart->displayShipping());
     }
 
+    public function testDisplayShippingHighQuantity()
+    {
+        $cart = $this->makeCart2(true, 2);
+        $this->assertEquals(780, $cart->displayShipping());
+    }
+
     public function testDisplayShippingWithSuppliers()
     {
         $cart = $this->makeCart(true, false, 'Standard Shipping', true);

@@ -93,7 +93,12 @@ class VendirunTestCase extends \TestCase {
         return $cart;
     }
 
-    protected function makeCart2($priceIncludesTax = true)
+    /**
+     * @param bool $priceIncludesTax
+     * @param int $cartItemQuantity
+     * @return Cart
+     */
+    protected function makeCart2($priceIncludesTax = true, $cartItemQuantity = 1)
     {
         $params = [
             'ids' => [1,2,3],
@@ -130,7 +135,7 @@ class VendirunTestCase extends \TestCase {
 
         $cartItem = new CartItem([
             'productVariationId' => 55,
-            'quantity' => 1,
+            'quantity' => $cartItemQuantity,
             'product' => $product,
             'basePrice' => 2500,
             'taxRate' => 20,
@@ -165,7 +170,7 @@ class VendirunTestCase extends \TestCase {
 
         $cartItem = new CartItem([
             'productVariationId' => 56,
-            'quantity' => 1,
+            'quantity' => $cartItemQuantity,
             'product' => $product,
             'basePrice' => 1500,
             'taxRate' => 20,
@@ -200,7 +205,7 @@ class VendirunTestCase extends \TestCase {
 
         $cartItem = new CartItem([
             'productVariationId' => 57,
-            'quantity' => 1,
+            'quantity' => $cartItemQuantity,
             'product' => $product,
             'basePrice' => 1200,
             'taxRate' => 20,

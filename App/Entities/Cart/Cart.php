@@ -4,7 +4,6 @@ use AlistairShaw\Vendirun\App\Entities\Cart\CartItem\CartItem;
 use AlistairShaw\Vendirun\App\Entities\Cart\Helpers\ShippingCalculator;
 use AlistairShaw\Vendirun\App\Entities\Cart\Helpers\TaxCalculator;
 use AlistairShaw\Vendirun\App\Entities\Customer\Helpers\CustomerHelper;
-use AlistairShaw\Vendirun\App\Exceptions\InvalidCartItemException;
 use AlistairShaw\Vendirun\App\Lib\CurrencyHelper;
 
 class Cart {
@@ -328,7 +327,12 @@ class Cart {
     {
         if ($this->orderShippingPrice === NULL) return NULL;
 
-        return $this->sum('rawShipping') + $this->orderShippingPrice;
+        $shippingPrice = $this->orderShippingPrice;
+        foreach ($this->items as $item)
+        {
+            $shippingPrice += ($item->rawShipping() * $item->getQuantity());
+        }
+        return $shippingPrice;
     }
 
     /**

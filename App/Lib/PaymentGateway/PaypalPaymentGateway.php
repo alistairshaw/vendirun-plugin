@@ -192,8 +192,8 @@ class PaypalPaymentGateway extends AbstractPaymentGateway implements PaymentGate
     {
         $settings = ClientHelper::getPaymentGatewayInfo('paypal');
 
-        $client_id = $settings->sandbox_mode ? $settings->test_client_id;
-        $secret = $settings->sandbox_mode ? $settings->test_secret;
+        $client_id = $settings->sandbox_mode ? $settings->test_client_id : $settings->client_id;
+        $secret = $settings->sandbox_mode ? $settings->test_secret : $settings->secret;
 
         $this->apiContext = new ApiContext(
             new OAuthTokenCredential(

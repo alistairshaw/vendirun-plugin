@@ -306,8 +306,9 @@ class CartItem {
      */
     public function getVariationId()
     {
-        $variations = $this->product->getVariations();
-        return $variations[0]->getId();
+        /*$variations = $this->product->getVariations();
+        return $variations[0]->getId();*/
+        return $this->productVariationId;
     }
 
     /**

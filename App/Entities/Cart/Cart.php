@@ -388,6 +388,8 @@ class Cart {
 
         if (!$found) $this->items[] = $cartItem;
         $this->setShippingPrice();
+
+        $this->checkIdList();
     }
 
     /**
@@ -439,6 +441,26 @@ class Cart {
         }
 
         return $total;
+    }
+
+    /**
+     * Remove any items from the id list that are not in the items
+     */
+    private function checkIdList()
+    {
+        $newIds = [];
+        foreach ($this->ids as $id)
+        {
+            $found = false;
+            foreach ($this->items as $item)
+            {
+                /* @var $cartItem CartItem */
+                if ($item->getVariationId() == $id) $found = true;
+            }
+            if ($found) $newIds[] = $id;
+        }
+
+        $this->ids = $newIds;
     }
 
     /**

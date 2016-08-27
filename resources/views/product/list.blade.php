@@ -20,7 +20,7 @@
                     <option value="24"{{ ($productSearchResult->getSearchParam('limit') == 24) ? ' selected' : '' }}>24</option>
                     <option value="30"{{ ($productSearchResult->getSearchParam('limit') == 30) ? ' selected' : '' }}>30</option>
                 </select>
-                <button type="submit" class="btn btn-default"><i class="fa fa-refresh"></i> Reload</button>
+                <button type="submit" class="btn btn-default js-reload-per-page-button"><i class="fa fa-refresh"></i> Reload</button>
             </div>
         </div>
     </div>

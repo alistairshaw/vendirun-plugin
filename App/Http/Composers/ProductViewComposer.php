@@ -73,9 +73,9 @@ class ProductViewComposer {
     /**
      * @param      $productId
      * @param      $productName
-     * @param int  $variationId
+     * @param int $variationId
      * @param bool $addToCart
-     * @return
+     * @return string
      */
     private function getProductRoute($productId, $productName, $variationId = 0, $addToCart = false)
     {

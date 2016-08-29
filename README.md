@@ -8,22 +8,9 @@ Latest Stable Version: 1.0.8.8
 
 ###Importing the package into a new front-end
 
-Add the repository to your composer.json:
-```php
-"repositories": [
-    {
-      "type": "git",
-      "url": "git@github.com:alistairshaw/vendirun-plugin.git"
-    }
-  ],
+Pull the package in via composer:
 ```
-Add the package to the require list:
-```php
-"require": {
-        "php": ">=5.5.9",
-        "laravel/framework": "5.1.*",
-        "alistairshaw/vendirun": "1.*"
-    },
+composer require alistairshaw/vendirun
 ```
 Add the namespace to the PSR-4 section
 ```php

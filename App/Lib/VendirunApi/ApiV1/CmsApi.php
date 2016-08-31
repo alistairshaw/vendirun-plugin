@@ -22,4 +22,14 @@ class CmsApi extends BaseApi {
         return $this->request($url, $params);
     }
 
+    /**
+     * @param $params
+     * @return object
+     */
+    public function slider($params)
+    {
+        $url = 'cms/slider/' . $params['id'];
+        return $this->request($url);
+    }
+
 } 

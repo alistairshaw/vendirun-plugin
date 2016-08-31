@@ -63,4 +63,17 @@ class WidgetViewComposer {
         $regions = CountryHelper::getRegions();
         $view->with('regions', $regions);
     }
+
+    /**
+     * @param View $view
+     */
+    public function slider($view)
+    {
+        $viewData = $view->getData();
+        if (!isset($viewData['options'])) $viewData['options'] = json_decode($viewData['element']->element_options, true);
+        $slider_id = $viewData['options']['id'];
+
+        $slider = VendirunApi::makeRequest('cms/slider', ['id' => $slider_id])->getData();
+        $view->with('slider', $slider);
+    }
 }

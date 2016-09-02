@@ -7,7 +7,7 @@ var productResultManager = function() {
         
         setupAddToCartButtons: function() {
             var _this = this;
-            $('.js-product-result').find('.js-add-to-cart').on('click', function(event) {
+            $('.js-product-result').find('.js-add-to-cart').off('click').on('click', function(event) {
                 var $variationModal = $('#productVariationModal');
                 if ($variationModal.length == 0) return true;
                 event.preventDefault();

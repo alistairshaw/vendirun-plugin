@@ -21,8 +21,10 @@ class VendirunTestCase extends \TestCase {
      */
     protected function makeCartItem($price = 100, $quantity = 3, $priceIncludesTax = true, $shippingPrice = 50, $shippingTaxRate = 20, $shippingType = 'Standard Shipping', $supplierId = null)
     {
+        $variationId = rand(1000,2000000);
+
         $variationParams = [
-            'id' => rand(1000000, 2000000),
+            'id' => $variationId,
             'name' => '',
             'price' => $price,
             'sku' => '123x'
@@ -53,7 +55,7 @@ class VendirunTestCase extends \TestCase {
         $product = new Product($productParams);
 
         $cartItem = new CartItem([
-            'productVariationId' => 55,
+            'productVariationId' => $variationId,
             'quantity' => $quantity,
             'product' => $product,
             'basePrice' => $price,
@@ -77,7 +79,6 @@ class VendirunTestCase extends \TestCase {
     protected function makeCart($priceIncludesTax = true, $shippingIsNull = false, $shippingType = 'Standard Shipping', $includeSuppliers = false)
     {
         $params = [
-            'ids' => [1,2,3],
             'priceIncludesTax' => $priceIncludesTax,
             'chargeTaxOnShipping' => true,
             'defaultTaxRate' => 20,
@@ -101,7 +102,6 @@ class VendirunTestCase extends \TestCase {
     protected function makeCart2($priceIncludesTax = true, $cartItemQuantity = 1)
     {
         $params = [
-            'ids' => [1,2,3],
             'priceIncludesTax' => $priceIncludesTax,
             'chargeTaxOnShipping' => true,
             'defaultTaxRate' => 20

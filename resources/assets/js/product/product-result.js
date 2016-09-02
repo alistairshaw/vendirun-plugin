@@ -19,7 +19,7 @@ var productResultManager = function() {
                 $variationModal.modal('show');
                 $addToCartConfirm.html('<i class="fa fa-spinner fa-spin"></i>').addClass('disabled').prop('disabled', true);
                 variationPicker($('.js-modal-variation-choice'), $(this).data('product-id'), function() {
-                    $addToCartConfirm.html(originalAddToCartText).removeClass('disabled').prop('disabled', false).on('click', function(event) {
+                    $addToCartConfirm.html(originalAddToCartText).removeClass('disabled').prop('disabled', false).off('click').on('click', function(event) {
                         event.preventDefault();
                         $addToCartConfirm.css('width', $addToCartConfirm.outerWidth()).html('<i class="fa fa-spinner fa-spin"></i>').addClass('disabled').prop('disabled', true);
                         _this.addItemToCart(function() {

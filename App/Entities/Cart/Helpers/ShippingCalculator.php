@@ -21,6 +21,8 @@ class ShippingCalculator
     {
         $price = NULL;
 
+        if (count($shipping) == 0) return NULL;
+
         foreach ($shipping as $sh)
         {
             /* @var $sh ProductShippingOption */
@@ -46,6 +48,8 @@ class ShippingCalculator
         $availableShippingTypes = [];
         $first = true;
 
+        if ($cart->totalProducts() == 0) return $availableShippingTypes;
+
         foreach ($cart->getItems() as $cartItem)
         {
             /* @var $cartItem CartItem */
@@ -53,7 +57,7 @@ class ShippingCalculator
 
             /* @var $product Product */
             $productShippingTypes = [];
-            if ($product->getShipping())
+            if (count($product->getShipping()))
             {
                 foreach ($product->getShipping() as $sh)
                 {
@@ -92,12 +96,14 @@ class ShippingCalculator
 
         $suppliers = [];
 
+        if (count($cart->getItems()) == 0) return $shippingCharge;
+
         foreach ($cart->getItems() as $cartItem)
         {
             /* @var $cartItem CartItem */
             $product = $cartItem->getProduct();
 
-            if ($product->getShipping())
+            if (count($product->getShipping()))
             {
                 foreach ($product->getShipping() as $sh)
                 {

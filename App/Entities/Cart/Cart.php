@@ -59,7 +59,7 @@ class Cart {
      */
     public function __construct($params)
     {
-        $this->ids = $params['ids'];
+        //$this->ids = $params['ids'];
         $this->priceIncludesTax = $params['priceIncludesTax'];
         $this->chargeTaxOnShipping = $params['chargeTaxOnShipping'];
         $this->defaultTaxRate = $params['defaultTaxRate'];
@@ -67,16 +67,10 @@ class Cart {
         $this->priceIncludesTax = (isset($params['priceIncludesTax'])) ? $params['priceIncludesTax'] : true;
         $this->chargeTaxOnShipping = (isset($params['chargeTaxOnShipping'])) ? $params['chargeTaxOnShipping'] : true;
 
-        if (isset($params['items']))
-        {
-            $this->items = $params['items'];
-        }
-        else
-        {
-            $this->items = [];
-        }
         if (isset($params['countryId'])) $this->countryId = (int)$params['countryId'];
         if (isset($params['shippingType'])) $this->shippingType = $params['shippingType'];
+
+        $this->items = [];
 
         $this->setShippingPrice();
         $this->setTaxPrice();
@@ -374,6 +368,8 @@ class Cart {
      */
     public function add(CartItem $cartItem)
     {
+        $this->ids[] = $cartItem->getVariationId();
+
         // check if cart item already in items
         $found = false;
         foreach ($this->items as $currentItem)
@@ -388,8 +384,6 @@ class Cart {
 
         if (!$found) $this->items[] = $cartItem;
         $this->setShippingPrice();
-
-        $this->checkIdList();
     }
 
     /**
@@ -446,7 +440,7 @@ class Cart {
     /**
      * Remove any items from the id list that are not in the items
      */
-    private function checkIdList()
+    public function checkIdList()
     {
         $newIds = [];
         foreach ($this->ids as $id)

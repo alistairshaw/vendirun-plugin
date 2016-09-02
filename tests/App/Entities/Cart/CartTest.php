@@ -4,6 +4,11 @@ use AlistairShaw\Vendirun\Tests\App\VendirunTestCase;
 
 class CartTest extends VendirunTestCase
 {
+    public function testTotalProducts()
+    {
+        $cart = $this->makeCart(false);
+        $this->assertEquals(3, $cart->totalProducts());
+    }
 
     public function testShippingBreakdown()
     {

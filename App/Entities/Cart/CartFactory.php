@@ -55,6 +55,8 @@ class CartFactory {
             $cart->add($item);
         }
 
+        $cart->checkIdList();
+
         return $cart;
     }
 

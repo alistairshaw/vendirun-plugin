@@ -17,8 +17,7 @@
                             <a class="js-decrease-quantity"
                                data-id="{{ $item['product']['variations'][0]['id'] }}"
                                href="{{ route(LocaleHelper::localePrefix() . 'vendirun.productRemoveFromCart', ['productVariationId' => $item['product']['variations'][0]['id']]) }}">
-                                <i class="fa fa-minus-circle"></i>
-                            </a>
+                                <i class="fa fa-minus-circle"></i></a>
                             <span>{{ $item['quantity'] }}</span>
                             <a class="js-increase-quantity"
                                data-id="{{ $item['product']['variations'][0]['id'] }}"

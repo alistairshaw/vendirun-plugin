@@ -71,6 +71,7 @@ class Cart {
         if (isset($params['shippingType'])) $this->shippingType = $params['shippingType'];
 
         $this->items = [];
+        $this->ids = [];
 
         $this->setShippingPrice();
         $this->setTaxPrice();

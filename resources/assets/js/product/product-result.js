@@ -15,9 +15,8 @@ var productResultManager = function() {
                 var $modalError = $('.js-product-variation-modal-error');
                 $modalError.addClass('hidden');
                 var $addToCartConfirm = $('.js-add-to-cart-modal-confirm');
-                $addToCartConfirm.off();
+                $addToCartConfirm.off('click');
                 var originalAddToCartText = $addToCartConfirm.html();
-                console.log("COUNT EM");
                 $variationModal.modal('show');
                 $addToCartConfirm.html('<i class="fa fa-spinner fa-spin"></i>').addClass('disabled').prop('disabled', true);
                 variationPicker($('.js-modal-variation-choice'), $(this).data('product-id'), function() {

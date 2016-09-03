@@ -26,6 +26,7 @@ class ApiCartRepository implements CartRepository {
             }
         }
         Session::put('shoppingCart', $itemIds);
+        Session::save();
 
         if ($token = CustomerHelper::checkLoggedinCustomer())
         {
@@ -82,7 +83,7 @@ class ApiCartRepository implements CartRepository {
      */
     public function getProducts($items)
     {
-        return VendirunApi::makeRequest('product/search', ['variation_list_only' => implode(",", $items)])->getData();
+        return VendirunApi::makeRequest('product/search', ['variation_list_only' => implode(",", $items), 'limit' => 0])->getData();
     }
 
     /**

@@ -46,9 +46,10 @@ class CartItemFactory
      * @param Product $product
      * @param bool $priceIncludesTax
      * @param int $quantity
+     * @param int $shippingTaxRate
      * @return CartItem
      */
-    public function make(Product $product, $priceIncludesTax, $quantity = 1)
+    public function make(Product $product, $priceIncludesTax, $quantity = 1, $shippingTaxRate = 0)
     {
         $variations = $product->getVariations();
         $productVariation = $variations[0];
@@ -61,7 +62,8 @@ class CartItemFactory
             'basePrice' => $productVariation->getPrice(),
             'priceIncludesTax' => $priceIncludesTax,
             'shippingType' => $this->shippingType,
-            'countryId' => $this->countryId
+            'countryId' => $this->countryId,
+            'shippingTaxRate' => $shippingTaxRate
         ];
 
         return new CartItem($params);
@@ -70,9 +72,10 @@ class CartItemFactory
     /**
      * @param      $items
      * @param bool $priceIncludesTax
+     * @param int $shippingTaxRate
      * @return array
      */
-    public function makeFromIds($items, $priceIncludesTax)
+    public function makeFromIds($items, $priceIncludesTax, $shippingTaxRate = 0)
     {
         $products = $this->cartRepository->getProducts($items);
         $productFactory = new ProductFactory();
@@ -84,7 +87,8 @@ class CartItemFactory
             foreach ($products->result as $product)
             {
                 $vrProduct = $productFactory->fromApi($product);
-                if ($product->variations{0}->id == $productVariationId) $final[] = $this->make($vrProduct, $priceIncludesTax, $quantity);
+
+                if ($product->variations{0}->id == $productVariationId) $final[] = $this->make($vrProduct, $priceIncludesTax, $quantity, $shippingTaxRate);
             }
         }
 

@@ -6,16 +6,16 @@
                 <td>SubTotal</td>
                 <td class="js-display-total">{{ $displayTotals->displayTotal }}</td>
             </tr>
-            @if (!$cart->getPriceIncludesTax())
-            <tr>
-                <td>Tax</td>
-                <td class="js-tax">{{ $displayTotals->tax }}</td>
-            </tr>
-            @endif
             <tr>
                 <td>Shipping</td>
                 <td class="js-display-shipping">{{ $displayTotals->displayShipping }}</td>
             </tr>
+            @if (!$cart->getPriceIncludesTax())
+                <tr>
+                    <td>Tax</td>
+                    <td class="js-tax">{{ $displayTotals->tax }}</td>
+                </tr>
+            @endif
             <tr>
                 <td>Total</td>
                 <td class="js-total">{{ $displayTotals->total }}</td>

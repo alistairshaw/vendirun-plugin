@@ -67,7 +67,6 @@ class CartItem {
         $this->product = $params['product'];
         $this->basePrice = $params['basePrice'];
 
-        if (isset($params['taxRate'])) $this->taxRate = $params['taxRate'];
         if (isset($params['shippingPrice'])) $this->shippingPrice = $params['shippingPrice'];
         if (isset($params['shippingTaxRate'])) $this->shippingTaxRate = $params['shippingTaxRate'];
         if (isset($params['countryId'])) $this->countryId = $params['countryId'];
@@ -259,7 +258,7 @@ class CartItem {
     public function shippingTax()
     {
         if ($this->shippingPrice === null) return null;
-        return $this->priceIncludesTax ? TaxCalculator::taxFromTotal($this->shippingPrice, $this->taxRate, $this->quantity) : (int)($this->shippingPrice / 100 * $this->taxRate) * $this->quantity;
+        return $this->priceIncludesTax ? TaxCalculator::taxFromTotal($this->shippingPrice, $this->shippingTaxRate, $this->quantity) : (int)($this->shippingPrice / 100 * $this->shippingTaxRate) * $this->quantity;
     }
 
     /**

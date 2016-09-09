@@ -356,7 +356,7 @@ class Cart {
     {
         return (object)[
             'displayTotal' => CurrencyHelper::formatWithCurrency($this->displayTotal()),
-            'tax' => CurrencyHelper::formatWithCurrency($this->tax()),
+            'tax' => CurrencyHelper::formatWithCurrency($this->tax(), false, '0.00'),
             'displayShipping' => $this->displayShipping() === NULL ? 'NOT AVAILABLE' : CurrencyHelper::formatWithCurrency($this->displayShipping(), false, '0.00'),
             'total' => CurrencyHelper::formatWithCurrency($this->total(), false, '0.00'),
             'totalBeforeTax' => CurrencyHelper::formatWithCurrency($this->totalBeforeTax(), false, '0.00'),

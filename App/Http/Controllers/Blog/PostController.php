@@ -23,7 +23,7 @@ class PostController extends VendirunBaseController {
 
     /**
      * @param $slug
-     * @return \Illuminate\View\View
+     * @return mixed
      */
     public function post($slug)
     {

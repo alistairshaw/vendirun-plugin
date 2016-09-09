@@ -70,6 +70,12 @@ class Product {
     private $variations;
 
     /**
+     * Array of categories
+     * @var array
+     */
+    private $categories;
+
+    /**
      * Product constructor.
      * @param $params | required: id, productName, productType, shortDescription, longDescription
      */
@@ -88,6 +94,7 @@ class Product {
         if (isset($params['shipping'])) $this->shipping = $params['shipping'];
         if (isset($params['tax'])) $this->tax = $params['tax'];
         if (isset($params['variations'])) $this->variations = $params['variations'];
+        if (isset($params['categories'])) $this->categories = $params['categories'];
     }
 
     /**
@@ -196,6 +203,22 @@ class Product {
     public function getTax()
     {
         return $this->tax;
+    }
+
+    /**
+     * @return array
+     */
+    public function getCategories()
+    {
+        return $this->categories ? $this->categories : [];
+    }
+
+    /**
+     * @return string
+     */
+    public function makeSlug()
+    {
+        return 'shop/' . $this->getId() . '/' . urlencode(strtolower($this->getProductName()));
     }
 
 }

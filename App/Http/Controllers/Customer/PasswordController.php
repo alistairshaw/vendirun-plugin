@@ -22,7 +22,9 @@ class PasswordController extends VendirunBaseController {
         // log out if logged in
         if (CustomerHelper::checkLoggedinCustomer()) Session::flush();
 
-        return View::make('vendirun::customer.password.recovery');
+        $data['pageTitle'] = trans('vendirun::customer.recoverPassword');
+
+        return View::make('vendirun::customer.password.recovery', $data);
     }
 
     /**
@@ -46,7 +48,9 @@ class PasswordController extends VendirunBaseController {
      */
     public function completeRecovery()
     {
-        return View::make('vendirun::customer.password.recovery-ok');
+        $data['pageTitle'] = trans('vendirun::customer.recoverPassword');
+
+        return View::make('vendirun::customer.password.recovery-ok', $data);
     }
 
     /**
@@ -55,7 +59,10 @@ class PasswordController extends VendirunBaseController {
      */
     public function resetForm($token)
     {
-        return View::make('vendirun::customer.password.reset-form', ['token' => $token]);
+        $data['pageTitle'] = trans('vendirun::customer.recoverPassword');
+        $data['token'] = $token;
+
+        return View::make('vendirun::customer.password.reset-form', $data);
     }
 
     /**
@@ -79,6 +86,8 @@ class PasswordController extends VendirunBaseController {
      */
     public function completeReset()
     {
-        return View::make('vendirun::customer.password.reset-ok');
+        $data['pageTitle'] = trans('vendirun::customer.recoverPassword');
+
+        return View::make('vendirun::customer.password.reset-ok', $data);
     }
 }

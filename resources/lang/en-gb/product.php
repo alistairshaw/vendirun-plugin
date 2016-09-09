@@ -1,7 +1,9 @@
 <?php
 
 return [
+    'shop' => 'Shop',
     'products' => 'Products',
+    'productDescription' => 'Browse our Products',
     'browse' => 'Browse',
     'search' => 'Search',
     'sort' => 'Order By',

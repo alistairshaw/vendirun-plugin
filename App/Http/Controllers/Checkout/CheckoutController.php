@@ -55,6 +55,8 @@ class CheckoutController extends VendirunBaseController {
         $data['cart'] = $cart;
         $data['displayTotals'] = $cart->getFormattedTotals();
 
+        $data['pageTitle'] = trans('vendirun::checkout.checkout');
+
         return View::make('vendirun::checkout.checkout', $data);
     }
 
@@ -199,6 +201,8 @@ class CheckoutController extends VendirunBaseController {
             $data['order'] = NULL;
         }
 
+        $data['pageTitle'] = trans('vendirun::checkout.orderCompleteTitle');
+
         return View::make('vendirun::checkout.success', $data);
     }
 
@@ -240,6 +244,8 @@ class CheckoutController extends VendirunBaseController {
             //    in which case we just won't show the order details
             $data['order'] = NULL;
         }
+
+        $data['pageTitle'] = trans('vendirun::checkout.orderFailedTitle');
 
         return View::make('vendirun::checkout.failure', $data);
     }

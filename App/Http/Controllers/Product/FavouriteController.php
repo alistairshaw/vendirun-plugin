@@ -56,6 +56,8 @@ class FavouriteController extends VendirunAuthController {
             if (App::environment() == 'production') abort(404);
         }
 
+        $data['pageTitle'] = trans('vendirun::product.favourites');
+
         return View::make('vendirun::product.favourites', $data);
     }
 

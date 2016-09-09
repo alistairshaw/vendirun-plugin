@@ -8483,11 +8483,14 @@ footer {
   padding: 8px 12px;
   border: 1px solid #eeeeee;
   border-bottom: 0;
-  margin: 20px 0 20px 0; }
+  margin: 0 0 15px 0; }
 
 .product-search .search-form .form-inputs {
   border: 1px solid #eeeeee;
   padding: 12px; }
+
+.product-search .search-form ul, .product-search .search-form form {
+  margin: 0 0 30px 0; }
 
 .product-search .heading {
   padding: 6px 12px;
@@ -8500,8 +8503,7 @@ footer {
     border-radius: 0; }
 
 ul.product-categories {
-  padding: 0;
-  margin-bottom: 30px; }
+  padding: 0; }
   ul.product-categories li {
     list-style: none;
     margin-bottom: 6px; }
@@ -8529,8 +8531,7 @@ ul.product-categories {
       text-decoration: none; }
 
 ul.refine-list {
-  padding: 0;
-  margin: 20px 0; }
+  padding: 0; }
   ul.refine-list li {
     list-style: none;
     float: left;
@@ -8910,9 +8911,6 @@ ul.refine-list {
         text-transform: none;
         color: #337ab7;
         font-size: 1.1em; }
-
-.product-simple-search-form {
-  margin-bottom: 30px; }
 
 .blog-list .blog-entry {
   border: 2px solid #ccc;

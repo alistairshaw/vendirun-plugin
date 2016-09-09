@@ -35,6 +35,7 @@ class CustomerController extends VendirunBaseController {
     {
         $data = Session::all();
         $data['bodyClass'] = 'property-search';
+        $data['pageTitle'] = trans('vendirun::forms.register');
 
         return View::make('vendirun::customer.register', $data);
     }
@@ -233,7 +234,9 @@ class CustomerController extends VendirunBaseController {
      */
     public function emailConfirm()
     {
-        return View::make('vendirun::customer.email-confirm');
+        $data['pageTitle'] = trans('vendirun::customer.emailConfirmation');
+
+        return View::make('vendirun::customer.email-confirm', $data);
     }
 
     /**
@@ -259,7 +262,9 @@ class CustomerController extends VendirunBaseController {
      */
     public function noPermissions()
     {
-        return View::make('vendirun::customer.no-permissions');
+        $data['pageTitle'] = trans('vendirun::customer.noPermissionsTitle');
+
+        return View::make('vendirun::customer.no-permissions', $data);
     }
 
     /**

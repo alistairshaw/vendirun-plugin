@@ -32,7 +32,8 @@ class ProductSearchResultFactory {
             'searchParams' => $result->search_params,
             'availableColors' => $colors,
             'availableTypes' => $types,
-            'availableSizes' => $sizes
+            'availableSizes' => $sizes,
+            'breadcrumbs' => $result->breadcrumbs
         ]);
     }
 

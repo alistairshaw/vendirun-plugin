@@ -1,5 +1,5 @@
 @extends('vendirun::layouts.standard')
-@section('title', 'Products')
+@section('title', $pageTitle)
 @section('description', 'Browse Products')
 @section('keywords', '')
 @section('body-class', 'vendirun-app product-search')

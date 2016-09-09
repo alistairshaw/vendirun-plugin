@@ -1,5 +1,5 @@
 @extends('vendirun::layouts.standard')
-@section('title', 'Order Not Processed')
+@section('title', $pageTitle)
 @section('description', 'Order process failed to complete')
 @section('keywords', '')
 @section('body-class', 'vendirun-app checkout')

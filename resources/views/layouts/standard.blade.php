@@ -10,6 +10,7 @@
 @include('vendirun::common.alerts')
 <div id="fb-root"></div>
 <section id="main" role="main" class="clearfix">
+    @include('vendirun::common.breadcrumbs')
     @yield('content')
     <footer id="footer">
         @include('vendirun::common.footer')

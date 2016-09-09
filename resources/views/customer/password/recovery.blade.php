@@ -1,5 +1,5 @@
 @extends('vendirun::layouts.standard')
-@section('title', 'Password Recovery')
+@section('title', $pageTitle)
 @section('description', '')
 @section('keywords', '')
 @section('body-class', 'customer-password-recovery')

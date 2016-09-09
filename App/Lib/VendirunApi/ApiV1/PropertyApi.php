@@ -1,7 +1,5 @@
 <?php namespace AlistairShaw\Vendirun\App\Lib\VendirunApi\ApiV1;
 
-use AlistairShaw\Vendirun\App\Lib\VendirunApi\Exceptions\FailResponseException;
-
 class PropertyApi extends BaseApi {
 
     /**
@@ -46,7 +44,7 @@ class PropertyApi extends BaseApi {
 
     /**
      * @param $params
-     * @return array
+     * @return object
      */
     public function getFavourite($params)
     {
@@ -76,7 +74,7 @@ class PropertyApi extends BaseApi {
 
     /**
      * @param array $params
-     * @return array
+     * @return object
      */
     public function getCategoryList($params = [])
     {

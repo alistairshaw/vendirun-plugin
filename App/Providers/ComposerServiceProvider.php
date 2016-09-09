@@ -23,7 +23,7 @@ class ComposerServiceProvider extends ServiceProvider {
         $this->registerBlogComposers();
 
         // could be for anything
-        $this->app->view->composer('vendirun::cms.breadcrumbs', 'AlistairShaw\Vendirun\App\Http\Composers\BreadcrumbViewComposer@index');
+        $this->app->view->composer('vendirun::common.breadcrumbs', 'AlistairShaw\Vendirun\App\Http\Composers\BreadcrumbViewComposer@index');
     }
 
     private function registerPropertyComposers()

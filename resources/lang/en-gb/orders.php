@@ -3,6 +3,7 @@
 return [
     'paymentPending' => 'Payment is still pending for this order',
     'payNow' => 'Pay for this order now',
+    'orders' => 'Orders',
     'orderDetails' => 'Order Details',
     'paymentDetails' => 'Payment Details',
     'shipmentDetails' => 'Shipping',

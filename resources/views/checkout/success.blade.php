@@ -1,5 +1,5 @@
 @extends('vendirun::layouts.standard')
-@section('title', 'Order Confirmation')
+@section('title', $pageTitle)
 @section('description', 'Confirmation of your Order')
 @section('keywords', '')
 @section('body-class', 'vendirun-app checkout')

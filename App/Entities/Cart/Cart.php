@@ -4,7 +4,6 @@ use AlistairShaw\Vendirun\App\Entities\Cart\CartItem\CartItem;
 use AlistairShaw\Vendirun\App\Entities\Cart\Helpers\ShippingCalculator;
 use AlistairShaw\Vendirun\App\Entities\Cart\Helpers\TaxCalculator;
 use AlistairShaw\Vendirun\App\Entities\Customer\Helpers\CustomerHelper;
-use AlistairShaw\Vendirun\App\Exceptions\InvalidCartItemException;
 use AlistairShaw\Vendirun\App\Lib\CurrencyHelper;
 
 class Cart {
@@ -60,8 +59,7 @@ class Cart {
      */
     public function __construct($params)
     {
-        $this->ids = $params['ids'];
-        $this->items = $params['items'];
+        //$this->ids = $params['ids'];
         $this->priceIncludesTax = $params['priceIncludesTax'];
         $this->chargeTaxOnShipping = $params['chargeTaxOnShipping'];
         $this->defaultTaxRate = $params['defaultTaxRate'];
@@ -69,11 +67,34 @@ class Cart {
         $this->priceIncludesTax = (isset($params['priceIncludesTax'])) ? $params['priceIncludesTax'] : true;
         $this->chargeTaxOnShipping = (isset($params['chargeTaxOnShipping'])) ? $params['chargeTaxOnShipping'] : true;
 
-        if (isset($params['countryId'])) $this->countryId = $params['countryId'];
+        if (isset($params['countryId'])) $this->countryId = (int)$params['countryId'];
         if (isset($params['shippingType'])) $this->shippingType = $params['shippingType'];
+
+        $this->items = [];
+        $this->ids = [];
 
         $this->setShippingPrice();
         $this->setTaxPrice();
+    }
+
+    /**
+     * @return array
+     */
+    public function shippingBreakdown()
+    {
+        $itemShipping = [];
+        foreach ($this->items as $item)
+        {
+            $itemShipping[] = ShippingCalculator::shippingForItem($item->getShipping(), $item->getQuantity(), $this->countryId, $this->shippingType);
+        }
+
+        // order shipping
+        $shipping = [
+            'order' => $this->orderShippingPrice,
+            'items' => $itemShipping
+        ];
+
+        return $shipping;
     }
 
     /**
@@ -214,7 +235,8 @@ class Cart {
      */
     public function totalBeforeTax()
     {
-        return $this->sum('totalBeforeTax');
+        $total = $this->sum('displayTotal');
+        return $this->priceIncludesTax ? $total - $this->taxWithoutShipping() : $total;
     }
 
     /**
@@ -288,7 +310,8 @@ class Cart {
     {
         if ($this->orderShippingPrice === NULL) return NULL;
 
-        return $this->sum('shippingTax') + $this->orderShippingTax();
+        $shippingTotal = $this->sum('rawShipping') + $this->orderShippingPrice;
+        return $this->priceIncludesTax ? TaxCalculator::taxFromTotal($shippingTotal, $this->getDefaultTaxRate()) : (int)($shippingTotal / 100 * $this->getDefaultTaxRate());
     }
 
     /**
@@ -299,7 +322,12 @@ class Cart {
     {
         if ($this->orderShippingPrice === NULL) return NULL;
 
-        return $this->sum('displayShipping') + $this->orderShippingPrice;
+        $shippingPrice = $this->orderShippingPrice;
+        foreach ($this->items as $item)
+        {
+            $shippingPrice += ($item->rawShipping() * $item->getQuantity());
+        }
+        return $shippingPrice;
     }
 
     /**
@@ -317,7 +345,8 @@ class Cart {
      */
     public function taxWithoutShipping()
     {
-        return $this->sum('taxWithoutShipping');
+        $basePrice = $this->sum('displayTotal');
+        return $this->priceIncludesTax ? TaxCalculator::taxFromTotal($basePrice, $this->getDefaultTaxRate()) : ($basePrice / 100 * $this->getDefaultTaxRate());
     }
 
     /**
@@ -327,10 +356,10 @@ class Cart {
     {
         return (object)[
             'displayTotal' => CurrencyHelper::formatWithCurrency($this->displayTotal()),
-            'tax' => CurrencyHelper::formatWithCurrency($this->tax()),
+            'tax' => CurrencyHelper::formatWithCurrency($this->tax(), false, '0.00'),
             'displayShipping' => $this->displayShipping() === NULL ? 'NOT AVAILABLE' : CurrencyHelper::formatWithCurrency($this->displayShipping(), false, '0.00'),
-            'total' => CurrencyHelper::formatWithCurrency($this->total()),
-            'totalBeforeTax' => CurrencyHelper::formatWithCurrency($this->totalBeforeTax()),
+            'total' => CurrencyHelper::formatWithCurrency($this->total(), false, '0.00'),
+            'totalBeforeTax' => CurrencyHelper::formatWithCurrency($this->totalBeforeTax(), false, '0.00'),
             'shippingBeforeTax' => $this->displayShipping() === NULL ? 'NOT AVAILABLE' : CurrencyHelper::formatWithCurrency($this->shippingBeforeTax(), false, '0.00')
         ];
     }
@@ -340,6 +369,8 @@ class Cart {
      */
     public function add(CartItem $cartItem)
     {
+        $this->ids[] = $cartItem->getVariationId();
+
         // check if cart item already in items
         $found = false;
         foreach ($this->items as $currentItem)
@@ -351,8 +382,9 @@ class Cart {
                 $currentItem->setQuantity($currentItem->getQuantity() + $cartItem->getQuantity());
             }
         }
-        
+
         if (!$found) $this->items[] = $cartItem;
+        $this->setShippingPrice();
     }
 
     /**
@@ -407,6 +439,26 @@ class Cart {
     }
 
     /**
+     * Remove any items from the id list that are not in the items
+     */
+    public function checkIdList()
+    {
+        $newIds = [];
+        foreach ($this->ids as $id)
+        {
+            $found = false;
+            foreach ($this->items as $item)
+            {
+                /* @var $cartItem CartItem */
+                if ($item->getVariationId() == $id) $found = true;
+            }
+            if ($found) $newIds[] = $id;
+        }
+
+        $this->ids = $newIds;
+    }
+
+    /**
      * @return array
      */
     public function toArray()
@@ -457,9 +509,16 @@ class Cart {
     {
         if (!$this->countryId) $this->countryId = CustomerHelper::getDefaultCountry();
 
-        $this->availableShippingTypes = ShippingCalculator::availableShippingTypes($this->items, $this->countryId);
+        $this->availableShippingTypes = ShippingCalculator::availableShippingTypes($this);
+
         if (!$this->shippingType && count($this->availableShippingTypes) > 0) $this->shippingType = $this->availableShippingTypes[0];
-        $this->orderShippingPrice = ShippingCalculator::orderShippingCharge($this->items, $this->countryId, $this->shippingType);
+        $this->orderShippingPrice = ShippingCalculator::orderShippingCharge($this);
+
+        foreach ($this->items as $item)
+        {
+            $item->setCountryId($this->countryId);
+            $item->setShippingType($this->shippingType);
+        }
     }
 
     /**

@@ -1,125 +1,197 @@
-<?php namespace AlistairShaw\Vendirun\Test;
+<?php namespace AlistairShaw\Vendirun\Tests\App\Entities\Cart;
 
-use AlistairShaw\Vendirun\App\Entities\Cart\Cart;
-use AlistairShaw\Vendirun\App\Entities\Cart\CartItem\CartItem;
+use AlistairShaw\Vendirun\Tests\App\VendirunTestCase;
 
-class CartTest extends \PHPUnit_Framework_TestCase {
+class CartTest extends VendirunTestCase
+{
+    public function testTotalProducts()
+    {
+        $cart = $this->makeCart(false);
+        $this->assertEquals(3, $cart->totalProducts());
+    }
+
+    public function testShippingBreakdown()
+    {
+        $cart = $this->makeCart(false);
+        $shipping = $cart->shippingBreakdown();
+
+        $this->assertEquals(50, $shipping['order']);
+
+        foreach ($shipping['items'] as $item)
+        {
+            $this->assertEquals(50, $item);
+        }
+    }
+
+    public function testGetDefaultTaxRate()
+    {
+        $cart = $this->makeCart(false);
+        $this->assertEquals(20, $cart->getDefaultTaxRate());
+    }
+
+    public function testOrderShippingBeforeTax()
+    {
+        $cart = $this->makeCart(false);
+        $this->assertEquals(50, $cart->orderShippingBeforeTax());
+
+        $cart = $this->makeCart(true);
+        $this->assertEquals(42, $cart->orderShippingBeforeTax());
+    }
 
     public function testOrderShippingTax()
     {
+        $cart = $this->makeCart(false);
+        $this->assertEquals(10, $cart->orderShippingTax());
+
         $cart = $this->makeCart(true);
-        $this->assertEquals(25, $cart->orderShippingTax());
+        $this->assertEquals(8, $cart->orderShippingTax());
+    }
+
+    /**
+     * Total includes price, tax and shipping
+     */
+    public function testTotal()
+    {
+        $cart = $this->makeCart(true);
+        $this->assertEquals(500, $cart->total());
 
         $cart = $this->makeCart(false);
-        $this->assertEquals(30, $cart->orderShippingTax());
+        $this->assertEquals(600, $cart->total());
+    }
+
+    public function testTotalWithSuppliers()
+    {
+        $cart = $this->makeCart(true, false, 'Standard Shipping', true);
+        $this->assertEquals(600, $cart->total());
+
+        $cart = $this->makeCart(false, false, 'Standard Shipping', true);
+        $this->assertEquals(720, $cart->total());
+    }
+
+    public function testTotalWithSuppliersAgain()
+    {
+        $cart = $this->makeCart2(true);
+        $this->assertEquals(5890, $cart->total());
+
+        $cart = $this->makeCart2(false);
+        $this->assertEquals(7068, $cart->total());
     }
 
     public function testShippingTax()
     {
         $cart = $this->makeCart(true);
-        $this->assertEquals(100, $cart->shippingTax());
+        $this->assertEquals(33, $cart->shippingTax());
 
         $cart = $this->makeCart(false);
-        $this->assertEquals(120, $cart->shippingTax());
+        $this->assertEquals(40, $cart->shippingTax());
     }
 
     public function testTax()
     {
         $cart = $this->makeCart(true);
-        $this->assertEquals(250, $cart->tax());
+        $this->assertEquals(83, $cart->tax());
 
         $cart = $this->makeCart(false);
-        $this->assertEquals(300, $cart->tax());
+        $this->assertEquals(100, $cart->tax());
     }
 
     public function testTaxWithoutShipping()
     {
         $cart = $this->makeCart(true);
-        $this->assertEquals(150, $cart->taxWithoutShipping());
+        $this->assertEquals(50, $cart->taxWithoutShipping());
 
         $cart = $this->makeCart(false);
-        $this->assertEquals(180, $cart->taxWithoutShipping());
+        $this->assertEquals(60, $cart->taxWithoutShipping());
     }
 
     public function testDisplayShipping()
     {
         $cart = $this->makeCart(true);
-        $this->assertEquals(600, $cart->displayShipping());
+        $this->assertEquals(200, $cart->displayShipping());
 
         $cart = $this->makeCart(false);
-        $this->assertEquals(600, $cart->displayShipping());
+        $this->assertEquals(200, $cart->displayShipping());
     }
 
-    public function testOrderShippingBeforeTax()
+    public function testDisplayShippingAgain()
     {
-        $cart = $this->makeCart(true);
-        $this->assertEquals(125, $cart->orderShippingBeforeTax());
+        $cart = $this->makeCart2(true);
+        $this->assertEquals(690, $cart->displayShipping());
 
-        $cart = $this->makeCart(false);
-        $this->assertEquals(150, $cart->orderShippingBeforeTax());
+        $cart = $this->makeCart2(false);
+        $this->assertEquals(690, $cart->displayShipping());
+    }
+
+    public function testDisplayShippingHighQuantity()
+    {
+        $cart = $this->makeCart2(true, 2);
+        $this->assertEquals(780, $cart->displayShipping());
+    }
+
+    public function testDisplayShippingWithSuppliers()
+    {
+        $cart = $this->makeCart(true, false, 'Standard Shipping', true);
+        $this->assertEquals(300, $cart->displayShipping());
     }
 
     public function testDisplayOrderShipping()
     {
         $cart = $this->makeCart(true);
-        $this->assertEquals(150, $cart->displayOrderShipping());
+        $this->assertEquals(50, $cart->displayOrderShipping());
 
         $cart = $this->makeCart(false);
+        $this->assertEquals(50, $cart->displayOrderShipping());
+    }
+
+    public function testDisplayOrderShippingWithSuppliers()
+    {
+        $cart = $this->makeCart(true, false, 'Standard Shipping', true);
         $this->assertEquals(150, $cart->displayOrderShipping());
     }
 
     public function testShippingBeforeTax()
     {
         $cart = $this->makeCart(true);
-        $this->assertEquals(500, $cart->shippingBeforeTax());
+        $this->assertEquals(168, $cart->shippingBeforeTax());
 
         $cart = $this->makeCart(false);
-        $this->assertEquals(600, $cart->shippingBeforeTax());
+        $this->assertEquals(200, $cart->shippingBeforeTax());
     }
 
     public function testShipping()
     {
         $cart = $this->makeCart(true);
-        $this->assertEquals(600, $cart->shipping());
+        $this->assertEquals(200, $cart->shipping());
 
         $cart = $this->makeCart(false);
-        $this->assertEquals(720, $cart->shipping());
+        $this->assertEquals(240, $cart->shipping());
     }
 
     public function testDisplayTotal()
     {
         $cart = $this->makeCart(true);
-        $this->assertEquals(900, $cart->displayTotal());
+        $this->assertEquals(300, $cart->displayTotal());
 
         $cart = $this->makeCart(false);
-        $this->assertEquals(900, $cart->displayTotal());
+        $this->assertEquals(300, $cart->displayTotal());
     }
 
     public function testTotalBeforeTax()
     {
         $cart = $this->makeCart(true);
-        $this->assertEquals(750, $cart->totalBeforeTax());
+        $this->assertEquals(250, $cart->totalBeforeTax());
 
         $cart = $this->makeCart(false);
-        $this->assertEquals(900, $cart->totalBeforeTax());
+        $this->assertEquals(300, $cart->totalBeforeTax());
     }
 
     public function testTotalWithoutShipping()
     {
         $cart = $this->makeCart(true);
-        $this->assertEquals(900, $cart->totalWithoutShipping());
+        $this->assertEquals(300, $cart->totalWithoutShipping());
 
         $cart = $this->makeCart(false);
-        $this->assertEquals(1080, $cart->totalWithoutShipping());
-    }
-
-    public function testTotal()
-    {
-        $cart = $this->makeCart(true);
-        $this->assertEquals(1500, $cart->total());
-
-        $cart = $this->makeCart(false);
-        $this->assertEquals(1800, $cart->total());
+        $this->assertEquals(360, $cart->totalWithoutShipping());
     }
 
     /**
@@ -143,67 +215,6 @@ class CartTest extends \PHPUnit_Framework_TestCase {
     {
         $cart = $this->makeCart(true, false, 'Express Shipping');
         $this->assertEquals('Express Shipping', $cart->getShippingType());
-    }
-
-    /**
-     * @param bool   $priceIncludesTax
-     * @param bool   $shippingIsNull
-     * @param string $shippingType
-     * @return Cart
-     */
-    private function makeCart($priceIncludesTax = true, $shippingIsNull = false, $shippingType = 'Standard Shipping')
-    {
-        $params = [
-            'ids' => [1,2,3],
-            'items' => $this->makeMultipleItems(3, $priceIncludesTax, 100, $shippingIsNull ? null : 50, $shippingType),
-            'countryId' => 72,
-            'shippingType' => $shippingType,
-            'priceIncludesTax' => $priceIncludesTax,
-            'chargeTaxOnShipping' => true,
-            'defaultTaxRate' => 20.0,
-            'orderShippingPrice' => $shippingIsNull ? null : 150,
-            'availableShippingTypes' => [
-                'Standard Shipping',
-                'Express Shipping'
-            ],
-        ];
-        return new Cart($params);
-    }
-
-    /**
-     * @param      $number
-     * @param bool $priceIncludesTax
-     * @param int  $price
-     * @param int  $shippingPrice
-     * @return array
-     */
-    private function makeMultipleItems($number, $priceIncludesTax = true, $price = 100, $shippingPrice = 50)
-    {
-        $items = [];
-        for ($i = 1; $i <= $number; $i++) $items[] = $this->makeCartItem($price, 3, $priceIncludesTax, $shippingPrice);
-        return $items;
-    }
-
-    /**
-     * @param int  $price
-     * @param int  $quantity
-     * @param bool $priceIncludesTax
-     * @param int  $shippingPrice
-     * @return CartItem
-     */
-    private function makeCartItem($price = 100, $quantity = 3, $priceIncludesTax = true, $shippingPrice = 50)
-    {
-        return new CartItem([
-            'productVariationId' => 55,
-            'quantity' => $quantity,
-            'taxRate' => 20.0,
-            'productVariation' => [],
-            'product' => [],
-            'basePrice' => $price,
-            'shippingPrice' => $shippingPrice,
-            'shippingTaxRate' => $shippingPrice === null ? null : 20.0,
-            'priceIncludesTax' => $priceIncludesTax
-        ]);
     }
 
 }

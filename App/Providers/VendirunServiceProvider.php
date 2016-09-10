@@ -33,6 +33,11 @@ class VendirunServiceProvider extends ServiceProvider {
 			__DIR__.'/../../public' => public_path('vendor/vendirun'),
 		], 'public');
 
+        // this publishes the error views
+        $this->publishes([
+            __DIR__.'/../../resources/views/errors' => base_path('resources/views/errors'),
+        ], 'public');
+
 		// include my package custom routes
 		include __DIR__.'/../../routes.php';
 

@@ -13,6 +13,7 @@
                 </div>
             </div>
             <div class="col-md-9 col-md-8">
+                @include('vendirun::product.refine.mobile-search')
                 @include('vendirun::product.list')
             </div>
         </div>

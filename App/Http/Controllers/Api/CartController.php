@@ -12,7 +12,7 @@ use Request;
 class CartController extends ApiBaseController {
 
     /**
-     * Returns full list of available actions with the relevant URI listed
+     * Returns cart adjusted based on country or shipping type
      * @param CartRepository $cartRepository
      * @return array
      */
@@ -20,9 +20,7 @@ class CartController extends ApiBaseController {
     {
         try
         {
-            $cart = $cartRepository->find();
-            if (Request::get('countryId')) $cart->setShippingType(Request::get('countryId'));
-            if (Request::get('shippingTypeId')) $cart->setShippingType(Request::get('shippingTypeId'));
+            $cart = $cartRepository->find(Request::get('countryId', null), Request::get('shippingTypeId', ''));
 
             return $this->respond(true, $cart->toArray());
         }
@@ -49,7 +47,7 @@ class CartController extends ApiBaseController {
 
             $clientInfo = Config::get('clientInfo');
             $priceIncludesTax = $clientInfo->business_settings->tax->price_includes_tax;
-            $cartItemFactory = new CartItemFactory($cartRepository);
+            $cartItemFactory = new CartItemFactory($cartRepository, $cart);
             $cartItem = $cartItemFactory->make($product, $priceIncludesTax, $quantity);
             $cart->add($cartItem);
             $cart = $cartRepository->save($cart);

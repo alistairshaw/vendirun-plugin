@@ -69,15 +69,6 @@ class PageController extends VendirunBaseController {
     }
 
     /**
-     * Example of a menu from the API
-     * @return \Illuminate\View\View
-     */
-    public function menu()
-    {
-        return View::make('vendirun::cms.menu-example');
-    }
-
-    /**
      * @return \Illuminate\Http\JsonResponse
      */
     public function mapCacheRetrieve()

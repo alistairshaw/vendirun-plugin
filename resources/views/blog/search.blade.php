@@ -4,6 +4,6 @@
 @section('content')
     <div class="container">
         <h1>Blog</h1>
-        @include('vendirun:blog.posts')
+        @include('vendirun::blog.posts')
     </div>
 @stop

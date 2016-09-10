@@ -38,6 +38,9 @@ class ClientHelper {
         return (object)$data;
     }
 
+    /**
+     * @return array
+     */
     public static function getValidLocales()
     {
         $clientInfo = static::getClientInfo();
@@ -47,6 +50,15 @@ class ClientHelper {
             $final[] = $language->language_code;
         }
         return $final;
+    }
+
+    /**
+     * @param $module
+     * @return bool
+     */
+    public static function checkForModule($module)
+    {
+        return (in_array($module, (array)self::getClientInfo()->modules));
     }
 
 }

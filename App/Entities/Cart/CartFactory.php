@@ -4,6 +4,7 @@ use AlistairShaw\Vendirun\App\Entities\Cart\CartItem\CartItemFactory;
 use AlistairShaw\Vendirun\App\Entities\Cart\Helpers\ShippingCalculator;
 use AlistairShaw\Vendirun\App\Entities\Cart\Helpers\TaxCalculator;
 use AlistairShaw\Vendirun\App\Entities\Customer\Helpers\CustomerHelper;
+use AlistairShaw\Vendirun\App\Entities\Product\ProductTaxOption\ProductTaxOptionFactory;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\Exceptions\FailResponseException;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\VendirunApi;
 use App;
@@ -29,65 +30,39 @@ class CartFactory {
 
     /**
      * @param $items
+     * @param null $countryId
+     * @param string $shippingType
      * @return Cart
      */
-    public function makeFromIds($items)
+    public function makeFromIds($items, $countryId = null, $shippingType = '')
     {
         $clientInfo = Config::get('clientInfo');
         $priceIncludesTax = $clientInfo->business_settings->tax->price_includes_tax;
 
-        $cartItemFactory = new CartItemFactory($this->cartRepository);
-        $products = $cartItemFactory->makeFromIds($items, $priceIncludesTax);
+
+        $taxes = ProductTaxOptionFactory::makeFromApi($clientInfo->business_settings->tax->country_tax_rates);
+        $defaultTaxRate = TaxCalculator::calculateProductTaxRate($taxes, $countryId, $clientInfo->business_settings->tax->default_tax_rate);
 
         $params = [
             'ids' => $items,
-            'items' => $products,
             'priceIncludesTax' => $priceIncludesTax,
             'chargeTaxOnShipping' => $clientInfo->business_settings->tax->charge_tax_on_shipping,
-            'defaultTaxRate' => $clientInfo->business_settings->tax->default_tax_rate,
-        ];
-
-        return new Cart($params);
-    }
-
-    /**
-     * CartFactory constructor.
-     * @param null  $countryId
-     * @param null  $shippingType
-     * @return Cart
-     */
-    /*public function make($countryId = null, $shippingType = null)
-    {
-        // if no country select a default
-        if (!$countryId) $countryId = CustomerHelper::getDefaultCountry();
-
-        $productVariationIds = $this->cartRepository->getCart();
-        $products = $this->cartRepository->getProducts()->result;
-        $availableShippingTypes = ShippingCalculator::availableShippingTypes($products, $countryId);
-
-        if ((count($availableShippingTypes) > 0) && !in_array($shippingType, $availableShippingTypes)) $shippingType = $availableShippingTypes[0];
-        if (count($availableShippingTypes) == 0) $shippingType = '';
-
-        $clientInfo = Config::get('clientInfo');
-        $priceIncludesTax = $clientInfo->business_settings->tax->price_includes_tax;
-
-        $orderShippingPrice = ShippingCalculator::orderShippingCharge($products, $countryId, $shippingType);
-
-        $cartItemFactory = new CartItemFactory($this->cartRepository, $countryId, $shippingType);
-
-        $params = [
-            'ids' => $productVariationIds,
-            'items' => $cartItemFactory->makeFromIds($priceIncludesTax),
+            'defaultTaxRate' => $defaultTaxRate,
             'countryId' => $countryId,
-            'shippingType' => $shippingType,
-            'priceIncludesTax' => $priceIncludesTax,
-            'chargeTaxOnShipping' => $clientInfo->business_settings->tax->charge_tax_on_shipping,
-            'defaultTaxRate' => $clientInfo->business_settings->tax->default_tax_rate,
-            'orderShippingPrice' => $orderShippingPrice,
-            'availableShippingTypes' => $availableShippingTypes,
+            'shippingType' => $shippingType ? $shippingType : null
         ];
 
-        return new Cart($params);
-    }*/
+        $cart = new Cart($params);
+
+        $cartItemFactory = new CartItemFactory($this->cartRepository, $cart);
+        foreach ($cartItemFactory->makeFromIds($items, $priceIncludesTax, $cart->getDefaultTaxRate()) as $item)
+        {
+            $cart->add($item);
+        }
+
+        $cart->checkIdList();
+
+        return $cart;
+    }
 
 }

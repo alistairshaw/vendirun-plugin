@@ -1,8 +1,8 @@
-<?php namespace AlistairShaw\Vendirun\Test;
+<?php namespace AlistairShaw\Vendirun\Tests\App\Entities\Cart\CartItem;
 
-use AlistairShaw\Vendirun\App\Entities\Cart\CartItem\CartItem;
+use AlistairShaw\Vendirun\Tests\App\VendirunTestCase;
 
-class CartItemTest extends \PHPUnit_Framework_TestCase {
+class CartItemTest extends VendirunTestCase {
 
     public function testGetSingleItemPrice()
     {
@@ -47,6 +47,12 @@ class CartItemTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals(250, $cartItem->displayShipping());
 
         $cartItem = $this->makeCartItem(100, 5, false);
+        $this->assertEquals(250, $cartItem->displayShipping());
+    }
+
+    public function testDisplayShippingWithSupplier()
+    {
+        $cartItem = $this->makeCartItem(100, 5, true, 50, 20, 'Standard Shipping', 1);
         $this->assertEquals(250, $cartItem->displayShipping());
     }
 
@@ -124,11 +130,12 @@ class CartItemTest extends \PHPUnit_Framework_TestCase {
         $cartItem = $this->makeCartItem(100);
         $this->assertEquals(450, $cartItem->total());
 
+        $cartItem = $this->makeCartItem(10100, 3, false);
+        $this->assertEquals(36540, $cartItem->total());
+
         $cartItem = $this->makeCartItem(100, 3, false);
         $this->assertEquals(540, $cartItem->total());
 
-        $cartItem = $this->makeCartItem(10100, 3, false);
-        $this->assertEquals(36540, $cartItem->total());
     }
 
     /**
@@ -143,20 +150,5 @@ class CartItemTest extends \PHPUnit_Framework_TestCase {
         $this->assertNull($cartItem->shippingBeforeTax());
         $this->assertNull($cartItem->shippingTax());
         $this->assertNull($cartItem->displayShipping());
-    }
-
-    private function makeCartItem($price = 100, $quantity = 3, $priceIncludesTax = true, $shippingPrice = 50, $shippingTaxRate = 20.0)
-    {
-        return new CartItem([
-            'productVariationId' => 55,
-            'quantity' => $quantity,
-            'taxRate' => 20.0,
-            'productVariation' => [],
-            'product' => [],
-            'basePrice' => $price,
-            'shippingPrice' => $shippingPrice,
-            'shippingTaxRate' => $shippingTaxRate,
-            'priceIncludesTax' => $priceIncludesTax
-        ]);
     }
 }

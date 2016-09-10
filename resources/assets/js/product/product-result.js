@@ -7,7 +7,7 @@ var productResultManager = function() {
         
         setupAddToCartButtons: function() {
             var _this = this;
-            $('.js-product-result').find('.js-add-to-cart').on('click', function(event) {
+            $('.js-product-result').find('.js-add-to-cart').off('click').on('click', function(event) {
                 var $variationModal = $('#productVariationModal');
                 if ($variationModal.length == 0) return true;
                 event.preventDefault();
@@ -15,6 +15,7 @@ var productResultManager = function() {
                 var $modalError = $('.js-product-variation-modal-error');
                 $modalError.addClass('hidden');
                 var $addToCartConfirm = $('.js-add-to-cart-modal-confirm');
+                $addToCartConfirm.off('click');
                 var originalAddToCartText = $addToCartConfirm.html();
                 $variationModal.modal('show');
                 $addToCartConfirm.html('<i class="fa fa-spinner fa-spin"></i>').addClass('disabled').prop('disabled', true);

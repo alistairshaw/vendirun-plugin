@@ -2,6 +2,7 @@
 
 use AlistairShaw\Vendirun\App\Entities\Product\ProductShippingOption\ProductShippingOption;
 use AlistairShaw\Vendirun\App\Entities\Product\ProductTaxOption\ProductTaxOption;
+use AlistairShaw\Vendirun\App\Entities\Product\ProductTaxOption\ProductTaxOptionFactory;
 use AlistairShaw\Vendirun\App\Entities\Product\ProductVariation\ProductVariationFactory;
 
 class ProductFactory {
@@ -23,8 +24,8 @@ class ProductFactory {
             'video' => $product->video
         ];
 
-        if (isset($product->shipping)) $params['shipping'] = $this->makeShipping($product->shipping);
-        if (isset($product->tax)) $params['tax'] = $this->makeTax($product->tax);
+        if (isset($product->shipping)) $params['shipping'] = $this->makeShipping($product->shipping, $product->supplier_id);
+        if (isset($product->tax)) $params['tax'] = ProductTaxOptionFactory::makeFromApi($product->tax);
         if (isset($product->variations)) $params['variations'] = $this->makeVariations($product->variations);
         if (isset($product->relatedProducts)) $params['relatedProducts'] = $this->makeRelatedProducts($product->related_products);
 
@@ -33,30 +34,29 @@ class ProductFactory {
 
     /**
      * @param $apiShipping
+     * @param null $supplierId
      * @return array
      */
-    private function makeShipping($apiShipping)
+    private function makeShipping($apiShipping, $supplierId = null)
     {
         $shipping = [];
         foreach ($apiShipping as $item)
         {
-            $shipping[] = new ProductShippingOption($item->order_price, $item->shipping_type, $item->countries, $item->weight_from, $item->weight_to);
+            // override with supplier prices, if applicable
+            if (isset($item->supplier_prices))
+            {
+                foreach ($item->supplier_prices as $supplier_price)
+                {
+                    if ($supplier_price->supplier_id == $supplierId)
+                    {
+                        $item->order_price = $supplier_price->order_price;
+                    }
+                }
+            }
+
+            $shipping[] = new ProductShippingOption($item->order_price, $item->product_price, $item->shipping_type, $supplierId, $item->countries, $item->weight_from, $item->weight_to);
         }
         return $shipping;
-    }
-
-    /**
-     * @param $apiTax
-     * @return array
-     */
-    private function makeTax($apiTax)
-    {
-        $tax = [];
-        foreach ($apiTax as $item)
-        {
-            $tax[] = new ProductTaxOption($item->percentage, $item->countries, !$item->id);
-        }
-        return $tax;
     }
 
     /**

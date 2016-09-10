@@ -1,3 +1,5 @@
+$('.js-reload-per-page-button').remove();
+
 $(document).ready(function () {
 
     var resultsUrlManager = new urlManager();

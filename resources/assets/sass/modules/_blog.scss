@@ -12,6 +12,10 @@
             }
             .blog-item-container {
                 @extend .col-sm-9;
+                > div {
+                    @extend .clearfix;
+                    padding: 0 20px 20px 0;
+                }
             }
         }
         .created {

@@ -1,5 +1,6 @@
 <?php namespace AlistairShaw\Vendirun\App\Entities\Cart\CartItem;
 
+use AlistairShaw\Vendirun\App\Entities\Cart\Helpers\ShippingCalculator;
 use AlistairShaw\Vendirun\App\Entities\Cart\Helpers\TaxCalculator;
 use AlistairShaw\Vendirun\App\Entities\Product\Product;
 
@@ -46,6 +47,16 @@ class CartItem {
     private $priceIncludesTax;
 
     /**
+     * @var int
+     */
+    private $countryId;
+
+    /**
+     * @var string
+     */
+    private $shippingType;
+
+    /**
      * CartItem constructor.
      * @param $params
      */
@@ -53,12 +64,43 @@ class CartItem {
     {
         $this->productVariationId = $params['productVariationId'];
         $this->quantity = $params['quantity'];
-        $this->taxRate = $params['taxRate'];
         $this->product = $params['product'];
         $this->basePrice = $params['basePrice'];
-        $this->shippingPrice = $params['shippingPrice'];
-        $this->shippingTaxRate = $params['shippingTaxRate'];
-        $this->priceIncludesTax = $params['priceIncludesTax'];
+
+        if (isset($params['shippingPrice'])) $this->shippingPrice = $params['shippingPrice'];
+        if (isset($params['shippingTaxRate'])) $this->shippingTaxRate = $params['shippingTaxRate'];
+        if (isset($params['countryId'])) $this->countryId = $params['countryId'];
+        if (isset($params['shippingType'])) $this->shippingType = $params['shippingType'];
+        $this->priceIncludesTax = (isset($params['priceIncludesTax'])) ? $params['priceIncludesTax'] : true;
+
+        $this->updateShippingAndTaxes();
+    }
+
+    /**
+     * @param $countryId
+     */
+    public function setCountryId($countryId)
+    {
+        $this->countryId = (int)$countryId;
+        $this->updateShippingAndTaxes();
+    }
+
+    /**
+     * @param $shippingType
+     */
+    public function setShippingType($shippingType)
+    {
+        $this->shippingType = $shippingType ? $shippingType : null;
+        $this->updateShippingAndTaxes();
+    }
+
+    /**
+     *
+     */
+    private function updateShippingAndTaxes()
+    {
+        $this->taxRate = TaxCalculator::calculateProductTaxRate($this->getProduct()->getTax(), $this->countryId);
+        $this->shippingPrice = ShippingCalculator::shippingForItem($this->getProduct()->getShipping(), $this->getQuantity(), $this->countryId, $this->shippingType);
     }
 
     /**
@@ -149,7 +191,8 @@ class CartItem {
      */
     public function total()
     {
-        return $this->totalBeforeTax() + $this->taxWithoutShipping() + $this->shipping();
+        $total = $this->totalBeforeTax() + $this->taxWithoutShipping() + $this->shipping();
+        return $total;
     }
 
     /**
@@ -192,6 +235,14 @@ class CartItem {
     }
 
     /**
+     * @return int
+     */
+    public function rawShipping()
+    {
+        return $this->shippingPrice;
+    }
+
+    /**
      * total shipping before tax
      * @return int
      */
@@ -207,7 +258,7 @@ class CartItem {
     public function shippingTax()
     {
         if ($this->shippingPrice === null) return null;
-        return $this->priceIncludesTax ? TaxCalculator::taxFromTotal($this->shippingPrice, $this->taxRate, $this->quantity) : (int)($this->shippingPrice / 100 * $this->taxRate) * $this->quantity;
+        return $this->priceIncludesTax ? TaxCalculator::taxFromTotal($this->shippingPrice, $this->shippingTaxRate, $this->quantity) : (int)($this->shippingPrice / 100 * $this->shippingTaxRate) * $this->quantity;
     }
 
     /**
@@ -227,6 +278,7 @@ class CartItem {
     public function tax()
     {
         $tax = $this->priceIncludesTax ? TaxCalculator::taxFromTotal($this->basePrice, $this->taxRate, $this->quantity) : ($this->basePrice * $this->quantity / 100 * $this->taxRate);
+
         return $tax + $this->shippingTax();
     }
 
@@ -253,8 +305,9 @@ class CartItem {
      */
     public function getVariationId()
     {
-        $variations = $this->product->getVariations();
-        return $variations[0]->getId();
+        /*$variations = $this->product->getVariations();
+        return $variations[0]->getId();*/
+        return $this->productVariationId;
     }
 
     /**

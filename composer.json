@@ -1,7 +1,7 @@
 {
     "name": "alistairshaw/vendirun",
     "description": "Vendirun plugin for front-end Laravel website",
-    "version": "1.0.8.8",
+    "version": "1.1",
     "authors": [
         {
             "name": "Alistair Shaw",
@@ -10,7 +10,7 @@
     ],
     "require": {
         "php": ">=5.5.9",
-        "laravel/framework": "^5.2",
+        "laravel/framework": "5.2.*",
         "guzzlehttp/guzzle": "^6.0@dev",
         "social-links/social-links": "^1.9",
         "stripe/stripe-php": "^3",

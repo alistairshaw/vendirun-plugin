@@ -26,6 +26,7 @@ class ApiCartRepository implements CartRepository {
             }
         }
         Session::put('shoppingCart', $itemIds);
+        Session::save();
 
         if ($token = CustomerHelper::checkLoggedinCustomer())
         {
@@ -48,14 +49,16 @@ class ApiCartRepository implements CartRepository {
     }
 
     /**
+     * @param null $countryId
+     * @param string $shippingType
      * @return Cart
      */
-    public function find()
+    public function find($countryId = null, $shippingType = '')
     {
         $cartFactory = new CartFactory($this);
 
-        if (Session::has('shoppingCart')) return $cartFactory->makeFromIds(Session::get('shoppingCart'));
-        if (!CustomerHelper::checkLoggedinCustomer()) return $cartFactory->makeFromIds([]);
+        if (Session::has('shoppingCart')) return $cartFactory->makeFromIds(Session::get('shoppingCart'), $countryId, $shippingType);
+        if (!CustomerHelper::checkLoggedinCustomer()) return $cartFactory->makeFromIds([], $countryId, $shippingType);
 
         try
         {
@@ -71,7 +74,7 @@ class ApiCartRepository implements CartRepository {
             $items = [];
         }
 
-        return $cartFactory->makeFromIds($items);
+        return $cartFactory->makeFromIds($items, $countryId, $shippingType);
     }
 
     /**
@@ -80,7 +83,7 @@ class ApiCartRepository implements CartRepository {
      */
     public function getProducts($items)
     {
-        return VendirunApi::makeRequest('product/search', ['variation_list_only' => implode(",", $items)])->getData();
+        return VendirunApi::makeRequest('product/search', ['variation_list_only' => implode(",", $items), 'limit' => 0])->getData();
     }
 
     /**

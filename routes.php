@@ -119,9 +119,6 @@ Route::group(['middleware' => ['web']], function ()
             Route::post('vendirun/google-map-cache-get', ['as' => $localePrefix . 'vendirun.mapCache', 'uses' => 'Cms\PageController@mapCacheRetrieve']);
             Route::post('vendirun/google-map-cache-set', ['as' => $localePrefix . 'vendirun.mapCache', 'uses' => 'Cms\PageController@mapCacheSet']);
 
-            // menu example
-            Route::any('menu-example', ['as' => $localePrefix . 'vendirun.menu', 'uses' => 'Cms\PageController@menu']);
-
             // home page
             Route::any('/', ['as' => $localePrefix . 'vendirun.home', 'uses' => 'Cms\PageController@index']);
         });

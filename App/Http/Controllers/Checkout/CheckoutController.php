@@ -43,13 +43,12 @@ class CheckoutController extends VendirunBaseController {
         }
 
         $countryId = NULL;
-        $countryId = CustomerHelper::getDefaultCountry();
+        $countryId = CustomerHelper::getDefaultCountry($customerRepository);
         if ($data['defaultAddress']) $countryId = $data['defaultAddress']->getCountryId();
         if (Request::old('shippingaddressId')) $countryId = $data['customer']->getAddressFromAddressId(Request::old('shippingaddressId'))->getCountryId();
 
-        $cart = $cartRepository->find();
+        $cart = $cartRepository->find($countryId, Request::get('shippingTypeId', ''));
         $cart->setCountryId($countryId);
-        if (Request::get('shippingTypeId')) $cart->setShippingType(Request::get('shippingTypeId'));
 
         if ($cart->count() == 0) return Redirect::route(LocaleHelper::localePrefix() . 'vendirun.productCart');
 
@@ -68,7 +67,7 @@ class CheckoutController extends VendirunBaseController {
         $customer = $customerRepository->find();
 
         $countryId = NULL;
-        $countryId = CustomerHelper::getDefaultCountry();
+        $countryId = CustomerHelper::getDefaultCountry($customerRepository);
         if (Request::has('countryId')) $countryId = Request::get('countryId');
         if (Request::has('shippingaddressId'))
         {
@@ -110,9 +109,7 @@ class CheckoutController extends VendirunBaseController {
         $countryId = $shippingAddress ? $shippingAddress->getCountryId() : $request->get('shippingcountryId');
 
         // construct the cart
-        $cart = $cartRepository->find();
-        $cart->setCountryId($countryId);
-        if (Request::get('shippingType')) $cart->setShippingType(Request::get('shippingType'));
+        $cart = $cartRepository->find($countryId, Request::get('shippingType', ''));
 
         // if cart is empty go back to main checkout page
         if ($cart->count() == 0) return Redirect::back()->with('paymentError', 'No items in your cart')->withInput();
@@ -172,7 +169,6 @@ class CheckoutController extends VendirunBaseController {
         }
         catch (\Exception $e)
         {
-            dd($e);
             return Redirect::back()->with('paymentError', $e->getMessage())->withInput();
         }
 

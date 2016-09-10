@@ -6,6 +6,6 @@
 @section('content')
     <div class="large-notice">
         <h1>404</h1>
-        <p>{{ trans('vendirun::standard.fourOhFour') }}</p>
+        <p>{{ trans('vendirun::standard.fiveOhThree') }}</p>
     </div>
 @stop

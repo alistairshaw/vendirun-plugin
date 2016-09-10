@@ -1,0 +1,70 @@
+.vendirun-slider-widget {
+    .carousel-control {
+        > span {
+            position: absolute;
+            top: 50%;
+            margin-top: -10px;
+            z-index: 5;
+            display: inline-block;
+        }
+    }
+    .carousel-caption {
+        background: rgba(255,255,255,0.6);
+        color: $gray-darker;
+        text-shadow: none;
+        font-size: 1.4em;
+        font-weight: 300;
+        letter-spacing: 1px;
+        width: 100%;
+        margin: 0;
+        left: 0;
+        bottom: 80px;
+        padding: 12px;
+    }
+    .carousel-content {
+        position: absolute;
+        width: 100%;
+        top: 0;
+        left: 0;
+        padding: 40px 160px 40px 160px;
+        p {
+            margin: 20px 0 40px 0;
+            span {
+                padding: 16px;
+                background: rgba($brand-primary, 0.7);
+                color: white;
+                font-weight: 100;
+                font-size: 1.5em;
+                letter-spacing: 2px;
+            }
+        }
+    }
+    .carousel-call-to-action {
+        position: absolute;
+        padding: 0 160px;
+        width: 100%;
+        bottom: 200px;
+        button {
+            font-size: 1.5em;
+            padding: 12px 24px;
+            font-weight: 300;
+            @extend .btn-warning;
+        }
+    }
+    .item:nth-child(even) {
+        .carousel-content {
+            p {
+                text-align: right;
+                span {
+                    background: rgba($brand-warning, 0.8);
+                }
+            }
+        }
+        .carousel-call-to-action {
+            text-align: right;
+            button {
+                @extend .btn-success;
+            }
+        }
+    }
+}

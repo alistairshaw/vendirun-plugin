@@ -2,15 +2,18 @@
 
 namespace AlistairShaw\Vendirun\App\Entities\Cart\Helpers;
 
+use AlistairShaw\Vendirun\App\Entities\Cart\Cart;
+use AlistairShaw\Vendirun\App\Entities\Cart\CartItem\CartItem;
 use AlistairShaw\Vendirun\App\Entities\Product\Product;
 use AlistairShaw\Vendirun\App\Entities\Product\ProductShippingOption\ProductShippingOption;
 
-class ShippingCalculator {
+class ShippingCalculator
+{
 
     /**
      * @param array $shipping
-     * @param int    $quantity
-     * @param int    $countryId
+     * @param int $quantity
+     * @param int $countryId
      * @param string $shippingType
      * @return int|null
      */
@@ -18,10 +21,12 @@ class ShippingCalculator {
     {
         $price = NULL;
 
+        if (count($shipping) == 0) return NULL;
+
         foreach ($shipping as $sh)
         {
             /* @var $sh ProductShippingOption */
-            $price = $sh->getMatch($countryId, $shippingType);
+            if ($price = $sh->getUnitMatch($countryId, $shippingType)) return $price;
         }
 
         if (!$price && $shippingType)
@@ -29,45 +34,52 @@ class ShippingCalculator {
             return self::shippingForItem($shipping, $quantity, $countryId, '');
         }
 
-        if ($price === false) return 0;
+        if ($price === false) return null;
 
         return $price * $quantity;
     }
 
     /**
-     * @param      $products
-     * @param null $countryId
+     * @param Cart $cart
      * @return array
      */
-    public static function availableShippingTypes($products, $countryId = NULL)
+    public static function availableShippingTypes(Cart $cart)
     {
         $availableShippingTypes = [];
         $first = true;
 
-        foreach ($products as $product)
-        {
-            $productShippingTypes = [];
-            /* @var $product Product */
-            foreach ($product->getShipping() as $sh)
-            {
-                /* @var $sh ProductShippingOption */
-                if ($shippingType = $sh->matchShippingType($countryId)) $productShippingTypes[] = $shippingType;
-            }
+        if ($cart->totalProducts() == 0) return $availableShippingTypes;
 
-            if (!$first)
+        foreach ($cart->getItems() as $cartItem)
+        {
+            /* @var $cartItem CartItem */
+            $product = $cartItem->getProduct();
+
+            /* @var $product Product */
+            $productShippingTypes = [];
+            if (count($product->getShipping()))
             {
-                // if there are any available ones that aren't available for this product, remove them
-                $newAvailable = [];
-                foreach ($productShippingTypes as $type)
+                foreach ($product->getShipping() as $sh)
                 {
-                    if (in_array($type, $availableShippingTypes)) $newAvailable[] = $type;
+                    /* @var $sh ProductShippingOption */
+                    if ($shippingType = $sh->matchShippingType($cart->getCountryId())) $productShippingTypes[] = $shippingType;
                 }
-                $availableShippingTypes = $newAvailable;
-            }
-            else
-            {
-                $first = false;
-                $availableShippingTypes = $productShippingTypes;
+
+                if (!$first)
+                {
+                    // if there are any available ones that aren't available for this product, remove them
+                    $newAvailable = [];
+                    foreach ($productShippingTypes as $type)
+                    {
+                        if (in_array($type, $availableShippingTypes)) $newAvailable[] = $type;
+                    }
+                    $availableShippingTypes = $newAvailable;
+                }
+                else
+                {
+                    $first = false;
+                    $availableShippingTypes = $productShippingTypes;
+                }
             }
         }
 
@@ -75,23 +87,46 @@ class ShippingCalculator {
     }
 
     /**
-     * @param        $products
-     * @param null   $countryId
-     * @param string $shippingType
+     * @param Cart $cart
      * @return array
      */
-    public static function orderShippingCharge($products, $countryId = NULL, $shippingType = '')
+    public static function orderShippingCharge(Cart $cart)
     {
         $shippingCharge = null;
 
-        foreach ($products as $product)
+        $suppliers = [];
+
+        if (count($cart->getItems()) == 0) return $shippingCharge;
+
+        foreach ($cart->getItems() as $cartItem)
         {
-            /* @var $product Product */
-            foreach ($product->getShipping() as $sh)
+            /* @var $cartItem CartItem */
+            $product = $cartItem->getProduct();
+
+            if (count($product->getShipping()))
             {
-                /* @var $sh ProductShippingOption */
-                if ($shippingCharge = $sh->getMatch($countryId, $shippingType)) return $shippingCharge;
+                foreach ($product->getShipping() as $sh)
+                {
+                    /* @var $sh ProductShippingOption */
+                    if ($sh->getMatch($cart->getCountryId(), $cart->getShippingType()))
+                    {
+                        if ($sh->getSupplierId())
+                        {
+                            $suppliers[$sh->getSupplierId()] = $sh->getOrderPrice();
+                        }
+                        else
+                        {
+                            $suppliers[0] = $sh->getOrderPrice();
+                        }
+                    }
+                }
             }
+        }
+
+        $shippingCharge = false;
+        foreach ($suppliers as $supplierId => $value)
+        {
+            $shippingCharge += $value;
         }
 
         // return null if no shipping charge applies

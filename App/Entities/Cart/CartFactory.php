@@ -39,6 +39,7 @@ class CartFactory {
         $clientInfo = Config::get('clientInfo');
         $priceIncludesTax = $clientInfo->business_settings->tax->price_includes_tax;
 
+
         $taxes = ProductTaxOptionFactory::makeFromApi($clientInfo->business_settings->tax->country_tax_rates);
         $defaultTaxRate = TaxCalculator::calculateProductTaxRate($taxes, $countryId, $clientInfo->business_settings->tax->default_tax_rate);
 

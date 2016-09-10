@@ -171,7 +171,6 @@ class CheckoutController extends VendirunBaseController {
         }
         catch (\Exception $e)
         {
-            dd($e);
             return Redirect::back()->with('paymentError', $e->getMessage())->withInput();
         }
 

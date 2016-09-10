@@ -22,7 +22,7 @@ class BreadcrumbViewComposer
         $breadcrumbs = [];
 
         // cms and blog
-        if (isset($viewData['page'])) return $this->pageBreadcrumbs($viewData['page']->breadcrumbs);
+        if (isset($viewData['page'])) return isset($viewData['page']->breadcrumbs) ? $this->pageBreadcrumbs($viewData['page']->breadcrumbs) : $breadcrumbs;
         if (isset($viewData['posts'])) return $this->blogBreadcrumbs();
         if (isset($viewData['post'])) return $this->blogPostBreadcrumbs($viewData['post']);
 

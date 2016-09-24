@@ -39,13 +39,14 @@ class CustomerViewComposer {
         $viewData = $view->getData();
 
         $address = [
+            'id' => '',
             'address1' => '',
             'address2' => '',
             'address3' => '',
             'city' => '',
             'state' => '',
             'postcode' => '',
-            'country_id' => ''
+            'countryId' => ''
         ];
 
         if (isset($viewData['address']) && $viewData['address'])

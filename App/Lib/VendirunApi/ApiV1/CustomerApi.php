@@ -155,4 +155,14 @@ class CustomerApi extends BaseApi {
         $url = 'customer/get_email_verification_data/' . $params['id'];
         return $this->request($url, $params);
     }
+
+    /**
+     * @param $params
+     * @return object
+     */
+    public function deleteAddress($params)
+    {
+        $url = 'customer/delete_address/' . $params['id'];
+        return $this->request($url, $params);
+    }
 }

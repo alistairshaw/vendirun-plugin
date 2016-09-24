@@ -12,5 +12,6 @@ return [
     'account' => 'Account',
     'addAddress' => 'Add a New Address',
     'editAddress' => 'Edit Address',
-    'addresses' => 'Your Addresses'
+    'addresses' => 'Your Addresses',
+    'noAddressesYet' => 'You have not added any addresses yet.'
 ];

@@ -201,6 +201,21 @@ class Customer {
     }
 
     /**
+     * @param $id
+     * @return $this
+     */
+    public function removeAddress($id)
+    {
+        $final = [];
+        foreach ($this->addresses as $address)
+        {
+            if ($address->getId() != $id) $final[] = $address;
+        }
+        $this->addresses = $final;
+        return $this;
+    }
+
+    /**
      * @return Address
      */
     public function getPrimaryAddress()

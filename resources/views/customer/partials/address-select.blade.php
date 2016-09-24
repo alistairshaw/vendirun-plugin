@@ -21,5 +21,6 @@
                 </ul>
             </label>
         @endforeach
+        <a href="{{ route(LocaleHelper::localePrefix() . 'vendirun.customer.address.add') }}" class="btn btn-primary"><i class="fa fa-plus-circle"></i> {{ trans('vendirun::customer.addAddress') }}</a>
     @endif
 </div>

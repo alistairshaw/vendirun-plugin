@@ -49,13 +49,10 @@
                 @if (count($customer->getAddresses()) == 0)
                     <div class="alert alert-info">
                         <i class="fa fa-info-circle"></i>
-                        You have not added any addresses yet. <a href="{{ route(LocaleHelper::localePrefix() . 'vendirun.customer.address.add') }}">Add one now</a>?
+                        {{ trans('vendirun::customer.noAddressesYet')}} <a href="{{ route(LocaleHelper::localePrefix() . 'vendirun.customer.address.add') }}">{{ trans('vendirun::customer.addAddress') }}.</a>
                     </div>
                 @endif
                 @include('vendirun::customer.partials.address-select', ['showSelector' => false])
-                <p>
-                    <a href="#" class="btn btn-primary"><i class="fa fa-plus-circle"></i> Add New Address</a>
-                </p>
             </div>
         </div>
     </div>

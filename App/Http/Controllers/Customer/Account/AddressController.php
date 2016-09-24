@@ -2,6 +2,7 @@
 
 use AlistairShaw\Vendirun\App\Entities\Customer\CustomerRepository;
 use AlistairShaw\Vendirun\App\Http\Controllers\VendirunAuthController;
+use AlistairShaw\Vendirun\App\Lib\VendirunApi\VendirunApi;
 use AlistairShaw\Vendirun\App\ValueObjects\Address;
 use Redirect;
 use Request;
@@ -32,9 +33,15 @@ class AddressController extends VendirunAuthController {
         return View::make('vendirun::customer.account.address-edit', $data);
     }
 
+    /**
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function delete($id)
     {
-        dd("DELETE $id");
+        VendirunApi::makeRequest('customer/deleteAddress', ['id' => $id]);
+
+        return Redirect::route('vendirun.customer.account');
     }
 
     /**

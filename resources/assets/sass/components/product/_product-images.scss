@@ -1,3 +1,17 @@
 .product-slide-show, .product-single-image {
+    margin: 0;
     padding: 0;
+    height: 150px;
+    li {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+    img {
+        max-width: 10%;
+        max-height: 10%;
+        margin: auto;
+        transform-origin: top center;
+        transform: scale(10);
+    }
 }

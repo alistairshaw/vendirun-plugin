@@ -1,6 +1,7 @@
 <?php namespace AlistairShaw\Vendirun\App\Http\Composers;
 
 use AlistairShaw\Vendirun\App\Lib\CountryHelper;
+use AlistairShaw\Vendirun\App\Lib\VendirunApi\Exceptions\FailResponseException;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\VendirunApi;
 use App;
 use Config;
@@ -73,7 +74,14 @@ class WidgetViewComposer {
         if (!isset($viewData['options'])) $viewData['options'] = json_decode($viewData['element']->element_options, true);
         $slider_id = $viewData['options']['id'];
 
-        $slider = VendirunApi::makeRequest('cms/slider', ['id' => $slider_id])->getData();
+        try
+        {
+            $slider = VendirunApi::makeRequest('cms/slider', ['id' => $slider_id])->getData();
+        }
+        catch (FailResponseException $e)
+        {
+            $slider = false;
+        }
         $view->with('slider', $slider);
     }
 }

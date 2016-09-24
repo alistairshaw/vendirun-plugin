@@ -3,12 +3,12 @@
 use AlistairShaw\Vendirun\App\Entities\Customer\CustomerRepository;
 use AlistairShaw\Vendirun\App\Entities\Customer\Helpers\CustomerHelper;
 use AlistairShaw\Vendirun\App\Entities\Order\OrderRepository;
-use AlistairShaw\Vendirun\App\Http\Controllers\VendirunBaseController;
+use AlistairShaw\Vendirun\App\Http\Controllers\VendirunAuthController;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Request;
 use View;
 
-class OrderController extends VendirunBaseController {
+class OrderController extends VendirunAuthController {
 
     /**
      * @param OrderRepository $orderRepository

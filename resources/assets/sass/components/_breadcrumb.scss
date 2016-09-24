@@ -1,3 +1,7 @@
-.breadcrumb {
-    @extend .container;
+.vendirun-breadcrumbs {
+    background: $gray-lighter;
+    .breadcrumb {
+        @extend .container;
+        background: $gray-lighter;
+    }
 }

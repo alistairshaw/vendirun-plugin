@@ -1,4 +1,4 @@
-@extends('vendirun::layouts.standard')
+@extends('vendirun::layouts.customer-account')
 @section('title', $pageTitle)
 @section('description', trans('vendirun::product.orderHistory'))
 @section('keywords', '')

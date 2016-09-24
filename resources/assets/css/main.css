@@ -1502,24 +1502,24 @@ pre {
   max-height: 340px;
   overflow-y: scroll; }
 
-.container, .breadcrumb {
+.container, .vendirun-breadcrumbs .breadcrumb, .customer-account-nav ul {
   margin-right: auto;
   margin-left: auto;
   padding-left: 15px;
   padding-right: 15px; }
-  .container:before, .breadcrumb:before, .container:after, .breadcrumb:after {
+  .container:before, .vendirun-breadcrumbs .breadcrumb:before, .customer-account-nav ul:before, .container:after, .vendirun-breadcrumbs .breadcrumb:after, .customer-account-nav ul:after {
     content: " ";
     display: table; }
-  .container:after, .breadcrumb:after {
+  .container:after, .vendirun-breadcrumbs .breadcrumb:after, .customer-account-nav ul:after {
     clear: both; }
   @media (min-width: 768px) {
-    .container, .breadcrumb {
+    .container, .vendirun-breadcrumbs .breadcrumb, .customer-account-nav ul {
       width: 750px; } }
   @media (min-width: 992px) {
-    .container, .breadcrumb {
+    .container, .vendirun-breadcrumbs .breadcrumb, .customer-account-nav ul {
       width: 970px; } }
   @media (min-width: 1200px) {
-    .container, .breadcrumb {
+    .container, .vendirun-breadcrumbs .breadcrumb, .customer-account-nav ul {
       width: 1170px; } }
 
 .container-fluid {
@@ -1533,16 +1533,16 @@ pre {
   .container-fluid:after {
     clear: both; }
 
-.row, .address-select, .property-advanced-search-widget .form-inputs, .product-cart .wrapper, .product-cart .cart-items .cart-table, .product-orders.view-order .order-details .wrapper, .blog-list .blog-entry .blog-entry-container, .cms-blog-posts-widget, .checkout .wrapper, .checkout .checkout-form .shipping-method, .payment .expiry-cvv {
+.row, .address-select, .customer-account .inner-container, .property-advanced-search-widget .form-inputs, .product-cart .wrapper, .product-cart .cart-items .cart-table, .product-orders.view-order .order-details .wrapper, .blog-list .blog-entry .blog-entry-container, .cms-blog-posts-widget, .checkout .wrapper, .checkout .checkout-form .shipping-method, .payment .expiry-cvv {
   margin-left: -15px;
   margin-right: -15px; }
-  .row:before, .address-select:before, .property-advanced-search-widget .form-inputs:before, .product-cart .wrapper:before, .product-cart .cart-items .cart-table:before, .product-orders.view-order .order-details .wrapper:before, .blog-list .blog-entry .blog-entry-container:before, .cms-blog-posts-widget:before, .checkout .wrapper:before, .checkout .checkout-form .shipping-method:before, .payment .expiry-cvv:before, .row:after, .address-select:after, .property-advanced-search-widget .form-inputs:after, .product-cart .wrapper:after, .product-cart .cart-items .cart-table:after, .product-orders.view-order .order-details .wrapper:after, .blog-list .blog-entry .blog-entry-container:after, .cms-blog-posts-widget:after, .checkout .wrapper:after, .checkout .checkout-form .shipping-method:after, .payment .expiry-cvv:after {
+  .row:before, .address-select:before, .customer-account .inner-container:before, .property-advanced-search-widget .form-inputs:before, .product-cart .wrapper:before, .product-cart .cart-items .cart-table:before, .product-orders.view-order .order-details .wrapper:before, .blog-list .blog-entry .blog-entry-container:before, .cms-blog-posts-widget:before, .checkout .wrapper:before, .checkout .checkout-form .shipping-method:before, .payment .expiry-cvv:before, .row:after, .address-select:after, .customer-account .inner-container:after, .property-advanced-search-widget .form-inputs:after, .product-cart .wrapper:after, .product-cart .cart-items .cart-table:after, .product-orders.view-order .order-details .wrapper:after, .blog-list .blog-entry .blog-entry-container:after, .cms-blog-posts-widget:after, .checkout .wrapper:after, .checkout .checkout-form .shipping-method:after, .payment .expiry-cvv:after {
     content: " ";
     display: table; }
-  .row:after, .address-select:after, .property-advanced-search-widget .form-inputs:after, .product-cart .wrapper:after, .product-cart .cart-items .cart-table:after, .product-orders.view-order .order-details .wrapper:after, .blog-list .blog-entry .blog-entry-container:after, .cms-blog-posts-widget:after, .checkout .wrapper:after, .checkout .checkout-form .shipping-method:after, .payment .expiry-cvv:after {
+  .row:after, .address-select:after, .customer-account .inner-container:after, .property-advanced-search-widget .form-inputs:after, .product-cart .wrapper:after, .product-cart .cart-items .cart-table:after, .product-orders.view-order .order-details .wrapper:after, .blog-list .blog-entry .blog-entry-container:after, .cms-blog-posts-widget:after, .checkout .wrapper:after, .checkout .checkout-form .shipping-method:after, .payment .expiry-cvv:after {
     clear: both; }
 
-.col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .product-cart .wrapper .cart-sidebar, .product-orders.view-order .order-details .wrapper .shipping, .blog-list .blog-entry .blog-entry-container .image-container, .checkout .checkout-form .shipping-method .shipping-price, .checkout .checkout-form .shipping-method .options, .col-md-3, .col-lg-3, .col-xs-4, .payment .expiry-cvv .cvv, .col-sm-4, .address-select label, .property-search.type1 .multiple .property-result, .property-view.type1 .property-attributes .item, .product-search .multiple .product-result, .cms-blog-posts-widget .blog-entry, .checkout .checkout-sidebar, .col-md-4, .property-advanced-search-widget .form-inputs .form-group, .product-cart .cart-items .cart-table .cart-column, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .property-view.type1 .property-attributes .item, .col-sm-6, .property-search.type2 .property-results .property-result .property-attributes .item, .property-view.type2 .property-attributes .item, .property-advanced-search-widget .form-inputs .form-group, .product-cart .cart-items .cart-table .cart-column, .checkout .checkout-form .shipping-method .method-select, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .payment .expiry-cvv .expiry, .col-sm-8, .checkout .checkout-form, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .product-cart .wrapper .cart-items, .product-orders.view-order .order-details .wrapper .list, .blog-list .blog-entry .blog-entry-container .blog-item-container, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .cms-blog-posts-widget .blog-entry .blog-entry-container .image-container, .cms-blog-posts-widget .blog-entry .blog-entry-container .blog-item-container, .col-md-12, .col-lg-12 {
+.col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .product-cart .wrapper .cart-sidebar, .product-orders.view-order .order-details .wrapper .shipping, .blog-list .blog-entry .blog-entry-container .image-container, .checkout .checkout-form .shipping-method .shipping-price, .checkout .checkout-form .shipping-method .options, .col-md-3, .col-lg-3, .col-xs-4, .payment .expiry-cvv .cvv, .col-sm-4, .address-select label, .property-search.type1 .multiple .property-result, .property-view.type1 .property-attributes .item, .product-search .multiple .product-result, .cms-blog-posts-widget .blog-entry, .checkout .checkout-sidebar, .col-md-4, .property-advanced-search-widget .form-inputs .form-group, .product-cart .cart-items .cart-table .cart-column, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .property-view.type1 .property-attributes .item, .col-sm-6, .customer-account-addresses, .customer-account-details, .property-search.type2 .property-results .property-result .property-attributes .item, .property-view.type2 .property-attributes .item, .property-advanced-search-widget .form-inputs .form-group, .product-cart .cart-items .cart-table .cart-column, .checkout .checkout-form .shipping-method .method-select, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .payment .expiry-cvv .expiry, .col-sm-8, .checkout .checkout-form, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .product-cart .wrapper .cart-items, .product-orders.view-order .order-details .wrapper .list, .blog-list .blog-entry .blog-entry-container .blog-item-container, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .customer-account-addresses .address-select label, .cms-blog-posts-widget .blog-entry .blog-entry-container .image-container, .cms-blog-posts-widget .blog-entry .blog-entry-container .blog-item-container, .col-md-12, .col-lg-12 {
   position: relative;
   min-height: 1px;
   padding-left: 15px;
@@ -1705,7 +1705,7 @@ pre {
   margin-left: 100%; }
 
 @media (min-width: 768px) {
-  .col-sm-1, .col-sm-2, .col-sm-3, .product-cart .wrapper .cart-sidebar, .product-orders.view-order .order-details .wrapper .shipping, .blog-list .blog-entry .blog-entry-container .image-container, .checkout .checkout-form .shipping-method .shipping-price, .checkout .checkout-form .shipping-method .options, .col-sm-4, .address-select label, .property-search.type1 .multiple .property-result, .property-view.type1 .property-attributes .item, .product-search .multiple .product-result, .cms-blog-posts-widget .blog-entry, .checkout .checkout-sidebar, .col-sm-5, .col-sm-6, .property-search.type2 .property-results .property-result .property-attributes .item, .property-view.type2 .property-attributes .item, .property-advanced-search-widget .form-inputs .form-group, .product-cart .cart-items .cart-table .cart-column, .checkout .checkout-form .shipping-method .method-select, .col-sm-7, .col-sm-8, .checkout .checkout-form, .col-sm-9, .product-cart .wrapper .cart-items, .product-orders.view-order .order-details .wrapper .list, .blog-list .blog-entry .blog-entry-container .blog-item-container, .col-sm-10, .col-sm-11, .col-sm-12, .cms-blog-posts-widget .blog-entry .blog-entry-container .image-container, .cms-blog-posts-widget .blog-entry .blog-entry-container .blog-item-container {
+  .col-sm-1, .col-sm-2, .col-sm-3, .product-cart .wrapper .cart-sidebar, .product-orders.view-order .order-details .wrapper .shipping, .blog-list .blog-entry .blog-entry-container .image-container, .checkout .checkout-form .shipping-method .shipping-price, .checkout .checkout-form .shipping-method .options, .col-sm-4, .address-select label, .property-search.type1 .multiple .property-result, .property-view.type1 .property-attributes .item, .product-search .multiple .product-result, .cms-blog-posts-widget .blog-entry, .checkout .checkout-sidebar, .col-sm-5, .col-sm-6, .customer-account-addresses, .customer-account-details, .property-search.type2 .property-results .property-result .property-attributes .item, .property-view.type2 .property-attributes .item, .property-advanced-search-widget .form-inputs .form-group, .product-cart .cart-items .cart-table .cart-column, .checkout .checkout-form .shipping-method .method-select, .col-sm-7, .col-sm-8, .checkout .checkout-form, .col-sm-9, .product-cart .wrapper .cart-items, .product-orders.view-order .order-details .wrapper .list, .blog-list .blog-entry .blog-entry-container .blog-item-container, .col-sm-10, .col-sm-11, .col-sm-12, .customer-account-addresses .address-select label, .cms-blog-posts-widget .blog-entry .blog-entry-container .image-container, .cms-blog-posts-widget .blog-entry .blog-entry-container .blog-item-container {
     float: left; }
   .col-sm-1 {
     width: 8.3333333333%; }
@@ -1717,7 +1717,7 @@ pre {
     width: 33.3333333333%; }
   .col-sm-5 {
     width: 41.6666666667%; }
-  .col-sm-6, .property-search.type2 .property-results .property-result .property-attributes .item, .property-view.type2 .property-attributes .item, .property-advanced-search-widget .form-inputs .form-group, .product-cart .cart-items .cart-table .cart-column, .checkout .checkout-form .shipping-method .method-select {
+  .col-sm-6, .customer-account-addresses, .customer-account-details, .property-search.type2 .property-results .property-result .property-attributes .item, .property-view.type2 .property-attributes .item, .property-advanced-search-widget .form-inputs .form-group, .product-cart .cart-items .cart-table .cart-column, .checkout .checkout-form .shipping-method .method-select {
     width: 50%; }
   .col-sm-7 {
     width: 58.3333333333%; }
@@ -1729,7 +1729,7 @@ pre {
     width: 83.3333333333%; }
   .col-sm-11 {
     width: 91.6666666667%; }
-  .col-sm-12, .cms-blog-posts-widget .blog-entry .blog-entry-container .image-container, .cms-blog-posts-widget .blog-entry .blog-entry-container .blog-item-container {
+  .col-sm-12, .customer-account-addresses .address-select label, .cms-blog-posts-widget .blog-entry .blog-entry-container .image-container, .cms-blog-posts-widget .blog-entry .blog-entry-container .blog-item-container {
     width: 100%; }
   .col-sm-pull-0 {
     right: auto; }
@@ -2492,24 +2492,44 @@ fieldset[disabled]
 .checkbox label {
   cursor: not-allowed; }
 
-.form-control-static {
+.form-control-static, .customer-account-details .customer-account-details--section .account-value {
   padding-top: 7px;
   padding-bottom: 7px;
   margin-bottom: 0;
   min-height: 34px; }
-  .form-control-static.input-lg, .input-group-lg > .form-control-static.form-control, .add-to-cart .input-group-lg > input.form-control-static, .product-simple-search-form .input-group-lg > input.form-control-static,
-  .input-group-lg > .form-control-static.input-group-addon,
-  .input-group-lg > .input-group-btn > .form-control-static.btn, .product-variation-choice .type-picker li
+  .form-control-static.input-lg, .input-group-lg > .form-control-static.form-control, .customer-account-details .customer-account-details--section .input-group-lg > .form-control.account-value, .customer-account-details .customer-account-details--section .add-to-cart .input-group-lg > input.account-value, .add-to-cart .customer-account-details .customer-account-details--section .input-group-lg > input.account-value, .customer-account-details .customer-account-details--section .product-simple-search-form .input-group-lg > input.account-value, .product-simple-search-form .customer-account-details .customer-account-details--section .input-group-lg > input.account-value, .add-to-cart .input-group-lg > input.form-control-static, .product-simple-search-form .input-group-lg > input.form-control-static,
+  .input-group-lg > .form-control-static.input-group-addon, .customer-account-details .customer-account-details--section
+  .input-group-lg > .input-group-addon.account-value,
+  .input-group-lg > .input-group-btn > .form-control-static.btn, .customer-account-details .customer-account-details--section
+  .input-group-lg > .input-group-btn > .btn.account-value, .customer-account-details .customer-account-details--section .product-variation-choice .type-picker li
+  .input-group-lg > .input-group-btn > a.account-value, .product-variation-choice .type-picker li .customer-account-details .customer-account-details--section
+  .input-group-lg > .input-group-btn > a.account-value, .customer-account-details .customer-account-details--section .product-variation-choice .size-picker li
+  .input-group-lg > .input-group-btn > a.account-value, .product-variation-choice .size-picker li .customer-account-details .customer-account-details--section
+  .input-group-lg > .input-group-btn > a.account-value, .customer-account-details .customer-account-details--section .product-variation-choice .color-picker li
+  .input-group-lg > .input-group-btn > a.account-value, .product-variation-choice .color-picker li .customer-account-details .customer-account-details--section
+  .input-group-lg > .input-group-btn > a.account-value, .customer-account-details .customer-account-details--section .cart-widget .cart-added-popup .checkout
+  .input-group-lg > .input-group-btn > a.account-value, .cart-widget .cart-added-popup .checkout .customer-account-details .customer-account-details--section
+  .input-group-lg > .input-group-btn > a.account-value, .product-variation-choice .type-picker li
   .input-group-lg > .input-group-btn > a.form-control-static, .product-variation-choice .size-picker li
   .input-group-lg > .input-group-btn > a.form-control-static, .product-variation-choice .color-picker li
   .input-group-lg > .input-group-btn > a.form-control-static, .cart-widget .cart-added-popup .checkout
-  .input-group-lg > .input-group-btn > a.form-control-static, .form-control-static.input-sm, .input-group-sm > .form-control-static.form-control, .add-to-cart .input-group-sm > input.form-control-static, .product-simple-search-form .input-group-sm > input.form-control-static,
-  .input-group-sm > .form-control-static.input-group-addon,
-  .input-group-sm > .input-group-btn > .form-control-static.btn, .product-variation-choice .type-picker li
+  .input-group-lg > .input-group-btn > a.form-control-static, .customer-account-details .customer-account-details--section .input-lg.account-value, .form-control-static.input-sm, .input-group-sm > .form-control-static.form-control, .customer-account-details .customer-account-details--section .input-group-sm > .form-control.account-value, .customer-account-details .customer-account-details--section .add-to-cart .input-group-sm > input.account-value, .add-to-cart .customer-account-details .customer-account-details--section .input-group-sm > input.account-value, .customer-account-details .customer-account-details--section .product-simple-search-form .input-group-sm > input.account-value, .product-simple-search-form .customer-account-details .customer-account-details--section .input-group-sm > input.account-value, .add-to-cart .input-group-sm > input.form-control-static, .product-simple-search-form .input-group-sm > input.form-control-static,
+  .input-group-sm > .form-control-static.input-group-addon, .customer-account-details .customer-account-details--section
+  .input-group-sm > .input-group-addon.account-value,
+  .input-group-sm > .input-group-btn > .form-control-static.btn, .customer-account-details .customer-account-details--section
+  .input-group-sm > .input-group-btn > .btn.account-value, .customer-account-details .customer-account-details--section .product-variation-choice .type-picker li
+  .input-group-sm > .input-group-btn > a.account-value, .product-variation-choice .type-picker li .customer-account-details .customer-account-details--section
+  .input-group-sm > .input-group-btn > a.account-value, .customer-account-details .customer-account-details--section .product-variation-choice .size-picker li
+  .input-group-sm > .input-group-btn > a.account-value, .product-variation-choice .size-picker li .customer-account-details .customer-account-details--section
+  .input-group-sm > .input-group-btn > a.account-value, .customer-account-details .customer-account-details--section .product-variation-choice .color-picker li
+  .input-group-sm > .input-group-btn > a.account-value, .product-variation-choice .color-picker li .customer-account-details .customer-account-details--section
+  .input-group-sm > .input-group-btn > a.account-value, .customer-account-details .customer-account-details--section .cart-widget .cart-added-popup .checkout
+  .input-group-sm > .input-group-btn > a.account-value, .cart-widget .cart-added-popup .checkout .customer-account-details .customer-account-details--section
+  .input-group-sm > .input-group-btn > a.account-value, .product-variation-choice .type-picker li
   .input-group-sm > .input-group-btn > a.form-control-static, .product-variation-choice .size-picker li
   .input-group-sm > .input-group-btn > a.form-control-static, .product-variation-choice .color-picker li
   .input-group-sm > .input-group-btn > a.form-control-static, .cart-widget .cart-added-popup .checkout
-  .input-group-sm > .input-group-btn > a.form-control-static {
+  .input-group-sm > .input-group-btn > a.form-control-static, .customer-account-details .customer-account-details--section .input-sm.account-value {
     padding-left: 0;
     padding-right: 0; }
 
@@ -2556,7 +2576,7 @@ select[multiple].input-sm,
 .form-group-sm select[multiple].form-control {
   height: auto; }
 
-.form-group-sm .form-control-static {
+.form-group-sm .form-control-static, .form-group-sm .customer-account-details .customer-account-details--section .account-value, .customer-account-details .customer-account-details--section .form-group-sm .account-value {
   height: 30px;
   min-height: 32px;
   padding: 6px 10px;
@@ -2606,7 +2626,7 @@ select[multiple].input-lg,
 .form-group-lg select[multiple].form-control {
   height: auto; }
 
-.form-group-lg .form-control-static {
+.form-group-lg .form-control-static, .form-group-lg .customer-account-details .customer-account-details--section .account-value, .customer-account-details .customer-account-details--section .form-group-lg .account-value {
   height: 46px;
   min-height: 38px;
   padding: 11px 16px;
@@ -2758,46 +2778,46 @@ select[multiple].input-lg,
   color: #737373; }
 
 @media (min-width: 768px) {
-  .form-inline .form-group, .add-to-cart .form-group {
+  .form-inline .form-group, .customer-account-details .customer-account-details--section .form-group, .add-to-cart .form-group {
     display: inline-block;
     margin-bottom: 0;
     vertical-align: middle; }
-  .form-inline .form-control, .add-to-cart .form-control, .form-inline .add-to-cart input, .add-to-cart .form-inline input, .add-to-cart input, .form-inline .product-simple-search-form input, .product-simple-search-form .form-inline input {
+  .form-inline .form-control, .customer-account-details .customer-account-details--section .form-control, .add-to-cart .form-control, .form-inline .add-to-cart input, .add-to-cart .form-inline input, .customer-account-details .customer-account-details--section .add-to-cart input, .add-to-cart .customer-account-details .customer-account-details--section input, .add-to-cart input, .form-inline .product-simple-search-form input, .product-simple-search-form .form-inline input, .customer-account-details .customer-account-details--section .product-simple-search-form input, .product-simple-search-form .customer-account-details .customer-account-details--section input {
     display: inline-block;
     width: auto;
     vertical-align: middle; }
-  .form-inline .form-control-static, .add-to-cart .form-control-static {
+  .form-inline .form-control-static, .customer-account-details .customer-account-details--section .form-control-static, .add-to-cart .form-control-static, .customer-account-details .customer-account-details--section .account-value {
     display: inline-block; }
-  .form-inline .input-group, .add-to-cart .input-group {
+  .form-inline .input-group, .customer-account-details .customer-account-details--section .input-group, .add-to-cart .input-group {
     display: inline-table;
     vertical-align: middle; }
-    .form-inline .input-group .input-group-addon, .add-to-cart .input-group .input-group-addon,
-    .form-inline .input-group .input-group-btn, .add-to-cart .input-group .input-group-btn,
-    .form-inline .input-group .form-control, .add-to-cart .input-group .form-control,
+    .form-inline .input-group .input-group-addon, .customer-account-details .customer-account-details--section .input-group .input-group-addon, .add-to-cart .input-group .input-group-addon,
+    .form-inline .input-group .input-group-btn, .customer-account-details .customer-account-details--section .input-group .input-group-btn, .add-to-cart .input-group .input-group-btn,
+    .form-inline .input-group .form-control, .customer-account-details .customer-account-details--section .input-group .form-control, .add-to-cart .input-group .form-control,
     .form-inline .input-group .add-to-cart input, .add-to-cart
-    .form-inline .input-group input, .add-to-cart .input-group input,
+    .form-inline .input-group input, .customer-account-details .customer-account-details--section .input-group .add-to-cart input, .add-to-cart .customer-account-details .customer-account-details--section .input-group input, .add-to-cart .input-group input,
     .form-inline .input-group .product-simple-search-form input, .product-simple-search-form
-    .form-inline .input-group input, .add-to-cart .input-group .product-simple-search-form input, .product-simple-search-form .add-to-cart .input-group input {
+    .form-inline .input-group input, .customer-account-details .customer-account-details--section .input-group .product-simple-search-form input, .product-simple-search-form .customer-account-details .customer-account-details--section .input-group input, .add-to-cart .input-group .product-simple-search-form input, .product-simple-search-form .add-to-cart .input-group input {
       width: auto; }
-  .form-inline .input-group > .form-control, .add-to-cart .input-group > .form-control, .form-inline .add-to-cart .input-group > input, .add-to-cart .form-inline .input-group > input, .add-to-cart .input-group > input, .form-inline .product-simple-search-form .input-group > input, .product-simple-search-form .form-inline .input-group > input, .add-to-cart .product-simple-search-form .input-group > input, .product-simple-search-form .add-to-cart .input-group > input {
+  .form-inline .input-group > .form-control, .customer-account-details .customer-account-details--section .input-group > .form-control, .add-to-cart .input-group > .form-control, .form-inline .add-to-cart .input-group > input, .add-to-cart .form-inline .input-group > input, .customer-account-details .customer-account-details--section .add-to-cart .input-group > input, .add-to-cart .customer-account-details .customer-account-details--section .input-group > input, .add-to-cart .input-group > input, .form-inline .product-simple-search-form .input-group > input, .product-simple-search-form .form-inline .input-group > input, .customer-account-details .customer-account-details--section .product-simple-search-form .input-group > input, .product-simple-search-form .customer-account-details .customer-account-details--section .input-group > input, .add-to-cart .product-simple-search-form .input-group > input, .product-simple-search-form .add-to-cart .input-group > input {
     width: 100%; }
-  .form-inline .control-label, .add-to-cart .control-label {
+  .form-inline .control-label, .customer-account-details .customer-account-details--section .control-label, .add-to-cart .control-label {
     margin-bottom: 0;
     vertical-align: middle; }
-  .form-inline .radio, .add-to-cart .radio,
-  .form-inline .checkbox, .add-to-cart .checkbox {
+  .form-inline .radio, .customer-account-details .customer-account-details--section .radio, .add-to-cart .radio,
+  .form-inline .checkbox, .customer-account-details .customer-account-details--section .checkbox, .add-to-cart .checkbox {
     display: inline-block;
     margin-top: 0;
     margin-bottom: 0;
     vertical-align: middle; }
-    .form-inline .radio label, .add-to-cart .radio label,
-    .form-inline .checkbox label, .add-to-cart .checkbox label {
+    .form-inline .radio label, .customer-account-details .customer-account-details--section .radio label, .add-to-cart .radio label,
+    .form-inline .checkbox label, .customer-account-details .customer-account-details--section .checkbox label, .add-to-cart .checkbox label {
       padding-left: 0; }
-  .form-inline .radio input[type="radio"], .add-to-cart .radio input[type="radio"],
-  .form-inline .checkbox input[type="checkbox"], .add-to-cart .checkbox input[type="checkbox"] {
+  .form-inline .radio input[type="radio"], .customer-account-details .customer-account-details--section .radio input[type="radio"], .add-to-cart .radio input[type="radio"],
+  .form-inline .checkbox input[type="checkbox"], .customer-account-details .customer-account-details--section .checkbox input[type="checkbox"], .add-to-cart .checkbox input[type="checkbox"] {
     position: relative;
     margin-left: 0; }
-  .form-inline .has-feedback .form-control-feedback, .add-to-cart .has-feedback .form-control-feedback {
+  .form-inline .has-feedback .form-control-feedback, .customer-account-details .customer-account-details--section .has-feedback .form-control-feedback, .add-to-cart .has-feedback .form-control-feedback {
     top: 0; } }
 
 .form-horizontal .radio,
@@ -3967,15 +3987,15 @@ tbody.collapse.in {
     .navbar-fixed-bottom .navbar-collapse {
       max-height: 200px; } }
 
-.container > .navbar-header, .breadcrumb > .navbar-header,
-.container > .navbar-collapse, .breadcrumb > .navbar-collapse,
+.container > .navbar-header, .vendirun-breadcrumbs .breadcrumb > .navbar-header, .customer-account-nav ul > .navbar-header,
+.container > .navbar-collapse, .vendirun-breadcrumbs .breadcrumb > .navbar-collapse, .customer-account-nav ul > .navbar-collapse,
 .container-fluid > .navbar-header,
 .container-fluid > .navbar-collapse {
   margin-right: -15px;
   margin-left: -15px; }
   @media (min-width: 768px) {
-    .container > .navbar-header, .breadcrumb > .navbar-header,
-    .container > .navbar-collapse, .breadcrumb > .navbar-collapse,
+    .container > .navbar-header, .vendirun-breadcrumbs .breadcrumb > .navbar-header, .customer-account-nav ul > .navbar-header,
+    .container > .navbar-collapse, .vendirun-breadcrumbs .breadcrumb > .navbar-collapse, .customer-account-nav ul > .navbar-collapse,
     .container-fluid > .navbar-header,
     .container-fluid > .navbar-collapse {
       margin-right: 0;
@@ -4019,7 +4039,7 @@ tbody.collapse.in {
   .navbar-brand > img {
     display: block; }
   @media (min-width: 768px) {
-    .navbar > .container .navbar-brand, .navbar > .breadcrumb .navbar-brand,
+    .navbar > .container .navbar-brand, .vendirun-breadcrumbs .navbar > .breadcrumb .navbar-brand, .customer-account-nav .navbar > ul .navbar-brand,
     .navbar > .container-fluid .navbar-brand {
       margin-left: -15px; } }
 
@@ -4097,7 +4117,7 @@ tbody.collapse.in {
       display: inline-block;
       width: auto;
       vertical-align: middle; }
-    .navbar-form .form-control-static {
+    .navbar-form .form-control-static, .navbar-form .customer-account-details .customer-account-details--section .account-value, .customer-account-details .customer-account-details--section .navbar-form .account-value {
       display: inline-block; }
     .navbar-form .input-group {
       display: inline-table;
@@ -4552,18 +4572,18 @@ a.badge:hover, a.badge:focus {
     font-weight: 200; }
   .jumbotron > hr {
     border-top-color: #d5d5d5; }
-  .container .jumbotron, .breadcrumb .jumbotron,
+  .container .jumbotron, .vendirun-breadcrumbs .breadcrumb .jumbotron, .customer-account-nav ul .jumbotron,
   .container-fluid .jumbotron {
     border-radius: 6px;
     padding-left: 15px;
     padding-right: 15px; }
-  .jumbotron .container, .jumbotron .breadcrumb {
+  .jumbotron .container, .jumbotron .vendirun-breadcrumbs .breadcrumb, .vendirun-breadcrumbs .jumbotron .breadcrumb, .jumbotron .customer-account-nav ul, .customer-account-nav .jumbotron ul {
     max-width: 100%; }
   @media screen and (min-width: 768px) {
     .jumbotron {
       padding-top: 48px;
       padding-bottom: 48px; }
-      .container .jumbotron, .breadcrumb .jumbotron,
+      .container .jumbotron, .vendirun-breadcrumbs .breadcrumb .jumbotron, .customer-account-nav ul .jumbotron,
       .container-fluid .jumbotron {
         padding-left: 60px;
         padding-right: 60px; }
@@ -5835,11 +5855,11 @@ button.close {
   .carousel-indicators {
     bottom: 20px; } }
 
-.clearfix:before, .social-share:before, .image-container .nivo-directionNav:before, .property-search.type1 .heading:before, .property-search.type2 .property-results .property-result .details:before, .property-view.type1 .social-share:before, .property-categories .category-search-item:before, .property-categories .property-category-list-item .details:before, .product-search .heading:before, ul.refine-list:before, .product.product-view .variations:before, .product.product-view .product-share .social-share:before, .product-variation-choice .type-picker:before, .product-variation-choice .size-picker:before, .product-variation-choice .color-picker:before, .product-result .wrapper:before, .related-products li:before, .product-orders .order-item .section1:before, .product-orders.view-order .order-details .wrapper:before, .payment-details .wrapper:before, .payment-pending-form .wrapper:before, .shipment-details .wrapper:before, .blog-list .blog-entry .blog-entry-container .blog-item-container > div:before, .blog-post .tags:before, .checkout .checkout-form .step-header:before, .clearfix:after, .social-share:after, .image-container .nivo-directionNav:after, .property-search.type1 .heading:after, .property-search.type2 .property-results .property-result .details:after, .property-view.type1 .social-share:after, .property-categories .category-search-item:after, .property-categories .property-category-list-item .details:after, .product-search .heading:after, ul.refine-list:after, .product.product-view .variations:after, .product.product-view .product-share .social-share:after, .product-variation-choice .type-picker:after, .product-variation-choice .size-picker:after, .product-variation-choice .color-picker:after, .product-result .wrapper:after, .related-products li:after, .product-orders .order-item .section1:after, .product-orders.view-order .order-details .wrapper:after, .payment-details .wrapper:after, .payment-pending-form .wrapper:after, .shipment-details .wrapper:after, .blog-list .blog-entry .blog-entry-container .blog-item-container > div:after, .blog-post .tags:after, .checkout .checkout-form .step-header:after {
+.clearfix:before, .social-share:before, .image-container .nivo-directionNav:before, .customer-account-nav ul:before, .property-search.type1 .heading:before, .property-search.type2 .property-results .property-result .details:before, .property-view.type1 .social-share:before, .property-categories .category-search-item:before, .property-categories .property-category-list-item .details:before, .product-search .heading:before, ul.refine-list:before, .product.product-view .variations:before, .product.product-view .product-share .social-share:before, .product-variation-choice .type-picker:before, .product-variation-choice .size-picker:before, .product-variation-choice .color-picker:before, .product-result .wrapper:before, .related-products li:before, .product-orders .order-item .section1:before, .product-orders.view-order .order-details .wrapper:before, .payment-details .wrapper:before, .payment-pending-form .wrapper:before, .shipment-details .wrapper:before, .blog-list .blog-entry .blog-entry-container .blog-item-container > div:before, .blog-post .tags:before, .checkout .checkout-form .step-header:before, .clearfix:after, .social-share:after, .image-container .nivo-directionNav:after, .customer-account-nav ul:after, .property-search.type1 .heading:after, .property-search.type2 .property-results .property-result .details:after, .property-view.type1 .social-share:after, .property-categories .category-search-item:after, .property-categories .property-category-list-item .details:after, .product-search .heading:after, ul.refine-list:after, .product.product-view .variations:after, .product.product-view .product-share .social-share:after, .product-variation-choice .type-picker:after, .product-variation-choice .size-picker:after, .product-variation-choice .color-picker:after, .product-result .wrapper:after, .related-products li:after, .product-orders .order-item .section1:after, .product-orders.view-order .order-details .wrapper:after, .payment-details .wrapper:after, .payment-pending-form .wrapper:after, .shipment-details .wrapper:after, .blog-list .blog-entry .blog-entry-container .blog-item-container > div:after, .blog-post .tags:after, .checkout .checkout-form .step-header:after {
   content: " ";
   display: table; }
 
-.clearfix:after, .social-share:after, .image-container .nivo-directionNav:after, .property-search.type1 .heading:after, .property-search.type2 .property-results .property-result .details:after, .property-view.type1 .social-share:after, .property-categories .category-search-item:after, .property-categories .property-category-list-item .details:after, .product-search .heading:after, ul.refine-list:after, .product.product-view .variations:after, .product.product-view .product-share .social-share:after, .product-variation-choice .type-picker:after, .product-variation-choice .size-picker:after, .product-variation-choice .color-picker:after, .product-result .wrapper:after, .related-products li:after, .product-orders .order-item .section1:after, .product-orders.view-order .order-details .wrapper:after, .payment-details .wrapper:after, .payment-pending-form .wrapper:after, .shipment-details .wrapper:after, .blog-list .blog-entry .blog-entry-container .blog-item-container > div:after, .blog-post .tags:after, .checkout .checkout-form .step-header:after {
+.clearfix:after, .social-share:after, .image-container .nivo-directionNav:after, .customer-account-nav ul:after, .property-search.type1 .heading:after, .property-search.type2 .property-results .property-result .details:after, .property-view.type1 .social-share:after, .property-categories .category-search-item:after, .property-categories .property-category-list-item .details:after, .product-search .heading:after, ul.refine-list:after, .product.product-view .variations:after, .product.product-view .product-share .social-share:after, .product-variation-choice .type-picker:after, .product-variation-choice .size-picker:after, .product-variation-choice .color-picker:after, .product-result .wrapper:after, .related-products li:after, .product-orders .order-item .section1:after, .product-orders.view-order .order-details .wrapper:after, .payment-details .wrapper:after, .payment-pending-form .wrapper:after, .shipment-details .wrapper:after, .blog-list .blog-entry .blog-entry-container .blog-item-container > div:after, .blog-post .tags:after, .checkout .checkout-form .step-header:after {
   clear: both; }
 
 .center-block {
@@ -6928,6 +6948,7 @@ header .navbar {
       max-height: 100%; }
 
 footer {
+  margin-top: 40px;
   padding: 40px 0;
   background: #f0f0f0; }
 
@@ -8027,6 +8048,11 @@ footer {
 .vendirun-slider-widget .item:nth-child(even) .carousel-call-to-action {
   text-align: right; }
 
+.vendirun-breadcrumbs {
+  background: #eeeeee; }
+  .vendirun-breadcrumbs .breadcrumb {
+    background: #eeeeee; }
+
 .cms-page .vendirun-cms-block .vr-cms-content .vr-image-element {
   text-align: center; }
   .cms-page .vendirun-cms-block .vr-cms-content .vr-image-element img {
@@ -8041,6 +8067,43 @@ footer {
     list-style: none; }
     .address-select label ul.address li.selector {
       margin-top: 10px; }
+    .address-select label ul.address li.address-links {
+      margin: 8px 0; }
+      .address-select label ul.address li.address-links a {
+        margin-right: 6px; }
+
+.customer-account-nav {
+  border-bottom: 1px solid #eeeeee;
+  background: #eeeeee; }
+  .customer-account-nav ul {
+    margin-bottom: 0;
+    list-style: none; }
+    .customer-account-nav ul li {
+      float: left;
+      margin: 0; }
+      .customer-account-nav ul li a {
+        display: block;
+        padding: 12px;
+        background: #eeeeee;
+        color: #337ab7; }
+        .customer-account-nav ul li a:hover, .customer-account-nav ul li a:active {
+          background: #337ab7;
+          color: white;
+          text-decoration: none; }
+      .customer-account-nav ul li.active a {
+        background: #337ab7;
+        color: white; }
+      .customer-account-nav ul li.divider {
+        display: none; }
+
+.customer-account-details .customer-account-details--section {
+  margin-bottom: 40px; }
+  .customer-account-details .customer-account-details--section .account-item {
+    display: block; }
+    .customer-account-details .customer-account-details--section .account-item label {
+      min-width: 200px; }
+  .customer-account-details .customer-account-details--section .account-value {
+    color: #337ab7; }
 
 .property-search.type1 .search-form h3 {
   background: #f0f0f0;
@@ -8379,7 +8442,7 @@ footer {
 .property-view.type2 .amenities-well {
   position: relative;
   background: #FFF; }
-  .property-view.type2 .amenities-well .col-sm-6, .property-view.type2 .amenities-well .property-search.type2 .property-results .property-result .property-attributes .item, .property-search.type2 .property-results .property-result .property-attributes .property-view.type2 .amenities-well .item, .property-view.type2 .amenities-well .property-attributes .item, .property-view.type2 .property-attributes .amenities-well .item, .property-view.type2 .amenities-well .property-advanced-search-widget .form-inputs .form-group, .property-advanced-search-widget .form-inputs .property-view.type2 .amenities-well .form-group, .property-view.type2 .amenities-well .product-cart .cart-items .cart-table .cart-column, .product-cart .cart-items .cart-table .property-view.type2 .amenities-well .cart-column, .property-view.type2 .amenities-well .checkout .checkout-form .shipping-method .method-select, .checkout .checkout-form .shipping-method .property-view.type2 .amenities-well .method-select {
+  .property-view.type2 .amenities-well .col-sm-6, .property-view.type2 .amenities-well .customer-account-addresses, .property-view.type2 .amenities-well .customer-account-details, .property-view.type2 .amenities-well .property-search.type2 .property-results .property-result .property-attributes .item, .property-search.type2 .property-results .property-result .property-attributes .property-view.type2 .amenities-well .item, .property-view.type2 .amenities-well .property-attributes .item, .property-view.type2 .property-attributes .amenities-well .item, .property-view.type2 .amenities-well .property-advanced-search-widget .form-inputs .form-group, .property-advanced-search-widget .form-inputs .property-view.type2 .amenities-well .form-group, .property-view.type2 .amenities-well .product-cart .cart-items .cart-table .cart-column, .product-cart .cart-items .cart-table .property-view.type2 .amenities-well .cart-column, .property-view.type2 .amenities-well .checkout .checkout-form .shipping-method .method-select, .checkout .checkout-form .shipping-method .property-view.type2 .amenities-well .method-select {
     position: static; }
   .property-view.type2 .amenities-well .amenities {
     text-align: right; }
@@ -8403,10 +8466,10 @@ footer {
     font-weight: bold;
     width: 110px; }
 
-.property-categories .row, .property-categories .address-select, .property-categories .property-advanced-search-widget .form-inputs, .property-advanced-search-widget .property-categories .form-inputs, .property-categories .product-cart .wrapper, .product-cart .property-categories .wrapper, .property-categories .product-cart .cart-items .cart-table, .product-cart .cart-items .property-categories .cart-table, .property-categories .product-orders.view-order .order-details .wrapper, .product-orders.view-order .order-details .property-categories .wrapper, .property-categories .blog-list .blog-entry .blog-entry-container, .blog-list .blog-entry .property-categories .blog-entry-container, .property-categories .cms-blog-posts-widget, .property-categories .checkout .wrapper, .checkout .property-categories .wrapper, .property-categories .checkout .checkout-form .shipping-method, .checkout .checkout-form .property-categories .shipping-method, .property-categories .payment .expiry-cvv, .payment .property-categories .expiry-cvv {
+.property-categories .row, .property-categories .address-select, .property-categories .customer-account .inner-container, .customer-account .property-categories .inner-container, .property-categories .property-advanced-search-widget .form-inputs, .property-advanced-search-widget .property-categories .form-inputs, .property-categories .product-cart .wrapper, .product-cart .property-categories .wrapper, .property-categories .product-cart .cart-items .cart-table, .product-cart .cart-items .property-categories .cart-table, .property-categories .product-orders.view-order .order-details .wrapper, .product-orders.view-order .order-details .property-categories .wrapper, .property-categories .blog-list .blog-entry .blog-entry-container, .blog-list .blog-entry .property-categories .blog-entry-container, .property-categories .cms-blog-posts-widget, .property-categories .checkout .wrapper, .checkout .property-categories .wrapper, .property-categories .checkout .checkout-form .shipping-method, .checkout .checkout-form .property-categories .shipping-method, .property-categories .payment .expiry-cvv, .payment .property-categories .expiry-cvv {
   margin: 0; }
 
-.property-categories .col-sm-6, .property-categories .property-search.type2 .property-results .property-result .property-attributes .item, .property-search.type2 .property-results .property-result .property-attributes .property-categories .item, .property-categories .property-view.type2 .property-attributes .item, .property-view.type2 .property-attributes .property-categories .item, .property-categories .property-advanced-search-widget .form-inputs .form-group, .property-advanced-search-widget .form-inputs .property-categories .form-group, .property-categories .product-cart .cart-items .cart-table .cart-column, .product-cart .cart-items .cart-table .property-categories .cart-column, .property-categories .checkout .checkout-form .shipping-method .method-select, .checkout .checkout-form .shipping-method .property-categories .method-select {
+.property-categories .col-sm-6, .property-categories .customer-account-addresses, .property-categories .customer-account-details, .property-categories .property-search.type2 .property-results .property-result .property-attributes .item, .property-search.type2 .property-results .property-result .property-attributes .property-categories .item, .property-categories .property-view.type2 .property-attributes .item, .property-view.type2 .property-attributes .property-categories .item, .property-categories .property-advanced-search-widget .form-inputs .form-group, .property-advanced-search-widget .form-inputs .property-categories .form-group, .property-categories .product-cart .cart-items .cart-table .cart-column, .product-cart .cart-items .cart-table .property-categories .cart-column, .property-categories .checkout .checkout-form .shipping-method .method-select, .checkout .checkout-form .shipping-method .property-categories .method-select {
   padding-left: 0;
   padding-right: 0; }
 

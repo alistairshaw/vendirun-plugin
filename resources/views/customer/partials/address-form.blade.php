@@ -1,4 +1,5 @@
 <div class="address-form {{ $prefix }}-address-form js-{{ $prefix }}-address-form">
+    <input type="hidden" name="{{ $prefix }}addressId" value="{{ $address['id'] }}">
     <div class="form-group">
         <label for="{{ $prefix }}address1">{{ trans('vendirun::forms.address1') }}</label>
         <input type="text" class="form-control" name="{{ $prefix }}address1" id="{{ $prefix }}address1" value="{{ old($prefix . 'address1', $address['address1']) }}">
@@ -25,6 +26,6 @@
     </div>
     <div class="form-group">
         <label for="{{ $prefix }}countryId">{{ trans('vendirun::forms.country') }}</label>
-        @include('vendirun::customer.partials.country-select', ['fieldId' => $prefix . 'countryId', 'fieldName' => $prefix . 'countryId'])
+        @include('vendirun::customer.partials.country-select', ['fieldId' => $prefix . 'countryId', 'fieldName' => $prefix . 'countryId', 'selected' => $address['countryId']])
     </div>
 </div>

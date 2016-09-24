@@ -1,5 +1,6 @@
 <?php namespace AlistairShaw\Vendirun\App\Http\Composers;
 
+use AlistairShaw\Vendirun\App\Entities\Order\Order;
 use AlistairShaw\Vendirun\App\Entities\Product\Product;
 use AlistairShaw\Vendirun\App\Entities\Product\ProductSearchResult\ProductSearchResult;
 use Illuminate\View\View;
@@ -26,11 +27,17 @@ class BreadcrumbViewComposer
         if (isset($viewData['posts'])) return $this->blogBreadcrumbs();
         if (isset($viewData['post'])) return $this->blogPostBreadcrumbs($viewData['post']);
 
+        // products
         if (isset($viewData['productSearchResult'])) return $this->productsBreadcrumbs($viewData['productSearchResult']);
         if (isset($viewData['product'])) return $this->productBreadcrumbs($viewData['product'],
             isset($viewData['recommend']) ? $viewData['recommend'] : false,
             isset($viewData['pageTitle']) ? $viewData['pageTitle'] : '');
 
+        // account
+        if (isset($viewData['orders'])) return $this->orderBreadcrumbs();
+        if (isset($viewData['order'])) return $this->orderBreadcrumbs($viewData['order']);
+
+        // defaults
         if (isset($viewData['pageTitle']))
         {
             $breadcrumbs[] = [
@@ -156,6 +163,33 @@ class BreadcrumbViewComposer
             $breadcrumbs[] = [
                 'title' => $pageTitle,
                 'slug' => $slug
+            ];
+        }
+
+        return $breadcrumbs;
+    }
+
+    /**
+     * @param Order|null $order
+     * @return array
+     */
+    private function orderBreadcrumbs(Order $order = null)
+    {
+        $breadcrumbs = $this->homeCrumb();
+        $breadcrumbs[] = [
+            'title' => trans('vendirun::customer.account'),
+            'slug' => 'customer/account'
+        ];
+        $breadcrumbs[] = [
+            'title' => trans('vendirun::product.orderHistory'),
+            'slug' => 'customer/account/orders'
+        ];
+
+        if ($order)
+        {
+            $breadcrumbs[] = [
+                'title' => trans('vendirun::customer.account'),
+                'slug' => 'customer/account/orders/order/view/' . $order->getId()
             ];
         }
 

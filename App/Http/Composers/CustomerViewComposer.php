@@ -2,7 +2,9 @@
 
 use AlistairShaw\Vendirun\App\Entities\Customer\Helpers\CustomerHelper;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\VendirunApi;
+use AlistairShaw\Vendirun\App\ValueObjects\Address;
 use Illuminate\View\View;
+use Request;
 use Session;
 
 class CustomerViewComposer {
@@ -56,5 +58,33 @@ class CustomerViewComposer {
 
         $view->with('address', $address);
         if (!isset($viewData['prefix'])) $view->with('prefix', '');
+    }
+
+    /**
+     * @param $view
+     * @return mixed
+     */
+    public function accountNav($view)
+    {
+        $nav_selected = 'account';
+
+        if (strstr(Request::path(), 'customer/account/orders')) $nav_selected = 'orders';
+
+        return $view->with('navSelected', $nav_selected);
+    }
+
+    /**
+     * @param $view
+     * @return mixed
+     */
+    public function addressSelect($view)
+    {
+        $viewData = $view->getData();
+
+        $showSelector = isset($viewData['showSelector']) ? $viewData['showSelector'] : true;
+        $prefix = isset($viewData['prefix']) ? $viewData['prefix'] : '';
+        $defaultAddress = isset($viewData['defaultAddress']) ? $viewData['defaultAddress'] : new Address([]);
+
+        return $view->with('prefix', $prefix)->with('defaultAddress', $defaultAddress)->with('showSelector', $showSelector);
     }
 }

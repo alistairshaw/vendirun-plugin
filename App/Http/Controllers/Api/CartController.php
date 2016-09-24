@@ -52,7 +52,11 @@ class CartController extends ApiBaseController {
             $cart->add($cartItem);
             $cart = $cartRepository->save($cart);
 
-            return $this->respond(true, $cart->toArray());
+            $final = $cart->toArray();
+            $final['itemAdded'] = $product->getDisplayArray();
+            $final['itemAdded']['quantity'] = $quantity;
+
+            return $this->respond(true, $final);
         }
         catch (\Exception $e)
         {

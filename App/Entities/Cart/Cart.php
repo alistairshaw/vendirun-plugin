@@ -208,7 +208,14 @@ class Cart {
      */
     public function totalProducts()
     {
-        return count($this->ids);
+        $total = 0;
+        foreach ($this->items as $cartItem)
+        {
+            /* @var $cartItem CartItem */
+            $total += $cartItem->getQuantity();
+        }
+
+        return $total;
     }
 
     /**

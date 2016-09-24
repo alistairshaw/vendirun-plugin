@@ -41,5 +41,6 @@ return [
     'quantity' => 'Quantity',
     'discount' => 'Discount',
     'paymentDate' => 'Payment Date',
-    'paymentMethod' => 'Payment Method'
+    'paymentMethod' => 'Payment Method',
+    'itemAdded' => 'Item Added to Cart'
 ];

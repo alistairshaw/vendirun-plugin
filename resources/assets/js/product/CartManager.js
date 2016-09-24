@@ -64,6 +64,27 @@ function CartManager () {
     };
 
     /**
+     * Shows the cart popup and then removes it after a short amount of time
+     * @param item
+     */
+    var showCartAddPopup = function(item) {
+        if (item === undefined || !item) return;
+        var popupContainer = $('.cart-added-popup');
+        popupContainer.show();
+
+        var display = item.quantity + ' x ' + item.productName;
+
+        popupContainer.find('.product-name').html(display);
+        popupContainer.find('.js-close-cart-added-popup').off('click').on('click', function() {
+           popupContainer.hide();
+        });
+
+        setTimeout(function() {
+            popupContainer.hide();
+        }, 8000);
+    };
+
+    /**
      * Add an item to the cart
      * @param productVariationId
      * @param quantity
@@ -78,6 +99,7 @@ function CartManager () {
             hideAddToCartButtons();
             showProductCountButtons();
             updatePageData(response.data);
+            showCartAddPopup(response.data.itemAdded);
         }, function (error) {
             callback(error);
         });

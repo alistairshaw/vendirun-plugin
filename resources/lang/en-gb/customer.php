@@ -8,5 +8,10 @@ return [
     'noPermissionsTitle' => 'Permission Denied',
     'noPermissions' => 'Sorry, you do not have permission to view that content',
     'noPermissionsText' => 'If you believe you are seeing this page in error, please contact us and let us know so we can look into it.',
-    'recoverPassword' => 'Password Recover'
+    'recoverPassword' => 'Password Recover',
+    'account' => 'Account',
+    'addAddress' => 'Add a New Address',
+    'editAddress' => 'Edit Address',
+    'addresses' => 'Your Addresses',
+    'noAddressesYet' => 'You have not added any addresses yet.'
 ];

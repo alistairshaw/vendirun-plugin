@@ -68,6 +68,7 @@ class Address {
     public function getArray()
     {
         return [
+            'id' => $this->id,
             'address1' => $this->address1,
             'address2' => $this->address2,
             'address3' => $this->address3,

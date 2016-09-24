@@ -1,7 +1,6 @@
 <?php namespace AlistairShaw\Vendirun\App\Lib\VendirunApi\ApiV1;
 
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\Exceptions\FailResponseException;
-use AlistairShaw\Vendirun\App\Lib\VendirunApi\Exceptions\InvalidApiRequestException;
 
 class CustomerApi extends BaseApi {
 
@@ -26,9 +25,35 @@ class CustomerApi extends BaseApi {
             unset($params['password']);
             unset($params['password_confirmation']);
             $this->apiSubmissionFailed('contact-form', $params);
+            return null;
         }
 	}
 
+    /**
+     * @param $params
+     * @return object
+     */
+	public function update($params)
+    {
+        try
+        {
+            $url = 'customer/update/' . $params['id'];
+            return $this->request($url, $params, true);
+        }
+        catch (\Exception $e)
+        {
+            unset($params['_token']);
+            unset($params['password']);
+            unset($params['password_confirmation']);
+            $this->apiSubmissionFailed('contact-form', $params);
+            return null;
+        }
+    }
+
+    /**
+     * @param $params
+     * @return object
+     */
     public function find($params)
     {
         $url = 'customer/find/' . $params['token'];
@@ -37,7 +62,7 @@ class CustomerApi extends BaseApi {
 
 	/**
 	 * @param array $params
-	 * @return array
+	 * @return object
 	 */
 	public function login($params)
 	{
@@ -81,7 +106,7 @@ class CustomerApi extends BaseApi {
 
     /**
      * @param $params
-     * @return array
+     * @return object
      */
 	public function tokenAuth($params)
 	{
@@ -128,6 +153,16 @@ class CustomerApi extends BaseApi {
     public function verifyEmailData($params)
     {
         $url = 'customer/get_email_verification_data/' . $params['id'];
+        return $this->request($url, $params);
+    }
+
+    /**
+     * @param $params
+     * @return object
+     */
+    public function deleteAddress($params)
+    {
+        $url = 'customer/delete_address/' . $params['id'];
         return $this->request($url, $params);
     }
 }

@@ -3,7 +3,7 @@
     <form method="GET">
         <div class="form-group">
             <label class="sr-only" for="shipToCountryId">Choose your country:</label>
-            @include('vendirun::customer.partials.country-select', ['fieldId' => 'shipToCountryId'])
+            @include('vendirun::customer.partials.country-select', ['fieldId' => 'shipToCountryId', 'selected' => $cart->getCountryId()])
         </div>
         @if (isset($cart) && count($cart->getAvailableShippingTypes()) > 0)
             <div class="form-group">

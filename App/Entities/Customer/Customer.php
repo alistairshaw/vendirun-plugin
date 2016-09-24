@@ -56,6 +56,7 @@ class Customer {
         $this->id = $id;
         $this->name = $name;
         $this->primaryEmail = $primaryEmail;
+        $this->addresses = [];
     }
 
     /**
@@ -183,7 +184,35 @@ class Customer {
      */
     public function addAddress(Address $address)
     {
-        $this->addresses[] = $address;
+        // if address has an ID, we need to remove the current one and add this new one
+        if ($address->getId())
+        {
+            $final[] = $address;
+            foreach ($this->addresses as $currentAddress)
+            {
+                if (!$address->getId() == $currentAddress->getId()) $final[] = $currentAddress;
+            }
+            $this->addresses = $final;
+        }
+        else
+        {
+            $this->addresses[] = $address;
+        }
+    }
+
+    /**
+     * @param $id
+     * @return $this
+     */
+    public function removeAddress($id)
+    {
+        $final = [];
+        foreach ($this->addresses as $address)
+        {
+            if ($address->getId() != $id) $final[] = $address;
+        }
+        $this->addresses = $final;
+        return $this;
     }
 
     /**

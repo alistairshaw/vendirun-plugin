@@ -62,6 +62,14 @@ class ApiCustomerRepository implements CustomerRepository {
             'telephone' => $customer->getPrimaryTelephone()
         ];
 
+        $addresses = [];
+        foreach ($customer->getAddresses() as $add)
+        {
+            /* @var $add Address */
+            $addresses[] = $add->getArray();
+        }
+        $data['addresses'] = $addresses;
+
         if ($customer->getId()) return $this->update($data, $customer->getId());
 
         $savedCustomer = VendirunApi::makeRequest('customer/store', $data)->getData();

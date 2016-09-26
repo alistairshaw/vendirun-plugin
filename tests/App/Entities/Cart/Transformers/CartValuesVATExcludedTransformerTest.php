@@ -18,9 +18,9 @@ class CartValuesVATExcludedTransformerTest extends VendirunTestCase {
         $this->assertArrayHasKey('tax', $values);
         $this->assertArrayHasKey('total', $values);
 
-        $this->assertEquals(300, $values['subTotal']);
+        $this->assertEquals(360, $values['subTotal']);
         $this->assertEquals(300, $values['displayTotal']);
-        $this->assertEquals(200, $values['shipping']);
+        $this->assertEquals(240, $values['shipping']);
         $this->assertEquals(200, $values['displayShipping']);
         $this->assertEquals(100, $values['tax']);
         $this->assertEquals(600, $values['total']);

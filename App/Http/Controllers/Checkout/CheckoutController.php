@@ -1,6 +1,7 @@
 <?php namespace AlistairShaw\Vendirun\App\Http\Controllers\Checkout;
 
 use AlistairShaw\Vendirun\App\Entities\Cart\CartRepository;
+use AlistairShaw\Vendirun\App\Entities\Cart\Transformers\CartValuesTransformer;
 use AlistairShaw\Vendirun\App\Entities\Customer\CustomerFactory;
 use AlistairShaw\Vendirun\App\Entities\Customer\CustomerRepository;
 use AlistairShaw\Vendirun\App\Entities\Customer\Helpers\CustomerHelper;
@@ -23,11 +24,12 @@ use View;
 class CheckoutController extends VendirunBaseController {
 
     /**
-     * @param CartRepository     $cartRepository
+     * @param CartRepository $cartRepository
      * @param CustomerRepository $customerRepository
+     * @param CartValuesTransformer $transformer
      * @return mixed
      */
-    public function index(CartRepository $cartRepository, CustomerRepository $customerRepository)
+    public function index(CartRepository $cartRepository, CustomerRepository $customerRepository, CartValuesTransformer $transformer)
     {
         $this->setPrimaryPath();
         
@@ -53,7 +55,7 @@ class CheckoutController extends VendirunBaseController {
         if ($cart->count() == 0) return Redirect::route(LocaleHelper::localePrefix() . 'vendirun.productCart');
 
         $data['cart'] = $cart;
-        $data['displayTotals'] = $cart->getFormattedTotals();
+        $data['displayTotals'] = $cart->getFormattedValues($transformer);
 
         $data['pageTitle'] = trans('vendirun::checkout.checkout');
 

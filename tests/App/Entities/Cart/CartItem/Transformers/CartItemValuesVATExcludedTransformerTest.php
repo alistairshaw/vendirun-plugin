@@ -21,4 +21,20 @@ class CartItemValuesVATExcludedTransformerTest extends VendirunTestCase  {
         $this->assertEquals(50, $values['shipping']);
     }
 
+    public function testCartItemNullShippingValues()
+    {
+        $cartItem = $this->makeCartItem(100, 1, false, null);
+
+        $transformer = new CartItemValuesVATExcludedTransformer();
+        $values = $cartItem->getValues($transformer);
+
+        $this->assertArrayHasKey('total', $values);
+        $this->assertArrayHasKey('shipping', $values);
+        $this->assertArrayHasKey('tax', $values);
+
+        $this->assertEquals(100, $values['total']);
+        $this->assertEquals(20, $values['tax']);
+        $this->assertNull($values['shipping']);
+    }
+
 }

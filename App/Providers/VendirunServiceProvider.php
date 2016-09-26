@@ -1,11 +1,19 @@
 <?php namespace AlistairShaw\Vendirun\App\Providers;
 
+use AlistairShaw\Vendirun\App\Entities\Cart\Transformers\CartValuesTransformer;
+use AlistairShaw\Vendirun\App\Entities\Cart\Transformers\CartValuesVATExcludedTransformer;
+use AlistairShaw\Vendirun\App\Entities\Cart\Transformers\CartValuesVATIncludedTransformer;
+use AlistairShaw\Vendirun\App\Lib\ClientHelper;
 use AlistairShaw\Vendirun\App\Lib\CurrencyHelper;
 use AlistairShaw\Vendirun\App\Lib\LocaleHelper;
+use AlistairShaw\Vendirun\App\Lib\Social\SocialLinks;
+use AlistairShaw\Vendirun\App\Lib\Social\SocialLinksStandard;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
 
 class VendirunServiceProvider extends ServiceProvider {
+
+    //protected $defer = true;
 
 	/**
 	 * Bootstrap the application services.
@@ -43,6 +51,17 @@ class VendirunServiceProvider extends ServiceProvider {
 
 		// load translation files
 		$this->loadTranslationsFrom(__DIR__.'/../../resources/lang', 'vendirun');
+
+        $clientInfo = ClientHelper::getClientInfo();
+
+        if ($clientInfo->business_settings->tax->price_includes_tax)
+        {
+            $this->app->bind(CartValuesTransformer::class, CartValuesVATIncludedTransformer::class);
+        }
+        else
+        {
+            $this->app->bind(CartValuesTransformer::class, CartValuesVATExcludedTransformer::class);
+        }
 	}
 
 	/**
@@ -75,6 +94,7 @@ class VendirunServiceProvider extends ServiceProvider {
         });
 
         // dependency injection
+        $this->app->bind(SocialLinks::class, SocialLinksStandard::class);
         $this->app->bind('AlistairShaw\Vendirun\App\Lib\Social\SocialLinks', 'AlistairShaw\Vendirun\App\Lib\Social\SocialLinksStandard');
         $this->app->bind('AlistairShaw\Vendirun\App\Entities\Cart\CartRepository', 'AlistairShaw\Vendirun\App\Entities\Cart\ApiCartRepository');
         $this->app->bind('AlistairShaw\Vendirun\App\Entities\Order\OrderRepository', 'AlistairShaw\Vendirun\App\Entities\Order\ApiOrderRepository');

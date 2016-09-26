@@ -31,15 +31,15 @@ class CartValuesVATExcludedTransformer implements CartValuesTransformer {
         }
 
         // calculate tax on shipping
-        $tax += TaxCalculator::totalPlusTax($shipping, $defaultTaxRate, 1);
+        $shippingTax = TaxCalculator::totalPlusTax($shipping, $defaultTaxRate, 1);
 
         return [
-            'subTotal' => $subTotal,
+            'subTotal' => $subTotal + $tax,
             'displayTotal' => $subTotal,
-            'shipping' => $shipping,
+            'shipping' => $shipping + $shippingTax,
             'displayShipping' => $shipping,
-            'tax' => $tax,
-            'total' => $subTotal + $shipping + $tax
+            'tax' => $tax + $shippingTax,
+            'total' => $subTotal + $shipping + $tax + $shippingTax
         ];
     }
 

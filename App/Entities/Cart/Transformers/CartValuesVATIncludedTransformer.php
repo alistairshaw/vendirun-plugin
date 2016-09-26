@@ -25,20 +25,21 @@ class CartValuesVATIncludedTransformer implements CartValuesTransformer {
             /* @var $cartItem CartItem */
             $cartItemTotals = $cartItem->getValues(new CartItemValuesVATIncludedTransformer());
             $subTotal += $cartItemTotals['total'];
-            $shipping += $cartItemTotals['shipping'];
+            if ($cartItemTotals['shipping'] !== null) $shipping += $cartItemTotals['shipping'];
             $tax += $cartItemTotals['tax'];
         }
 
+
         // calculate tax on shipping
-        $shippingTax = TaxCalculator::taxFromTotal($shipping, $defaultTaxRate, 1);
+        $shippingTax = ($shipping === null) ? null : TaxCalculator::taxFromTotal($shipping, $defaultTaxRate, 1);
 
         return [
-            'subTotal' => $subTotal + $tax,
+            'subTotal' => $subTotal,
             'displayTotal' => $subTotal,
-            'shipping' => $shipping + $shippingTax,
+            'shipping' => $shipping == null ? null : $shipping,
             'displayShipping' => $shipping,
-            'tax' => $tax,
-            'total' => $subTotal + $tax + $shipping + $shippingTax
+            'tax' => $tax + $shippingTax,
+            'total' => $subTotal + $shipping
         ];
     }
 

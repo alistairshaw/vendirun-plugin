@@ -94,6 +94,21 @@ class Cart {
     }
 
     /**
+     * @param $transformer
+     * @return mixed
+     */
+    public function getFormattedValues($transformer)
+    {
+        $values = $this->getValues($transformer);
+        foreach ($values as $key => $value)
+        {
+            $values[$key] = CurrencyHelper::formatWithCurrency($value, false, '');
+        }
+
+        return $values;
+    }
+
+    /**
      * @return array
      */
     public function shippingBreakdown()

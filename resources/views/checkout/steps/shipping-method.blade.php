@@ -11,7 +11,7 @@
     </div>
     <div class="shipping-price">
         <div class="price js-display-shipping">
-            {{ $displayTotals->displayShipping }}
+            {{ $displayTotals['displayShipping'] }}
         </div>
     </div>
     <div class="options">

@@ -2,10 +2,14 @@
 
 use AlistairShaw\Vendirun\App\Entities\Cart\CartItem\CartItemFactory;
 use AlistairShaw\Vendirun\App\Entities\Cart\CartRepository;
+use AlistairShaw\Vendirun\App\Entities\Cart\Transformers\CartValuesTransformer;
 use AlistairShaw\Vendirun\App\Entities\Customer\CustomerRepository;
 use AlistairShaw\Vendirun\App\Entities\Customer\Helpers\CustomerHelper;
 use AlistairShaw\Vendirun\App\Entities\Product\ProductRepository;
 use AlistairShaw\Vendirun\App\Http\Controllers\VendirunBaseController;
+use AlistairShaw\Vendirun\App\Lib\TaxHelper;
+use AlistairShaw\Vendirun\App\Providers\VendirunServiceProvider;
+use App;
 use Config;
 use Mockery\CountValidator\Exception;
 use Redirect;
@@ -18,18 +22,20 @@ class CartController extends VendirunBaseController {
     /**
      * @param CartRepository $cartRepository
      * @param CustomerRepository $customerRepository
+     * @param CartValuesTransformer $transformer
      * @return mixed
      */
-    public function index(CartRepository $cartRepository, CustomerRepository $customerRepository)
+    public function index(CartRepository $cartRepository, CustomerRepository $customerRepository, CartValuesTransformer $transformer)
     {
         $this->setPrimaryPath();
 
         $countryId = Request::get('countryId', null);
         if (!$countryId) $countryId = CustomerHelper::getDefaultCountry($customerRepository);
 
-        $cart = $cartRepository->find($countryId);
+        $data['cart'] = $cartRepository->find($countryId);
+        $data['cartValues'] = $data['cart']->getValues($transformer);
 
-        return View::make('vendirun::product.cart')->with('cart', $cart);
+        return View::make('vendirun::product.cart', $data);
     }
 
     /**

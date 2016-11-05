@@ -28,5 +28,7 @@ return [
     'billingAddressSameAsShipping' => 'Billing address is the same as the shipping address',
     'paymentTakenOtherError' => 'Payment Has Been Taken - ORDER not saved correctly, please contact Customer Services',
     'paymentMethod' => 'Payment Method',
-    'paymentDate' => 'Payment Date'
+    'paymentDate' => 'Payment Date',
+    'invalidPostcode' => 'Paypal will not accept your postcode as valid, please edit your address and try again, or pay by Credit Card',
+    'paypalUnavailable' => 'Paypal is not available at the moment, please pay by Credit Card or contact us for further assistance'
 ];

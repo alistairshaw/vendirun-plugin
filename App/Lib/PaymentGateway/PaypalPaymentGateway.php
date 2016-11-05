@@ -18,6 +18,7 @@ use PayPal\Api\RedirectUrls;
 use PayPal\Api\ShippingAddress;
 use PayPal\Api\Transaction;
 use PayPal\Auth\OAuthTokenCredential;
+use PayPal\Exception\PayPalConnectionException;
 use PayPal\Rest\ApiContext;
 
 class PaypalPaymentGateway extends AbstractPaymentGateway implements PaymentGateway {
@@ -63,10 +64,28 @@ class PaypalPaymentGateway extends AbstractPaymentGateway implements PaymentGate
             ->setRedirectUrls($redirectUrls)
             ->setTransactions(array($transaction));
 
-        $payment->create($this->apiContext);
-
-        $link = $payment->getApprovalLink();
-        return $link;
+        try
+        {
+            $payment->create($this->apiContext);
+            return $payment->getApprovalLink();
+        }
+        catch (PayPalConnectionException $e)
+        {
+            $response = json_decode($e->getData());
+            switch ($response->name)
+            {
+                case 'VALIDATION_ERROR':
+                    throw new Exception('Oops! ' . trans('vendirun::checkout.invalidPostcode'));
+                    break;
+                default:
+                    throw new Exception(trans('vendirun::checkout.paypalUnavailable'));
+            }
+        }
+        catch (Exception $e)
+        {
+            dd($e);
+            throw new Exception($e->getMessage());
+        }
     }
 
     /**
@@ -82,16 +101,9 @@ class PaypalPaymentGateway extends AbstractPaymentGateway implements PaymentGate
 
         $transaction = $this->buildTransaction();
 
-        try
-        {
-            $execution->addTransaction($transaction);
-            $payment->execute($execution, $this->apiContext);
-            $payment = Payment::get($params['paymentId'], $this->apiContext);
-        }
-        catch (\Exception $e)
-        {
-            dd($e);
-        }
+        $execution->addTransaction($transaction);
+        $payment->execute($execution, $this->apiContext);
+        $payment = Payment::get($params['paymentId'], $this->apiContext);
 
         $vendirunPayment = new VendirunPayment($this->order->getTotalPrice(), date("Y-m-d"), 'paypal', json_encode($payment));
         $this->order->addPayment($vendirunPayment);
@@ -113,10 +125,10 @@ class PaypalPaymentGateway extends AbstractPaymentGateway implements PaymentGate
         foreach ($this->order->getItems() as $item)
         {
             /* @var $item OrderItem */
-            $subTotal += $item->getPrice();
-
             // don't add shipping row
             if ($item->isShipping()) continue;
+
+            $subTotal += $item->getPrice();
 
             $newItem = new Item();
             $newItem->setName($item->getProductName())

@@ -3,6 +3,7 @@
 use AlistairShaw\Vendirun\App\Entities\Cart\CartItem\CartItemFactory;
 use AlistairShaw\Vendirun\App\Entities\Cart\Helpers\ShippingCalculator;
 use AlistairShaw\Vendirun\App\Entities\Cart\Helpers\TaxCalculator;
+use AlistairShaw\Vendirun\App\Entities\Cart\Transformers\CartValuesTransformer;
 use AlistairShaw\Vendirun\App\Entities\Customer\Helpers\CustomerHelper;
 use AlistairShaw\Vendirun\App\Entities\Product\ProductTaxOption\ProductTaxOptionFactory;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\Exceptions\FailResponseException;
@@ -20,12 +21,19 @@ class CartFactory {
     private $cartRepository;
 
     /**
+     * @var CartValuesTransformer
+     */
+    private $cartValuesTransformer;
+
+    /**
      * CartFactory constructor.
      * @param CartRepository $cartRepository
+     * @param CartValuesTransformer $cartValuesTransformer
      */
-    public function __construct(CartRepository $cartRepository)
+    public function __construct(CartRepository $cartRepository, CartValuesTransformer $cartValuesTransformer)
     {
         $this->cartRepository = $cartRepository;
+        $this->cartValuesTransformer = $cartValuesTransformer;
     }
 
     /**
@@ -38,7 +46,6 @@ class CartFactory {
     {
         $clientInfo = Config::get('clientInfo');
         $priceIncludesTax = $clientInfo->business_settings->tax->price_includes_tax;
-
 
         $taxes = ProductTaxOptionFactory::makeFromApi($clientInfo->business_settings->tax->country_tax_rates);
         $defaultTaxRate = TaxCalculator::calculateProductTaxRate($taxes, $countryId, $clientInfo->business_settings->tax->default_tax_rate);
@@ -61,6 +68,12 @@ class CartFactory {
         }
 
         $cart->checkIdList();
+
+        // check for free shipping
+        if (isset($clientInfo->business_settings->free_shipping) && $clientInfo->business_settings->free_shipping->free_shipping_enabled)
+        {
+            $cart->updateForFreeShipping($this->cartValuesTransformer, $clientInfo->business_settings->free_shipping->free_shipping_minimum_order, $clientInfo->business_settings->free_shipping->free_shipping_countries);
+        }
 
         return $cart;
     }

@@ -2,6 +2,7 @@
 
 use AlistairShaw\Vendirun\App\Entities\Cart\Cart;
 use AlistairShaw\Vendirun\App\Entities\Cart\CartItem\CartItem;
+use AlistairShaw\Vendirun\App\Entities\Cart\Transformers\CartValuesTransformer;
 use AlistairShaw\Vendirun\App\Entities\Customer\Customer;
 use AlistairShaw\Vendirun\App\Entities\Order\OrderItem\OrderItem;
 use AlistairShaw\Vendirun\App\Entities\Order\Payment\Payment;
@@ -12,12 +13,13 @@ use AlistairShaw\Vendirun\App\ValueObjects\Name;
 class OrderFactory {
 
     /**
-     * @param Cart     $cart
+     * @param Cart $cart
      * @param Customer $customer
-     * @param array    $params
+     * @param CartValuesTransformer $cartValuesTransformer
+     * @param array $params
      * @return Order
      */
-    public function fromCart(Cart $cart, Customer $customer, $params)
+    public function fromCart(Cart $cart, Customer $customer, CartValuesTransformer $cartValuesTransformer, $params)
     {
         if (isset($params['shippingaddressId']))
         {
@@ -70,13 +72,12 @@ class OrderFactory {
             /* @var $item CartItem */
             $sku = $item->getSku();
 
-            for ($i = 1; $i <= $item->getQuantity(); $i++)
-            {
-                $items[] = new OrderItem(NULL, $item->getVariationId(), $item->getTaxRate(), $item->getSingleItemPrice($i), $item->getProductName(), $sku, 0, 0);
-            }
+            $items[] = new OrderItem(NULL, $item->getVariationId(), $item->getTaxRate(), $item->getPrice(), $item->getQuantity(), $item->getProductName(), $sku, 0, 0);
         }
 
-        if ($cart->shipping() > 0) $items[] = new OrderItem(NULL, NULL, $cart->getDefaultTaxRate(), $cart->shippingBeforeTax(), $cart->getShippingType(), 'SHIPPING', 1, 0);
+        // add order item for shipping
+        $cartValues = $cart->getValues($cartValuesTransformer);
+        if ($cartValues['shipping'] > 0) $items[] = new OrderItem(NULL, NULL, $cart->getDefaultTaxRate(), $cartValues['shipping'] - $cartValues['shippingTax'], 1, $cart->getShippingType(), 'SHIPPING', 1, 0);
 
         $order = new Order($customer, $billingAddress, $shippingAddress, $items, $cart->getShippingType());
 
@@ -117,12 +118,12 @@ class OrderFactory {
         $customer->setPrimaryEmail($order->customer_id ? $order->customer->primary_email : $order->guest_email);
         $customer->setCompanyName($order->customer_id ? $order->customer->organisation_name : $order->guest_company_name);
         $customer->setTaxNumber($order->customer_id ? $order->customer->tax_number : $order->guest_tax_number);
-        
+
         // order items
         $items = [];
         foreach ($order->items as $item)
         {
-            $items[] = new OrderItem($item->id, $item->product_variation_id, $item->tax_rate, $item->price, $item->product_name, $item->product_sku, $item->is_shipping, $item->discount_amount);
+            $items[] = new OrderItem($item->id, $item->product_variation_id, $item->tax_rate, $item->price, $item->quantity, $item->product_name, $item->product_sku, $item->is_shipping, $item->discount_amount);
         }
 
         $vrOrder = new Order($customer, $billingAddress, $shippingAddress, $items, null, $order->id, $order->created);

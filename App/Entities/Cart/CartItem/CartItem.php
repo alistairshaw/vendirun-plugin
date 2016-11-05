@@ -1,8 +1,10 @@
 <?php namespace AlistairShaw\Vendirun\App\Entities\Cart\CartItem;
 
+use AlistairShaw\Vendirun\App\Entities\Cart\CartItem\Transformers\CartItemValuesTransformer;
 use AlistairShaw\Vendirun\App\Entities\Cart\Helpers\ShippingCalculator;
 use AlistairShaw\Vendirun\App\Entities\Cart\Helpers\TaxCalculator;
 use AlistairShaw\Vendirun\App\Entities\Product\Product;
+use AlistairShaw\Vendirun\App\Entities\Product\ProductVariation\ProductVariation;
 
 class CartItem {
 
@@ -39,16 +41,6 @@ class CartItem {
     /**
      * @var int
      */
-    private $shippingTaxRate;
-
-    /**
-     * @var bool
-     */
-    private $priceIncludesTax;
-
-    /**
-     * @var int
-     */
     private $countryId;
 
     /**
@@ -68,12 +60,19 @@ class CartItem {
         $this->basePrice = $params['basePrice'];
 
         if (isset($params['shippingPrice'])) $this->shippingPrice = $params['shippingPrice'];
-        if (isset($params['shippingTaxRate'])) $this->shippingTaxRate = $params['shippingTaxRate'];
         if (isset($params['countryId'])) $this->countryId = $params['countryId'];
         if (isset($params['shippingType'])) $this->shippingType = $params['shippingType'];
-        $this->priceIncludesTax = (isset($params['priceIncludesTax'])) ? $params['priceIncludesTax'] : true;
 
         $this->updateShippingAndTaxes();
+    }
+
+    /**
+     * @param CartItemValuesTransformer $transformer
+     * @return array
+     */
+    public function getValues(CartItemValuesTransformer $transformer)
+    {
+        return $transformer->getValues($this->quantity, $this->taxRate, $this->basePrice, $this->shippingPrice);
     }
 
     /**
@@ -92,6 +91,25 @@ class CartItem {
     {
         $this->shippingType = $shippingType ? $shippingType : null;
         $this->updateShippingAndTaxes();
+    }
+
+    /**
+     * @param string $shippingType
+     * @return $this
+     */
+    public function freeShipping($shippingType = '')
+    {
+        $this->shippingPrice = 0;
+        $this->shippingType = $shippingType;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPrice()
+    {
+        return $this->basePrice;
     }
 
     /**
@@ -169,135 +187,11 @@ class CartItem {
     }
 
     /**
-     * Note: if there is more than one item, we need to split the amounts carefully
-     *    so we don't lose any pennies here and there
-     * @param int $count
-     * @return int
-     */
-    public function getSingleItemPrice($count = 1)
-    {
-        if (!$this->priceIncludesTax) return $this->basePrice;
-
-        $totalWithoutTax = $this->totalBeforeTax();
-        $singleItemPrice = (int)($totalWithoutTax / $this->quantity);
-        if ($count == $this->quantity) $singleItemPrice += $totalWithoutTax % $this->quantity;
-
-        return $singleItemPrice;
-    }
-
-    /**
-     * including price, tax and shipping
-     * @return int
-     */
-    public function total()
-    {
-        $total = $this->totalBeforeTax() + $this->taxWithoutShipping() + $this->shipping();
-        return $total;
-    }
-
-    /**
-     * including price and tax
-     * @return int
-     */
-    public function totalWithoutShipping()
-    {
-        $total = $this->quantity * $this->basePrice;
-        return $this->priceIncludesTax ? $total :  $total + $this->taxWithoutShipping();
-    }
-
-    /**
-     * price before tax and without shipping
-     * @return int
-     */
-    public function totalBeforeTax()
-    {
-        $total = $this->basePrice * $this->quantity;
-        return $this->priceIncludesTax ? $total - $this->taxWithoutShipping() : $total;
-    }
-
-    /**
-     * just price without shipping or tax
-     * @return int
-     */
-    public function displayTotal()
-    {
-        return $this->quantity * $this->basePrice;
-    }
-
-    /**
-     * total shipping including tax
-     * @return int
-     */
-    public function shipping()
-    {
-        if ($this->shippingPrice === null) return null;
-        return $this->shippingBeforeTax() + $this->shippingTax();
-    }
-
-    /**
-     * @return int
-     */
-    public function rawShipping()
-    {
-        return $this->shippingPrice;
-    }
-
-    /**
-     * total shipping before tax
-     * @return int
-     */
-    public function shippingBeforeTax()
-    {
-        if ($this->shippingPrice === null) return null;
-        return $this->priceIncludesTax ? ($this->shippingPrice * $this->quantity) - $this->shippingTax() : $this->shippingPrice * $this->quantity;
-    }
-
-    /**
-     * @return int
-     */
-    public function shippingTax()
-    {
-        if ($this->shippingPrice === null) return null;
-        return $this->priceIncludesTax ? TaxCalculator::taxFromTotal($this->shippingPrice, $this->shippingTaxRate, $this->quantity) : (int)($this->shippingPrice / 100 * $this->shippingTaxRate) * $this->quantity;
-    }
-
-    /**
-     * shipping display value
-     * @return int
-     */
-    public function displayShipping()
-    {
-        if ($this->shippingPrice === null) return null;
-        return $this->shippingPrice * $this->quantity;
-    }
-
-    /**
-     * total amount of tax including shipping tax
-     * @return int
-     */
-    public function tax()
-    {
-        $tax = $this->priceIncludesTax ? TaxCalculator::taxFromTotal($this->basePrice, $this->taxRate, $this->quantity) : ($this->basePrice * $this->quantity / 100 * $this->taxRate);
-
-        return $tax + $this->shippingTax();
-    }
-
-    /**
-     * total amount of tax excluding shipping tax
-     * @return int
-     */
-    public function taxWithoutShipping()
-    {
-        return $this->tax() - $this->shippingTax();
-    }
-
-    /**
      * @return string
      */
     public function getSku()
     {
-        $variations = $this->product->getVariations();
-        return $variations[0]->getSku();
+        return $this->getThisVariation()->getSku();
     }
 
     /**
@@ -305,8 +199,6 @@ class CartItem {
      */
     public function getVariationId()
     {
-        /*$variations = $this->product->getVariations();
-        return $variations[0]->getId();*/
         return $this->productVariationId;
     }
 
@@ -315,8 +207,7 @@ class CartItem {
      */
     public function getProductName()
     {
-        $variations = $this->product->getVariations();
-        return $this->product->getProductName() . ' ' . $variations[0]->getName();
+        return $this->product->getProductName() . ' ' . $this->getThisVariation()->getName();
     }
 
     /**
@@ -326,5 +217,14 @@ class CartItem {
     public function setTaxPrice($countryId, $default = 0)
     {
         $this->taxRate = TaxCalculator::calculateProductTaxRate($this->product->getTax(), $countryId, $default);
+    }
+
+    /**
+     * @return ProductVariation
+     */
+    private function getThisVariation()
+    {
+        $variations = $this->product->getVariations();
+        return $variations[0];
     }
 }

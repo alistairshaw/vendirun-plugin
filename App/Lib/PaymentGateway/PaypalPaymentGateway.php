@@ -1,6 +1,7 @@
 <?php namespace AlistairShaw\Vendirun\App\Lib\PaymentGateway;
 
 use AlistairShaw\Vendirun\App\Entities\Order\Order;
+use AlistairShaw\Vendirun\App\Entities\Order\OrderItem\OrderItem;
 use AlistairShaw\Vendirun\App\Entities\Order\OrderRepository;
 use AlistairShaw\Vendirun\App\Lib\ClientHelper;
 use AlistairShaw\Vendirun\App\Entities\Order\Payment\Payment as VendirunPayment;
@@ -17,6 +18,7 @@ use PayPal\Api\RedirectUrls;
 use PayPal\Api\ShippingAddress;
 use PayPal\Api\Transaction;
 use PayPal\Auth\OAuthTokenCredential;
+use PayPal\Exception\PayPalConnectionException;
 use PayPal\Rest\ApiContext;
 
 class PaypalPaymentGateway extends AbstractPaymentGateway implements PaymentGateway {
@@ -62,10 +64,23 @@ class PaypalPaymentGateway extends AbstractPaymentGateway implements PaymentGate
             ->setRedirectUrls($redirectUrls)
             ->setTransactions(array($transaction));
 
-        $payment->create($this->apiContext);
-
-        $link = $payment->getApprovalLink();
-        return $link;
+        try
+        {
+            $payment->create($this->apiContext);
+            return $payment->getApprovalLink();
+        }
+        catch (PayPalConnectionException $e)
+        {
+            $response = json_decode($e->getData());
+            switch ($response->name)
+            {
+                case 'VALIDATION_ERROR':
+                    throw new Exception('Oops! ' . trans('vendirun::checkout.invalidPostcode'));
+                    break;
+                default:
+                    throw new Exception(trans('vendirun::checkout.paypalUnavailable'));
+            }
+        }
     }
 
     /**
@@ -85,11 +100,10 @@ class PaypalPaymentGateway extends AbstractPaymentGateway implements PaymentGate
         {
             $execution->addTransaction($transaction);
             $payment->execute($execution, $this->apiContext);
-            $payment = Payment::get($params['paymentId'], $this->apiContext);
         }
-        catch (\Exception $e)
+        catch (PayPalConnectionException $e)
         {
-            dd($e);
+            throw new Exception(trans('vendirun::checkout.paypalUnavailable'));
         }
 
         $vendirunPayment = new VendirunPayment($this->order->getTotalPrice(), date("Y-m-d"), 'paypal', json_encode($payment));
@@ -109,22 +123,22 @@ class PaypalPaymentGateway extends AbstractPaymentGateway implements PaymentGate
         $paypalItems = [];
         $subTotal = 0;
 
-        foreach ($this->order->getUniqueItems() as $item)
+        foreach ($this->order->getItems() as $item)
         {
-            $subTotal += $item->price;
+            /* @var $item OrderItem */
+            // don't add shipping row
+            if ($item->isShipping()) continue;
 
-            // This doesn't work when price includes tax, because you can't split the price properly
-            if (!$priceIncludesTax)
-            {
-                $newItem = new Item();
-                $newItem->setName($item->productName)
-                    ->setCurrency($clientInfo->currency->currency_iso)
-                    ->setQuantity($item->quantity)
-                    ->setSku($item->sku)
-                    ->setPrice($item->unitPrice / 100);
+            $subTotal += $item->getPrice() * $item->getQuantity();
 
-                $paypalItems[] = $newItem;
-            }
+            $newItem = new Item();
+            $newItem->setName($item->getProductName())
+                ->setCurrency($clientInfo->currency->currency_iso)
+                ->setQuantity($item->getQuantity())
+                ->setSku($item->getProductSku())
+                ->setPrice($item->getPrice() / 100);
+
+            $paypalItems[] = $newItem;
         }
 
         $shippingBeforeTax = $this->order->getShipping() / 100;

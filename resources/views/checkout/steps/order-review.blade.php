@@ -2,21 +2,21 @@
     <table class="table">
         <tr>
             <td>{{ trans('vendirun::checkout.subTotal') }}</td>
-            <td class="js-total-before-tax">{{ $displayTotals->totalBeforeTax }}</td>
+            <td class="js-total-before-tax">{{ $displayTotals['displayTotal'] }}</td>
         </tr>
         <tr>
             <td>{{ trans('vendirun::checkout.shipping') }}</td>
-            <td class="js-shipping-before-tax">{{ $displayTotals->shippingBeforeTax }}</td>
+            <td class="js-shipping-before-tax">{{ $displayTotals['displayShipping'] }}</td>
         </tr>
-        @if ($cart->tax() > 0)
+        @if ($displayTotals['subTotal'] != $displayTotals['displayTotal'])
             <tr>
                 <td>{{ trans('vendirun::checkout.tax') }}</td>
-                <td class="js-tax">{{ $displayTotals->tax }}</td>
+                <td class="js-tax">{{ $displayTotals['tax'] }}</td>
             </tr>
         @endif
         <tr>
             <th>{{ trans('vendirun::checkout.total') }}</th>
-            <th class="js-total">{{ $displayTotals->total }}</th>
+            <th class="js-total">{{ $displayTotals['total'] }}</th>
         </tr>
     </table>
 </div>

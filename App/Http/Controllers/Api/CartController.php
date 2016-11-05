@@ -3,6 +3,7 @@
 use AlistairShaw\Vendirun\App\Entities\Cart\CartFactory;
 use AlistairShaw\Vendirun\App\Entities\Cart\CartItem\CartItemFactory;
 use AlistairShaw\Vendirun\App\Entities\Cart\CartRepository;
+use AlistairShaw\Vendirun\App\Entities\Cart\Transformers\CartValuesTransformer;
 use AlistairShaw\Vendirun\App\Entities\Product\ProductRepository;
 use AlistairShaw\Vendirun\App\Exceptions\InvalidProductVariationIdException;
 use AlistairShaw\Vendirun\App\Lib\CurrencyHelper;
@@ -31,11 +32,12 @@ class CartController extends ApiBaseController {
     }
 
     /**
-     * @param CartRepository    $cartRepository
+     * @param CartRepository $cartRepository
      * @param ProductRepository $productRepository
+     * @param CartValuesTransformer $cartValuesTransformer
      * @return array
      */
-    public function add(CartRepository $cartRepository, ProductRepository $productRepository)
+    public function add(CartRepository $cartRepository, ProductRepository $productRepository, CartValuesTransformer $cartValuesTransformer)
     {
         $productVariationId = Request::get('productVariationId', 0);
         $quantity = Request::get('quantity', 1);
@@ -52,7 +54,7 @@ class CartController extends ApiBaseController {
             $cart->add($cartItem);
             $cart = $cartRepository->save($cart);
 
-            $final = $cart->toArray();
+            $final = $cart->toArray($cartValuesTransformer);
             $final['itemAdded'] = $product->getDisplayArray();
             $final['itemAdded']['quantity'] = $quantity;
 
@@ -66,9 +68,10 @@ class CartController extends ApiBaseController {
 
     /**
      * @param CartRepository $cartRepository
+     * @param CartValuesTransformer $cartValuesTransformer
      * @return array
      */
-    public function remove(CartRepository $cartRepository)
+    public function remove(CartRepository $cartRepository, CartValuesTransformer $cartValuesTransformer)
     {
         $productVariationId = Request::get('productVariationId', 0);
         $quantity = Request::get('quantity', 1);
@@ -79,7 +82,9 @@ class CartController extends ApiBaseController {
             $cart->remove($productVariationId, $quantity);
             $cart = $cartRepository->save($cart);
 
-            return $this->respond(true, $cart->toArray());
+            $final = $cart->toArray($cartValuesTransformer);
+
+            return $this->respond(true, $final);
         }
         catch (\Exception $e)
         {

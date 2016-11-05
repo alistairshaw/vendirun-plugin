@@ -21,7 +21,7 @@ class OrderFactory {
      */
     public function fromCart(Cart $cart, Customer $customer, CartValuesTransformer $cartValuesTransformer, $params)
     {
-        if (isset($params['shippingaddressId']))
+        if (isset($params['shippingaddressId']) && $params['shippingaddressId'] > 0)
         {
             $shippingAddress = $customer->getAddressFromAddressId($params['shippingaddressId']);
         }
@@ -39,7 +39,7 @@ class OrderFactory {
             $shippingAddress = new Address($data);
         }
 
-        if (isset($params['billingAddressSameAsShipping']))
+        if (isset($params['billingAddressSameAsShipping']) && $params['billingAddressSameAsShipping'])
         {
             $billingAddress = $shippingAddress;
         }

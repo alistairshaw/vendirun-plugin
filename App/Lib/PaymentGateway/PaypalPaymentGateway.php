@@ -75,18 +75,11 @@ class PaypalPaymentGateway extends AbstractPaymentGateway implements PaymentGate
             switch ($response->name)
             {
                 case 'VALIDATION_ERROR':
-                    dd($e);
                     throw new Exception('Oops! ' . trans('vendirun::checkout.invalidPostcode'));
                     break;
                 default:
-                    dd($e);
                     throw new Exception(trans('vendirun::checkout.paypalUnavailable'));
             }
-        }
-        catch (Exception $e)
-        {
-            dd($e);
-            throw new Exception($e->getMessage());
         }
     }
 
@@ -103,9 +96,16 @@ class PaypalPaymentGateway extends AbstractPaymentGateway implements PaymentGate
 
         $transaction = $this->buildTransaction();
 
-        $execution->addTransaction($transaction);
-        $payment->execute($execution, $this->apiContext);
-        $payment = Payment::get($params['paymentId'], $this->apiContext);
+        try
+        {
+            $execution->addTransaction($transaction);
+            $payment->execute($execution, $this->apiContext);
+        }
+        catch (PayPalConnectionException $e)
+        {
+            dd($e);
+            throw new Exception(trans('vendirun::checkout.paypalUnavailable'));
+        }
 
         $vendirunPayment = new VendirunPayment($this->order->getTotalPrice(), date("Y-m-d"), 'paypal', json_encode($payment));
         $this->order->addPayment($vendirunPayment);

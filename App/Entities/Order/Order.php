@@ -159,56 +159,6 @@ class Order {
     }
 
     /**
-     * Unique items WITHOUT shipping
-     * @param bool $ignorePriceDifferences
-     * @return object
-     */
-    public function getUniqueItems($ignorePriceDifferences = false)
-    {
-        $final = [];
-        foreach ($this->getItems() as $item)
-        {
-            /* @var $item OrderItem */
-
-            if ($item->isShipping()) continue;
-
-            // find match in final
-            $matched = false;
-            foreach ($final as $index => $finalItem)
-            {
-                if ($item->getProductName() == $finalItem->productName
-                    && $item->getProductSku() == $finalItem->sku
-                    && $item->getProductVariationId() == $finalItem->productVariationId
-                    && $item->getTaxRate() == $finalItem->taxRate
-                    && ($item->getPrice() == $finalItem->unitPrice || $ignorePriceDifferences)
-                    )
-                {
-                    $matched = true;
-                    $final[$index]->price += $item->getPrice();
-                    $final[$index]->quantity++;
-                }
-            }
-
-            // if no match in final, add new row to final
-            if (!$matched)
-            {
-                $final[] = (object)[
-                    'price' => (int)$item->getPrice(),
-                    'unitPrice' => (int)$item->getPrice(),
-                    'productName' => $item->getProductName(),
-                    'sku' => $item->getProductSku(),
-                    'productVariationId' => $item->getProductVariationId(),
-                    'taxRate' => $item->getTaxRate(),
-                    'quantity' => 1,
-                    'priceWithTax' => TaxCalculator::totalPlusTax($item->getPrice(), $item->getTaxRate())
-                ];
-            }
-        }
-
-        return (object)$final;
-    }
-
-    /**
      * Totals for shipping
      * @return int
      */
@@ -250,9 +200,10 @@ class Order {
     public function getTax()
     {
         $tax = 0;
-        foreach ($this->getUniqueItems() as $item)
+        foreach ($this->getItems() as $item)
         {
-            $tax += TaxCalculator::totalPlusTax($item->price, $item->taxRate);
+            /* @var $item OrderItem */
+            $tax += TaxCalculator::totalPlusTax($item->getPrice(), $item->getTaxRate());
         }
 
         return $tax + $this->getShippingTax();
@@ -273,9 +224,9 @@ class Order {
     {
         if (!$this->items) return 0;
         $total = 0;
-        foreach ($this->concatItems() as $item)
+        foreach ($this->getItems() as $item)
         {
-            $total += $item['price'] + TaxCalculator::totalPlusTax($item['price'], $item['taxRate']);
+            $total += $item->getPrice() + TaxCalculator::totalPlusTax($item->getPrice(), $item->getTaxRate());
         }
 
         return $total;
@@ -288,9 +239,9 @@ class Order {
     {
         if (!$this->items) return 0;
         $total = 0;
-        foreach ($this->concatItems() as $item)
+        foreach ($this->items as $item)
         {
-            $total += $item['price'];
+            $total += $item->getPrice();
         }
 
         return $total;
@@ -336,36 +287,6 @@ class Order {
             $totalPaid += $payment->getAmount();
         }
         return $totalPaid;
-    }
-
-    /**
-     * @return array
-     */
-    public function concatItems()
-    {
-        $final = [];
-        foreach ($this->getItems() as $item)
-        {
-            /* @var $item OrderItem */
-            if (isset($final[$item->getProductVariationId()]))
-            {
-                $final[$item->getProductVariationId()]['price'] += $item->getPrice();
-                $final[$item->getProductVariationId()]['quantity']++;
-            }
-            else
-            {
-                $final[$item->getProductVariationId()] = [
-                    'productSku' => $item->getProductSku(),
-                    'productName' => $item->getProductName(),
-                    'price' => $item->getPrice(),
-                    'quantity' => 1,
-                    'discount' => 0,
-                    'taxRate' => $item->getTaxRate()
-                ];
-            }
-        }
-
-        return $final;
     }
 
     /**

@@ -94,6 +94,14 @@ class CartItem {
     }
 
     /**
+     * @return int
+     */
+    public function getPrice()
+    {
+        return $this->basePrice;
+    }
+
+    /**
      *
      */
     private function updateShippingAndTaxes()

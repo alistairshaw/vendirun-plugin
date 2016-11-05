@@ -83,13 +83,14 @@ class CheckoutController extends VendirunBaseController {
     }
 
     /**
-     * @param OrderRequest       $request
-     * @param CartRepository     $cartRepository
-     * @param OrderRepository    $orderRepository
+     * @param OrderRequest $request
+     * @param CartRepository $cartRepository
+     * @param OrderRepository $orderRepository
      * @param CustomerRepository $customerRepository
+     * @param CartValuesTransformer $cartValuesTransformer
      * @return mixed
      */
-    public function process(OrderRequest $request, CartRepository $cartRepository, OrderRepository $orderRepository, CustomerRepository $customerRepository)
+    public function process(OrderRequest $request, CartRepository $cartRepository, OrderRepository $orderRepository, CustomerRepository $customerRepository, CartValuesTransformer $cartValuesTransformer)
     {
         if (Request::has('recalculateShipping')) return $this->recalculateShipping($customerRepository);
         if (Request::has('orderId')) return $this->processExistingOrder($orderRepository, Request::get('orderId'));
@@ -120,10 +121,11 @@ class CheckoutController extends VendirunBaseController {
 
         // convert cart to order
         $orderFactory = new OrderFactory();
-        $order = $orderFactory->fromCart($cart, $customer, Request::all());
+        $order = $orderFactory->fromCart($cart, $customer, $cartValuesTransformer, Request::all());
 
         // persist the order
         if (!$order = $orderRepository->save($order)) return Redirect::back()->with('paymentError', 'Payment Has NOT Been Taken - unable to create order, please try again');
+
         Session::set('orderOneTimeToken', $order->getOneTimeToken());
 
         return $this->takePayment($orderRepository, $order);

@@ -26,8 +26,8 @@
     </div>
     <div class="section2">
         <ul class="product-list">
-            @foreach ($order->getUniqueItems(true) as $orderItem)
-                <li><span class="sku">{{ $orderItem->sku }}</span> <span class="quantity">{{ $orderItem->quantity }}</span> <span class="product">{{ $orderItem->productName }}</span></li>
+            @foreach ($order->getItems() as $orderItem)
+                <li><span class="sku">{{ $orderItem->getProductSku() }}</span> <span class="quantity">{{ $orderItem->getQuantity() }}</span> <span class="product">{{ $orderItem->getProductName() }}</span></li>
             @endforeach
         </ul>
     </div>

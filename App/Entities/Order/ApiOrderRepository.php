@@ -64,13 +64,13 @@ class ApiOrderRepository implements OrderRepository {
         }
         catch (FailResponseException $e)
         {
-            return false;
+            return null;
         }
     }
 
     /**
      * @param Order $order
-     * @return bool
+     * @return Order
      */
     public function save(Order $order)
     {
@@ -84,6 +84,7 @@ class ApiOrderRepository implements OrderRepository {
             $products[] =  $item->getProductVariationId();
             $items[] = [
                 'product_variation_id' => $item->getProductVariationId(),
+                'quantity' => $item->getQuantity(),
                 'product_name' => $item->getProductName(),
                 'product_sku' => $item->getProductSku(),
                 'price' => $item->getPrice(),

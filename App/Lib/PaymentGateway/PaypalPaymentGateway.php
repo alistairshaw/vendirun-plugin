@@ -1,6 +1,7 @@
 <?php namespace AlistairShaw\Vendirun\App\Lib\PaymentGateway;
 
 use AlistairShaw\Vendirun\App\Entities\Order\Order;
+use AlistairShaw\Vendirun\App\Entities\Order\OrderItem\OrderItem;
 use AlistairShaw\Vendirun\App\Entities\Order\OrderRepository;
 use AlistairShaw\Vendirun\App\Lib\ClientHelper;
 use AlistairShaw\Vendirun\App\Entities\Order\Payment\Payment as VendirunPayment;
@@ -109,22 +110,22 @@ class PaypalPaymentGateway extends AbstractPaymentGateway implements PaymentGate
         $paypalItems = [];
         $subTotal = 0;
 
-        foreach ($this->order->getUniqueItems() as $item)
+        foreach ($this->order->getItems() as $item)
         {
-            $subTotal += $item->price;
+            /* @var $item OrderItem */
+            $subTotal += $item->getPrice();
 
-            // This doesn't work when price includes tax, because you can't split the price properly
-            if (!$priceIncludesTax)
-            {
-                $newItem = new Item();
-                $newItem->setName($item->productName)
-                    ->setCurrency($clientInfo->currency->currency_iso)
-                    ->setQuantity($item->quantity)
-                    ->setSku($item->sku)
-                    ->setPrice($item->unitPrice / 100);
+            // don't add shipping row
+            if ($item->isShipping()) continue;
 
-                $paypalItems[] = $newItem;
-            }
+            $newItem = new Item();
+            $newItem->setName($item->getProductName())
+                ->setCurrency($clientInfo->currency->currency_iso)
+                ->setQuantity($item->getQuantity())
+                ->setSku($item->getProductSku())
+                ->setPrice($item->getPrice() / 100);
+
+            $paypalItems[] = $newItem;
         }
 
         $shippingBeforeTax = $this->order->getShipping() / 100;

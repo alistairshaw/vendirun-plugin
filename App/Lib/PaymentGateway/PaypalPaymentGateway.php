@@ -75,9 +75,11 @@ class PaypalPaymentGateway extends AbstractPaymentGateway implements PaymentGate
             switch ($response->name)
             {
                 case 'VALIDATION_ERROR':
+                    dd($e);
                     throw new Exception('Oops! ' . trans('vendirun::checkout.invalidPostcode'));
                     break;
                 default:
+                    dd($e);
                     throw new Exception(trans('vendirun::checkout.paypalUnavailable'));
             }
         }
@@ -128,7 +130,7 @@ class PaypalPaymentGateway extends AbstractPaymentGateway implements PaymentGate
             // don't add shipping row
             if ($item->isShipping()) continue;
 
-            $subTotal += $item->getPrice();
+            $subTotal += $item->getPrice() * $item->getQuantity();
 
             $newItem = new Item();
             $newItem->setName($item->getProductName())

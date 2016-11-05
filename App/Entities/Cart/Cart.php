@@ -2,7 +2,6 @@
 
 use AlistairShaw\Vendirun\App\Entities\Cart\CartItem\CartItem;
 use AlistairShaw\Vendirun\App\Entities\Cart\Helpers\ShippingCalculator;
-use AlistairShaw\Vendirun\App\Entities\Cart\Helpers\TaxCalculator;
 use AlistairShaw\Vendirun\App\Entities\Cart\Transformers\CartValuesTransformer;
 use AlistairShaw\Vendirun\App\Entities\Customer\Helpers\CustomerHelper;
 use AlistairShaw\Vendirun\App\Lib\CurrencyHelper;
@@ -65,7 +64,6 @@ class Cart {
      */
     public function __construct($params)
     {
-        //$this->ids = $params['ids'];
         $this->priceIncludesTax = $params['priceIncludesTax'];
         $this->chargeTaxOnShipping = $params['chargeTaxOnShipping'];
         $this->defaultTaxRate = $params['defaultTaxRate'];
@@ -341,6 +339,36 @@ class Cart {
         }
 
         $this->ids = $newIds;
+    }
+
+    /**
+     * @param CartValuesTransformer $transformer
+     * @param $freeShippingMinimumOrder
+     * @param $freeShippingCountries
+     * @return $this
+     */
+    public function updateForFreeShipping(CartValuesTransformer $transformer, $freeShippingMinimumOrder, $freeShippingCountries)
+    {
+        $values = $this->getValues($transformer);
+
+        if ($values['displayTotal'] >= $freeShippingMinimumOrder)
+        {
+            $shippingType = trans('vendirun::checkout.freeShipping');
+
+            $this->freeShipping = true;
+            $this->orderShippingPrice = 0;
+            $this->shippingType = $shippingType;
+            $newItems = [];
+            foreach ($this->getItems() as $item)
+            {
+                /* @var $item CartItem */
+                $item = $item->freeShipping($shippingType);
+                $newItems[] = $item;
+            }
+            $this->items = $newItems;
+        }
+
+        return $this;
     }
 
     /**

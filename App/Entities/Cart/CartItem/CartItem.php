@@ -94,6 +94,17 @@ class CartItem {
     }
 
     /**
+     * @param string $shippingType
+     * @return $this
+     */
+    public function freeShipping($shippingType = '')
+    {
+        $this->shippingPrice = 0;
+        $this->shippingType = $shippingType;
+        return $this;
+    }
+
+    /**
      * @return int
      */
     public function getPrice()

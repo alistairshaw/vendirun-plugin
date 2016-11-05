@@ -1,9 +1,22 @@
 <?php namespace AlistairShaw\Vendirun\App\Providers;
 
+use AlistairShaw\Vendirun\App\Entities\Cart\ApiCartRepository;
+use AlistairShaw\Vendirun\App\Entities\Cart\CartRepository;
+use AlistairShaw\Vendirun\App\Entities\Cart\Helpers\TaxCalculator;
 use AlistairShaw\Vendirun\App\Entities\Cart\Transformers\CartValuesTransformer;
 use AlistairShaw\Vendirun\App\Entities\Cart\Transformers\CartValuesVATExcludedTransformer;
 use AlistairShaw\Vendirun\App\Entities\Cart\Transformers\CartValuesVATIncludedTransformer;
+use AlistairShaw\Vendirun\App\Entities\Customer\ApiCustomerRepository;
+use AlistairShaw\Vendirun\App\Entities\Customer\CustomerRepository;
+use AlistairShaw\Vendirun\App\Entities\Customer\Helpers\CustomerHelper;
+use AlistairShaw\Vendirun\App\Entities\Order\ApiOrderRepository;
+use AlistairShaw\Vendirun\App\Entities\Order\OrderRepository;
+use AlistairShaw\Vendirun\App\Entities\Product\ApiProductRepository;
+use AlistairShaw\Vendirun\App\Entities\Product\ProductCategory\ApiProductCategoryRepository;
+use AlistairShaw\Vendirun\App\Entities\Product\ProductCategory\ProductCategoryRepository;
+use AlistairShaw\Vendirun\App\Entities\Product\ProductRepository;
 use AlistairShaw\Vendirun\App\Lib\ClientHelper;
+use AlistairShaw\Vendirun\App\Lib\CountryHelper;
 use AlistairShaw\Vendirun\App\Lib\CurrencyHelper;
 use AlistairShaw\Vendirun\App\Lib\LocaleHelper;
 use AlistairShaw\Vendirun\App\Lib\Social\SocialLinks;
@@ -62,6 +75,12 @@ class VendirunServiceProvider extends ServiceProvider {
         {
             $this->app->bind(CartValuesTransformer::class, CartValuesVATExcludedTransformer::class);
         }
+
+        $this->app->bind(CartRepository::class, function() {
+            $clientInfo = ClientHelper::getClientInfo();
+            $transformer = $clientInfo->business_settings->tax->price_includes_tax ? new CartValuesVATExcludedTransformer() : new CartValuesVATIncludedTransformer();
+            return new ApiCartRepository($transformer);
+        });
 	}
 
 	/**
@@ -95,20 +114,18 @@ class VendirunServiceProvider extends ServiceProvider {
 
         // dependency injection
         $this->app->bind(SocialLinks::class, SocialLinksStandard::class);
-        $this->app->bind('AlistairShaw\Vendirun\App\Lib\Social\SocialLinks', 'AlistairShaw\Vendirun\App\Lib\Social\SocialLinksStandard');
-        $this->app->bind('AlistairShaw\Vendirun\App\Entities\Cart\CartRepository', 'AlistairShaw\Vendirun\App\Entities\Cart\ApiCartRepository');
-        $this->app->bind('AlistairShaw\Vendirun\App\Entities\Order\OrderRepository', 'AlistairShaw\Vendirun\App\Entities\Order\ApiOrderRepository');
-        $this->app->bind('AlistairShaw\Vendirun\App\Entities\Customer\CustomerRepository', 'AlistairShaw\Vendirun\App\Entities\Customer\ApiCustomerRepository');
-        $this->app->bind('AlistairShaw\Vendirun\App\Entities\Product\ProductRepository', 'AlistairShaw\Vendirun\App\Entities\Product\ApiProductRepository');
-        $this->app->bind('AlistairShaw\Vendirun\App\Entities\Product\ProductCategory\ProductCategoryRepository', 'AlistairShaw\Vendirun\App\Entities\Product\ProductCategory\ApiProductCategoryRepository');
+        $this->app->bind(OrderRepository::class, ApiOrderRepository::class);
+        $this->app->bind(CustomerRepository::class, ApiCustomerRepository::class);
+        $this->app->bind(ProductRepository::class, ApiProductRepository::class);
+        $this->app->bind(ProductCategoryRepository::class, ApiProductCategoryRepository::class);
 
 		// aliases
 		$loader = AliasLoader::getInstance();
-		$loader->alias('LocaleHelper', 'AlistairShaw\Vendirun\App\Lib\LocaleHelper');
-		$loader->alias('CurrencyHelper', 'AlistairShaw\Vendirun\App\Lib\CurrencyHelper');
-		$loader->alias('CountryHelper', 'AlistairShaw\Vendirun\App\Lib\CountryHelper');
-		$loader->alias('ClientHelper', 'AlistairShaw\Vendirun\App\Lib\ClientHelper');
-		$loader->alias('TaxCalculator', 'AlistairShaw\Vendirun\App\Entities\Cart\Helpers\TaxCalculator');
-		$loader->alias('CustomerHelper', 'AlistairShaw\Vendirun\App\Entities\Customer\Helpers\CustomerHelper');
+		$loader->alias('LocaleHelper', LocaleHelper::class);
+		$loader->alias('CurrencyHelper', CurrencyHelper::class);
+		$loader->alias('CountryHelper', CountryHelper::class);
+		$loader->alias('ClientHelper', ClientHelper::class);
+		$loader->alias('TaxCalculator', TaxCalculator::class);
+		$loader->alias('CustomerHelper', CustomerHelper::class);
 	}
 }

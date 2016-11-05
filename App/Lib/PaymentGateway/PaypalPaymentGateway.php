@@ -103,7 +103,6 @@ class PaypalPaymentGateway extends AbstractPaymentGateway implements PaymentGate
         }
         catch (PayPalConnectionException $e)
         {
-            dd($e);
             throw new Exception(trans('vendirun::checkout.paypalUnavailable'));
         }
 

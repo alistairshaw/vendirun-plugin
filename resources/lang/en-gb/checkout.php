@@ -30,5 +30,6 @@ return [
     'paymentMethod' => 'Payment Method',
     'paymentDate' => 'Payment Date',
     'invalidPostcode' => 'Paypal will not accept your postcode as valid, please edit your address and try again, or pay by Credit Card',
-    'paypalUnavailable' => 'Paypal is not available at the moment, please pay by Credit Card or contact us for further assistance'
+    'paypalUnavailable' => 'Paypal is not available at the moment, please pay by Credit Card or contact us for further assistance',
+    'freeShipping' => 'Free Shipping'
 ];

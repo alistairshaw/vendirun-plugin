@@ -17,7 +17,7 @@
                 <td>{{ CurrencyHelper::formatWithCurrency($item->getDiscount(), false, '') }}</td>
                 <td>{{ CurrencyHelper::formatWithCurrency($item->getPrice(), false, '') }}</td>
                 <td>{{ $item->getTaxRate() }}%</td>
-                <td>{{ CurrencyHelper::formatWithCurrency($item->getPrice() + TaxCalculator::totalPlusTax($item->getPrice() - $item->getdiscount(), $item->getTaxRate()), false, '') }}</td>
+                <td>{{ CurrencyHelper::formatWithCurrency(($item->getPrice() * $item->getQuantity()) + TaxCalculator::totalPlusTax(($item->getPrice() * $item->getQuantity()) - $item->getdiscount(), $item->getTaxRate()), false, '') }}</td>
             </tr>
         @endforeach
         <tr>

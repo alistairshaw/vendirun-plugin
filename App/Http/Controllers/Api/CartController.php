@@ -15,15 +15,16 @@ class CartController extends ApiBaseController {
     /**
      * Returns cart adjusted based on country or shipping type
      * @param CartRepository $cartRepository
+     * @param CartValuesTransformer $cartValuesTransformer
      * @return array
      */
-    public function calculate(CartRepository $cartRepository)
+    public function calculate(CartRepository $cartRepository, CartValuesTransformer $cartValuesTransformer)
     {
         try
         {
             $cart = $cartRepository->find(Request::get('countryId', null), Request::get('shippingTypeId', ''));
 
-            return $this->respond(true, $cart->toArray());
+            return $this->respond(true, $cart->toArray($cartValuesTransformer));
         }
         catch (\Exception $e)
         {

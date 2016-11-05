@@ -39,12 +39,16 @@ var shippingCalculator = function(button) {
             };
             apiManager.makeCall('cart', 'calculate', params, function(response) {
                 _this.endProcess();
-                $('.js-display-total').html(response.data.totals.displayTotal);
-                $('.js-tax').html(response.data.totals.tax);
-                $('.js-display-shipping').html(response.data.totals.displayShipping);
-                $('.js-total').html(response.data.totals.total);
-                $('.js-total-before-tax').html(response.data.totals.totalBeforeTax);
-                $('.js-shipping-before-tax').html(response.data.totals.shippingBeforeTax);
+
+                var totals = response.data.displayTotals;
+                console.log(totals);
+
+                $('.js-display-total').html(totals.displayTotal);
+                $('.js-tax').html(totals.tax);
+                $('.js-display-shipping').html(totals.displayShipping);
+                $('.js-total').html(totals.total);
+                $('.js-total-before-tax').html(totals.totalBeforeTax);
+                $('.js-shipping-before-tax').html(totals.shippingBeforeTax);
 
                 var $one = $('.js-one-shipping-type');
                 var $multiple = $('.js-multiple-shipping-types');

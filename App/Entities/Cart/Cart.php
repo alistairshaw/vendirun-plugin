@@ -391,8 +391,10 @@ class Cart {
         {
             $totals = $this->getValues($cartValuesTransformer);
             $displayTotals = array_map(function($item) {
-                return CurrencyHelper::formatWithCurrency($item, false, '0.00');
+                return CurrencyHelper::formatWithCurrency($item, false, '');
             }, $totals);
+
+            if ($this->orderShippingPrice === null) $displayTotals['displayShipping'] = 'NOT AVAILABLE';
         }
 
         return [

@@ -372,9 +372,10 @@ class Cart {
     }
 
     /**
+     * @param CartValuesTransformer $cartValuesTransformer
      * @return array
      */
-    public function toArray()
+    public function toArray(CartValuesTransformer $cartValuesTransformer = null)
     {
         $items = [];
         foreach ($this->items as $cartItem)
@@ -383,12 +384,24 @@ class Cart {
             $items[] = $cartItem->display();
         }
 
+        $totals = [];
+        $displayTotals = [];
+        if ($cartValuesTransformer)
+        {
+            $totals = $this->getValues($cartValuesTransformer);
+            $displayTotals = array_map(function($item) {
+                return CurrencyHelper::formatWithCurrency($item, false, '0.00');
+            }, $totals);
+        }
+
         return [
             'shippingTypeId' => $this->getShippingType(),
             'countryId' => $this->getCountryId(),
             'availableShippingTypes' => $this->getAvailableShippingTypes(),
             'items' => $items,
-            'itemCount' => $this->totalProducts()
+            'itemCount' => $this->totalProducts(),
+            'totals' => $totals,
+            'displayTotals' => $displayTotals
         ];
     }
 

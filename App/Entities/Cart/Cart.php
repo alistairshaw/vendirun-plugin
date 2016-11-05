@@ -351,22 +351,23 @@ class Cart {
     {
         $values = $this->getValues($transformer);
 
-        if ($values['displayTotal'] >= $freeShippingMinimumOrder)
-        {
-            $shippingType = trans('vendirun::checkout.freeShipping');
+        if (!in_array($this->countryId, explode(",", $freeShippingCountries))) return $this;
 
-            $this->freeShipping = true;
-            $this->orderShippingPrice = 0;
-            $this->shippingType = $shippingType;
-            $newItems = [];
-            foreach ($this->getItems() as $item)
-            {
-                /* @var $item CartItem */
-                $item = $item->freeShipping($shippingType);
-                $newItems[] = $item;
-            }
-            $this->items = $newItems;
+        if ($values['displayTotal'] < $freeShippingMinimumOrder) return $this;
+
+        $shippingType = trans('vendirun::checkout.freeShipping');
+
+        $this->freeShipping = true;
+        $this->orderShippingPrice = 0;
+        $this->shippingType = $shippingType;
+        $newItems = [];
+        foreach ($this->getItems() as $item)
+        {
+            /* @var $item CartItem */
+            $item = $item->freeShipping($shippingType);
+            $newItems[] = $item;
         }
+        $this->items = $newItems;
 
         return $this;
     }

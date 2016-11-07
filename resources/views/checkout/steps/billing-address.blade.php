@@ -12,6 +12,6 @@
             @include('vendirun::customer.partials.address-select', ['selected' => $defaultAddress, 'prefix' => 'billing'])
         </div>
     @else
-        @include('vendirun::customer.partials.address-form', ['prefix' => 'billing'])
+        @include('vendirun::customer.partials.address-form', ['prefix' => 'billing', 'address' => ['countryId' => Request::get('countryId', 79)]])
     @endif
 </div>

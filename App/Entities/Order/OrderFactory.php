@@ -45,7 +45,7 @@ class OrderFactory {
         }
         else
         {
-            if (isset($params['billingaddressId']))
+            if (isset($params['billingaddressId']) && $params['billingaddressId'] > 0)
             {
                 $billingAddress = $customer->getAddressFromAddressId($params['billingaddressId']);
             }

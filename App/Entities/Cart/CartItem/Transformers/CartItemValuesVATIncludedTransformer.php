@@ -18,7 +18,7 @@ class CartItemValuesVATIncludedTransformer implements CartItemValuesTransformer 
 
         return [
             'total' => $subTotal,
-            'shipping' => $shippingPrice,
+            'shipping' => $shippingPrice * $quantity,
             'tax' => $tax,
         ];
     }

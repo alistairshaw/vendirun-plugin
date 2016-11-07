@@ -29,7 +29,6 @@ class CartValuesVATIncludedTransformer implements CartValuesTransformer {
             $tax += $cartItemTotals['tax'];
         }
 
-
         // calculate tax on shipping
         $shippingTax = ($shipping === null) ? null : TaxCalculator::taxFromTotal($shipping, $defaultTaxRate, 1);
 

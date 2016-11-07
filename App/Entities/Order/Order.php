@@ -203,7 +203,7 @@ class Order {
         foreach ($this->getItems() as $item)
         {
             /* @var $item OrderItem */
-            $tax += TaxCalculator::totalPlusTax($item->getPrice() * $item->getQuantity(), $item->getTaxRate());
+            $tax += TaxCalculator::totalPlusTax($item->getPrice(), $item->getTaxRate());
         }
 
         return $tax;
@@ -226,7 +226,7 @@ class Order {
         $total = 0;
         foreach ($this->getItems() as $item)
         {
-            $total += ($item->getPrice() * $item->getQuantity()) + TaxCalculator::totalPlusTax($item->getPrice() * $item->getQuantity(), $item->getTaxRate());
+            $total += $item->getPrice() + TaxCalculator::totalPlusTax($item->getPrice(), $item->getTaxRate());
         }
 
         return $total;
@@ -241,7 +241,7 @@ class Order {
         $total = 0;
         foreach ($this->items as $item)
         {
-            $total += $item->getPrice() * $item->getQuantity();
+            $total += $item->getPrice();
         }
 
         return $total;

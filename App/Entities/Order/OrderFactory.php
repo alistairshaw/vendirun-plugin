@@ -76,7 +76,7 @@ class OrderFactory {
 
             $cartItemValues = $item->getValues($cartItemValuesTransformer);
 
-            $items[] = new OrderItem(NULL, $item->getVariationId(), $item->getTaxRate(), (int)($cartItemValues['totalBeforeTax'] / $item->getQuantity()), $item->getQuantity(), $item->getProductName(), $sku, 0, 0);
+            $items[] = new OrderItem(NULL, $item->getVariationId(), $item->getTaxRate(), $cartItemValues['totalBeforeTax'], $item->getQuantity(), $item->getProductName(), $sku, 0, 0);
         }
 
         // add order item for shipping

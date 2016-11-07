@@ -129,7 +129,7 @@ class PaypalPaymentGateway extends AbstractPaymentGateway implements PaymentGate
             // don't add shipping row
             if ($item->isShipping()) continue;
 
-            $subTotal += $item->getPrice() * $item->getQuantity();
+            $subTotal += $item->getPrice();
 
             $newItem = new Item();
             $newItem->setName($item->getProductName())

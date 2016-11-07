@@ -8,7 +8,7 @@ class PaymentGatewayException extends \Exception {
      */
     public function __construct($message)
     {
-        parent::__construct(trans('vendirun::checkout.paymentTakenOtherError') . ' - ' . $message);
+        parent::__construct(trans('vendirun::checkout.paymentError') . ' - ' . $message);
     }
 
 }

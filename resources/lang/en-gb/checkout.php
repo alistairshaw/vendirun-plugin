@@ -26,6 +26,7 @@ return [
     'orderFailed' => 'Your payment was not taken successfully',
     'orderFailedText' => 'Unfortunately your payment did not go through. Please try again.',
     'billingAddressSameAsShipping' => 'Billing address is the same as the shipping address',
+    'paymentError' => 'Payment error - Unable to take payment',
     'paymentTakenOtherError' => 'Payment Has Been Taken - ORDER not saved correctly, please contact Customer Services',
     'paymentMethod' => 'Payment Method',
     'paymentDate' => 'Payment Date',

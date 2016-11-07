@@ -21,8 +21,8 @@ class CartItemValuesVATExcludedTransformer implements CartItemValuesTransformer 
             'total' => $subTotal,
             'shipping' => $shippingTotal,
             'tax' => $tax,
-            'shipping_before_tax' => $shippingTotal,
-            'total_before_tax' => $subTotal
+            'shippingBeforeTax' => $shippingTotal,
+            'totalBeforeTax' => $subTotal
         ];
     }
 }

@@ -1,5 +1,7 @@
 <?php namespace AlistairShaw\Vendirun\App\Entities\Order\OrderItem;
 
+use AlistairShaw\Vendirun\App\Exceptions\InvalidPriceException;
+
 class OrderItem {
 
     /**
@@ -49,18 +51,22 @@ class OrderItem {
 
     /**
      * OrderItem constructor.
-     * @param        $id
-     * @param        $productVariationId
-     * @param        $taxRate
-     * @param        $price
+     * @param int $id
+     * @param int $productVariationId
+     * @param float $taxRate
+     * @param int $price
      * @param int $quantity
      * @param string $productName
      * @param string $productSku
      * @param int $isShipping
      * @param int $discount
+     * @throws InvalidPriceException
      */
     public function __construct($id, $productVariationId, $taxRate, $price, $quantity = 1, $productName = '', $productSku = '', $isShipping = 0, $discount = 0)
     {
+        $price = (int)$price;
+        if ($price < 0) throw new InvalidPriceException($price . ' is not a valid price');
+
         $this->id = $id;
         $this->taxRate = $taxRate;
         $this->price = $price;

@@ -36,7 +36,7 @@ class CartValuesVATIncludedTransformer implements CartValuesTransformer {
         return [
             'subTotal' => $subTotal,
             'displayTotal' => $subTotal,
-            'shipping' => $shipping == null ? null : $shipping,
+            'shipping' => $freeShipping ? 0 : $shipping == null ? null : $shipping,
             'displayShipping' => $shipping,
             'shippingTax' => $shippingTax,
             'tax' => $tax + $shippingTax,

@@ -77,7 +77,7 @@ class OrderFactory {
 
         // add order item for shipping
         $cartValues = $cart->getValues($cartValuesTransformer);
-        if ($cartValues['shipping'] > 0) $items[] = new OrderItem(NULL, NULL, $cart->getDefaultTaxRate(), $cartValues['shipping'] - $cartValues['shippingTax'], 1, $cart->getShippingType(), 'SHIPPING', 1, 0);
+        if ($cartValues['shipping'] > 0) $items[] = new OrderItem(NULL, NULL, $cart->getDefaultTaxRate(), $cartValues['shipping'], 1, $cart->getShippingType(), 'SHIPPING', 1, 0);
 
         $order = new Order($customer, $billingAddress, $shippingAddress, $items, $cart->getShippingType());
 

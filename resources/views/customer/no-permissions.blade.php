@@ -1,5 +1,5 @@
 @extends('vendirun::layouts.standard')
-@section('title', 'Permission Denied')
+@section('title', $pageTitle)
 @section('description', '')
 @section('keywords', '')
 @section('body-class', 'vendirun-app no-permissions')

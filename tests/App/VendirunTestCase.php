@@ -14,12 +14,11 @@ class VendirunTestCase extends \TestCase {
      * @param int $quantity
      * @param bool $priceIncludesTax
      * @param int $shippingPrice
-     * @param int $shippingTaxRate
      * @param string $shippingType
      * @param null $supplierId
      * @return CartItem
      */
-    protected function makeCartItem($price = 100, $quantity = 3, $priceIncludesTax = true, $shippingPrice = 50, $shippingTaxRate = 20, $shippingType = 'Standard Shipping', $supplierId = null)
+    protected function makeCartItem($price = 100, $quantity = 3, $priceIncludesTax = true, $shippingPrice = 50, $shippingType = 'Standard Shipping', $supplierId = null)
     {
         $variationId = rand(1000,2000000);
 
@@ -62,8 +61,7 @@ class VendirunTestCase extends \TestCase {
             'taxRate' => 20,
             'shippingType' => $shippingType,
             'countryId' => 79,
-            'priceIncludesTax' => $priceIncludesTax,
-            'shippingTaxRate' => $shippingTaxRate
+            'priceIncludesTax' => $priceIncludesTax
         ]);
 
         return $cartItem;
@@ -74,14 +72,16 @@ class VendirunTestCase extends \TestCase {
      * @param bool $shippingIsNull
      * @param string $shippingType
      * @param bool $includeSuppliers
+     * @param bool $freeShipping
      * @return Cart
      */
-    protected function makeCart($priceIncludesTax = true, $shippingIsNull = false, $shippingType = 'Standard Shipping', $includeSuppliers = false)
+    protected function makeCart($priceIncludesTax = true, $shippingIsNull = false, $shippingType = 'Standard Shipping', $includeSuppliers = false, $freeShipping = false)
     {
         $params = [
             'priceIncludesTax' => $priceIncludesTax,
             'chargeTaxOnShipping' => true,
             'defaultTaxRate' => 20,
+            'freeShipping' => $freeShipping
         ];
 
         $cart = new Cart($params);
@@ -141,8 +141,7 @@ class VendirunTestCase extends \TestCase {
             'taxRate' => 20,
             'shippingType' => 'Standard Shipping',
             'countryId' => 79,
-            'priceIncludesTax' => $priceIncludesTax,
-            'shippingTaxRate' => 20
+            'priceIncludesTax' => $priceIncludesTax
         ]);
 
         $cart->add($cartItem);
@@ -176,8 +175,7 @@ class VendirunTestCase extends \TestCase {
             'taxRate' => 20,
             'shippingType' => 'Standard Shipping',
             'countryId' => 79,
-            'priceIncludesTax' => $priceIncludesTax,
-            'shippingTaxRate' => 20
+            'priceIncludesTax' => $priceIncludesTax
         ]);
 
         $cart->add($cartItem);
@@ -211,8 +209,7 @@ class VendirunTestCase extends \TestCase {
             'taxRate' => 20,
             'shippingType' => 'Standard Shipping',
             'countryId' => 79,
-            'priceIncludesTax' => $priceIncludesTax,
-            'shippingTaxRate' => 20
+            'priceIncludesTax' => $priceIncludesTax
         ]);
 
         $cart->add($cartItem);
@@ -238,11 +235,11 @@ class VendirunTestCase extends \TestCase {
         $startAt = 1;
         if ($includeSuppliers)
         {
-            $items[] = $this->makeCartItem($price, 1, $priceIncludesTax, $shippingPrice, 20, $shippingType, null);
+            $items[] = $this->makeCartItem($price, 1, $priceIncludesTax, $shippingPrice, $shippingType, null);
 
             if ($number == 1) return $items;
 
-            $items[] = $this->makeCartItem($price, 1, $priceIncludesTax, $shippingPrice, 20, $shippingType, 1);
+            $items[] = $this->makeCartItem($price, 1, $priceIncludesTax, $shippingPrice, $shippingType, 1);
 
             if ($number == 2) return $items;
 
@@ -250,7 +247,7 @@ class VendirunTestCase extends \TestCase {
             $startAt = 3;
         }
 
-        for ($i = $startAt; $i <= $number; $i++) $items[] = $this->makeCartItem($price, 1, $priceIncludesTax, $shippingPrice, 20, $shippingType, $supplierId);
+        for ($i = $startAt; $i <= $number; $i++) $items[] = $this->makeCartItem($price, 1, $priceIncludesTax, $shippingPrice, $shippingType, $supplierId);
         return $items;
     }
 

@@ -1,12 +1,27 @@
 <?php namespace AlistairShaw\Vendirun\App\Entities\Cart;
 
 use AlistairShaw\Vendirun\App\Entities\Cart\CartItem\CartItem;
+use AlistairShaw\Vendirun\App\Entities\Cart\Transformers\CartValuesTransformer;
 use AlistairShaw\Vendirun\App\Entities\Customer\Helpers\CustomerHelper;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\Exceptions\FailResponseException;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\VendirunApi;
 use Session;
 
 class ApiCartRepository implements CartRepository {
+
+    /**
+     * @var CartValuesTransformer
+     */
+    private $cartValuesTransformer;
+
+    /**
+     * ApiCartRepository constructor.
+     * @param CartValuesTransformer $cartValuesTransformer
+     */
+    public function __construct(CartValuesTransformer $cartValuesTransformer)
+    {
+        $this->cartValuesTransformer = $cartValuesTransformer;
+    }
 
     /**
      * @param Cart $cart
@@ -55,7 +70,7 @@ class ApiCartRepository implements CartRepository {
      */
     public function find($countryId = null, $shippingType = '')
     {
-        $cartFactory = new CartFactory($this);
+        $cartFactory = new CartFactory($this, $this->cartValuesTransformer);
 
         if (Session::has('shoppingCart')) return $cartFactory->makeFromIds(Session::get('shoppingCart'), $countryId, $shippingType);
         if (!CustomerHelper::checkLoggedinCustomer()) return $cartFactory->makeFromIds([], $countryId, $shippingType);

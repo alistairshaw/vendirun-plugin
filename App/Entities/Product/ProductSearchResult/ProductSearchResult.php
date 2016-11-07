@@ -43,6 +43,11 @@ class ProductSearchResult {
     private $availableSizes;
 
     /**
+     * @var array
+     */
+    private $breadcrumbs;
+
+    /**
      * @param array $params | required: products, totalRows, limit, offset
      */
     public function __construct($params)
@@ -56,6 +61,7 @@ class ProductSearchResult {
         $this->availableColors = (isset($params['availableColors'])) ? $params['availableColors'] : [];
         $this->availableTypes = (isset($params['availableTypes'])) ? $params['availableTypes'] : [];
         $this->availableSizes = (isset($params['availableSizes'])) ? $params['availableSizes'] : [];
+        $this->breadcrumbs = (isset($params['breadcrumbs'])) ? $params['breadcrumbs'] : [];
     }
 
     /**
@@ -118,6 +124,14 @@ class ProductSearchResult {
     public function getAvailableSizes()
     {
         return $this->availableSizes;
+    }
+
+    /**
+     * @return array
+     */
+    public function getBreadcrumbs()
+    {
+        return $this->breadcrumbs;
     }
 
 }

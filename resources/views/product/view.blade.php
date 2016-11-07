@@ -2,7 +2,7 @@
 @section('title', strip_tags($productDisplay['productName']))
 @section('description', strip_tags($productDisplay['shortDescription']))
 @section('keywords', strip_tags($productDisplay['keywords']))
-@section('body-class', 'vendirun-app product product-view')
+@section('body-class', 'vendirun-app product product-view js-product-view')
 @section('content')
     <input type="hidden" id="productId" value="{{ $productDisplay['id'] }}">
     <div class="container">

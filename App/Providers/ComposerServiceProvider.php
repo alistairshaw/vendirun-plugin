@@ -21,6 +21,9 @@ class ComposerServiceProvider extends ServiceProvider {
         $this->registerCustomerComposers();
         $this->registerWidgetComposers();
         $this->registerBlogComposers();
+
+        // could be for anything
+        $this->app->view->composer('vendirun::common.breadcrumbs', 'AlistairShaw\Vendirun\App\Http\Composers\BreadcrumbViewComposer@index');
     }
 
     private function registerPropertyComposers()
@@ -80,6 +83,8 @@ class ComposerServiceProvider extends ServiceProvider {
         $this->app->view->composer('vendirun::cms.menu.login-button', 'AlistairShaw\Vendirun\App\Http\Composers\CustomerViewComposer@customerDetails');
         $this->app->view->composer('vendirun::customer.partials.address-form', 'AlistairShaw\Vendirun\App\Http\Composers\CustomerViewComposer@address');
         $this->app->view->composer('vendirun::customer.partials.country-select', 'AlistairShaw\Vendirun\App\Http\Composers\WidgetViewComposer@regions');
+        $this->app->view->composer('vendirun::customer.account.partials.nav-items', 'AlistairShaw\Vendirun\App\Http\Composers\CustomerViewComposer@accountNav');
+        $this->app->view->composer('vendirun::customer.partials.address-select', 'AlistairShaw\Vendirun\App\Http\Composers\CustomerViewComposer@addressSelect');
     }
 
     private function registerWidgetComposers()

@@ -19,12 +19,18 @@ return [
     'tax' => 'VAT',
     'total' => 'Total',
     'cardDeclined' => 'Sorry, but your card has been declined. Please try again.',
+    'orderCompleteTitle' => 'Order Complete',
     'orderComplete' => 'Your order has been completed',
     'thanksForOrder' => 'Thanks for placing an order with us, your order details are below',
+    'orderFailedTitle' => 'Failure',
     'orderFailed' => 'Your payment was not taken successfully',
     'orderFailedText' => 'Unfortunately your payment did not go through. Please try again.',
     'billingAddressSameAsShipping' => 'Billing address is the same as the shipping address',
+    'paymentError' => 'Payment error - Unable to take payment',
     'paymentTakenOtherError' => 'Payment Has Been Taken - ORDER not saved correctly, please contact Customer Services',
     'paymentMethod' => 'Payment Method',
-    'paymentDate' => 'Payment Date'
+    'paymentDate' => 'Payment Date',
+    'invalidPostcode' => 'Paypal will not accept your postcode as valid, please edit your address and try again, or pay by Credit Card',
+    'paypalUnavailable' => 'Paypal is not available at the moment, please pay by Credit Card or contact us for further assistance',
+    'freeShipping' => 'Free Shipping'
 ];

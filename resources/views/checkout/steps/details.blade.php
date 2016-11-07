@@ -20,8 +20,9 @@
         <input type="text" class="form-control" name="companyName" id="companyName" value="{{ $customer ? $customer->getCompanyName() : old('companyName', '') }}">
     </div>
     @if ($customer && $defaultAddress)
+        <h3>{{ trans('vendirun::customer.selectAddress') }}</h3>
         @include('vendirun::customer.partials.address-select', ['selected' => $defaultAddress->getId(), 'prefix' => 'shipping'])
     @else
-        @include('vendirun::customer.partials.address-form', ['prefix' => 'shipping'])
+        @include('vendirun::customer.partials.address-form', ['prefix' => 'shipping', 'address' => ['countryId' => Request::get('countryId', 79)]])
     @endif
 </div>

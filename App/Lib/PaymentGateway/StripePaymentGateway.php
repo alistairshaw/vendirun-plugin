@@ -16,7 +16,6 @@ class StripePaymentGateway extends AbstractPaymentGateway implements PaymentGate
     private $stripeToken;
 
     /**
-     * @return mixed
      * @throws CardDeclinedException
      * @throws UnknownErrorException
      */
@@ -49,6 +48,7 @@ class StripePaymentGateway extends AbstractPaymentGateway implements PaymentGate
         }
         catch (\Exception $e)
         {
+            dd($e);
             throw new UnknownErrorException($e->getMessage());
         }
     }

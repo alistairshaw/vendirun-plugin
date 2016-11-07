@@ -1,5 +1,5 @@
 @extends('vendirun::layouts.standard')
-@section('title', strip_tags($productDisplay['productName']))
+@section('title', $pageTitle)
 @section('description', strip_tags($productDisplay['shortDescription']))
 @section('keywords', strip_tags($productDisplay['keywords']))
 @section('body-class', 'vendirun-app product product-view')

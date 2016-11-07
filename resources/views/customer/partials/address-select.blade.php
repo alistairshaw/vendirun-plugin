@@ -1,4 +1,3 @@
-<h3>{{ trans('vendirun::customer.selectAddress') }}</h3>
 <div class="address-select">
     @if ($customer && $customer->getAddresses())
         @foreach ($customer->getAddresses() as $address)
@@ -10,11 +9,18 @@
                     <li>{{ $address->getArray()['city'] }}&nbsp;</li>
                     <li>{{ $address->getArray()['state'] }}&nbsp;</li>
                     <li>{{ $address->getArray()['postcode'] }}&nbsp;</li>
-                    <li class="selector">
-                        <input type="radio" name="{{ $prefix . 'addressId' }}" id="{{ $prefix . 'addressId' }}" value="{{ $address->getId() }}"{{ old($prefix . 'addressId', $defaultAddress->getId()) == $address->getId() ? ' checked' : '' }}>
+                    @if ($showSelector)
+                        <li class="selector">
+                            <input type="radio" name="{{ $prefix . 'addressId' }}" id="{{ $prefix . 'addressId' }}" value="{{ $address->getId() }}"{{ old($prefix . 'addressId', $defaultAddress->getId()) == $address->getId() ? ' checked' : '' }}>
+                        </li>
+                    @endif
+                    <li class="address-links">
+                        <a href="{{ route(LocaleHelper::localePrefix() . 'vendirun.customer.address.edit', ['id' => $address->getId()]) }}">Edit</a>
+                        <a href="{{ route(LocaleHelper::localePrefix() . 'vendirun.customer.address.delete', ['id' => $address->getId()]) }}">Delete</a>
                     </li>
                 </ul>
             </label>
         @endforeach
+        <a href="{{ route(LocaleHelper::localePrefix() . 'vendirun.customer.address.add') }}" class="btn btn-primary"><i class="fa fa-plus-circle"></i> {{ trans('vendirun::customer.addAddress') }}</a>
     @endif
 </div>

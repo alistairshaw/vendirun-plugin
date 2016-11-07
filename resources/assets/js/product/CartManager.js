@@ -59,8 +59,29 @@ function CartManager () {
      * @param data
      */
     var updatePageData = function (data) {
-        $('.js-shopping-cart-total').html(data.totals.total > 0 ? data.totals.displayTotal : data.totals.total);
-        $('.js-shopping-cart-shipping-total').html(data.totals.displayShipping);
+        $('.js-shopping-cart-total').html(data.displayTotals.displayTotal);
+        $('.js-shopping-cart-shipping-total').html(data.displayTotals.displayShipping);
+    };
+
+    /**
+     * Shows the cart popup and then removes it after a short amount of time
+     * @param item
+     */
+    var showCartAddPopup = function(item) {
+        if (item === undefined || !item) return;
+        var popupContainer = $('.cart-added-popup');
+        popupContainer.show();
+
+        var display = item.quantity + ' x ' + item.productName;
+
+        popupContainer.find('.product-name').html(display);
+        popupContainer.find('.js-close-cart-added-popup').off('click').on('click', function() {
+           popupContainer.hide();
+        });
+
+        setTimeout(function() {
+            popupContainer.hide();
+        }, 8000);
     };
 
     /**
@@ -78,6 +99,7 @@ function CartManager () {
             hideAddToCartButtons();
             showProductCountButtons();
             updatePageData(response.data);
+            showCartAddPopup(response.data.itemAdded);
         }, function (error) {
             callback(error);
         });

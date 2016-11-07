@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'home' => 'Inicio',
     'login' => 'Acceder',
     'loginOrRegister' => 'Log In / Register',
     'logout' => 'Cerrar Sesión',

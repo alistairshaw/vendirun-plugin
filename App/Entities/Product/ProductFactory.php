@@ -27,7 +27,9 @@ class ProductFactory {
         if (isset($product->shipping)) $params['shipping'] = $this->makeShipping($product->shipping, $product->supplier_id);
         if (isset($product->tax)) $params['tax'] = ProductTaxOptionFactory::makeFromApi($product->tax);
         if (isset($product->variations)) $params['variations'] = $this->makeVariations($product->variations);
-        if (isset($product->relatedProducts)) $params['relatedProducts'] = $this->makeRelatedProducts($product->related_products);
+        if (isset($product->related_products)) $params['relatedProducts'] = $this->makeRelatedProducts($product->related_products);
+        if (isset($product->categories)) $params['categories'] = $product->categories;
+
 
         return new Product($params);
     }

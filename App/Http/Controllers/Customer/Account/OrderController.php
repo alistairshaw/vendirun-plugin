@@ -3,12 +3,12 @@
 use AlistairShaw\Vendirun\App\Entities\Customer\CustomerRepository;
 use AlistairShaw\Vendirun\App\Entities\Customer\Helpers\CustomerHelper;
 use AlistairShaw\Vendirun\App\Entities\Order\OrderRepository;
-use AlistairShaw\Vendirun\App\Http\Controllers\VendirunBaseController;
+use AlistairShaw\Vendirun\App\Http\Controllers\VendirunAuthController;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Request;
 use View;
 
-class OrderController extends VendirunBaseController {
+class OrderController extends VendirunAuthController {
 
     /**
      * @param OrderRepository $orderRepository
@@ -32,9 +32,12 @@ class OrderController extends VendirunBaseController {
                 ]
             ) : false;
 
-        return View::make('vendirun::customer.orders.index')
-            ->with('orders', $orderSearchResult->getOrders())
-            ->with('pagination', $pagination);
+        $data['pageTitle'] = trans('vendirun::product.orderHistory');
+
+        $data['orders'] = $orderSearchResult->getOrders();
+        $data['pagination'] = $pagination;
+
+        return View::make('vendirun::customer.orders.index', $data);
     }
 
     /**
@@ -48,6 +51,7 @@ class OrderController extends VendirunBaseController {
         $data['customer'] = $customerRepository->find();
         $data['order'] = $orderRepository->find($orderId);
         $data['defaultAddress'] = $data['order']->getBillingAddress();
+        $data['pageTitle'] = trans('vendirun::product.viewOrder');
 
         return View::make('vendirun::customer.orders.view', $data);
     }

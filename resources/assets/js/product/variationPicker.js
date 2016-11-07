@@ -304,12 +304,13 @@ var variationPicker = function ($container, productId, renderCallback) {
         /**
          * @param $container jQuery object
          * @param productId
+         * @param renderCallback
          */
         init: function ($container, productId, renderCallback) {
             this.$container = $container.html(this.loadingSpinner);
             this.selectedVariationId = $('#productVariationId').val();
             this.productId = productId ? productId : $('#productId').val();
-            this.renderCallback = renderCallback;
+            if (typeof renderCallback == 'function')  this.renderCallback = renderCallback; //x
             this.loadProduct();
         },
 
@@ -351,7 +352,7 @@ var variationPicker = function ($container, productId, renderCallback) {
 
             if (!initialFound) _this.variationBuild(_this.product.variations[0]);
 
-            _this.renderCallback();
+            if (_this.renderCallback !== null) _this.renderCallback();
         },
 
         /**

@@ -13,7 +13,77 @@
                     margin-top: 10px;
                     @extend .text-center;
                 }
+                &.address-links {
+                    margin: 8px 0;
+                    a {
+                        margin-right: 6px;
+                    }
+                }
             }
+        }
+    }
+}
+
+.customer-account-addresses {
+    @extend .col-sm-6;
+    .address-select label {
+        @extend .col-sm-12;
+    }
+}
+
+.customer-account-nav {
+    border-bottom: 1px solid $gray-lighter;
+    background: $gray-lighter;
+    ul {
+        @extend .container;
+        @extend .clearfix;
+        margin-bottom: 0;
+        list-style: none;
+        li {
+            float: left;
+            margin: 0;
+            a {
+                display: block;
+                padding: 12px;
+                background: $gray-lighter;
+                color: $brand-primary;
+                &:hover, &:active {
+                    background: $brand-primary;
+                    color: white;
+                    text-decoration: none;
+                }
+            }
+            &.active {
+                a {
+                    background: $brand-primary;
+                    color: white;
+                }
+            }
+            &.divider {
+                display: none;
+            }
+        }
+    }
+}
+
+.customer-account .inner-container {
+    @extend .row;
+}
+
+.customer-account-details {
+    @extend .col-sm-6;
+    .customer-account-details--section {
+        @extend .form-inline;
+        margin-bottom: 40px;
+        .account-item {
+            display: block;
+            label {
+                min-width: 200px;
+            }
+        }
+        .account-value {
+            @extend .form-control-static;
+            color: $brand-primary;
         }
     }
 }

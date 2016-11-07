@@ -9,15 +9,15 @@
             <th>{{ trans('vendirun::checkout.tax') }}</th>
             <th>{{ trans('vendirun::product.total') }}</th>
         </tr>
-        @foreach ($order->concatItems() as $productVariationId => $item)
+        @foreach ($order->getItems() as $item)
             <tr>
-                <td>{{ $item['productSku'] }}</td>
-                <td>{{ $item['productName'] }}</td>
-                <td class="text-center">{{ $item['quantity'] }}</td>
-                <td>{{ CurrencyHelper::formatWithCurrency($item['discount'], false, '') }}</td>
-                <td>{{ CurrencyHelper::formatWithCurrency($item['price'], false, '') }}</td>
-                <td>{{ $item['taxRate'] }}%</td>
-                <td>{{ CurrencyHelper::formatWithCurrency($item['price'] + TaxCalculator::totalPlusTax($item['price'] - $item['discount'], $item['taxRate']), false, '') }}</td>
+                <td>{{ $item->getProductSku() }}</td>
+                <td>{{ $item->getProductName() }}</td>
+                <td class="text-center">{{ $item->getQuantity() }}</td>
+                <td>{{ CurrencyHelper::formatWithCurrency($item->getDiscount(), false, '') }}</td>
+                <td>{{ CurrencyHelper::formatWithCurrency($item->getPrice(), false, '') }}</td>
+                <td>{{ $item->getTaxRate() }}%</td>
+                <td>{{ CurrencyHelper::formatWithCurrency($item->getPrice() - $item->getdiscount() + TaxCalculator::totalPlusTax($item->getPrice() - $item->getdiscount(), $item->getTaxRate()), false, '') }}</td>
             </tr>
         @endforeach
         <tr>

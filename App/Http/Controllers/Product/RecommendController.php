@@ -37,6 +37,9 @@ class RecommendController extends VendirunBaseController {
             // this exception means we're not logged in. No problem
         }
 
+        $data['recommend'] = true;
+        $data['pageTitle'] = trans('vendirun::product.sendProductToFriend');
+
         return View::make('vendirun::product.recommend', $data);
     }
 

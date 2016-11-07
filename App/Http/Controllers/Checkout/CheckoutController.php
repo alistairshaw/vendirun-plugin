@@ -1,6 +1,8 @@
 <?php namespace AlistairShaw\Vendirun\App\Http\Controllers\Checkout;
 
+use AlistairShaw\Vendirun\App\Entities\Cart\CartItem\Transformers\CartItemValuesTransformer;
 use AlistairShaw\Vendirun\App\Entities\Cart\CartRepository;
+use AlistairShaw\Vendirun\App\Entities\Cart\Transformers\CartValuesTransformer;
 use AlistairShaw\Vendirun\App\Entities\Customer\CustomerFactory;
 use AlistairShaw\Vendirun\App\Entities\Customer\CustomerRepository;
 use AlistairShaw\Vendirun\App\Entities\Customer\Helpers\CustomerHelper;
@@ -23,11 +25,12 @@ use View;
 class CheckoutController extends VendirunBaseController {
 
     /**
-     * @param CartRepository     $cartRepository
+     * @param CartRepository $cartRepository
      * @param CustomerRepository $customerRepository
+     * @param CartValuesTransformer $transformer
      * @return mixed
      */
-    public function index(CartRepository $cartRepository, CustomerRepository $customerRepository)
+    public function index(CartRepository $cartRepository, CustomerRepository $customerRepository, CartValuesTransformer $transformer)
     {
         $this->setPrimaryPath();
         
@@ -53,7 +56,9 @@ class CheckoutController extends VendirunBaseController {
         if ($cart->count() == 0) return Redirect::route(LocaleHelper::localePrefix() . 'vendirun.productCart');
 
         $data['cart'] = $cart;
-        $data['displayTotals'] = $cart->getFormattedTotals();
+        $data['displayTotals'] = $cart->getFormattedValues($transformer);
+
+        $data['pageTitle'] = trans('vendirun::checkout.checkout');
 
         return View::make('vendirun::checkout.checkout', $data);
     }
@@ -79,13 +84,22 @@ class CheckoutController extends VendirunBaseController {
     }
 
     /**
-     * @param OrderRequest       $request
-     * @param CartRepository     $cartRepository
-     * @param OrderRepository    $orderRepository
+     * @param OrderRequest $request
+     * @param CartRepository $cartRepository
+     * @param OrderRepository $orderRepository
      * @param CustomerRepository $customerRepository
+     * @param CartValuesTransformer $cartValuesTransformer
+     * @param CartItemValuesTransformer $cartItemValuesTransformer
      * @return mixed
      */
-    public function process(OrderRequest $request, CartRepository $cartRepository, OrderRepository $orderRepository, CustomerRepository $customerRepository)
+    public function process(
+        OrderRequest $request,
+        CartRepository $cartRepository,
+        OrderRepository $orderRepository,
+        CustomerRepository $customerRepository,
+        CartValuesTransformer $cartValuesTransformer,
+        CartItemValuesTransformer $cartItemValuesTransformer
+    )
     {
         if (Request::has('recalculateShipping')) return $this->recalculateShipping($customerRepository);
         if (Request::has('orderId')) return $this->processExistingOrder($orderRepository, Request::get('orderId'));
@@ -116,10 +130,11 @@ class CheckoutController extends VendirunBaseController {
 
         // convert cart to order
         $orderFactory = new OrderFactory();
-        $order = $orderFactory->fromCart($cart, $customer, Request::all());
+        $order = $orderFactory->fromCart($cart, $customer, $cartValuesTransformer, $cartItemValuesTransformer, Request::all());
 
         // persist the order
         if (!$order = $orderRepository->save($order)) return Redirect::back()->with('paymentError', 'Payment Has NOT Been Taken - unable to create order, please try again');
+
         Session::set('orderOneTimeToken', $order->getOneTimeToken());
 
         return $this->takePayment($orderRepository, $order);
@@ -198,6 +213,8 @@ class CheckoutController extends VendirunBaseController {
             $data['order'] = NULL;
         }
 
+        $data['pageTitle'] = trans('vendirun::checkout.orderCompleteTitle');
+
         return View::make('vendirun::checkout.success', $data);
     }
 
@@ -239,6 +256,8 @@ class CheckoutController extends VendirunBaseController {
             //    in which case we just won't show the order details
             $data['order'] = NULL;
         }
+
+        $data['pageTitle'] = trans('vendirun::checkout.orderFailedTitle');
 
         return View::make('vendirun::checkout.failure', $data);
     }

@@ -15,11 +15,14 @@ class CartItemValuesVATExcludedTransformer implements CartItemValuesTransformer 
     {
         $subTotal = $quantity * $basePrice;
         $tax = TaxCalculator::totalPlusTax($basePrice, $taxRate, $quantity);
+        $shippingTotal = $shippingPrice === null ? null : $shippingPrice * $quantity;
 
         return [
             'total' => $subTotal,
-            'shipping' => $shippingPrice * $quantity,
+            'shipping' => $shippingTotal,
             'tax' => $tax,
+            'shipping_before_tax' => $shippingTotal,
+            'total_before_tax' => $subTotal
         ];
     }
 }

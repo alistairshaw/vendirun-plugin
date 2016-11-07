@@ -1,6 +1,9 @@
 <?php namespace AlistairShaw\Vendirun\App\Providers;
 
 use AlistairShaw\Vendirun\App\Entities\Cart\ApiCartRepository;
+use AlistairShaw\Vendirun\App\Entities\Cart\CartItem\Transformers\CartItemValuesTransformer;
+use AlistairShaw\Vendirun\App\Entities\Cart\CartItem\Transformers\CartItemValuesVATExcludedTransformer;
+use AlistairShaw\Vendirun\App\Entities\Cart\CartItem\Transformers\CartItemValuesVATIncludedTransformer;
 use AlistairShaw\Vendirun\App\Entities\Cart\CartRepository;
 use AlistairShaw\Vendirun\App\Entities\Cart\Helpers\TaxCalculator;
 use AlistairShaw\Vendirun\App\Entities\Cart\Transformers\CartValuesTransformer;
@@ -70,10 +73,12 @@ class VendirunServiceProvider extends ServiceProvider {
         if ($clientInfo->business_settings->tax->price_includes_tax)
         {
             $this->app->bind(CartValuesTransformer::class, CartValuesVATIncludedTransformer::class);
+            $this->app->bind(CartItemValuesTransformer::class, CartItemValuesVATIncludedTransformer::class);
         }
         else
         {
             $this->app->bind(CartValuesTransformer::class, CartValuesVATExcludedTransformer::class);
+            $this->app->bind(CartItemValuesTransformer::class, CartItemValuesVATExcludedTransformer::class);
         }
 
         $this->app->bind(CartRepository::class, function() {

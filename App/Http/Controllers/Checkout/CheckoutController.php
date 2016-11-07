@@ -1,5 +1,6 @@
 <?php namespace AlistairShaw\Vendirun\App\Http\Controllers\Checkout;
 
+use AlistairShaw\Vendirun\App\Entities\Cart\CartItem\Transformers\CartItemValuesTransformer;
 use AlistairShaw\Vendirun\App\Entities\Cart\CartRepository;
 use AlistairShaw\Vendirun\App\Entities\Cart\Transformers\CartValuesTransformer;
 use AlistairShaw\Vendirun\App\Entities\Customer\CustomerFactory;
@@ -88,9 +89,17 @@ class CheckoutController extends VendirunBaseController {
      * @param OrderRepository $orderRepository
      * @param CustomerRepository $customerRepository
      * @param CartValuesTransformer $cartValuesTransformer
+     * @param CartItemValuesTransformer $cartItemValuesTransformer
      * @return mixed
      */
-    public function process(OrderRequest $request, CartRepository $cartRepository, OrderRepository $orderRepository, CustomerRepository $customerRepository, CartValuesTransformer $cartValuesTransformer)
+    public function process(
+        OrderRequest $request,
+        CartRepository $cartRepository,
+        OrderRepository $orderRepository,
+        CustomerRepository $customerRepository,
+        CartValuesTransformer $cartValuesTransformer,
+        CartItemValuesTransformer $cartItemValuesTransformer
+    )
     {
         if (Request::has('recalculateShipping')) return $this->recalculateShipping($customerRepository);
         if (Request::has('orderId')) return $this->processExistingOrder($orderRepository, Request::get('orderId'));
@@ -121,7 +130,7 @@ class CheckoutController extends VendirunBaseController {
 
         // convert cart to order
         $orderFactory = new OrderFactory();
-        $order = $orderFactory->fromCart($cart, $customer, $cartValuesTransformer, Request::all());
+        $order = $orderFactory->fromCart($cart, $customer, $cartValuesTransformer, $cartItemValuesTransformer, Request::all());
 
         // persist the order
         if (!$order = $orderRepository->save($order)) return Redirect::back()->with('paymentError', 'Payment Has NOT Been Taken - unable to create order, please try again');

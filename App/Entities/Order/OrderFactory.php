@@ -2,6 +2,7 @@
 
 use AlistairShaw\Vendirun\App\Entities\Cart\Cart;
 use AlistairShaw\Vendirun\App\Entities\Cart\CartItem\CartItem;
+use AlistairShaw\Vendirun\App\Entities\Cart\CartItem\Transformers\CartItemValuesTransformer;
 use AlistairShaw\Vendirun\App\Entities\Cart\Transformers\CartValuesTransformer;
 use AlistairShaw\Vendirun\App\Entities\Customer\Customer;
 use AlistairShaw\Vendirun\App\Entities\Order\OrderItem\OrderItem;
@@ -16,10 +17,11 @@ class OrderFactory {
      * @param Cart $cart
      * @param Customer $customer
      * @param CartValuesTransformer $cartValuesTransformer
+     * @param CartItemValuesTransformer $cartItemValuesTransformer
      * @param array $params
      * @return Order
      */
-    public function fromCart(Cart $cart, Customer $customer, CartValuesTransformer $cartValuesTransformer, $params)
+    public function fromCart(Cart $cart, Customer $customer, CartValuesTransformer $cartValuesTransformer, CartItemValuesTransformer $cartItemValuesTransformer, $params)
     {
         if (isset($params['shippingaddressId']) && $params['shippingaddressId'] > 0)
         {
@@ -72,12 +74,14 @@ class OrderFactory {
             /* @var $item CartItem */
             $sku = $item->getSku();
 
-            $items[] = new OrderItem(NULL, $item->getVariationId(), $item->getTaxRate(), $item->getPrice(), $item->getQuantity(), $item->getProductName(), $sku, 0, 0);
+            $cartItemValues = $item->getValues($cartItemValuesTransformer);
+
+            $items[] = new OrderItem(NULL, $item->getVariationId(), $item->getTaxRate(), $cartItemValues['total_before_tax'], $item->getQuantity(), $item->getProductName(), $sku, 0, 0);
         }
 
         // add order item for shipping
         $cartValues = $cart->getValues($cartValuesTransformer);
-        if ($cartValues['shipping'] > 0) $items[] = new OrderItem(NULL, NULL, $cart->getDefaultTaxRate(), $cartValues['shipping'], 1, $cart->getShippingType(), 'SHIPPING', 1, 0);
+        if ($cartValues['shipping'] > 0) $items[] = new OrderItem(NULL, NULL, $cart->getDefaultTaxRate(), $cartValues['shipping'] - $cartValues['shippingTax'], 1, $cart->getShippingType(), 'SHIPPING', 1, 0);
 
         $order = new Order($customer, $billingAddress, $shippingAddress, $items, $cart->getShippingType());
 

@@ -310,7 +310,8 @@ var variationPicker = function ($container, productId, renderCallback) {
             this.$container = $container.html(this.loadingSpinner);
             this.selectedVariationId = $('#productVariationId').val();
             this.productId = productId ? productId : $('#productId').val();
-            if (typeof renderCallback == 'function')  this.renderCallback = renderCallback; //x
+            if (typeof renderCallback == 'function')  this.renderCallback = renderCallback;
+            $('.product-single-image').magnifier();
             this.loadProduct();
         },
 

@@ -32,6 +32,7 @@ class PasswordController extends VendirunBaseController {
      */
     public function processRecovery()
     {
+
         try
         {
             VendirunApi::makeRequest('customer/passwordRecovery', ['email' => Request::get('email')]);
@@ -39,7 +40,9 @@ class PasswordController extends VendirunBaseController {
         }
         catch (FailResponseException $e)
         {
-            return View::make('vendirun::customer.password.recovery')->with('alertMessage', $e->getMessage());
+            $data['pageTitle'] = trans('vendirun::customer.recoverPassword');
+            $data['alertMessage'] = trans('vendirun::customer.recoverPasswordFail');
+            return View::make('vendirun::customer.password.recovery', $data);
         }
     }
 
@@ -77,7 +80,10 @@ class PasswordController extends VendirunBaseController {
         }
         catch (FailResponseException $e)
         {
-            return View::make('vendirun::customer.password.reset-form')->with('alertMessage', $e->getMessage())->with('token', Request::get('token'));
+            $data['pageTitle'] = trans('vendirun::customer.recoverPassword');
+            $data['alertMessage'] = trans('vendirun::customer.recoverPasswordFail2');
+            $data['token'] = Request::get('token');
+            return View::make('vendirun::customer.password.reset-form', $data);
         }
     }
 

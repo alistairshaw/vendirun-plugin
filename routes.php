@@ -121,8 +121,8 @@ Route::group(['middleware' => ['web']], function ()
             Route::get('/staff/{staffId}/{staffName}', ['as' => $localePrefix . 'vendirun.staff', 'uses' => 'Cms\PageController@staff']);
 
             // google map cache
-            Route::post('vendirun/google-map-cache-get', ['as' => $localePrefix . 'vendirun.mapCache', 'uses' => 'Cms\PageController@mapCacheRetrieve']);
-            Route::post('vendirun/google-map-cache-set', ['as' => $localePrefix . 'vendirun.mapCache', 'uses' => 'Cms\PageController@mapCacheSet']);
+            Route::post('vendirun/google-map-cache-get', ['as' => $localePrefix . 'vendirun.mapCache', 'uses' => 'Api\MapCacheController@mapCacheRetrieve']);
+            Route::post('vendirun/google-map-cache-set', ['as' => $localePrefix . 'vendirun.mapCache', 'uses' => 'Api\MapCacheController@mapCacheSet']);
 
             // home page
             Route::any('/', ['as' => $localePrefix . 'vendirun.home', 'uses' => 'Cms\PageController@index']);

@@ -57,6 +57,7 @@ class CheckoutController extends VendirunBaseController {
 
         $data['cart'] = $cart;
         $data['displayTotals'] = $cart->getFormattedValues($transformer);
+        $data['cartTotals'] = $cart->getValues($transformer);
 
         $data['pageTitle'] = trans('vendirun::checkout.checkout');
 
@@ -137,7 +138,7 @@ class CheckoutController extends VendirunBaseController {
 
         Session::set('orderOneTimeToken', $order->getOneTimeToken());
 
-        return $this->takePayment($orderRepository, $order);
+        return $order->getTotalPrice() > 0 ? $this->takePayment($orderRepository, $order) : $this->noPaymentNecessary($order);
     }
 
     /**
@@ -187,6 +188,15 @@ class CheckoutController extends VendirunBaseController {
             return Redirect::back()->with('paymentError', $e->getMessage())->withInput();
         }
 
+        return Redirect::route('vendirun.checkoutSuccess', ['orderId' => $order->getId()]);
+    }
+
+    /**
+     * @param Order $order
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    private function noPaymentNecessary(Order $order)
+    {
         return Redirect::route('vendirun.checkoutSuccess', ['orderId' => $order->getId()]);
     }
 

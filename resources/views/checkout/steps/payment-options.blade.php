@@ -4,7 +4,8 @@
             <div class="alert alert-danger">
                 <i class="fa fa-exclamation-circle"></i>
                 This site requires javascript to be enabled in your browser in order to securely process payments. For
-                more information on javascript and instructions on how to enable it, <a href="http://enable-javascript.com/" target="_blank">click here</a>.
+                more information on javascript and instructions on how to enable it,
+                <a href="http://enable-javascript.com/" target="_blank">click here</a>.
             </div>
         </noscript>
     @endif

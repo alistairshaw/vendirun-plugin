@@ -5,16 +5,16 @@
 
         <div class="carousel-container">
             <div id="vendirun-carousel-{{ $slider->id }}" class="carousel slide" data-ride="carousel" data-interval="{{ $slider->speed }}">
-                <!-- Indicators -->
-                <ol class="carousel-indicators">
-                    <?php $counter = 0; ?>
-                    @foreach ($slider->slides as $slide)
-                        <li data-target="#vendirun-carousel-{{ $slider->id }}" data-slide-to="<?php echo $counter ?>"<?php if ($counter == 0) echo ' class="active"'; ?>></li>
-                        <?php $counter++; ?>
-                    @endforeach
-                </ol>
+                @if (count($slider->slides) > 1)
+                    <ol class="carousel-indicators">
+                        <?php $counter = 0; ?>
+                        @foreach ($slider->slides as $slide)
+                            <li data-target="#vendirun-carousel-{{ $slider->id }}" data-slide-to="<?php echo $counter ?>"<?php if ($counter == 0) echo ' class="active"'; ?>></li>
+                            <?php $counter++; ?>
+                        @endforeach
+                    </ol>
+                @endif
 
-                <!-- Wrapper for slides -->
                 <div class="carousel-inner" role="listbox">
                     <?php $counter = 0; ?>
                     @foreach ($slider->slides as $slide)
@@ -32,18 +32,19 @@
                                 @include('vendirun::cms.widgets.slider-call-to-action')
                             @endif
                         </a>
-                    <?php $counter++; ?>
-                @endforeach
+                        <?php $counter++; ?>
+                    @endforeach
 
-                <!-- Controls -->
-                    <a class="left carousel-control" href="#vendirun-carousel-{{ $slider->id }}" role="button" data-slide="prev">
-                        <span class="fa fa-chevron-left" aria-hidden="true"></span>
-                        <span class="sr-only">Previous</span>
-                    </a>
-                    <a class="right carousel-control" href="#vendirun-carousel-{{ $slider->id }}" role="button" data-slide="next">
-                        <span class="fa fa-chevron-right" aria-hidden="true"></span>
-                        <span class="sr-only">Next</span>
-                    </a>
+                    @if (count($slider->slides) > 1)
+                        <a class="left carousel-control" href="#vendirun-carousel-{{ $slider->id }}" role="button" data-slide="prev">
+                            <span class="fa fa-chevron-left" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="right carousel-control" href="#vendirun-carousel-{{ $slider->id }}" role="button" data-slide="next">
+                            <span class="fa fa-chevron-right" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    @endif
                 </div>
             </div>
         </div>

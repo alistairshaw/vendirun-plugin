@@ -3,7 +3,7 @@
 @else
     <div class="vendirun-slider-widget {{ $slider->css }}">
 
-        <div class="carousel-container">
+        <div class="carousel-container" style="{{ implode("; ", $sliderStyles) }}">
             <div id="vendirun-carousel-{{ $slider->id }}" class="carousel slide" data-ride="carousel" data-interval="{{ $slider->speed }}">
                 @if (count($slider->slides) > 1)
                     <ol class="carousel-indicators">
@@ -16,10 +16,12 @@
                 @endif
 
                 <div class="carousel-inner" role="listbox">
-                    <?php $counter = 0; ?>
+                    <?php $index = 0; ?>
                     @foreach ($slider->slides as $slide)
-                        <a href="{{ $slide->link }}" class="item<?php if ($counter == 0) echo ' active'; ?>">
-                            <img src="{{ asset($slide->background->hd) }}">
+                        <a href="{{ $slide->link }}" class="item<?php if ($index == 0) echo ' active'; ?>" style="{{ implode("; ", $slideStyles[$index]) }}">
+                            @if (!$slide->set_as_background)
+                                <img src="{{ asset($slide->background->hd) }}">
+                            @endif
                             @if ($slide->caption)
                                 <div class="carousel-caption">
                                     {{ $slide->caption }}
@@ -32,7 +34,7 @@
                                 @include('vendirun::cms.widgets.slider-call-to-action')
                             @endif
                         </a>
-                        <?php $counter++; ?>
+                        <?php $index++; ?>
                     @endforeach
 
                     @if (count($slider->slides) > 1)

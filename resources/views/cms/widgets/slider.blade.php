@@ -18,7 +18,7 @@
                 <div class="carousel-inner" role="listbox">
                     <?php $index = 0; ?>
                     @foreach ($slider->slides as $slide)
-                        <a href="{{ $slide->link }}" class="item<?php if ($index == 0) echo ' active'; ?>" style="{{ implode("; ", $slideStyles[$index]) }}">
+                        <a href="{{ $slide->link }}" class="item<?php if ($index == 0) echo ' active'; ?>" style="{{ isset($slideStyles[$index]) ? implode("; ", $slideStyles[$index]) : '' }}">
                             @if (!$slide->set_as_background)
                                 <img src="{{ asset($slide->background->hd) }}">
                             @endif

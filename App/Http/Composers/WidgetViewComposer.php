@@ -74,7 +74,6 @@ class WidgetViewComposer {
         if (!isset($viewData['options'])) $viewData['options'] = json_decode($viewData['element']->element_options, true);
         $slider_id = $viewData['options']['id'];
 
-        $sliderStyles = [];
         try
         {
             $slider = VendirunApi::makeRequest('cms/slider', ['id' => $slider_id])->getData();
@@ -84,6 +83,8 @@ class WidgetViewComposer {
         catch (FailResponseException $e)
         {
             $slider = false;
+            $sliderStyles = [];
+            $slideStyles = [];
         }
         $view->with('slider', $slider)->with('sliderStyles', $sliderStyles)->with('slideStyles', $slideStyles);
     }
@@ -120,6 +121,7 @@ class WidgetViewComposer {
         $index = 0;
         foreach ($slider->slides as $slide)
         {
+            $slideStyles[$index] = [];
             if ($slide->set_as_background == 1) $slideStyles[$index][] = 'min-height: calc(100vh)';
             if ($slide->set_as_background == 1) $slideStyles[$index][] = 'background-position: center top';
             if ($slide->set_as_background == 1) $slideStyles[$index][] = 'background-image: url(' . $slide->background->hd . ')';

@@ -19,7 +19,7 @@
                     <?php $index = 0; ?>
                     @foreach ($slider->slides as $slide)
                         <a href="{{ $slide->link }}" class="item<?php if ($index == 0) echo ' active'; ?>" style="{{ isset($slideStyles[$index]) ? implode("; ", $slideStyles[$index]) : '' }}">
-                            @if (!$slide->set_as_background)
+                            @if (!isset($slide->set_as_background) || !$slide->set_as_background)
                                 <img src="{{ asset($slide->background->hd) }}">
                             @endif
                             @if ($slide->caption)

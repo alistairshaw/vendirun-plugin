@@ -20,7 +20,7 @@
             'display: none; ' +
             'top: ' + top + 'px; ' +
             'left: ' + left + 'px; ' +
-            'border: 1px solid #ccc; ' +
+            //'border: 1px solid #ccc; ' +
             'width: ' + settings.viewerWidth + 'px; ' +
             'height: ' + settings.viewerHeight + 'px;"' +
             '>' +
@@ -62,7 +62,7 @@
                 var $imageLink = $(this).find('img');
                 $('<img>').load(function(){
                     $viewerWindow.find('.cover').css('display', 'none');
-                    $viewerWindow.css('background-image', 'url(' + $imageLink.data('original') + ')');
+                    $viewerWindow.css('background-image', 'url(' + $imageLink.data('original') + ')').css('background-repeat', 'no-repeat');
                     $('body').append(this);
                     $(this).hide();
                     viewerWindow.currentOriginalHeight = $(this).height();

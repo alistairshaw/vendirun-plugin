@@ -71,7 +71,7 @@ Route::group(['middleware' => ['web']], function ()
                 Route::get('recommend/{productId}', ['as' => $localePrefix . 'vendirun.productRecommend', 'uses' => 'Product\RecommendController@index']);
 
                 // this one must be last to catch any undefined routes
-                Route::any('/{category?}', ['as' => $localePrefix . 'vendirun.productSearch', 'uses' => 'Product\ProductController@index'])->where('category', '(.*)');
+                Route::any('{category?}', ['as' => $localePrefix . 'vendirun.productSearch', 'uses' => 'Product\ProductController@index'])->where('category', '(.*)');
             });
 
             Route::group(['prefix' => 'customer'], function () use ($localePrefix)

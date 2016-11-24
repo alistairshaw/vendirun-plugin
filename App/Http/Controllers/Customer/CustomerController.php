@@ -201,7 +201,7 @@ class CustomerController extends VendirunBaseController {
 
         // we will always make a new customer on contact forms, in case the form values are wildly different from the logged in user's details
         $customerFactory = new CustomerFactory();
-        $customer = $customerFactory->make(null, Request::get('fullname'), Request::get('email'));
+        $customer = $customerFactory->make(null, Request::get('fullname', null), Request::get('email'));
         $customer->setPrimaryTelephone(Request::get('telephone', null));
         $customerRepository->save($customer);
 
@@ -214,17 +214,27 @@ class CustomerController extends VendirunBaseController {
         $note = '';
         if (Request::has('property')) $note .= "<strong>Property Name: " . Request::get('property') . '</strong><br>';
         if (Request::has('product')) $note .= "<strong>Product Name: " . Request::get('product') . '</strong><br>';
-        $note .= nl2br(Request::get('message', ''));
+        if (Request::has('message')) $note .= nl2br(Request::get('message', ''));
 
-        VendirunApi::makeRequest('customer/addNote', ['customer_id' => $customer->getId(), 'note' => $note]);
+        if ($note) VendirunApi::makeRequest('customer/addNote', ['customer_id' => $customer->getId(), 'note' => $note]);
+
+        $formId = Request::get('formId', 'Website Form');
+
         VendirunApi::makeRequest('customer/registerFormCompletion', [
             'customer_id' => $customer->getId(),
             'new_customer' => 1,
             'data' => json_encode(Request::all()),
-            'form_id' => Request::get('formId', 'Website Form')
+            'form_id' => $formId
         ]);
 
-        Session::flash('vendirun-alert-success', 'Thank you for contacting us we will get back to you shortly!');
+        switch ($formId)
+        {
+            case 'Newsletter Signup':
+                Session::flash('vendirun-alert-success', trans('vendirun::forms.newsletterThanks'));
+                break;
+            default:
+                Session::flash('vendirun-alert-success', trans('vendirun::forms.contactThanks'));
+        }
 
         return Redirect::back();
     }

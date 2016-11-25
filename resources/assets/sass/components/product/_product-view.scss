@@ -62,6 +62,9 @@
     margin-top: 20px;
     input {
         @extend .form-control;
+        @media (max-width: $screen-sm) {
+            display: inline;
+        }
         max-width: 100px;
     }
     .price {

@@ -20,7 +20,7 @@ class ProductController extends VendirunBaseController {
     /**
      * @param ProductRepository $productRepository
      * @param string            $category
-     * @return \Illuminate\View\View
+     * @return mixed
      */
     public function index(ProductRepository $productRepository, $category = '')
     {
@@ -29,6 +29,14 @@ class ProductController extends VendirunBaseController {
         try
         {
             $search = $productRepository->search($productSearchParams);
+
+            if ($productSearchParams['offset'] > $search->getTotalRows() - 1)
+            {
+                $params = Request::query();
+                $params['page'] = 1;
+                $params['category'] = $category;
+                return Redirect::route(LocaleHelper::localePrefix() . 'vendirun.productSearch', $params);
+            }
 
             $data['pagination'] = ($search->getTotalRows() > 0) ? $data['pagination'] =
                 new LengthAwarePaginator(
@@ -104,7 +112,11 @@ class ProductController extends VendirunBaseController {
 
         if (!$single)
         {
-            if ($category) $productSearchParams['category'] = $category;
+            if ($category)
+            {
+                if (substr($category, 0, 1) != '/') $category = '/' . $category;
+                $productSearchParams['category'] = $category;
+            }
 
             $productSearchParams['offset'] = (Request::get('page', 1) - 1) * Request::get('limit', 12);
 

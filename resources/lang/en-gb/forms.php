@@ -44,5 +44,9 @@ return [
     'cardHolderName' => 'Card Holder\'s Name',
     'cardNumber' => 'Card Number',
     'cardExpiry' => 'Card Expiry Date',
-    'cvv' => 'CVV/CVV2'
+    'cvv' => 'CVV/CVV2',
+    'newsletterSignUp' => 'Enter your email address to sign up to our newsletter',
+    'newsletterSubmit' => 'Sign Up',
+    'contactThanks' => 'Thank you for contacting us we will get back to you shortly!',
+    'newsletterThanks' => 'You have been signed up! Thanks a million :)',
 ];

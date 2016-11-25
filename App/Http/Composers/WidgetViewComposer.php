@@ -74,7 +74,6 @@ class WidgetViewComposer {
         if (!isset($viewData['options'])) $viewData['options'] = json_decode($viewData['element']->element_options, true);
         $slider_id = $viewData['options']['id'];
 
-        $sliderStyles = [];
         try
         {
             $slider = VendirunApi::makeRequest('cms/slider', ['id' => $slider_id])->getData();
@@ -84,6 +83,8 @@ class WidgetViewComposer {
         catch (FailResponseException $e)
         {
             $slider = false;
+            $sliderStyles = [];
+            $slideStyles = [];
         }
         $view->with('slider', $slider)->with('sliderStyles', $sliderStyles)->with('slideStyles', $slideStyles);
     }
@@ -95,14 +96,14 @@ class WidgetViewComposer {
     private function getSliderStyles($slider)
     {
         $sliderStyles = [];
-        if ($slider->full_screen == 1)
+        if (isset($slider->full_screen) && $slider->full_screen == 1)
         {
             $sliderStyles[] = 'height: 100%';
         }
         else
         {
-            if ($slider->max_height > 0) $sliderStyles[] = 'max-height: ' . $slider->max_height . 'px';
-            if ($slider->min_height > 0) $sliderStyles[] = 'min-height: ' . $slider->min_height . 'px';
+            if (isset($slider->max_height) && $slider->max_height > 0) $sliderStyles[] = 'max-height: ' . $slider->max_height . 'px';
+            if (isset($slider->min_height) && $slider->min_height > 0) $sliderStyles[] = 'min-height: ' . $slider->min_height . 'px';
         }
 
         if (count($sliderStyles)) $sliderStyles[] = 'overflow: hidden;';
@@ -120,10 +121,14 @@ class WidgetViewComposer {
         $index = 0;
         foreach ($slider->slides as $slide)
         {
-            if ($slide->set_as_background == 1) $slideStyles[$index][] = 'min-height: calc(100vh)';
-            if ($slide->set_as_background == 1) $slideStyles[$index][] = 'background-position: center top';
-            if ($slide->set_as_background == 1) $slideStyles[$index][] = 'background-image: url(' . $slide->background->hd . ')';
-            if ($slide->background_cover == 1) $slideStyles[$index][] = 'background-size: cover';
+            $slideStyles[$index] = [];
+            if (isset($slide->set_as_background))
+            {
+                if ($slide->set_as_background == 1) $slideStyles[$index][] = 'min-height: calc(100vh)';
+                if ($slide->set_as_background == 1) $slideStyles[$index][] = 'background-position: center top';
+                if ($slide->set_as_background == 1) $slideStyles[$index][] = 'background-image: url(' . $slide->background->hd . ')';
+            }
+            if (isset($slide->background_cover) && $slide->background_cover == 1) $slideStyles[$index][] = 'background-size: cover';
 
             $index++;
         }

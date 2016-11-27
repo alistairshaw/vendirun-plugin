@@ -102,8 +102,15 @@ class WidgetViewComposer {
         }
         else
         {
-            if (isset($slider->max_height) && $slider->max_height > 0) $sliderStyles[] = 'max-height: ' . $slider->max_height . 'px';
-            if (isset($slider->min_height) && $slider->min_height > 0) $sliderStyles[] = 'min-height: ' . $slider->min_height . 'px';
+            if ($slider->max_height == $slider->min_height)
+            {
+                $sliderStyles[] = 'height: ' . $slider->min_height . 'px';
+            }
+            else
+            {
+                if (isset($slider->max_height) && $slider->max_height > 0) $sliderStyles[] = 'max-height: ' . $slider->max_height . 'px';
+                if (isset($slider->min_height) && $slider->min_height > 0) $sliderStyles[] = 'min-height: ' . $slider->min_height . 'px';
+            }
         }
 
         if (count($sliderStyles)) $sliderStyles[] = 'overflow: hidden;';
@@ -121,10 +128,24 @@ class WidgetViewComposer {
         $index = 0;
         foreach ($slider->slides as $slide)
         {
+            $minHeight = 0;
+            $maxHeight = 0;
+            if (isset($slider->min_height) && $slider->min_height > 0) $minHeight = $slider->min_height;
+            if (isset($slider->max_height) && $slider->max_height > 0) $maxHeight = $slider->max_height;
+            $actualHeight = ($minHeight == $maxHeight) ? $minHeight : 0;
+
+
+            // if we have no min height and the slider is set as background, then we need to give it some height
+            //    otherwise it's not visible
+            if (!$minHeight && !$actualHeight && $slide->set_as_background == 1) $minHeight = 'calc(100vh)';
+
             $slideStyles[$index] = [];
+            if ($minHeight) $slideStyles[$index][] = 'min-height: ' . $minHeight . 'px';
+            if ($maxHeight) $slideStyles[$index][] = 'max-height: ' . $maxHeight . 'px';
+            if ($actualHeight) $slideStyles[$index][] = 'height: ' . $actualHeight . 'px';
+
             if (isset($slide->set_as_background))
             {
-                if ($slide->set_as_background == 1) $slideStyles[$index][] = 'min-height: calc(100vh)';
                 if ($slide->set_as_background == 1) $slideStyles[$index][] = 'background-position: center top';
                 if ($slide->set_as_background == 1) $slideStyles[$index][] = 'background-image: url(' . $slide->background->hd . ')';
             }

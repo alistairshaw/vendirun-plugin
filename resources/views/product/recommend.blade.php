@@ -4,7 +4,7 @@
 @section('keywords', strip_tags($productDisplay['keywords']))
 @section('body-class', 'vendirun-app product product-view')
 @section('content')
-
+    @include('vendirun::product.partials.variationModal')
     <div class="container">
         <h1>{{ trans('vendirun::product.sendProductToFriend') }}</h1>
         <div class="row">

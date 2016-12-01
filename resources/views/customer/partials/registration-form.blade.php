@@ -28,7 +28,7 @@
         <input type="text" class="form-control" name="telephone" id="telephone" placeholder="{{ trans('vendirun::forms.telephone') }}">
     </div>
 
-    <div class="form-group pull-right">
-        <button type="submit" class="btn btn-primary">{{ trans('vendirun::standard.register') }}</button>
+    <div class="form-group clearfix">
+        <button type="submit" class="btn btn-primary pull-right">{{ trans('vendirun::standard.register') }}</button>
     </div>
 </form>

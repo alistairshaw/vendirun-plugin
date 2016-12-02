@@ -88,7 +88,15 @@ class CustomerController extends VendirunBaseController {
 
         try
         {
-            VendirunApi::makeRequest('customer/store', Request::all());
+            $customer = VendirunApi::makeRequest('customer/store', Request::all());
+
+            VendirunApi::makeRequest('customer/registerFormCompletion', [
+                'customer_id' => $customer->getData()->id,
+                'new_customer' => 1,
+                'data' => json_encode(Request::all()),
+                'form_id' => 'Registration Form'
+            ]);
+
             return $this->login(Request::get('email'), Request::get('password'));
         }
         catch (FailResponseException $e)
@@ -100,7 +108,7 @@ class CustomerController extends VendirunBaseController {
     /**
      * @param $email
      * @param $password
-     * @return \Illuminate\Http\RedirectResponse
+     * @return mixed
      */
     private function login($email, $password)
     {

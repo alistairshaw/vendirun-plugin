@@ -181,12 +181,11 @@ class CustomerController extends VendirunBaseController {
         catch (CustomerNotFoundException $e)
         {
             $originator = $customerFactory->make(null, Request::get('fullName'), Request::get('emailAddress'));
-            $customerRepository->save($originator);
+            $originator = $customerRepository->save($originator, false, null, true);
         }
 
         $receiver = $customerFactory->make(null, Request::get('fullNameFriend'), Request::get('emailAddressFriend'));
-
-        $customerRepository->save($receiver);
+        $receiver = $customerRepository->save($receiver, false, null, true);
 
         try
         {

@@ -35,15 +35,16 @@ class ApiCustomerRepository implements CustomerRepository {
      * @param Customer $customer
      * @param bool $is_registration
      * @param null $password
+     * @param bool $fetch_duplicate
      * @return Customer
      */
-    public function save(Customer $customer, $is_registration = false, $password = null)
+    public function save(Customer $customer, $is_registration = false, $password = null, $fetch_duplicate = false)
     {
         $data = [
             'full_name' => $customer->fullName(),
             'job_role' => $customer->getJobRole(),
             'email' => $customer->getPrimaryEmail(),
-            'telephone' => $customer->getPrimaryTelephone(),
+            'telephone' => $customer->getPrimaryTelephone()
         ];
 
         if ($is_registration)
@@ -51,6 +52,8 @@ class ApiCustomerRepository implements CustomerRepository {
             $data['is_registration'] = true;
             $data['password'] = $password;
         }
+
+        if ($fetch_duplicate) $data['fetch_duplicate'] = true;
 
         $addresses = [];
         foreach ($customer->getAddresses() as $add)

@@ -75,7 +75,8 @@ class Address {
             'city' => $this->city,
             'state' => $this->state,
             'postcode' => $this->postcode,
-            'countryId' => $this->countryId
+            'countryId' => $this->countryId,
+            'country_id' => $this->countryId, // yes, it's here twice on purpose
         ];
     }
 

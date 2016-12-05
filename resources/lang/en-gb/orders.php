@@ -12,5 +12,10 @@ return [
     'expectedDelivery' => 'Expected Delivery',
     'trackingNumber' => 'Tracking Number',
     'itemsInShipment' => 'Items in Shipment',
-    'none' => 'You haven\'t made any orders yet.'
+    'none' => 'You haven\'t made any orders yet.',
+    'statusPendingPayment' => 'Pending Payment',
+    'statusPendingShipment' => 'Order Processing',
+    'statusShipped' => 'Shipped',
+    'statusPartiallyShipped' => 'Partially Shipped',
+    'statusCompleted' => 'Completed',
 ];

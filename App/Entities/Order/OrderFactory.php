@@ -5,6 +5,7 @@ use AlistairShaw\Vendirun\App\Entities\Cart\CartItem\CartItem;
 use AlistairShaw\Vendirun\App\Entities\Cart\CartItem\Transformers\CartItemValuesTransformer;
 use AlistairShaw\Vendirun\App\Entities\Cart\Transformers\CartValuesTransformer;
 use AlistairShaw\Vendirun\App\Entities\Customer\Customer;
+use AlistairShaw\Vendirun\App\Entities\Order\Aggregates\OrderStatus;
 use AlistairShaw\Vendirun\App\Entities\Order\OrderItem\OrderItem;
 use AlistairShaw\Vendirun\App\Entities\Order\Payment\Payment;
 use AlistairShaw\Vendirun\App\Entities\Order\Shipment\ShipmentFactory;
@@ -131,7 +132,9 @@ class OrderFactory {
             $items[] = new OrderItem($item->id, $item->product_variation_id, $item->tax_rate, $item->price, $item->quantity, $item->product_name, $item->product_sku, $item->is_shipping, $item->discount_amount);
         }
 
-        $vrOrder = new Order($customer, $billingAddress, $shippingAddress, $items, null, $order->id, $order->created);
+        $orderStatus = new OrderStatus($order->created, $order->is_paid, $order->completed_at, $order->cancelled_at, $order->cancellation_reason, $order->fully_shipped, $order->partially_shipped, $order->shipped_at);
+
+        $vrOrder = new Order($customer, $billingAddress, $shippingAddress, $items, null, $order->id, $orderStatus);
 
         // add the payments
         foreach ($order->payments as $payment)

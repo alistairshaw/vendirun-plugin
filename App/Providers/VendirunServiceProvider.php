@@ -26,6 +26,7 @@ use AlistairShaw\Vendirun\App\Lib\Social\SocialLinks;
 use AlistairShaw\Vendirun\App\Lib\Social\SocialLinksStandard;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
+use Thujohn\Twitter\Facades\Twitter;
 
 class VendirunServiceProvider extends ServiceProvider {
 
@@ -103,6 +104,9 @@ class VendirunServiceProvider extends ServiceProvider {
 		$this->app->register('AlistairShaw\Vendirun\App\Providers\ComposerServiceProvider');
 		$this->app->register('AlistairShaw\Vendirun\App\Providers\EventServiceProvider');
 
+		// twitter
+		$this->app->register('Thujohn\Twitter\TwitterServiceProvider');
+
         // middleware
         $this->app['router']->middleware('localization', 'AlistairShaw\Vendirun\App\Http\Middleware\Localization');
 
@@ -132,5 +136,6 @@ class VendirunServiceProvider extends ServiceProvider {
 		$loader->alias('ClientHelper', ClientHelper::class);
 		$loader->alias('TaxCalculator', TaxCalculator::class);
 		$loader->alias('CustomerHelper', CustomerHelper::class);
+		$loader->alias('Twitter', Twitter::class);
 	}
 }

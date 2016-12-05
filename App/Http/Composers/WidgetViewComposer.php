@@ -6,6 +6,7 @@ use AlistairShaw\Vendirun\App\Lib\VendirunApi\VendirunApi;
 use App;
 use Config;
 use Illuminate\View\View;
+use Thujohn\Twitter\Facades\Twitter;
 use URL;
 
 class WidgetViewComposer {
@@ -63,6 +64,33 @@ class WidgetViewComposer {
     {
         $regions = CountryHelper::getRegions();
         $view->with('regions', $regions);
+    }
+
+
+    /**
+     * @param View $view
+     */
+    public function twitterFeed($view)
+    {
+        $viewData = $view->getData();
+        $elementOptions = json_decode($viewData['element']->element_options);
+
+        $tweets = [];
+        $twitterHandle = '?';
+        try
+        {
+            if (isset($elementOptions->name) && $elementOptions->name)
+            {
+                $tweets = json_decode(Twitter::getUserTimeline(['screen_name' => $elementOptions->name, 'count' => 8, 'format' => 'json']));
+                $twitterHandle = $elementOptions->name;
+            }
+        }
+        catch (\Exception $e)
+        {
+            // ignore any exceptions when retrieving tweets
+        }
+
+        $view->with('tweets', $tweets)->with('twitterHandle', $twitterHandle);
     }
 
     /**

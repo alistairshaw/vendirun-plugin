@@ -237,5 +237,4 @@ class Customer {
 
         return $this->getPrimaryAddress();
     }
-
 }

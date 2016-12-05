@@ -140,7 +140,8 @@ class BaseApi {
         if (!$response->success)
         {
             $msg = 'API returned a failure';
-            if ($response->data) $msg = json_encode($response->data);
+            if ($response->error) $msg = $response->error;
+            if ($response->data) $msg .= json_encode($response->data);
             throw new FailResponseException(false, $msg);
         }
         else
@@ -224,39 +225,5 @@ class BaseApi {
     protected function getError()
     {
         return $this->error;
-    }
-
-    /**
-     * @param $action
-     * @param $data
-     */
-    protected function apiSubmissionFailed($action, $data)
-    {
-        switch ($action)
-        {
-            case 'contact-form':
-                $subjectLine = 'Someone contacted you from your website';
-                $view = 'vendirun::emails.failures.contact-form';
-                break;
-            case 'register':
-                $subjectLine = 'Someone attempted to register on your website';
-                $view = 'vendirun::emails.failures.register';
-                break;
-            case 'recommend-friend':
-                $subjectLine = 'Someone attempted to recommed a friend to a page on your website';
-                $view = 'vendirun::emails.failures.recommend-friend';
-                break;
-            default:
-                $subjectLine = 'An unknown error occurred';
-                $view = 'vendirun::emails.failures.default';
-        }
-
-        $data['mailData'] = $data;
-        Mail::send($view, $data, function (Message $message) use ($subjectLine)
-        {
-            $message->from(Config('vendirun.emailsFrom'), Config('vendirun.emailsFromName'));
-            $message->to(Config('vendirun.backupEmail'))->subject($subjectLine);
-            $message->cc(Config('vendirun.vendirunSupportEmail'), 'Vendirun Support');
-        });
     }
 }

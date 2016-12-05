@@ -9,9 +9,11 @@ interface CustomerRepository {
 
     /**
      * @param Customer $customer
+     * @param bool $is_registration
+     * @param null $password
      * @return Customer
      */
-    public function save(Customer $customer);
+    public function save(Customer $customer, $is_registration = false, $password = null);
 
     /**
      * @param Customer $originator
@@ -20,5 +22,11 @@ interface CustomerRepository {
      * @return mixed
      */
     public function recommendFriend(Customer $originator, Customer $receiver, $link);
+
+    /**
+     * @param Customer $customer
+     * @param array $data
+     */
+    public function registerFormCompletion(Customer $customer, $data);
 
 }

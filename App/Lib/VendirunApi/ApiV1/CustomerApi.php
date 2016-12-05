@@ -11,22 +11,12 @@ class CustomerApi extends BaseApi {
      * @param $params ['email']        required!
      * @param $params ['telephone']
      * @return object
+     * @throws FailResponseException
      */
 	public function store($params)
 	{
-        try
-        {
-            $url = 'customer/store';
-            return $this->request($url, $params, true);
-        }
-        catch (\Exception $e)
-        {
-            unset($params['_token']);
-            unset($params['password']);
-            unset($params['password_confirmation']);
-            $this->apiSubmissionFailed('contact-form', $params);
-            return null;
-        }
+        $url = 'customer/store';
+        return $this->request($url, $params, true);
 	}
 
     /**
@@ -35,19 +25,8 @@ class CustomerApi extends BaseApi {
      */
 	public function update($params)
     {
-        try
-        {
-            $url = 'customer/update/' . $params['id'];
-            return $this->request($url, $params, true);
-        }
-        catch (\Exception $e)
-        {
-            unset($params['_token']);
-            unset($params['password']);
-            unset($params['password_confirmation']);
-            $this->apiSubmissionFailed('contact-form', $params);
-            return null;
-        }
+        $url = 'customer/update/' . $params['id'];
+        return $this->request($url, $params, true);
     }
 
     /**

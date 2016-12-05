@@ -10,11 +10,10 @@ use AlistairShaw\Vendirun\App\Http\Controllers\VendirunBaseController;
 use AlistairShaw\Vendirun\App\Lib\LocaleHelper;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\Exceptions\FailResponseException;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\VendirunApi;
-use App;
+use AlistairShaw\Vendirun\App\Traits\ApiSubmissionFailTrait;
 use Cache;
 use Config;
 use Event;
-use League\Flysystem\Adapter\Local;
 use Redirect;
 use Request;
 use Illuminate\Http\Request as IlRequest;
@@ -22,6 +21,8 @@ use Session;
 use View;
 
 class CustomerController extends VendirunBaseController {
+
+    use ApiSubmissionFailTrait;
 
     public function __construct()
     {
@@ -71,9 +72,10 @@ class CustomerController extends VendirunBaseController {
     /**
      * Register a customer
      * @param IlRequest $request
+     * @param CustomerRepository $customerRepository
      * @return mixed
      */
-    public function doRegister(IlRequest $request)
+    public function doRegister(IlRequest $request, CustomerRepository $customerRepository)
     {
         $this->validate($request, [
             'full_name' => 'required',
@@ -86,23 +88,27 @@ class CustomerController extends VendirunBaseController {
         $clientInfo = Config::get('clientInfo');
         if ($clientInfo->signup_email_verification) return $this->doEmailVerification(Request::all());
 
+        $customerFactory = new CustomerFactory();
+        $customer = $customerFactory->fromRegistration(Request::all());
+
         try
         {
-            $customer = VendirunApi::makeRequest('customer/store', Request::all());
-
-            VendirunApi::makeRequest('customer/registerFormCompletion', [
-                'customer_id' => $customer->getData()->id,
-                'new_customer' => 1,
-                'data' => json_encode(Request::all()),
-                'form_id' => 'Registration Form'
-            ]);
-
-            return $this->login(Request::get('email'), Request::get('password'));
+            $customer = $customerRepository->save($customer, true, Request::get('password'));
+            $customerRepository->registerFormCompletion($customer, Request::all());
         }
         catch (FailResponseException $e)
         {
             return Redirect::route(LocaleHelper::localePrefix() . 'vendirun.register')->withInput()->withErrors($e->getMessage());
         }
+        catch (\Exception $e)
+        {
+            $this->apiSubmissionFailed('register', Request::all());
+            return Redirect::route(LocaleHelper::localePrefix() . 'vendirun.register')->withInput()->withErrors(trans('vendirun::customer.cannotRegister'));
+        }
+
+
+
+        return $this->login(Request::get('email'), Request::get('password'));
     }
 
     /**

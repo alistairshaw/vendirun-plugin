@@ -4,6 +4,7 @@ use AlistairShaw\Vendirun\App\Lib\CountryHelper;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\Exceptions\FailResponseException;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\VendirunApi;
 use App;
+use Cache;
 use Config;
 use Illuminate\View\View;
 use Thujohn\Twitter\Facades\Twitter;
@@ -81,8 +82,17 @@ class WidgetViewComposer {
         {
             if (isset($elementOptions->name) && $elementOptions->name)
             {
-                $tweets = json_decode(Twitter::getUserTimeline(['screen_name' => $elementOptions->name, 'count' => 8, 'format' => 'json']));
                 $twitterHandle = $elementOptions->name;
+
+                if (!Cache::has('twitterFeed' . $twitterHandle))
+                {
+                    $tweets = json_decode(Twitter::getUserTimeline(['screen_name' => $elementOptions->name, 'count' => 8, 'format' => 'json']));
+                    Cache::put('twitterFeed' . $twitterHandle, $tweets, 3);
+                }
+                else
+                {
+                    $tweets = Cache::get('twitterFeed' . $twitterHandle);
+                }
             }
         }
         catch (\Exception $e)

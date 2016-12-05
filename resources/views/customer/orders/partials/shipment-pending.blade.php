@@ -1,3 +1,5 @@
 <div class="shipment-details">
-    <h3>Order processing, not yet dispatched</h3>
+    <div class="wrapper">
+        <h3>Order processing, not yet dispatched</h3>
+    </div>
 </div>

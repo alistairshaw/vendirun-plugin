@@ -190,7 +190,7 @@ class Customer {
             $final[] = $address;
             foreach ($this->addresses as $currentAddress)
             {
-                if (!$address->getId() == $currentAddress->getId()) $final[] = $currentAddress;
+                if ($address->getId() != $currentAddress->getId()) $final[] = $currentAddress;
             }
             $this->addresses = $final;
         }

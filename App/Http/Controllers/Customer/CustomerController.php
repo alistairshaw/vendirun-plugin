@@ -271,8 +271,6 @@ class CustomerController extends VendirunBaseController {
         try
         {
             $params = VendirunApi::makeRequest('customer/verifyEmailData', ['id' => Request::get('confirmId')])->getData();
-
-            VendirunApi::makeRequest('customer/store', $params);
             return $this->login($params->email, $params->password);
         }
         catch (FailResponseException $e)

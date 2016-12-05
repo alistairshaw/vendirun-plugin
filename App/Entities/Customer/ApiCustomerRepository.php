@@ -95,6 +95,7 @@ class ApiCustomerRepository implements CustomerRepository {
     private function update($data, $id)
     {
         $data['id'] = $id;
+
         VendirunApi::makeRequest('customer/update', $data)->getData();
         return $this->find();
     }

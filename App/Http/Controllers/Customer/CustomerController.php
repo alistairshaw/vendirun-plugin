@@ -216,7 +216,7 @@ class CustomerController extends VendirunBaseController {
         $customerFactory = new CustomerFactory();
         $customer = $customerFactory->make(null, Request::get('fullname', null), Request::get('email'));
         $customer->setPrimaryTelephone(Request::get('telephone', null));
-        $customerRepository->save($customer);
+        $customer = $customerRepository->save($customer, false, null, true);
 
         if (Request::has('propertyId'))
         {

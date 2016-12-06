@@ -30,7 +30,7 @@ class ProductController extends VendirunBaseController {
         {
             $search = $productRepository->search($productSearchParams);
 
-            if ($productSearchParams['offset'] > $search->getTotalRows() - 1)
+            if ($search->getTotalRows() > 0 && $productSearchParams['offset'] > $search->getTotalRows() - 1)
             {
                 $params = Request::query();
                 $params['page'] = 1;

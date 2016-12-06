@@ -2,7 +2,7 @@
     <div class="staff">
         <div class="row">
             @foreach($staff as $person)
-                <div class="col-sm-3">
+                <div class="staff-wrapper">
                     <a href="{{ route(LocaleHelper::localePrefix() . 'vendirun.staff',[$person->id, urlencode($person->first_name)]) }}" class="staff-item">
                         <div class="photo">
                             @foreach (array_slice($person->images, 0, 1) as $image)

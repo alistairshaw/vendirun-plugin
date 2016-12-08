@@ -28,7 +28,7 @@ class OrderFactory {
         {
             $shippingAddress = $customer->getAddressFromAddressId($params['shippingaddressId']);
         }
-        else
+        elseif (isset($params['shippingaddress1']))
         {
             $data = [
                 'address1' => $params['shippingaddress1'],
@@ -41,10 +41,15 @@ class OrderFactory {
             ];
             $shippingAddress = new Address($data);
         }
+        else
+        {
+            $shippingAddress = null;
+        }
 
         if (isset($params['billingAddressSameAsShipping']) && $params['billingAddressSameAsShipping'])
         {
             $billingAddress = $shippingAddress;
+            $data['billing_address_same_as_shipping'] = true;
         }
         else
         {
@@ -64,6 +69,12 @@ class OrderFactory {
                     'countryId' => $params['billingcountryId']
                 ];
                 $billingAddress = new Address($data);
+
+                if ($shippingAddress === null)
+                {
+                    $shippingAddress = $billingAddress;
+                    $data['billing_address_same_as_shipping'] = true;
+                }
             }
         }
 

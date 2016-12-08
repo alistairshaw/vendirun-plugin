@@ -18,4 +18,5 @@ return [
     'statusShipped' => 'Shipped',
     'statusPartiallyShipped' => 'Partially Shipped',
     'statusCompleted' => 'Completed',
+    'statusPendingCompletion' => 'Pending Completion'
 ];

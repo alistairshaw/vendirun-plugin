@@ -75,7 +75,7 @@ class Order {
      * @param OrderStatus $orderStatus
      * @internal param null $createdAt
      */
-    public function __construct(Customer $customer, Address $billingAddress, Address $shippingAddress, $items, $shippingType = '', $id = null, OrderStatus $orderStatus = null)
+    public function __construct(Customer $customer, Address $billingAddress = null, Address $shippingAddress = null, $items = [], $shippingType = '', $id = null, OrderStatus $orderStatus = null)
     {
         $this->customer = $customer;
         $this->billingAddress = $billingAddress;

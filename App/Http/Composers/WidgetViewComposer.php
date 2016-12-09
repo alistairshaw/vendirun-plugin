@@ -18,7 +18,28 @@ class WidgetViewComposer {
      */
     public function social($view)
     {
-        if ($clientInfo = Config::get('clientInfo'))
+        $data = $view->getData();
+
+        if (isset($data['element']))
+        {
+            $socialOptions = json_decode($data['element']->element_options);
+
+            $final = [
+                'facebook' => null,
+                'twitter' => null,
+                'google_plus' => null,
+                'linkedin' => null,
+                'blog' => null
+            ];
+            foreach ($socialOptions as $key => $option)
+            {
+                if (!$option) continue;
+                $final[str_replace('social_', '', $key)] = $option;
+            }
+
+            $view->with('social', (object)$final);
+        }
+        else if ($clientInfo = Config::get('clientInfo'))
         {
             $view->with('social', $clientInfo->social);
         }

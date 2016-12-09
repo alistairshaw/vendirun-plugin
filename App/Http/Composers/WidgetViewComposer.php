@@ -20,7 +20,7 @@ class WidgetViewComposer {
     {
         $data = $view->getData();
 
-        if (isset($data['element']))
+        if (isset($data['element']) && $data['element']->content == 'standard-social')
         {
             $socialOptions = json_decode($data['element']->element_options);
 
@@ -43,6 +43,7 @@ class WidgetViewComposer {
         {
             $view->with('social', $clientInfo->social);
         }
+
         $view->with('socialType', Config::get('socialType', 'light'));
     }
 

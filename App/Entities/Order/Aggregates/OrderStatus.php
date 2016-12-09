@@ -77,6 +77,7 @@ class OrderStatus {
         if ($this->fully_shipped) $status = trans('vendirun::orders.statusShipped');
         if ($this->fully_shipped && $this->is_paid) $status = trans('vendirun::orders.statusPendingCompletion');
         if ($this->completed_at) $status = trans('vendirun::orders.statusCompleted');
+        if ($this->cancelled_at) $status = trans('vendirun::orders.statusCancelled') . ' (' . $this->cancellation_reason . ')';
 
         return $status;
     }

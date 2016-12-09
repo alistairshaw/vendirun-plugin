@@ -149,8 +149,6 @@ class OrderFactory {
             $items[] = $orderItem;
         }
 
-        //dd($order);
-
         $orderStatus = new OrderStatus($order->created, $order->is_paid, $order->completed_at, $order->cancelled_at, $order->cancellation_reason, $order->fully_shipped, $order->partially_shipped, $order->shipped_at);
 
         $vrOrder = new Order($customer, $billingAddress, $shippingAddress, $items, null, $order->id, $orderStatus);

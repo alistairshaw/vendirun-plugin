@@ -373,6 +373,20 @@ class Cart {
     }
 
     /**
+     * @return bool
+     */
+    public function shippingApplies()
+    {
+        foreach ($this->getItems() as $cartItem)
+        {
+            /* @var $cartItem CartItem */
+            if ($cartItem->shippingApplies()) return true;
+        }
+
+        return false;
+    }
+
+    /**
      * @param CartValuesTransformer $cartValuesTransformer
      * @return array
      */

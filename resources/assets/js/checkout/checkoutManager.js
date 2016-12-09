@@ -107,7 +107,7 @@ var checkoutManager = function () {
         },
 
         setupBillingAddress: function () {
-            $('.js-billing-address-form').toggle();
+            if ($('#shippingaddressId').val() !== 'NOTAPPLICABLE') $('.js-billing-address-form').toggle();
             $('#billingAddressSameAsShipping').on('change', function () {
                 $('.js-billing-address-form').toggle();
             });

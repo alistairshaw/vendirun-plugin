@@ -75,7 +75,7 @@ class Order {
      * @param OrderStatus $orderStatus
      * @internal param null $createdAt
      */
-    public function __construct(Customer $customer, Address $billingAddress, Address $shippingAddress, $items, $shippingType = '', $id = null, OrderStatus $orderStatus = null)
+    public function __construct(Customer $customer, Address $billingAddress = null, Address $shippingAddress = null, $items = [], $shippingType = '', $id = null, OrderStatus $orderStatus = null)
     {
         $this->customer = $customer;
         $this->billingAddress = $billingAddress;
@@ -312,4 +312,30 @@ class Order {
         throw new OrderItemNotFoundException('No item found for ID ' . $orderItemId);
     }
 
+    /**
+     * @return bool
+     */
+    public function hasDownloadables()
+    {
+        foreach ($this->items as $item)
+        {
+            if (count($item->getDownloadables()) > 0) return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasShipping()
+    {
+        foreach ($this->items as $item)
+        {
+            /* @var $item OrderItem */
+            if ($item->isShipping()) return true;
+        }
+
+        return false;
+    }
 }

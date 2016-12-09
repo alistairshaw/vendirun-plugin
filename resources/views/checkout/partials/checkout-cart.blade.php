@@ -6,10 +6,12 @@
                 <td>{{ trans('vendirun::checkout.subTotal') }}</td>
                 <td class="js-display-total">{{ $displayTotals['displayTotal'] }}</td>
             </tr>
-            <tr>
-                <td>{{ trans('vendirun::checkout.shipping') }}</td>
-                <td class="js-display-shipping">{{ $displayTotals['displayShipping'] }}</td>
-            </tr>
+            @if ($cart->shippingApplies())
+                <tr>
+                    <td>{{ trans('vendirun::checkout.shipping') }}</td>
+                    <td class="js-display-shipping">{{ $displayTotals['displayShipping'] }}</td>
+                </tr>
+            @endif
             @if ($displayTotals['subTotal'] != $displayTotals['displayTotal'])
                 <tr>
                     <td>{{ trans('vendirun::checkout.tax') }}</td>

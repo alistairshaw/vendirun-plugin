@@ -6,6 +6,7 @@ use AlistairShaw\Vendirun\App\Entities\Cart\CartItem\Transformers\CartItemValues
 use AlistairShaw\Vendirun\App\Entities\Cart\Transformers\CartValuesTransformer;
 use AlistairShaw\Vendirun\App\Entities\Customer\Customer;
 use AlistairShaw\Vendirun\App\Entities\Order\Aggregates\OrderStatus;
+use AlistairShaw\Vendirun\App\Entities\Order\OrderItem\Downloadable;
 use AlistairShaw\Vendirun\App\Entities\Order\OrderItem\OrderItem;
 use AlistairShaw\Vendirun\App\Entities\Order\Payment\Payment;
 use AlistairShaw\Vendirun\App\Entities\Order\Shipment\ShipmentFactory;
@@ -28,7 +29,7 @@ class OrderFactory {
         {
             $shippingAddress = $customer->getAddressFromAddressId($params['shippingaddressId']);
         }
-        else
+        elseif (isset($params['shippingaddress1']))
         {
             $data = [
                 'address1' => $params['shippingaddress1'],
@@ -41,10 +42,15 @@ class OrderFactory {
             ];
             $shippingAddress = new Address($data);
         }
+        else
+        {
+            $shippingAddress = null;
+        }
 
         if (isset($params['billingAddressSameAsShipping']) && $params['billingAddressSameAsShipping'])
         {
             $billingAddress = $shippingAddress;
+            $data['billing_address_same_as_shipping'] = true;
         }
         else
         {
@@ -64,6 +70,12 @@ class OrderFactory {
                     'countryId' => $params['billingcountryId']
                 ];
                 $billingAddress = new Address($data);
+
+                if ($shippingAddress === null)
+                {
+                    $shippingAddress = $billingAddress;
+                    $data['billing_address_same_as_shipping'] = true;
+                }
             }
         }
 
@@ -129,8 +141,15 @@ class OrderFactory {
         $items = [];
         foreach ($order->items as $item)
         {
-            $items[] = new OrderItem($item->id, $item->product_variation_id, $item->tax_rate, $item->price, $item->quantity, $item->product_name, $item->product_sku, $item->is_shipping, $item->discount_amount);
+            $orderItem = new OrderItem($item->id, $item->product_variation_id, $item->tax_rate, $item->price, $item->quantity, $item->product_name, $item->product_sku, $item->is_shipping, $item->discount_amount);
+            foreach ($item->downloadables as $downloadable)
+            {
+                $orderItem->addDownloadable(new Downloadable($downloadable->id, $downloadable->filename, $downloadable->file_size));
+            }
+            $items[] = $orderItem;
         }
+
+        //dd($order);
 
         $orderStatus = new OrderStatus($order->created, $order->is_paid, $order->completed_at, $order->cancelled_at, $order->cancellation_reason, $order->fully_shipped, $order->partially_shipped, $order->shipped_at);
 

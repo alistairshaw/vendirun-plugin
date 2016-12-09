@@ -75,6 +75,7 @@ class OrderStatus {
         if ($this->is_paid) $status = trans('vendirun::orders.statusPendingShipment');
         if ($this->partially_shipped) $status = trans('vendirun::orders.statusPartiallyShipped');
         if ($this->fully_shipped) $status = trans('vendirun::orders.statusShipped');
+        if ($this->fully_shipped && $this->is_paid) $status = trans('vendirun::orders.statusPendingCompletion');
         if ($this->completed_at) $status = trans('vendirun::orders.statusCompleted');
 
         return $status;

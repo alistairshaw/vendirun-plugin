@@ -40,3 +40,22 @@
         </tr>
     </table>
 </div>
+
+@if ($order->hasDownloadables())
+    <h3>{{ trans('vendirun::orders.download') }}</h3>
+    @foreach ($order->getItems() as $item)
+        @if (count($item->getDownloadables()) > 0)
+            <div class="well">
+                <h4>{{ $item->getProductName() }}</h4>
+                <ul>
+                    @foreach ($item->getDownloadables() as $downloadable)
+                        <li>
+                            <a href="{{ Route(LocaleHelper::localePrefix() . 'vendirun.customer.account.orderDownload', ['orderId' => $order->getId(), 'fileId' => $downloadable->getId() ]) }}">
+                                {{ $downloadable->getFileName() }}
+                            </a></li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+    @endforeach
+@endif

@@ -1,6 +1,6 @@
 <div class="billing-address">
     <h2>Billing Address</h2>
-    @if ($cart->shippingApplies())
+    @if (isset($cart) && $cart->shippingApplies())
         <div class="form-group">
             <label class="checkbox">
                 <input type="checkbox" value="1" name="billingAddressSameAsShipping" id="billingAddressSameAsShipping" checked>

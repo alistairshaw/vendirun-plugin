@@ -2,9 +2,11 @@
 
 use AlistairShaw\Vendirun\App\Entities\Customer\CustomerRepository;
 use AlistairShaw\Vendirun\App\Entities\Customer\Helpers\CustomerHelper;
+use AlistairShaw\Vendirun\App\Entities\Order\Aggregates\OrderStatus;
 use AlistairShaw\Vendirun\App\Entities\Order\OrderRepository;
 use AlistairShaw\Vendirun\App\Http\Controllers\VendirunAuthController;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Redirect;
 use Request;
 use View;
 
@@ -56,4 +58,15 @@ class OrderController extends VendirunAuthController {
         return View::make('vendirun::customer.orders.view', $data);
     }
 
+    /**
+     * @param OrderRepository $orderRepository
+     * @param $orderId
+     * @param $fileId
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function download(OrderRepository $orderRepository, $orderId, $fileId)
+    {
+        $url = $orderRepository->getDownloadUrl($orderId, $fileId);
+        return Redirect::to($url);
+    }
 }

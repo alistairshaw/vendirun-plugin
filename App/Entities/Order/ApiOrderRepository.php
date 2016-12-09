@@ -7,6 +7,7 @@ use AlistairShaw\Vendirun\App\Entities\Order\OrderSearchResult\OrderSearchResult
 use AlistairShaw\Vendirun\App\Entities\Order\Payment\Payment;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\Exceptions\FailResponseException;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\VendirunApi;
+use Session;
 
 class ApiOrderRepository implements OrderRepository {
 
@@ -187,4 +188,21 @@ class ApiOrderRepository implements OrderRepository {
         return $payments;
     }
 
+    /**
+     * @param $id
+     * @param $fileId
+     * @return mixed
+     */
+    public function getDownloadUrl($id, $fileId)
+    {
+        $params = [
+            'orderId' => $id,
+            'fileId' => $fileId,
+            'token' => Session::get('token')
+        ];
+
+        $result = VendirunApi::makeRequest('order/download', $params)->getData();
+
+        return $result;
+    }
 }

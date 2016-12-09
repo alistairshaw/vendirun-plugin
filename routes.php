@@ -104,8 +104,10 @@ Route::group(['middleware' => ['web']], function ()
                     Route::get('address/edit/{addressId}', ['as' => $localePrefix . 'vendirun.customer.address.edit', 'uses' => 'Customer\Account\AddressController@edit']);
                     Route::get('address/delete/{addressId}', ['as' => $localePrefix . 'vendirun.customer.address.delete', 'uses' => 'Customer\Account\AddressController@delete']);
                     Route::post('address/save', ['as' => $localePrefix . 'vendirun.customer.address.save', 'uses' => 'Customer\Account\AddressController@save']);
+
                     Route::get('orders', ['as' => $localePrefix . 'vendirun.customer.account.orders', 'uses' => 'Customer\Account\OrderController@index']);
                     Route::get('orders/view/{orderId}', ['as' => $localePrefix . 'vendirun.customer.account.orderView', 'uses' => 'Customer\Account\OrderController@view']);
+                    Route::get('orders/download/{orderId}/{fileId}', ['as' => $localePrefix . 'vendirun.customer.account.orderDownload', 'uses' => 'Customer\Account\OrderController@download']);
                 });
             });
 

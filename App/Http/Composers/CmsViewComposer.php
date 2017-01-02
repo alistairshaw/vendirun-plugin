@@ -1,5 +1,6 @@
 <?php namespace AlistairShaw\Vendirun\App\Http\Composers;
 
+use AlistairShaw\Vendirun\App\Lib\ClientHelper;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\VendirunApi;
 use App;
 use Config;
@@ -8,6 +9,17 @@ use Request;
 use URL;
 
 class CmsViewComposer {
+
+    /**
+     * @param View $view
+     */
+    public function css($view)
+    {
+        $clientData = ClientHelper::getClientInfo();
+
+        $customCSS = (isset($clientData->custom_css) && $clientData->custom_css) ? $clientData->custom_css : false;
+        $view->with('customCSS', $customCSS);
+    }
 
     /**
      * Composer for navigation, fetches the menu from the API

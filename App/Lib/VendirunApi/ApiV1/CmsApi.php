@@ -3,6 +3,15 @@
 class CmsApi extends BaseApi {
 
     /**
+     * @return object
+     */
+    public function css()
+    {
+        $url = 'cms/css';
+        return $this->request($url);
+    }
+
+    /**
      * @param array $params
      * @return object
      */

@@ -1,5 +1,7 @@
 <?php namespace AlistairShaw\Vendirun\App\Http\Composers;
 
+use AlistairShaw\Vendirun\App\Entities\Slider\SliderRepository;
+use AlistairShaw\Vendirun\App\Entities\Slider\SliderViewTransformer;
 use AlistairShaw\Vendirun\App\Lib\CountryHelper;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\Exceptions\FailResponseException;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\VendirunApi;
@@ -131,88 +133,33 @@ class WidgetViewComposer {
     public function slider($view)
     {
         $viewData = $view->getData();
+
         if (!isset($viewData['options'])) $viewData['options'] = json_decode($viewData['element']->element_options, true);
         $slider_id = $viewData['options']['id'];
 
-        try
-        {
-            $slider = VendirunApi::makeRequest('cms/slider', ['id' => $slider_id])->getData();
-            $sliderStyles = $this->getSliderStyles($slider);
-            $slideStyles = $this->getSlideStyles($slider);
-        }
-        catch (FailResponseException $e)
-        {
-            $slider = false;
-            $sliderStyles = [];
-            $slideStyles = [];
-        }
-        $view->with('slider', $slider)->with('sliderStyles', $sliderStyles)->with('slideStyles', $slideStyles);
-    }
+        $cacheKey = 'vrSlider' . $slider_id;
 
-    /**
-     * @param $slider
-     * @return array
-     */
-    private function getSliderStyles($slider)
-    {
-        $sliderStyles = [];
-        if (isset($slider->full_screen) && $slider->full_screen == 1)
+        if (Cache::has($cacheKey))
         {
-            $sliderStyles[] = 'height: 100%';
+            $slider = Cache::get($cacheKey);
         }
         else
         {
-            if ($slider->max_height == $slider->min_height)
+            try
             {
-                $sliderStyles[] = 'height: ' . $slider->min_height . 'px';
+                $sliderRepository = App::make(SliderRepository::class);
+                $slider = $sliderRepository->find($slider_id);
             }
-            else
+            catch (FailResponseException $e)
             {
-                if (isset($slider->max_height) && $slider->max_height > 0) $sliderStyles[] = 'max-height: ' . $slider->max_height . 'px';
-                if (isset($slider->min_height) && $slider->min_height > 0) $sliderStyles[] = 'min-height: ' . $slider->min_height . 'px';
+                $slider = false;
             }
+
+            Cache::put($cacheKey, $slider, 1);
         }
 
-        if (count($sliderStyles)) $sliderStyles[] = 'overflow: hidden;';
+        $sliderData = $slider->transform(New SliderViewTransformer());
 
-        return $sliderStyles;
-    }
-
-    /**
-     * @param $slider
-     * @return array
-     */
-    private function getSlideStyles($slider)
-    {
-        $slideStyles = [];
-        $index = 0;
-        foreach ($slider->slides as $slide)
-        {
-            $minHeight = 0;
-            $maxHeight = 0;
-            if (isset($slider->min_height) && $slider->min_height > 0) $minHeight = $slider->min_height;
-            if (isset($slider->max_height) && $slider->max_height > 0) $maxHeight = $slider->max_height;
-            $actualHeight = ($minHeight == $maxHeight) ? $minHeight : 0;
-
-
-            // if we have no min height and the slider is set as background, then we need to give it some height
-            //    otherwise it's not visible
-            if (!$minHeight && !$actualHeight && $slide->set_as_background == 1) $minHeight = 'calc(100vh)';
-
-            $slideStyles[$index] = [];
-            if ($minHeight) $slideStyles[$index][] = 'min-height: ' . $minHeight . 'px';
-            if ($maxHeight) $slideStyles[$index][] = 'max-height: ' . $maxHeight . 'px';
-            if ($actualHeight) $slideStyles[$index][] = 'height: ' . $actualHeight . 'px';
-
-            if (isset($slide->set_as_background))
-            {
-                if ($slide->set_as_background == 1) $slideStyles[$index][] = 'background-position: center top';
-                if ($slide->set_as_background == 1) $slideStyles[$index][] = 'background-image: url(' . $slide->background->hd . ')';
-            }
-            if (isset($slide->background_cover) && $slide->background_cover == 1) $slideStyles[$index][] = 'background-size: cover';
-
-            $index++;
-        }
-        return $slideStyles;
+        $view->with('slider', $sliderData);
     }
 }

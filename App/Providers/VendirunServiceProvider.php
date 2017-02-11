@@ -18,6 +18,8 @@ use AlistairShaw\Vendirun\App\Entities\Product\ApiProductRepository;
 use AlistairShaw\Vendirun\App\Entities\Product\ProductCategory\ApiProductCategoryRepository;
 use AlistairShaw\Vendirun\App\Entities\Product\ProductCategory\ProductCategoryRepository;
 use AlistairShaw\Vendirun\App\Entities\Product\ProductRepository;
+use AlistairShaw\Vendirun\App\Entities\Slider\ApiSliderRepository;
+use AlistairShaw\Vendirun\App\Entities\Slider\SliderRepository;
 use AlistairShaw\Vendirun\App\Lib\ClientHelper;
 use AlistairShaw\Vendirun\App\Lib\CountryHelper;
 use AlistairShaw\Vendirun\App\Lib\CurrencyHelper;
@@ -127,6 +129,7 @@ class VendirunServiceProvider extends ServiceProvider {
         $this->app->bind(CustomerRepository::class, ApiCustomerRepository::class);
         $this->app->bind(ProductRepository::class, ApiProductRepository::class);
         $this->app->bind(ProductCategoryRepository::class, ApiProductCategoryRepository::class);
+        $this->app->bind(SliderRepository::class, ApiSliderRepository::class);
 
 		// aliases
 		$loader = AliasLoader::getInstance();

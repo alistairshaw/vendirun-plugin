@@ -48,7 +48,7 @@ class CheckoutController extends VendirunBaseController {
         $countryId = NULL;
         $countryId = CustomerHelper::getDefaultCountry($customerRepository);
         if ($data['defaultAddress']) $countryId = $data['defaultAddress']->getCountryId();
-        if (Request::old('shippingaddressId'))
+        if (Request::old('shippingaddressId') && $data['customer'])
         {
             $country = $data['customer']->getAddressFromAddressId(Request::old('shippingaddressId'));
             if ($country) $countryId = $country->getCountryId();

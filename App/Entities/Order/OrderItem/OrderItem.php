@@ -163,7 +163,7 @@ class OrderItem {
     public function addDownloadable(Downloadable $downloadable)
     {
         // no duplicates
-        foreach ($this->downloadables as $d) if ($d->get_id() == $downloadable->get_id()) return;
+        foreach ($this->downloadables as $d) if ($d->get_id() == $downloadable->getId()) return;
         $this->downloadables[] = $downloadable;
     }
 

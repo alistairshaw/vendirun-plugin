@@ -47,7 +47,7 @@ class Name {
         $nameExploder = new NameExploder();
         $name = $nameExploder->explode($fullName);
 
-        return new self($name->firstName(), $name->middleInitial(), $name->lastName(), $name->title());
+        return new self($name->title(), $name->firstName(), $name->middleInitial(), $name->lastName());
     }
 
     /**

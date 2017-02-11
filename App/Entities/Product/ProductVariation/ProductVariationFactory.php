@@ -16,7 +16,7 @@ class ProductVariationFactory {
             'id' => $productVariation->id,
             'name' => $productVariation->name,
             'price' => $productVariation->price,
-            'sku' => $productVariation->product_sku . $productVariation->variation_sku,
+            'sku' => $productVariation->variation_sku,
             'stockLevel' => $productVariation->stock_level,
         ];
 

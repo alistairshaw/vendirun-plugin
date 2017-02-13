@@ -50,7 +50,7 @@
                 <ul>
                     @foreach ($item->getDownloadables() as $downloadable)
                         <li>
-                            <a href="{{ Route(LocaleHelper::localePrefix() . 'vendirun.customer.account.orderDownload', ['orderId' => $order->getId(), 'fileId' => $downloadable->getId() ]) }}">
+                            <a href="{{ Route(LocaleHelper::localePrefix() . 'vendirun.customer.account.orderDownload', ['orderId' => $order->getId(), 'fileId' => $downloadable->getId(), 'oneTimeToken' => isset($oneTimeToken) ? $oneTimeToken : NULL ]) }}">
                                 {{ $downloadable->getFileName() }}
                             </a></li>
                     @endforeach

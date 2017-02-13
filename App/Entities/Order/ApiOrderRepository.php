@@ -49,6 +49,7 @@ class ApiOrderRepository implements OrderRepository {
         $params = [
             'id' => $id,
             'token' => CustomerHelper::checkLoggedinCustomer(),
+            'one_time_token' => $oneTimeToken,
             'remove_one_time_token' => $removeOneTimeToken
         ];
 
@@ -144,7 +145,9 @@ class ApiOrderRepository implements OrderRepository {
 
         $result = VendirunApi::makeRequest('order/store', $params)->getData();
 
-        return $this->find($result->order_id, $result->one_time_token, false);
+        $order = $this->find($result->order_id, $result->one_time_token, false);
+
+        return $order;
     }
 
     /**
@@ -191,14 +194,16 @@ class ApiOrderRepository implements OrderRepository {
     /**
      * @param $id
      * @param $fileId
+     * @param string $oneTimeToken
      * @return mixed
      */
-    public function getDownloadUrl($id, $fileId)
+    public function getDownloadUrl($id, $fileId, $oneTimeToken = null)
     {
         $params = [
             'orderId' => $id,
             'fileId' => $fileId,
-            'token' => Session::get('token')
+            'token' => Session::get('token'),
+            'one_time_token' => $oneTimeToken
         ];
 
         $result = VendirunApi::makeRequest('order/download', $params)->getData();

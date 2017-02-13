@@ -218,7 +218,6 @@ class CheckoutController extends VendirunBaseController {
         try
         {
             $data['order'] = $orderRepository->find($orderId, Session::get('orderOneTimeToken', NULL));
-            Session::remove('orderOneTimeToken');
         }
         catch (FailResponseException $e)
         {
@@ -226,6 +225,8 @@ class CheckoutController extends VendirunBaseController {
             //    in which case we just won't show the order details
             $data['order'] = NULL;
         }
+
+        $data['oneTimeToken'] = Session::get('orderOneTimeToken', NULL);
 
         $data['pageTitle'] = trans('vendirun::checkout.orderCompleteTitle');
 

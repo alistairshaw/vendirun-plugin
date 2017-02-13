@@ -158,7 +158,7 @@ class WidgetViewComposer {
             Cache::put($cacheKey, $slider, 1);
         }
 
-        $sliderData = $slider->transform(New SliderViewTransformer());
+        $sliderData = $slider ? $slider->transform(New SliderViewTransformer()) : false;
 
         $view->with('slider', $sliderData);
     }

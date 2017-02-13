@@ -2,7 +2,6 @@
 
 use AlistairShaw\Vendirun\App\Entities\Customer\CustomerRepository;
 use AlistairShaw\Vendirun\App\Entities\Customer\Helpers\CustomerHelper;
-use AlistairShaw\Vendirun\App\Entities\Order\Aggregates\OrderStatus;
 use AlistairShaw\Vendirun\App\Entities\Order\OrderRepository;
 use AlistairShaw\Vendirun\App\Http\Controllers\VendirunAuthController;
 use Illuminate\Pagination\LengthAwarePaginator;

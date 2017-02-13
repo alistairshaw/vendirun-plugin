@@ -107,7 +107,7 @@ Route::group(['middleware' => ['web']], function ()
 
                     Route::get('orders', ['as' => $localePrefix . 'vendirun.customer.account.orders', 'uses' => 'Customer\Account\OrderController@index']);
                     Route::get('orders/view/{orderId}', ['as' => $localePrefix . 'vendirun.customer.account.orderView', 'uses' => 'Customer\Account\OrderController@view']);
-                    Route::get('orders/download/{orderId}/{fileId}', ['as' => $localePrefix . 'vendirun.customer.account.orderDownload', 'uses' => 'Customer\Account\OrderController@download']);
+                    Route::get('orders/download/{orderId}/{fileId}/{oneTimeToken?}', ['as' => $localePrefix . 'vendirun.customer.account.orderDownload', 'uses' => 'Customer\Account\FileController@download']);
                 });
             });
 

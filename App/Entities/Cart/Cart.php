@@ -199,7 +199,7 @@ class Cart {
      */
     public function getShippingType()
     {
-        return $this->shippingType;
+        return $this->shippingType ? $this->shippingType : 'Shipping';
     }
 
     /**

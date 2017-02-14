@@ -22,25 +22,7 @@ class ApiCustomerRepository implements CustomerRepository {
             $apiCustomer = VendirunApi::makeRequest('customer/find', $data)->getData();
 
             $customerFactory = new CustomerFactory();
-            $customer = $customerFactory->make($apiCustomer->id, $apiCustomer->fullname, $apiCustomer->primary_email);
-            $customer->setCompanyName($apiCustomer->organisation_name);
-            $customer->setJobRole($apiCustomer->jobrole);
-
-            foreach ($apiCustomer->addresses as $address)
-            {
-                $customer->addAddress(new Address([
-                    'id' => $address->id,
-                    'address1' => $address->address1,
-                    'address2' => $address->address2,
-                    'address3' => $address->address3,
-                    'city' => $address->city,
-                    'state' => $address->state,
-                    'postcode' => $address->postcode,
-                    'countryId' => $address->country_id
-                ]));
-            }
-
-            return $customer;
+            return $customerFactory->fromApi($apiCustomer);
         }
         catch (FailResponseException $e)
         {
@@ -51,9 +33,12 @@ class ApiCustomerRepository implements CustomerRepository {
 
     /**
      * @param Customer $customer
+     * @param bool $is_registration
+     * @param null $password
+     * @param bool $fetch_duplicate
      * @return Customer
      */
-    public function save(Customer $customer)
+    public function save(Customer $customer, $is_registration = false, $password = null, $fetch_duplicate = false)
     {
         $data = [
             'full_name' => $customer->fullName(),
@@ -61,6 +46,14 @@ class ApiCustomerRepository implements CustomerRepository {
             'email' => $customer->getPrimaryEmail(),
             'telephone' => $customer->getPrimaryTelephone()
         ];
+
+        if ($is_registration)
+        {
+            $data['is_registration'] = true;
+            $data['password'] = $password;
+        }
+
+        if ($fetch_duplicate) $data['fetch_duplicate'] = true;
 
         $addresses = [];
         foreach ($customer->getAddresses() as $add)
@@ -72,8 +65,11 @@ class ApiCustomerRepository implements CustomerRepository {
 
         if ($customer->getId()) return $this->update($data, $customer->getId());
 
-        $savedCustomer = VendirunApi::makeRequest('customer/store', $data)->getData();
-        $customer->setId($savedCustomer->id);
+        $apiCustomer = VendirunApi::makeRequest('customer/store', $data)->getData();
+
+        $customerFactory = new CustomerFactory();
+        $customer = $customerFactory->fromApi($apiCustomer);
+
         return $customer;
     }
 
@@ -102,7 +98,22 @@ class ApiCustomerRepository implements CustomerRepository {
     private function update($data, $id)
     {
         $data['id'] = $id;
+
         VendirunApi::makeRequest('customer/update', $data)->getData();
         return $this->find();
+    }
+
+    /**
+     * @param Customer $customer
+     * @param array $data
+     */
+    public function registerFormCompletion(Customer $customer, $data)
+    {
+        VendirunApi::makeRequest('customer/registerFormCompletion', [
+            'customer_id' => $customer->getId(),
+            'new_customer' => 1,
+            'data' => json_encode($data),
+            'form_id' => 'Registration Form'
+        ]);
     }
 }

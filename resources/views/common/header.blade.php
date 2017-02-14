@@ -22,9 +22,7 @@
 
             <ul class="nav navbar-nav navbar-right">
                 @include('vendirun::cms.menu.login-button')
-                @if(\AlistairShaw\Vendirun\App\Lib\ClientHelper::checkForModule('webshop'))
-                    @include('vendirun::product.partials.cart.cart-widget')
-                @endif
+                @include('vendirun::product.partials.cart.cart-widget')
                 @if(count(\AlistairShaw\Vendirun\App\Lib\ClientHelper::getClientInfo()->additional_languages))
                     <li>
                         @include('vendirun::common.language-select')

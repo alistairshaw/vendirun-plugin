@@ -10,11 +10,10 @@ use AlistairShaw\Vendirun\App\Http\Controllers\VendirunBaseController;
 use AlistairShaw\Vendirun\App\Lib\LocaleHelper;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\Exceptions\FailResponseException;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\VendirunApi;
-use App;
+use AlistairShaw\Vendirun\App\Traits\ApiSubmissionFailTrait;
 use Cache;
 use Config;
 use Event;
-use League\Flysystem\Adapter\Local;
 use Redirect;
 use Request;
 use Illuminate\Http\Request as IlRequest;
@@ -22,6 +21,8 @@ use Session;
 use View;
 
 class CustomerController extends VendirunBaseController {
+
+    use ApiSubmissionFailTrait;
 
     public function __construct()
     {
@@ -71,9 +72,10 @@ class CustomerController extends VendirunBaseController {
     /**
      * Register a customer
      * @param IlRequest $request
+     * @param CustomerRepository $customerRepository
      * @return mixed
      */
-    public function doRegister(IlRequest $request)
+    public function doRegister(IlRequest $request, CustomerRepository $customerRepository)
     {
         $this->validate($request, [
             'full_name' => 'required',
@@ -86,21 +88,33 @@ class CustomerController extends VendirunBaseController {
         $clientInfo = Config::get('clientInfo');
         if ($clientInfo->signup_email_verification) return $this->doEmailVerification(Request::all());
 
+        $customerFactory = new CustomerFactory();
+        $customer = $customerFactory->fromRegistration(Request::all());
+
         try
         {
-            VendirunApi::makeRequest('customer/store', Request::all());
-            return $this->login(Request::get('email'), Request::get('password'));
+            $customer = $customerRepository->save($customer, true, Request::get('password'));
+            $customerRepository->registerFormCompletion($customer, Request::all());
         }
         catch (FailResponseException $e)
         {
             return Redirect::route(LocaleHelper::localePrefix() . 'vendirun.register')->withInput()->withErrors($e->getMessage());
         }
+        catch (\Exception $e)
+        {
+            $this->apiSubmissionFailed('register', Request::all());
+            return Redirect::route(LocaleHelper::localePrefix() . 'vendirun.register')->withInput()->withErrors(trans('vendirun::customer.cannotRegister'));
+        }
+
+
+
+        return $this->login(Request::get('email'), Request::get('password'));
     }
 
     /**
      * @param $email
      * @param $password
-     * @return \Illuminate\Http\RedirectResponse
+     * @return mixed
      */
     private function login($email, $password)
     {
@@ -167,12 +181,11 @@ class CustomerController extends VendirunBaseController {
         catch (CustomerNotFoundException $e)
         {
             $originator = $customerFactory->make(null, Request::get('fullName'), Request::get('emailAddress'));
-            $customerRepository->save($originator);
+            $originator = $customerRepository->save($originator, false, null, true);
         }
 
         $receiver = $customerFactory->make(null, Request::get('fullNameFriend'), Request::get('emailAddressFriend'));
-
-        $customerRepository->save($receiver);
+        $receiver = $customerRepository->save($receiver, false, null, true);
 
         try
         {
@@ -203,7 +216,7 @@ class CustomerController extends VendirunBaseController {
         $customerFactory = new CustomerFactory();
         $customer = $customerFactory->make(null, Request::get('fullname', null), Request::get('email'));
         $customer->setPrimaryTelephone(Request::get('telephone', null));
-        $customerRepository->save($customer);
+        $customer = $customerRepository->save($customer, false, null, true);
 
         if (Request::has('propertyId'))
         {
@@ -257,8 +270,6 @@ class CustomerController extends VendirunBaseController {
         try
         {
             $params = VendirunApi::makeRequest('customer/verifyEmailData', ['id' => Request::get('confirmId')])->getData();
-
-            VendirunApi::makeRequest('customer/store', $params);
             return $this->login($params->email, $params->password);
         }
         catch (FailResponseException $e)

@@ -66,6 +66,8 @@ class ComposerServiceProvider extends ServiceProvider {
 
     private function registerCmsComposers()
     {
+        // css
+        $this->app->view->composer('vendirun::common.head', 'AlistairShaw\Vendirun\App\Http\Composers\CmsViewComposer@css');
         // menu
         $this->app->view->composer('vendirun::cms.menu', 'AlistairShaw\Vendirun\App\Http\Composers\CmsViewComposer@menu');
         $this->app->view->composer('vendirun::cms.menu.item', 'AlistairShaw\Vendirun\App\Http\Composers\CmsViewComposer@menuItem');
@@ -93,6 +95,7 @@ class ComposerServiceProvider extends ServiceProvider {
         $this->app->view->composer('vendirun::cms.widgets.social-share', 'AlistairShaw\Vendirun\App\Http\Composers\WidgetViewComposer@socialShare');
         $this->app->view->composer('vendirun::cms.widgets.standard-staff', 'AlistairShaw\Vendirun\App\Http\Composers\WidgetViewComposer@staff');
         $this->app->view->composer('vendirun::cms.widgets.slider', 'AlistairShaw\Vendirun\App\Http\Composers\WidgetViewComposer@slider');
+        $this->app->view->composer('vendirun::cms.widgets.twitter-feed', 'AlistairShaw\Vendirun\App\Http\Composers\WidgetViewComposer@twitterFeed');
     }
 
     private function registerBlogComposers()

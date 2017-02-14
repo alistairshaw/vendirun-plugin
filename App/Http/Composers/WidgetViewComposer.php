@@ -1,11 +1,15 @@
 <?php namespace AlistairShaw\Vendirun\App\Http\Composers;
 
+use AlistairShaw\Vendirun\App\Entities\Slider\SliderRepository;
+use AlistairShaw\Vendirun\App\Entities\Slider\SliderViewTransformer;
 use AlistairShaw\Vendirun\App\Lib\CountryHelper;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\Exceptions\FailResponseException;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\VendirunApi;
 use App;
+use Cache;
 use Config;
 use Illuminate\View\View;
+use Thujohn\Twitter\Facades\Twitter;
 use URL;
 
 class WidgetViewComposer {
@@ -16,10 +20,32 @@ class WidgetViewComposer {
      */
     public function social($view)
     {
-        if ($clientInfo = Config::get('clientInfo'))
+        $data = $view->getData();
+
+        if (isset($data['element']) && $data['element']->content == 'standard-social')
+        {
+            $socialOptions = json_decode($data['element']->element_options);
+
+            $final = [
+                'facebook' => null,
+                'twitter' => null,
+                'google_plus' => null,
+                'linkedin' => null,
+                'blog' => null
+            ];
+            foreach ($socialOptions as $key => $option)
+            {
+                if (!$option) continue;
+                $final[str_replace('social_', '', $key)] = $option;
+            }
+
+            $view->with('social', (object)$final);
+        }
+        else if ($clientInfo = Config::get('clientInfo'))
         {
             $view->with('social', $clientInfo->social);
         }
+
         $view->with('socialType', Config::get('socialType', 'light'));
     }
 
@@ -65,94 +91,75 @@ class WidgetViewComposer {
         $view->with('regions', $regions);
     }
 
+
+    /**
+     * @param View $view
+     */
+    public function twitterFeed($view)
+    {
+        $viewData = $view->getData();
+        $elementOptions = json_decode($viewData['element']->element_options);
+
+        $tweets = [];
+        $twitterHandle = '?';
+        try
+        {
+            if (isset($elementOptions->name) && $elementOptions->name)
+            {
+                $twitterHandle = $elementOptions->name;
+
+                if (!Cache::has('twitterFeed' . $twitterHandle))
+                {
+                    $tweets = json_decode(Twitter::getUserTimeline(['screen_name' => $elementOptions->name, 'count' => 8, 'format' => 'json']));
+                    Cache::put('twitterFeed' . $twitterHandle, $tweets, 3);
+                }
+                else
+                {
+                    $tweets = Cache::get('twitterFeed' . $twitterHandle);
+                }
+            }
+        }
+        catch (\Exception $e)
+        {
+            // ignore any exceptions when retrieving tweets
+        }
+
+        $view->with('tweets', $tweets)->with('twitterHandle', $twitterHandle);
+    }
+
     /**
      * @param View $view
      */
     public function slider($view)
     {
         $viewData = $view->getData();
+
         if (!isset($viewData['options'])) $viewData['options'] = json_decode($viewData['element']->element_options, true);
         $slider_id = $viewData['options']['id'];
 
-        try
-        {
-            $slider = VendirunApi::makeRequest('cms/slider', ['id' => $slider_id])->getData();
-            $sliderStyles = $this->getSliderStyles($slider);
-            $slideStyles = $this->getSlideStyles($slider);
-        }
-        catch (FailResponseException $e)
-        {
-            $slider = false;
-            $sliderStyles = [];
-            $slideStyles = [];
-        }
-        $view->with('slider', $slider)->with('sliderStyles', $sliderStyles)->with('slideStyles', $slideStyles);
-    }
+        $cacheKey = 'vrSlider' . $slider_id;
 
-    /**
-     * @param $slider
-     * @return array
-     */
-    private function getSliderStyles($slider)
-    {
-        $sliderStyles = [];
-        if (isset($slider->full_screen) && $slider->full_screen == 1)
+        if (Cache::has($cacheKey))
         {
-            $sliderStyles[] = 'height: 100%';
+            $slider = Cache::get($cacheKey);
         }
         else
         {
-            if ($slider->max_height == $slider->min_height)
+            try
             {
-                $sliderStyles[] = 'height: ' . $slider->min_height . 'px';
+                $sliderRepository = App::make(SliderRepository::class);
+                $slider = $sliderRepository->find($slider_id);
             }
-            else
+            catch (FailResponseException $e)
             {
-                if (isset($slider->max_height) && $slider->max_height > 0) $sliderStyles[] = 'max-height: ' . $slider->max_height . 'px';
-                if (isset($slider->min_height) && $slider->min_height > 0) $sliderStyles[] = 'min-height: ' . $slider->min_height . 'px';
+                $slider = false;
             }
+
+            Cache::put($cacheKey, $slider, 1);
         }
 
-        if (count($sliderStyles)) $sliderStyles[] = 'overflow: hidden;';
+        $sliderData = $slider ? $slider->transform(New SliderViewTransformer()) : false;
 
-        return $sliderStyles;
-    }
-
-    /**
-     * @param $slider
-     * @return array
-     */
-    private function getSlideStyles($slider)
-    {
-        $slideStyles = [];
-        $index = 0;
-        foreach ($slider->slides as $slide)
-        {
-            $minHeight = 0;
-            $maxHeight = 0;
-            if (isset($slider->min_height) && $slider->min_height > 0) $minHeight = $slider->min_height;
-            if (isset($slider->max_height) && $slider->max_height > 0) $maxHeight = $slider->max_height;
-            $actualHeight = ($minHeight == $maxHeight) ? $minHeight : 0;
-
-
-            // if we have no min height and the slider is set as background, then we need to give it some height
-            //    otherwise it's not visible
-            if (!$minHeight && !$actualHeight && $slide->set_as_background == 1) $minHeight = 'calc(100vh)';
-
-            $slideStyles[$index] = [];
-            if ($minHeight) $slideStyles[$index][] = 'min-height: ' . $minHeight . 'px';
-            if ($maxHeight) $slideStyles[$index][] = 'max-height: ' . $maxHeight . 'px';
-            if ($actualHeight) $slideStyles[$index][] = 'height: ' . $actualHeight . 'px';
-
-            if (isset($slide->set_as_background))
-            {
-                if ($slide->set_as_background == 1) $slideStyles[$index][] = 'background-position: center top';
-                if ($slide->set_as_background == 1) $slideStyles[$index][] = 'background-image: url(' . $slide->background->hd . ')';
-            }
-            if (isset($slide->background_cover) && $slide->background_cover == 1) $slideStyles[$index][] = 'background-size: cover';
-
-            $index++;
-        }
-        return $slideStyles;
+        $view->with('slider', $sliderData);
     }
 }

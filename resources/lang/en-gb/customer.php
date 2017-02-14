@@ -15,5 +15,6 @@ return [
     'addAddress' => 'Add a New Address',
     'editAddress' => 'Edit Address',
     'addresses' => 'Your Addresses',
-    'noAddressesYet' => 'You have not added any addresses yet.'
+    'noAddressesYet' => 'You have not added any addresses yet.',
+    'cannotRegister' => 'Unable to register at this time, please try again later'
 ];

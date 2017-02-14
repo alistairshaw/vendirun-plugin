@@ -18,3 +18,7 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
 <link rel="stylesheet" href="{{ asset('vendor/vendirun/css/production.css') }}">
+
+@if ($customCSS)
+    <link rel="stylesheet" href="{{ $customCSS }}">
+@endif

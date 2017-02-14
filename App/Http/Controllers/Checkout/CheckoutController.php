@@ -48,7 +48,11 @@ class CheckoutController extends VendirunBaseController {
         $countryId = NULL;
         $countryId = CustomerHelper::getDefaultCountry($customerRepository);
         if ($data['defaultAddress']) $countryId = $data['defaultAddress']->getCountryId();
-        if (Request::old('shippingaddressId')) $countryId = $data['customer']->getAddressFromAddressId(Request::old('shippingaddressId'))->getCountryId();
+        if (Request::old('shippingaddressId') && $data['customer'])
+        {
+            $country = $data['customer']->getAddressFromAddressId(Request::old('shippingaddressId'));
+            if ($country) $countryId = $country->getCountryId();
+        }
 
         $cart = $cartRepository->find($countryId, Request::get('shippingTypeId', ''));
         $cart->setCountryId($countryId);
@@ -214,7 +218,6 @@ class CheckoutController extends VendirunBaseController {
         try
         {
             $data['order'] = $orderRepository->find($orderId, Session::get('orderOneTimeToken', NULL));
-            Session::remove('orderOneTimeToken');
         }
         catch (FailResponseException $e)
         {
@@ -222,6 +225,8 @@ class CheckoutController extends VendirunBaseController {
             //    in which case we just won't show the order details
             $data['order'] = NULL;
         }
+
+        $data['oneTimeToken'] = Session::get('orderOneTimeToken', NULL);
 
         $data['pageTitle'] = trans('vendirun::checkout.orderCompleteTitle');
 

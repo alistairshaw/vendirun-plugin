@@ -1,7 +1,7 @@
 {
     "name": "alistairshaw/vendirun",
     "description": "Vendirun plugin for front-end Laravel website",
-    "version": "1.1.1.5",
+    "version": "1.1.1.6",
     "authors": [
         {
             "name": "Alistair Shaw",
@@ -15,6 +15,7 @@
         "social-links/social-links": "^1.9",
         "stripe/stripe-php": "^3",
         "alistairshaw/name-exploder": "^0.1.0",
-        "paypal/rest-api-sdk-php": "*"
+        "paypal/rest-api-sdk-php": "*",
+        "thujohn/twitter": "~2.0"
     }
 }

@@ -199,7 +199,7 @@ class Cart {
      */
     public function getShippingType()
     {
-        return $this->shippingType;
+        return $this->shippingType ? $this->shippingType : 'Shipping';
     }
 
     /**
@@ -370,6 +370,20 @@ class Cart {
         $this->items = $newItems;
 
         return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function shippingApplies()
+    {
+        foreach ($this->getItems() as $cartItem)
+        {
+            /* @var $cartItem CartItem */
+            if ($cartItem->shippingApplies()) return true;
+        }
+
+        return false;
     }
 
     /**

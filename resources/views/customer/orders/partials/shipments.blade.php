@@ -22,9 +22,9 @@
                 <div class="tracking-number">
                     {{ trans('vendirun::orders.trackingNumber') }}<br>
                     <span>
-                        {{ $view['trackingUrl'] ? '<a href="' . $view['trackingUrl'] . '" target="_blank">' : '' }}
+                        {!! $view['trackingUrl'] && filter_var($view['trackingUrl'], FILTER_VALIDATE_URL) ? '<a href="' . $view['trackingUrl'] . '" target="_blank">' : ''  !!}
                         {{ $view['trackingNumber'] }}
-                        {{ $view['trackingUrl'] ? '</a>' : '' }}
+                        {!! $view['trackingUrl'] && filter_var($view['trackingUrl'], FILTER_VALIDATE_URL) ? '</a>' : '' !!}
                     </span>
                 </div>
             @endif

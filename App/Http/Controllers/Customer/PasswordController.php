@@ -32,7 +32,6 @@ class PasswordController extends VendirunBaseController {
      */
     public function processRecovery()
     {
-
         try
         {
             VendirunApi::makeRequest('customer/passwordRecovery', ['email' => Request::get('email')]);

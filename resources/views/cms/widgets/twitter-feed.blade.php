@@ -1,5 +1,18 @@
-<?php if (!isset($options)) $options = json_decode($element->element_options, true) ?>
 <div class="vendirun-twitter-feed">
-    <a class="twitter-timeline" data-dnt="true" href="https://twitter.com/{{ $options['name'] }}" data-widget-id="722490161188225024">Tweets by @{{ $options['name }}</a>
-    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+    <h3>{{ trans('vendirun::widgets.twitterFeedFor') }} <a href="https://twitter.com/{{ $twitterHandle }}" target="_blank">{{ '@' . $twitterHandle }}</a></h3>
+    @foreach ($tweets as $tweet)
+        <div class="tweet">
+            <div class="photo"><img src="{{ $tweet->user->profile_image_url_https }}"></div>
+            <div class="body">
+                <div class="header">
+                    <div class="name">{{ $tweet->user->name }}</div>
+                    <div class="handle">{{ $tweet->user->screen_name }}</div>
+                    <div class="date">{{ $tweet->created_at }}</div>
+                </div>
+                <div class="content">
+                    {{ $tweet->text }}
+                </div>
+            </div>
+        </div>
+    @endforeach
 </div>

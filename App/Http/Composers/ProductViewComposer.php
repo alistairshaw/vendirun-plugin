@@ -81,7 +81,7 @@ class ProductViewComposer {
     {
         return route(LocaleHelper::localePrefix() . $addToCart ? 'vendirun.productAddToCart' : 'vendirun.productView'
             , array_merge(
-                ['productId' => $productId, 'productName' => urlencode(strtolower($productName)), 'variationId' => $variationId]
+                ['productId' => $productId, 'productName' => urlencode(strtolower(str_replace('/', '-', $productName))), 'variationId' => $variationId]
                 , Request::query())
         );
     }

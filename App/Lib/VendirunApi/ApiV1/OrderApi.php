@@ -6,7 +6,7 @@ class OrderApi extends BaseApi {
 
     /**
      * @param $params
-     * @return array
+     * @return object
      */
     public function search($params)
     {
@@ -17,7 +17,7 @@ class OrderApi extends BaseApi {
 
     /**
      * @param array $params
-     * @return array
+     * @return object
      * @throws InvalidApiRequestException
      * @throws \AlistairShaw\Vendirun\App\Lib\VendirunApi\Exceptions\FailResponseException
      */
@@ -46,7 +46,7 @@ class OrderApi extends BaseApi {
 
     /**
      * @param array $params
-     * @return array
+     * @return object
      */
     public function find($params)
     {
@@ -64,6 +64,19 @@ class OrderApi extends BaseApi {
     public function payment($params)
     {
         $url = 'order/payment';
+
+        return $this->request($url, $params);
+    }
+
+    /**
+     * @param $params
+     * @return object
+     */
+    public function download($params)
+    {
+        $url = 'order/downloadable/';
+        $url .= (isset($params['orderId'])) ? $params['orderId'] : '0';
+        if (isset($params['fileId'])) $url .= '/' . $params['fileId'];
 
         return $this->request($url, $params);
     }

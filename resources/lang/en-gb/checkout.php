@@ -3,7 +3,9 @@
 return [
     'checkout' => 'Checkout',
     'deliveryDetails' => 'Delivery Details',
+    'customerDetails' => 'Your Details',
     'deliveryDetailsDescription' => 'Where shall we send this stuff?',
+    'customerDetailsDescription' => 'Just need a few details',
     'shippingMethod' => 'Shipping Method',
     'shippingMethodDescription' => 'Confirm your shipping method and amount',
     'shippingAddress' => 'Shipping Address',
@@ -32,5 +34,13 @@ return [
     'paymentDate' => 'Payment Date',
     'invalidPostcode' => 'Paypal will not accept your postcode as valid, please edit your address and try again, or pay by Credit Card',
     'paypalUnavailable' => 'Paypal is not available at the moment, please pay by Credit Card or contact us for further assistance',
-    'freeShipping' => 'Free Shipping'
+    'freeShipping' => 'Free Shipping',
+    'billingAddressMissing' => 'Please select a billing address OR',
+    'billingAddressLineOneMissing' => 'Please enter the first line of your billing address',
+    'billingAddressCityMissing' => 'Please enter your billing city',
+    'billingAddressCountryMissing' => 'Please select a billing country',
+    'shippingAddressMissing' => 'Please select a shipping address OR',
+    'shippingAddressLineOneMissing' => 'Please enter the first line of your shipping address',
+    'shippingAddressCityMissing' => 'Please enter your shipping city',
+    'shippingAddressCountryMissing' => 'Please select a shipping country',
 ];

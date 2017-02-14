@@ -26,4 +26,11 @@ interface OrderRepository {
      */
     public function save(Order $order);
 
+    /**
+     * @param $id
+     * @param $fileId
+     * @param string $oneTimeToken
+     * @return mixed
+     */
+    public function getDownloadUrl($id, $fileId, $oneTimeToken = null);
 }

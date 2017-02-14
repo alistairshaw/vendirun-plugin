@@ -1,0 +1,23 @@
+.vendirun-twitter-feed {
+    max-width: 600px;
+    .tweet {
+        @extend .clearfix;
+        border: 1px solid $gray-lighter;
+        padding: 20px;
+        margin-bottom: 10px;
+        .photo {
+            display: table-cell;
+            vertical-align: top;
+            width: 60px;
+        }
+        .body {
+            display: table-cell;
+            vertical-align: top;
+            .header {
+                > div {
+                    display: inline;
+                }
+            }
+        }
+    }
+}

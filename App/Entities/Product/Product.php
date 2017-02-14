@@ -221,4 +221,12 @@ class Product {
         return 'shop/' . $this->getId() . '/' . urlencode(strtolower($this->getProductName()));
     }
 
+    /**
+     * @return string
+     */
+    public function getProductType()
+    {
+        return $this->productType;
+    }
+
 }

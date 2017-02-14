@@ -60,11 +60,13 @@
             @include ('vendirun::customer.orders.partials.payments', ['payments' => $order->getPayments()])
         @endif
 
-        <h2>{{ trans('vendirun::orders.shipmentDetails') }}</h2>
+        @if ($order->hasShipping() || count($order->getShipments()) > 0)
+            <h2>{{ trans('vendirun::orders.shipmentDetails') }}</h2>
             @if (count($order->getShipments()) == 0)
                 @include ('vendirun::customer.orders.partials.shipment-pending')
             @else
                 @include ('vendirun::customer.orders.partials.shipments', ['shipments' => $order->getShipments()])
             @endif
+        @endif
     </div>
 @stop

@@ -18,6 +18,8 @@ use AlistairShaw\Vendirun\App\Entities\Product\ApiProductRepository;
 use AlistairShaw\Vendirun\App\Entities\Product\ProductCategory\ApiProductCategoryRepository;
 use AlistairShaw\Vendirun\App\Entities\Product\ProductCategory\ProductCategoryRepository;
 use AlistairShaw\Vendirun\App\Entities\Product\ProductRepository;
+use AlistairShaw\Vendirun\App\Entities\Slider\ApiSliderRepository;
+use AlistairShaw\Vendirun\App\Entities\Slider\SliderRepository;
 use AlistairShaw\Vendirun\App\Lib\ClientHelper;
 use AlistairShaw\Vendirun\App\Lib\CountryHelper;
 use AlistairShaw\Vendirun\App\Lib\CurrencyHelper;
@@ -26,6 +28,7 @@ use AlistairShaw\Vendirun\App\Lib\Social\SocialLinks;
 use AlistairShaw\Vendirun\App\Lib\Social\SocialLinksStandard;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
+use Thujohn\Twitter\Facades\Twitter;
 
 class VendirunServiceProvider extends ServiceProvider {
 
@@ -103,6 +106,9 @@ class VendirunServiceProvider extends ServiceProvider {
 		$this->app->register('AlistairShaw\Vendirun\App\Providers\ComposerServiceProvider');
 		$this->app->register('AlistairShaw\Vendirun\App\Providers\EventServiceProvider');
 
+		// twitter
+		$this->app->register('Thujohn\Twitter\TwitterServiceProvider');
+
         // middleware
         $this->app['router']->middleware('localization', 'AlistairShaw\Vendirun\App\Http\Middleware\Localization');
 
@@ -123,6 +129,7 @@ class VendirunServiceProvider extends ServiceProvider {
         $this->app->bind(CustomerRepository::class, ApiCustomerRepository::class);
         $this->app->bind(ProductRepository::class, ApiProductRepository::class);
         $this->app->bind(ProductCategoryRepository::class, ApiProductCategoryRepository::class);
+        $this->app->bind(SliderRepository::class, ApiSliderRepository::class);
 
 		// aliases
 		$loader = AliasLoader::getInstance();
@@ -132,5 +139,6 @@ class VendirunServiceProvider extends ServiceProvider {
 		$loader->alias('ClientHelper', ClientHelper::class);
 		$loader->alias('TaxCalculator', TaxCalculator::class);
 		$loader->alias('CustomerHelper', CustomerHelper::class);
+		$loader->alias('Twitter', Twitter::class);
 	}
 }

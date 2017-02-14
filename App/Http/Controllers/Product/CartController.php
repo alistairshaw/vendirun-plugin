@@ -32,7 +32,9 @@ class CartController extends VendirunBaseController {
         $countryId = Request::get('countryId', null);
         if (!$countryId) $countryId = CustomerHelper::getDefaultCountry($customerRepository);
 
-        $data['cart'] = $cartRepository->find($countryId);
+        $shippingType = Request::get('shippingType', null);
+
+        $data['cart'] = $cartRepository->find($countryId, $shippingType);
         $data['cartValues'] = $data['cart']->getValues($transformer);
 
         return View::make('vendirun::product.cart', $data);

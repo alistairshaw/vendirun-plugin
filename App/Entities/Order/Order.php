@@ -3,6 +3,7 @@
 use AlistairShaw\NameExploder\Exceptions\OrderItemNotFoundException;
 use AlistairShaw\Vendirun\App\Entities\Cart\Helpers\TaxCalculator;
 use AlistairShaw\Vendirun\App\Entities\Customer\Customer;
+use AlistairShaw\Vendirun\App\Entities\Order\Aggregates\OrderStatus;
 use AlistairShaw\Vendirun\App\Entities\Order\OrderItem\OrderItem;
 use AlistairShaw\Vendirun\App\Entities\Order\Payment\Payment;
 use AlistairShaw\Vendirun\App\Entities\Order\Shipment\Shipment;
@@ -59,9 +60,9 @@ class Order {
     private $oneTimeToken;
 
     /**
-     * @var string
+     * @var OrderStatus
      */
-    private $createdAt;
+    private $orderStatus;
 
     /**
      * Order constructor.
@@ -71,9 +72,10 @@ class Order {
      * @param          $items
      * @param string $shippingType
      * @param null $id
-     * @param null $createdAt
+     * @param OrderStatus $orderStatus
+     * @internal param null $createdAt
      */
-    public function __construct(Customer $customer, Address $billingAddress, Address $shippingAddress, $items, $shippingType = '', $id = null, $createdAt = null)
+    public function __construct(Customer $customer, Address $billingAddress = null, Address $shippingAddress = null, $items = [], $shippingType = '', $id = null, OrderStatus $orderStatus = null)
     {
         $this->customer = $customer;
         $this->billingAddress = $billingAddress;
@@ -81,9 +83,10 @@ class Order {
         $this->items = $items;
         $this->shippingType = $shippingType;
         $this->id = $id;
-        $this->createdAt = $createdAt ? $createdAt : date("Y-m-d H:i:s");
+
         $this->payments = [];
         $this->shipments = [];
+        $this->orderStatus = $orderStatus ? $orderStatus : new OrderStatus(date("Y-m-d H:i:s"));
     }
 
     /**
@@ -269,10 +272,7 @@ class Order {
      */
     public function getStatus()
     {
-        $status = 'Pending Payment';
-        if ($this->getTotalPrice() <= $this->getTotalPaid()) $status = 'Order Processing';
-
-        return $status;
+        return $this->orderStatus->getStatus();
     }
 
     /**
@@ -294,7 +294,7 @@ class Order {
      */
     public function getCreatedDate()
     {
-        return $this->createdAt;
+        return $this->orderStatus->getCreated();
     }
 
     /**
@@ -312,4 +312,30 @@ class Order {
         throw new OrderItemNotFoundException('No item found for ID ' . $orderItemId);
     }
 
+    /**
+     * @return bool
+     */
+    public function hasDownloadables()
+    {
+        foreach ($this->items as $item)
+        {
+            if (count($item->getDownloadables()) > 0) return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasShipping()
+    {
+        foreach ($this->items as $item)
+        {
+            /* @var $item OrderItem */
+            if ($item->isShipping()) return true;
+        }
+
+        return false;
+    }
 }

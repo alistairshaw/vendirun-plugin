@@ -62,6 +62,7 @@
                 .cart-item {
                     padding: 20px;
                     border: 1px solid #ccc;
+                    background: #ffffff;
                     .image {
                         width: 100px;
                         margin-right: 20px;
@@ -72,6 +73,9 @@
                         color: $brand-primary;
                         font-weight: 300;
                         font-size: 1.2em;
+                    }
+                    .wr {
+                        height: 150px;
                     }
                 }
             }

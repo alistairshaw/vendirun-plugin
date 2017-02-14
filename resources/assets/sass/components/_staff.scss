@@ -1,4 +1,14 @@
 .staff {
+    margin-left: -15px;
+    margin-right: -15px;
+    @extend .clearfix;
+    .staff-wrapper {
+        width: 100%;
+        max-width: 33%;
+        min-width: 300px;
+        margin: 15px;
+        float: left;
+    }
     .staff-item {
         display: block;
         background: $gray-lighter;

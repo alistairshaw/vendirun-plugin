@@ -227,4 +227,19 @@ class CartItem {
         $variations = $this->product->getVariations();
         return $variations[0];
     }
+
+    /**
+     * @return bool
+     */
+    public function shippingApplies()
+    {
+        switch ($this->product->getProductType())
+        {
+            case 'Virtual':
+            case 'Downloadable':
+                return false;
+            default:
+                return true;
+        }
+    }
 }

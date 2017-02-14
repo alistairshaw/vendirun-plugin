@@ -50,6 +50,11 @@ class OrderItem {
     private $discount;
 
     /**
+     * @var array of Downloadable
+     */
+    private $downloadables;
+
+    /**
      * OrderItem constructor.
      * @param int $id
      * @param int $productVariationId
@@ -76,6 +81,8 @@ class OrderItem {
         $this->isShipping = $isShipping;
         $this->discount = $discount;
         $this->productVariationId = $productVariationId;
+
+        $this->downloadables = [];
     }
 
     /**
@@ -150,4 +157,18 @@ class OrderItem {
         return $this->discount;
     }
 
+    /**
+     * @param Downloadable $downloadable
+     */
+    public function addDownloadable(Downloadable $downloadable)
+    {
+        // no duplicates
+        foreach ($this->downloadables as $d) if ($d->getId() == $downloadable->getId()) return;
+        $this->downloadables[] = $downloadable;
+    }
+
+    public function getDownloadables()
+    {
+        return $this->downloadables;
+    }
 }

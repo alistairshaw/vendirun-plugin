@@ -33,4 +33,18 @@ class OrderRequest extends Request {
         return $validation;
     }
 
+    public function messages()
+    {
+        return [
+            'billingaddressId.required_without_all' => trans('vendirun::checkout.billingAddressMissing'),
+            'billingaddress1.required_without' => trans('vendirun::checkout.billingAddressLineOneMissing'),
+            'billingcity.required_without' => trans('vendirun::checkout.billingAddressCityMissing'),
+            'billingcountryId.required_without' => trans('vendirun::checkout.billingAddressCountryMissing'),
+            'shippingaddressId.required_without_all' => trans('vendirun::checkout.shippingAddressMissing'),
+            'shippingaddress1.required_without' => trans('vendirun::checkout.shippingAddressLineOneMissing'),
+            'shippingcity.required_without' => trans('vendirun::checkout.shippingAddressCityMissing'),
+            'shippingcountryId.required_without' => trans('vendirun::checkout.shippingAddressCountryMissing')
+        ];
+    }
+
 }

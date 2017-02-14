@@ -52,13 +52,4 @@ class ClientHelper {
         return $final;
     }
 
-    /**
-     * @param $module
-     * @return bool
-     */
-    public static function checkForModule($module)
-    {
-        return (in_array($module, (array)self::getClientInfo()->modules));
-    }
-
 }

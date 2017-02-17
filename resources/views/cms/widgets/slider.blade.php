@@ -21,7 +21,7 @@
                     @foreach ($slider['slides'] as $slide)
                         <a href="{{ $slide['link'] }}" class="item<?php if ($index == 0) echo ' active'; ?>"
                            style="{{ implode("; ", $slide['slideStyles']) }}">
-                            @if (!$slide['setAsBackground']))
+                            @if (!$slide['setAsBackground'])
                             <img src="{{ asset($slide['background']->hd) }}">
                             @endif
                             @if ($slide['caption'])

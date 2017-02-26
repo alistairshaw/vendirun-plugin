@@ -112,7 +112,8 @@ class BreadcrumbViewComposer
      */
     private function productsBreadcrumbs(ProductSearchResult $productSearchResult)
     {
-        $breadcrumbs = $this->homeCrumb();
+        $breadcrumbs = [];
+
         foreach ($productSearchResult->getBreadcrumbs() as $crumb)
         {
             $breadcrumbs[] = (array)$crumb;

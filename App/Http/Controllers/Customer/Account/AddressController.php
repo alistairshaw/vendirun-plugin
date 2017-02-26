@@ -1,7 +1,9 @@
 <?php namespace AlistairShaw\Vendirun\App\Http\Controllers\Customer\Account;
 
 use AlistairShaw\Vendirun\App\Entities\Customer\CustomerRepository;
+use AlistairShaw\Vendirun\App\Entities\Customer\Helpers\CustomerHelper;
 use AlistairShaw\Vendirun\App\Http\Controllers\VendirunAuthController;
+use AlistairShaw\Vendirun\App\Lib\ClientHelper;
 use AlistairShaw\Vendirun\App\Lib\VendirunApi\VendirunApi;
 use AlistairShaw\Vendirun\App\ValueObjects\Address;
 use Redirect;
@@ -10,9 +12,11 @@ use View;
 
 class AddressController extends VendirunAuthController {
 
-    public function add()
+    public function add(CustomerRepository $customerRepository)
     {
         $data['pageTitle'] = trans('vendirun::customer.addAddress');
+
+        $data['address']['countryId'] = CustomerHelper::getDefaultCountry($customerRepository);
 
         return View::make('vendirun::customer.account.address-add', $data);
     }

@@ -4,6 +4,7 @@
             <div class="form-group order-by">
                 <label for="order_by">{{ trans('vendirun::product.sort') }}</label>
                 <select class="form-control" name="order_by" id="order_by">
+                    <option value="popularity"{{ ($productSearchResult->getSearchParam('order_by') == 'popularity') ? ' selected' : '' }}>{{ trans('vendirun::product.popularity') }}</option>
                     <option value="created_DESC"{{ ($productSearchResult->getSearchParam('order_by') == 'created') ? ' selected' : '' }}>{{ trans('vendirun::product.newest') }}</option>
                     <option value="price_ASC"{{ ($productSearchResult->getSearchParam('order_by') == 'price' && $productSearchResult->getSearchParam('order_direction') == 'ASC') ? ' selected' : '' }}>{{ trans('vendirun::product.priceLowestFirst') }}</option>
                     <option value="price_DESC"{{ ($productSearchResult->getSearchParam('order_by') == 'price' && $productSearchResult->getSearchParam('order_direction') == 'DESC') ? ' selected' : '' }}>{{ trans('vendirun::product.priceHighestFirst') }}</option>

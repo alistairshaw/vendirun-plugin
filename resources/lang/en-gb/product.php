@@ -11,6 +11,7 @@ return [
     'newest' => 'Newest',
     'priceLowestFirst' => 'Price (ASC)',
     'priceHighestFirst' => 'Price (DESC)',
+    'popularity' => 'Popularity',
     'sku' => 'SKU',
     'backTo' => 'Back to',
     'browseProducts' => 'Browse All Products',

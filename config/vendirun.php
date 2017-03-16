@@ -67,7 +67,7 @@ return [
     /**
      * By default, how to sort product search results
      */
-    'productDefaultSortBy' => 'price',
+    'productDefaultSortBy' => 'popularity',
     'productDefaultSortOrder' => 'ASC',
 
     /**

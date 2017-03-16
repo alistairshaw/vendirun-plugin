@@ -8,14 +8,21 @@ Latest Stable Version: 1.1.2.0
 
 ###Importing the package into a new front-end
 
+Install Laravel
+```
+composer create-project laravel/laravel newprojectname 5.2.*
+```
+
 Pull the package in via composer:
 ```
 composer require alistairshaw/vendirun
 ```
+
 Add the namespace to the PSR-4 section
 ```php
 "AlistairShaw\\Vendirun\\": "vendor/alistairshaw/vendirun"
 ```
+
 Edit the /config/app.php file and add the VendirunServiceProvider to the app
 ```php
 AlistairShaw\Vendirun\App\Providers\VendirunServiceProvider::class

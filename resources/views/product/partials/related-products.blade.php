@@ -1,7 +1,7 @@
 <ul class="related-products">
-    @foreach ($product->getRelatedProducts() as $product)
+    @foreach ($relatedProducts as $product)
         <li>
-            @include('vendirun::product.result')
+            @include('vendirun::product.result', ['productDisplay' => $product])
         </li>
     @endforeach
 </ul>

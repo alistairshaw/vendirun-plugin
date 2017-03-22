@@ -93,8 +93,8 @@ class Product {
         if (isset($params['relatedProducts'])) $this->relatedProducts = $params['relatedProducts'];
         if (isset($params['shipping'])) $this->shipping = $params['shipping'];
         if (isset($params['tax'])) $this->tax = $params['tax'];
-        if (isset($params['variations'])) $this->variations = $params['variations'];
-        if (isset($params['categories'])) $this->categories = $params['categories'];
+        $this->variations = (isset($params['variations'])) ? $params['variations'] : [];
+        $this->categories = (isset($params['categories'])) ? $params['categories'] : [];
     }
 
     /**

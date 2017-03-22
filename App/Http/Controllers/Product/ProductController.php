@@ -2,6 +2,7 @@
 
 namespace AlistairShaw\Vendirun\App\Http\Controllers\Product;
 
+use AlistairShaw\Vendirun\App\Entities\Product\Product;
 use AlistairShaw\Vendirun\App\Entities\Product\ProductRepository;
 use AlistairShaw\Vendirun\App\Http\Controllers\VendirunBaseController;
 use AlistairShaw\Vendirun\App\Lib\LocaleHelper;
@@ -64,9 +65,9 @@ class ProductController extends VendirunBaseController {
     /**
      * @param ProductRepository $productRepository
      * @param                   $id
-     * @param string            $productName
-     * @param int               $productVariationId
-     * @return \Illuminate\View\View
+     * @param string $productName
+     * @param int $productVariationId
+     * @return \Illuminate\Contracts\View\View
      */
     public function view(ProductRepository $productRepository, $id, $productName = '', $productVariationId = null)
     {
@@ -75,7 +76,14 @@ class ProductController extends VendirunBaseController {
 
         $data['product'] = $productRepository->find($id, $searchParams);
         $data['productDisplay'] = $data['product']->getDisplayArray();
-        $data['selectedVariation'] = $data['product']->getVariation($productVariationId );
+        $data['selectedVariation'] = $data['product']->getVariation($productVariationId);
+
+        $data['relatedProducts'] = [];
+        /** @var Product $relatedProduct */
+        foreach ($data['product']->getRelatedProducts() as $relatedProduct)
+        {
+            $data['relatedProducts'][] = $relatedProduct->getDisplayArray();
+        }
 
         return View::make('vendirun::product.view', $data);
     }

@@ -1,4 +1,4 @@
-<form method="GET" action="{{ route(LocaleHelper::localePrefix() . 'vendirun.productSearch', array_merge(['category' => ltrim($productSearchResult->getSearchParam('category'), '/')], Request::query())) }}" class="product-simple-search-form">
+<form method="GET" action="{{ route(LocaleHelper::localePrefix() . 'vendirun.productSearch', array_merge(['category' => isset($productSearchResult) ? ltrim($productSearchResult->getSearchParam('category'), '/') : ''], Request::query())) }}" class="product-simple-search-form">
     @foreach (Request::query() as $key => $value)
         @if ($key !== 'searchString' && $key !== 'page')
             <input type="hidden" name="{{ $key }}" value="{{ $value }}">

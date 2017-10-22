@@ -88,13 +88,23 @@ class CustomerController extends VendirunBaseController {
         $clientInfo = Config::get('clientInfo');
         if ($clientInfo->signup_email_verification) return $this->doEmailVerification(Request::all());
 
+        return $this->registerCustomer($customerRepository, $request->all());
+    }
+
+    /**
+     * @param CustomerRepository $customerRepository
+     * @param $registrationData
+     * @return mixed
+     */
+    private function registerCustomer(CustomerRepository $customerRepository, $registrationData)
+    {
         $customerFactory = new CustomerFactory();
-        $customer = $customerFactory->fromRegistration(Request::all());
+        $customer = $customerFactory->fromRegistration($registrationData);
 
         try
         {
-            $customer = $customerRepository->save($customer, true, Request::get('password'));
-            $customerRepository->registerFormCompletion($customer, Request::all());
+            $customer = $customerRepository->save($customer, true, $registrationData['password']);
+            $customerRepository->registerFormCompletion($customer, $registrationData);
         }
         catch (FailResponseException $e)
         {
@@ -102,13 +112,11 @@ class CustomerController extends VendirunBaseController {
         }
         catch (\Exception $e)
         {
-            $this->apiSubmissionFailed('register', Request::all());
+            $this->apiSubmissionFailed('register', $registrationData);
             return Redirect::route(LocaleHelper::localePrefix() . 'vendirun.register')->withInput()->withErrors(trans('vendirun::customer.cannotRegister'));
         }
 
-
-
-        return $this->login(Request::get('email'), Request::get('password'));
+        return $this->login($registrationData['email'], $registrationData['password']);
     }
 
     /**
@@ -264,14 +272,16 @@ class CustomerController extends VendirunBaseController {
     }
 
     /**
+     * @param CustomerRepository $customerRepository
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function emailConfirmAction()
+    public function emailConfirmAction(CustomerRepository $customerRepository)
     {
         try
         {
             $params = VendirunApi::makeRequest('customer/verifyEmailData', ['id' => Request::get('confirmId')])->getData();
-            return $this->login($params->email, $params->password);
+
+            return $this->registerCustomer($customerRepository, (array)$params);
         }
         catch (FailResponseException $e)
         {

@@ -13,7 +13,7 @@
             <label for="price_range_from">{{ trans('vendirun::property.priceRangeFrom') }}</label>
             <select name="price_range_from" id="price_range_from" class="form-control select2">
                 @foreach($priceArray as $key => $value)
-                    <option value="{{ $key }}"{{ (isset($searchParams['price_range_from']) && $value == $searchParams['price_range_from']) ? ' selected' : '' }}>{{ $value }}</option>
+                    <option value="{{ $key }}"{{ (isset($searchParams['price_range_from']) && $key == $searchParams['price_range_from']) ? ' selected' : '' }}>{{ $value }}</option>
                 @endforeach
             </select>
         </div>
@@ -21,7 +21,7 @@
             <label for="price_range_to">{{ trans('vendirun::property.priceRangeTo') }}</label>
             <select name="price_range_to" id="price_range_to" class="form-control select2">
                 @foreach($priceArray as $key => $value)
-                    <option value="{{ $key }}"{{ (isset($searchParams['price_range_to']) && $value == $searchParams['price_range_to']) ? ' selected' : '' }}>{{ $value }}</option>
+                    <option value="{{ $key }}"{{ (isset($searchParams['price_range_to']) && $key == $searchParams['price_range_to']) ? ' selected' : '' }}>{{ $value }}</option>
                 @endforeach
             </select>
         </div>

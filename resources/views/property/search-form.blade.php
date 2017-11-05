@@ -36,8 +36,8 @@
         <div class="form-group">
             <label for="propertytype">{{ trans('vendirun::property.propertyType') }}</label>
             <select name="propertytype" id="propertytype" class="form-control select2">
-                @foreach($propertyTypeArray as $value)
-                    <option value="{{ $value }}"{{ (isset($searchParams['propertytype']) && $value == $searchParams['propertytype']) ? ' selected' : '' }}>{{ $value}}</option>
+                @foreach($propertyTypeArray as $key => $value)
+                    <option value="{{ $key }}"{{ (isset($searchParams['propertytype']) && $key == $searchParams['propertytype']) ? ' selected' : '' }}>{{ $value}}</option>
                 @endforeach
             </select>
         </div>

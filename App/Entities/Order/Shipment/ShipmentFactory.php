@@ -25,10 +25,10 @@ class ShipmentFactory {
             $shipment->tracking_url
         );
 
-        foreach (explode(",", $shipment->order_items) as $orderItemId)
+        foreach ($shipment->shipment_items as $shipmentItem)
         {
-            $item = $order->getItemById($orderItemId);
-            $vrShipment->addItem($item);
+            $item = $order->getItemById($shipmentItem->order_item_id);
+            $vrShipment->addItem($item, $shipmentItem->quantity);
         }
 
         return $vrShipment;

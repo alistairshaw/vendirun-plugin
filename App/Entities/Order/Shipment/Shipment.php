@@ -43,6 +43,12 @@ class Shipment {
     private $items;
 
     /**
+     * Array of integers
+     * @var array
+     */
+    private $quantities;
+
+    /**
      * Shipment constructor.
      * @param $shippedDate
      * @param string $shippingCompany
@@ -64,10 +70,12 @@ class Shipment {
 
     /**
      * @param OrderItem $item
+     * @param int $quantity
      */
-    public function addItem(OrderItem $item)
+    public function addItem(OrderItem $item, $quantity = 1)
     {
         $this->items[] = $item;
+        $this->quantities[] = $quantity;
     }
 
     /**
@@ -75,6 +83,9 @@ class Shipment {
      */
     public function display()
     {
+        $total = 0;
+        foreach ($this->quantities as $q) $total += $q;
+
         return [
             'shippedDate' => $this->shippedDate,
             'shippingCompany' => $this->shippingCompany,
@@ -82,7 +93,7 @@ class Shipment {
             'deliveryWindowTime' => (string)$this->deliveryWindowTime,
             'trackingNumber' => $this->trackingNumber,
             'trackingUrl' => $this->trackingUrl,
-            'itemCount' => count($this->items)
+            'itemCount' => $total
         ];
     }
 }

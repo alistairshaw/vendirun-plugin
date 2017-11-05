@@ -147,22 +147,30 @@ class PropertyController extends VendirunBaseController {
 
         if (isset($_GET['propertytype']))
         {
-            $searchParams['propertytype'] = $_GET['propertytype'];
+            $searchParams = [
+                'propertytype' => $_GET['propertytype']
+            ];
         }
 
         if (isset($_GET['location']))
         {
-            $searchParams['location'] = $_GET['location'];
+            $searchParams = [
+                'location' => $_GET['location']
+            ];
         }
 
         if (Request::get('keywords'))
         {
-            $searchParams['search_string'] = Request::get('keywords');
+            $searchParams = [
+                'search_string' => $_GET['search_string']
+            ];
         }
 
         if (Request::get('reference'))
         {
-            $searchParams['reference'] = Request::get('reference');
+            $searchParams = [
+                'reference' => $_GET['reference']
+            ];
         }
 
         switch (Config::get('vendirun.propertyListingsView'))

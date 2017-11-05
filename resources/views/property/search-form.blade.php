@@ -13,7 +13,7 @@
             <label for="price_range_from">{{ trans('vendirun::property.priceRangeFrom') }}</label>
             <select name="price_range_from" id="price_range_from" class="form-control select2">
                 @foreach($priceArray as $key => $value)
-                    <option value="{{ $key }}"{{ (isset($searchParams['price_range_from']) && $value == $searchParams['price_range_from']) ? ' selected' : '' }}>{{ $value }}</option>
+                    <option value="{{ $key }}"{{ (isset($searchParams['price_range_from']) && $key == $searchParams['price_range_from']) ? ' selected' : '' }}>{{ $value }}</option>
                 @endforeach
             </select>
         </div>
@@ -21,7 +21,7 @@
             <label for="price_range_to">{{ trans('vendirun::property.priceRangeTo') }}</label>
             <select name="price_range_to" id="price_range_to" class="form-control select2">
                 @foreach($priceArray as $key => $value)
-                    <option value="{{ $key }}"{{ (isset($searchParams['price_range_to']) && $value == $searchParams['price_range_to']) ? ' selected' : '' }}>{{ $value }}</option>
+                    <option value="{{ $key }}"{{ (isset($searchParams['price_range_to']) && $key == $searchParams['price_range_to']) ? ' selected' : '' }}>{{ $value }}</option>
                 @endforeach
             </select>
         </div>
@@ -36,8 +36,8 @@
         <div class="form-group">
             <label for="propertytype">{{ trans('vendirun::property.propertyType') }}</label>
             <select name="propertytype" id="propertytype" class="form-control select2">
-                @foreach($propertyTypeArray as $value)
-                    <option value="{{ $value }}"{{ (isset($searchParams['propertytype']) && $value == $searchParams['propertytype']) ? ' selected' : '' }}>{{ $value}}</option>
+                @foreach($propertyTypeArray as $key => $value)
+                    <option value="{{ $key }}"{{ (isset($searchParams['propertytype']) && $key == $searchParams['propertytype']) ? ' selected' : '' }}>{{ $value}}</option>
                 @endforeach
             </select>
         </div>

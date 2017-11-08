@@ -150,6 +150,7 @@ class PropertyController extends VendirunBaseController {
             $searchParams = [
                 'propertytype' => $_GET['propertytype']
             ];
+            Session::put('searchParams', $searchParams);
         }
 
         if (isset($_GET['location']))
@@ -157,20 +158,23 @@ class PropertyController extends VendirunBaseController {
             $searchParams = [
                 'location' => $_GET['location']
             ];
+            Session::put('searchParams', $searchParams);
         }
 
-        if (Request::get('keywords'))
+        if (isset($_GET['keywords']))
         {
             $searchParams = [
                 'search_string' => $_GET['search_string']
             ];
+            Session::put('searchParams', $searchParams);
         }
 
-        if (Request::get('reference'))
+        if (isset($_GET['reference']))
         {
             $searchParams = [
                 'reference' => $_GET['reference']
             ];
+            Session::put('searchParams', $searchParams);
         }
 
         switch (Config::get('vendirun.propertyListingsView'))

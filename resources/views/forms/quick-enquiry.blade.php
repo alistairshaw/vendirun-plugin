@@ -2,7 +2,7 @@
     <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
     @if (isset($property))
-        <input type="hidden" name="property" value="{{ $property->title }}">
+        <input type="hidden" name="property" value="{{ $property->reference . ' - ' . $property->title }}">
         <input type="hidden" name="propertyId" value="{{ $property->id }}">
     @endif
 

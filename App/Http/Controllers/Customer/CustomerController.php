@@ -234,8 +234,8 @@ class CustomerController extends VendirunBaseController {
 
         // the note must contain something, since form registration does not initiate notifications
         $note = "Filled out contact form on website.<br>";
-        if (Request::has('property')) $note .= "<strong>Property Name: " . Request::get('property') . '</strong><br>';
-        if (Request::has('product')) $note .= "<strong>Product Name: " . Request::get('product') . '</strong><br>';
+        if (Request::has('property')) $note .= "<strong>Property: " . Request::get('property') . '</strong><br>';
+        if (Request::has('product')) $note .= "<strong>Product: " . Request::get('product') . '</strong><br>';
         if (Request::has('message')) $note .= '<br>' . nl2br(Request::get('message', ''));
 
         if ($note) VendirunApi::makeRequest('customer/addNote', ['customer_id' => $customer->getId(), 'note' => $note]);

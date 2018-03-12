@@ -4,7 +4,7 @@
 
 This package can be pulled in to any Laravel project and provides all of the default Vendirun front-end functionality
 
-Latest Stable Version: 1.2.1.0
+Latest Stable Version: 1.2.2.0
 
 ###Importing the package into a new front-end
 
